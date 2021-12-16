@@ -1,0 +1,156 @@
+<!doctype html>
+
+<style>
+  .visible {
+    visibility: visible;
+  }
+  .invisible {
+    visibility: hidden;
+  }
+
+  span.derecha{
+    text-align: right;
+  }
+
+  a.derecha{
+    text-align: right;
+  }
+
+  
+
+  .modalContainer {
+    display: none; 
+    position: fixed; 
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+  }
+
+  .modalContainer .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 5px;
+    border: 1px solid lightgray;
+    border-top: 10px solid #58abb7;
+    width: 40%;
+  }
+
+  .modalContainer .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .modalContainer .close:hover,
+  .modalContainer .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  #someid tr td:nth-child(1){
+    width:30%;
+  }
+
+
+</style>
+<script src="lib/jquery-3.6.0.min.js"></script>
+
+
+
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+
+ 
+      <title>PCA</title> 
+      
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+<link rel="stylesheet" href="css/bootstrap.min.css">  </head>
+
+
+<!-- Botones menus -->
+
+    <body>
+
+      <br><br><br>
+
+      <div class="container" >
+        <div class="row">
+          <table class="table table-striped caption-top"  >
+            <caption>Datos de compra</caption>
+              <tr>
+                  <td>Tipo de documento *</td>
+                  <td> 
+                      <select class="form-select" id="tipo_documento" style="width : 300px;">
+                          <option value="cc">Cédula de ciudadanía</option>
+                          <option value="ce">Cédula de ciudadanía</option>
+                          <option value="p">Pasaporte</option>
+                      </select>
+                  </td>
+              </tr>
+  
+              <tr>
+                  <td>Numero de documento</td>
+                  <td> <input type="text" id="numero_documento" style="width : 300px;" > </td>
+              </tr>
+  
+              <tr>
+                  <td>Nombres y apellidos</td>
+                  <td><input type="text" id="nombres_apellidos" style="width : 300px;"  ></td>
+              </tr>
+  
+              <tr>
+                  <td>Teléfono de contacto</td>
+                  <td><input type="text" id="telefono"  style="width : 300px;"></td>
+              </tr>
+  
+              <tr>
+                  <td>Placa de vehículo</td>
+                  <td><input type="text" id="placa" style="width : 300px;" ></td>
+              </tr>
+              <tr>
+                  <td>E-mail para el envio de los pasaportes</td>
+                  <td><input type="text" id="email"  style="width : 300px;"></td>
+              </tr>
+              <tr>
+                  <td>Confirmar E-mail</td>
+                  <td><input type="text" id="email_confirm" style="width : 300px;" ></td>
+              </tr>
+  
+              <tr>
+                <td colspan="2"><a  class="btn btn-primary "  style="border-style:none;background-color:rgb(131, 204, 22);;margin-left:810px;border-radius:20px;height:30px;width:130px;font-size:13px;padding-top:5px;"><b>Finalizar compra</b></a></td>
+              </tr>
+  
+          </table>
+        </div>
+      </div>
+
+        
+
+
+  
+
+
+
+  </body>
+
+  <script>
+
+  
+  </script>
+</html>

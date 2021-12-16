@@ -1,82 +1,599 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!doctype html>
 
-    <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="css/bootstrap.min.css">    
+    <style>
+      .visible {
+        visibility: visible;
+      }
+      .invisible {
+        visibility: hidden;
+      }
 
-<!-- Botones menus -->
+      span.derecha{
+        text-align: right;
+      }
 
-    <a href="index.php"><button type="button" class="btn btn-warning" style="border-radius:0px 0px 10px 10px;color: white; background:rgb(255, 157, 0); border-bottom:5px solid rgb(233, 113, 0);margin-bottom:20px;">volver al inicio</button></body></a>
+      a.derecha{
+        text-align: right;
+      }
 
-<!-- Botones aceptar -->
-<br>
+      
 
-<button type="button" class="btn btn-primary btn-sm" style="font-size:12px;border-radius:20px;border-color:rgb(131, 204, 22); padding:4px 30px;background-color: rgb(131, 204, 22);margin-bottom:20px;">Aceptar</button>
+      .modalContainer {
+        display: none; 
+        position: fixed; 
+        z-index: 1;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%; 
+        overflow: auto; 
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
+      }
 
-<br>
+      .modalContainer .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 5px;
+        border: 1px solid lightgray;
+        border-top: 10px solid #58abb7;
+        width: 40%;
+      }
+
+      .modalContainer .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .modalContainer .close:hover,
+      .modalContainer .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
 
 
-<!-- Cuadros de pasaportes -->
-<br>
+    </style>
+    <script src="lib/jquery-3.6.0.min.js"></script>
 
-<div class="card" style="width: 18rem;border-radius:26px;box-shadow:2px 2px 2px 1px rgb(235, 235, 235);margin:0px;border-style: none;">
-    <img src="images.jpg" style="border-radius:20px;padding:10px 10px;" class="card-img-top" alt="">
-    <div class="card-body">
-      <h5 class="card-title" style="font-size:16px;padding-bottom:7px;padding-top:0px;">Pasaporte 1</h5>
-      <p class="card-text"style="font-size:10px;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum libero repellendus tempore eos iusto nesciunt qui iure recusandae nobis suscipit!</p>
-      <h1 style="font-size:20px;display:contents;">$100.000 COP</h1>
-      <a href="" class="btn btn-primary" style="border-style:none;background-color:rgb(131, 204, 22);;margin-left:180px;border-radius:20px;height:30px;width:80px;font-size:13px;padding-top:5px;">Comprar</a>
+    
+
+    <html lang="en">
+      <head>
+        <!-- Required meta tags -->
+
+     
+          <title>PCA</title> 
+          
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+          
+        
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">  </head>
+  
+
+    <!-- Botones menus -->
+
+        
+
+    <!-- Botones aceptar -->
+    <br>
+
+    <!-- <button type="button" class="btn btn-primary btn-sm" style="font-size:12px;border-radius:20px;border-color:rgb(131, 204, 22); padding:4px 30px;background-color: rgb(131, 204, 22);margin-bottom:20px;">Aceptar</button> -->
+
+    <br>
+
+
+    <!-- Cuadros de pasaportes -->
+    <br>
+
+    <div class="container-fluid h-100"> 
+      <div class="row w-100 align-items-center">
+        <div class="col text-center">
+          <a ><button type="button" class="btn btn-warning " id="iniciar" style="border-radius:0px 0px 10px 10px;color: white; background:rgb(255, 157, 0); border-bottom:5px solid rgb(233, 113, 0);margin-bottom:20px;">Iniciar proceso de compra</button></body></a>
+
+          <div id="fecha" class=""> </div>
+
+        </div>	
+      </div>
+  
+  
     </div>
-</div>
-<div style="border-style: solid;border-color:rgb(255, 157, 0);width:220px;height:36px;border-radius:20px;z-index:1;margin-top:20px;padding:0px 0px;align-items:center;margin-bottom:20px;">
-<input type="search" id="search" style="color:rgb(255, 157, 0);padding:10px;margin-left:5px;margin-bottom:5px;width:180px;height:20px;border-style:none;background-color:transparent;border-color:transparent;border-radius:20px;outline:none;" src="img/lupa.png">
-<input type="image"  id="search" src="lupa.png" style="width:20px;height:20px;margin-top:5px;">
-</div>
 
-<button style="width:50px;height:30px;background-color:rgb(255, 157, 0);border-style:none;border-radius:30px;" type="button" class="btn btn-primary position-relative"><img style="margin-bottom:10px;width:20px;height:20px;"src="carrito-de-compras.png" alt="">
-  <span style="padding-right:10px;" class="position-absolute top-10 start-100 translate-middle p-2  bg-danger border border-light rounded-circle">
-    <span class="visually-hidden"></span>
-  </span>
-
-
-
-
-  <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Enable body scrolling</button>
-
-  <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Colored with scrolling</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <div class="float-lg-end">
+      <button style="width:50px;height:30px;background-color:rgb(255, 157, 0);border-style:none;border-radius:30px;"  type="button" class="btn btn-primary position-relative btnModal"><img style="margin-bottom:10px;width:20px;height:20px;"src="carrito-de-compras.png" alt="">
+        <span style="padding-right:10px;" class="position-absolute top-10 start-100 translate-middle p-2  bg-danger border border-light rounded-circle">
+          <span class="visually-hidden"></span>
+        </span>
     </div>
-    <div class="offcanvas-body">
-      <p>Try scrolling the rest of the page to see this option in action.</p>
+
+    
+
+   
+
+    <br>
+
+
+
+    <br><br><br>
+
+    
+    <div id="boletas" class="invisible" > 
+    <div  class="row col-auto bg-danger p-5 text-center" >
+      <div class="col-sm-3">
+          <div class="card" style="width: 18rem;border-radius:26px;box-shadow:2px 2px 2px 1px rgb(235, 235, 235);border-style: none;">
+              <img src="images.jpg" style="border-radius:20px;padding:10px 10px;" class="card-img-top" alt="">
+                <div class="card-body">
+                  <h5 class="card-title" style="font-size:16px;padding-bottom:7px;padding-top:0px;">Pasaporte 1</h5>
+                  <p class="card-text"style="font-size:10px;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum libero repellendus tempore eos iusto nesciunt qui iure recusandae nobis suscipit!</p>
+                  <h1 style="font-size:20px;display:contents;">$100.000 COP</h1>
+                  <a href="" class="btn btn-primary" style="border-style:none;background-color:rgb(131, 204, 22);;margin-left:180px;border-radius:20px;height:30px;width:80px;font-size:13px;padding-top:5px;">Comprar</a>
+                </div>
+          </div> 
+      </div>
+      
     </div>
   </div>
-  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">Offcanvas with backdrop</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    
+
+  <!-- <button id="btnModal">Abrir modal</button>  -->
+  <div id="myModal" class="modalContainer">
+    <div class="modal-content">
+      <span class="close derecha">×</span> 
+      <h2>Carrito de compras</h2>
+      <div id="div-carrito" >
+
+      </div> 
     </div>
-    <div class="offcanvas-body">
-      <p>.....</p>
+  </div> 
+
+    <div style="border-style: solid;border-color:rgb(255, 157, 0);width:220px;height:36px;border-radius:20px;z-index:1;margin-top:20px;padding:0px 0px;align-items:center;margin-bottom:20px;">
+    <input type="search" id="search" style="color:rgb(255, 157, 0);padding:10px;margin-left:5px;margin-bottom:5px;width:180px;height:20px;border-style:none;background-color:transparent;border-color:transparent;border-radius:20px;outline:none;" src="img/lupa.png">
+    <input type="image"  id="search" src="lupa.png" style="width:20px;height:20px;margin-top:5px;">
     </div>
-  </div>
-  <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Backdrop with scrolling</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <p>Try scrolling the rest of the page to see this option in action.</p>
-    </div>
-  </div>
+
+    
 
 
 
 
-  </body>
-</html>
+      
+
+
+
+      </body>
+
+      <script>
+
+      var modal = document.getElementById("myModal");
+			var btn = document.getElementsByClassName("btnModal");
+			var span = document.getElementsByClassName("close")[0];
+			var body = document.getElementsByTagName("body")[0];
+
+      const currency = function(number){
+          return new Intl.NumberFormat('en-IN', {style: 'currency',currency: 'INR', minimumFractionDigits: 2}).format(number);
+      };
+
+      function recalcularSubTotal(){
+
+        var json_boletas_nombres=localStorage.getItem('boletas_nombres');
+        var arr_boletas_nombres= JSON.parse(json_boletas_nombres);
+
+        var arr_boletas_carrito = JSON.parse( localStorage.getItem('boletas_carrito'));
+
+        var nuevo_subtotal=0;
+        console.log("Longitud preguntada:"+arr_boletas_carrito )
+        if(arr_boletas_carrito == null){
+          $("#div_subtotal").html("Subtotal $"+nuevo_subtotal.toLocaleString() )
+        }else{
+
+          arr_boletas_carrito.forEach(function(cant, idbo) {
+              if(cant>0){
+                  arr_boletas_nombres.forEach(function(boleta, index) {
+
+                      if(boleta['id']==idbo){
+                        nuevo_subtotal+=( parseFloat(boleta['precio']) * parseFloat(cant));
+                      }
+                  });
+              }
+
+              $("#div_subtotal").html("Subtotal $"+nuevo_subtotal.toLocaleString() )
+          });
+
+        }
+
+        
+
+
+      }
+
+      function retornarDatosBoleta(idboleta){
+        var json_boletas_nombres=localStorage.getItem('boletas_nombres');
+        var arr_boletas_nombres= JSON.parse(json_boletas_nombres);
+
+        console.log('arr_boletas_nombres')
+        console.log(arr_boletas_nombres)
+        var reto='';
+        arr_boletas_nombres.forEach(function(boleta, index) {
+            
+            if(boleta['id']==idboleta){
+              reto= boleta
+            }
+ 
+           
+         });
+
+         return(reto);
+
+      } 
+
+$(document).on("click", ".btnModal", function(){
+        
+
+       // alert("idboleta"+$(this).attr("idtipoBoleta"));
+
+        var boletas_carrito= localStorage.getItem('boletas_carrito');
+
+
+        //var boleta_local= localStorage.getItem('idtipoBoleta_'+$(this).attr("idtipoBoleta"));
+
+        if(boletas_carrito==null || boletas_carrito==undefined){
+
+          var arr_boletas_carrito=Array();
+
+          var indice=$(this).attr("idtipoBoleta")
+
+          if(indice>0){
+            console.log("indice -1")
+            console.log(indice)
+
+            arr_boletas_carrito[indice]=1;
+
+            console.log("arr_boletas_carrito -1")
+
+            console.log(arr_boletas_carrito)
+
+            var json_boletas_carrito=JSON.stringify(arr_boletas_carrito);
+
+            console.log("json_boletas_carrito -1")
+            console.log(json_boletas_carrito)
+            
+            localStorage.setItem('boletas_carrito',json_boletas_carrito);
+
+            console.log("paso por el if")
+
+          }
+
+          
+        }else{
+
+          var arr_boletas_carrito = JSON.parse(boletas_carrito);
+          if(arr_boletas_carrito[$(this).attr("idtipoBoleta")]==null){
+            arr_boletas_carrito[$(this).attr("idtipoBoleta")]=1;
+          }else{
+            arr_boletas_carrito[$(this).attr("idtipoBoleta")]++;
+          }
+         
+          
+          var json_boletas_carrito=JSON.stringify(arr_boletas_carrito);
+          
+          localStorage.setItem('boletas_carrito',json_boletas_carrito);
+          console.log("paso por el else")
+        }
+
+        console.log("actual")
+        console.log(localStorage.getItem('boletas_carrito'));
+
+        var arr_recorrer= JSON.parse( localStorage.getItem('boletas_carrito'));
+
+        console.log("arr_recorrer")
+
+        console.log(arr_recorrer);
+
+        modal.style.display = "block";
+				body.style.position = "static";
+				body.style.height = "100%";
+				body.style.overflow = "hidden";
+
+        
+
+          var cont=1;
+
+          var long= 0;
+          console.log("arr_recorrer"+arr_recorrer)
+          if(arr_recorrer!=null){
+
+
+            arr_recorrer.forEach(function(cant, idbo) {
+              if(cant>0){
+                long++;
+              }
+            });
+
+            console.log("long:"+long)
+
+          var str_div=''
+
+          var sumatoria=0;
+
+        arr_recorrer.forEach(function(cant, idbo) {
+          //width="100" height="100"
+
+          
+
+
+            if(cont==1){
+              str_div=str_div+'<table class="table">  ';
+            }
+
+            if(cant!=null && cant!=0){
+              console.log("idboleta:"+idbo+" cant:"+cant);
+              var datosBoleta=retornarDatosBoleta(idbo);
+              console.log(datosBoleta)
+
+            sumatoria+=parseFloat(cant)*parseFloat(datosBoleta['precio'])
+
+              str_div=str_div+'<tr id="tr_bol_'+idbo+'" class="productos">  <td><img src="data:image/jpeg;base64, '+datosBoleta['imagenBase64']+'" //width="100" height="60" ></td> <td> <b>'+datosBoleta['nombre']+'</b> <br> $'+datosBoleta['precio']+' </td> <td> <input type="button" style="width : 30px;" class="restar" id="'+idbo+'" value="-" ><input type="text" style="width : 30px;" id="inp_car'+idbo+'" value="'+cant+'"><input type="button" style="width : 30px;" class="sumar" id="'+idbo+'" value="+" > </td> <td><a  class="btn  eliminar_producto" id="'+datosBoleta['id']+'" > <img src="eliminar.png" width="20" height="20" > </a></td>  </tr>'
+
+              if(cont==long){
+                console.log("paso por el final, cont:"+cont+" , long:"+long)
+                str_div=str_div+'</table>';
+                str_div=str_div+' <br> <div style="text-align:right" ><a class="btn eliminar_todo derecha"><span class="derecha">Vaciar carrito <img src="trash2.jpg" width="20" height="20" > </span></a></div><br> <hr class="bg-success border-2 border-top border-success"> <span class="derecha"><h3 id="div_subtotal">Subtotal $'+sumatoria.toLocaleString()+'  </h3></span> <br><a  class="btn btn-primary irapagar"  style="border-style:none;background-color:rgb(131, 204, 22);;margin-left:410px;border-radius:20px;height:30px;width:130px;font-size:13px;padding-top:5px;"><b>Ir a pagar</b></a>';
+              }
+
+              cont++;
+
+            }
+            
+        });
+
+
+          }
+          
+
+          
+
+
+        
+
+          $("#div-carrito").html(str_div)
+
+        
+
+       // if( ;  )
+});
+
+  $(document).on("click", ".restar", function(){
+      var idboleta=$(this).attr('id');
+      var cantidad= $('#inp_car'+idboleta).val();
+      //alert("Restar a la boleta:"+idboleta+" que tiene  una cantidad de:"+cantidad)
+
+      
+
+      var arr_boletas_carrito = JSON.parse( localStorage.getItem('boletas_carrito'));
+
+      console.log("En local storage tenia:"+arr_boletas_carrito[idboleta])
+
+      var cantidad_nueva=parseFloat(cantidad)-1;
+
+      arr_boletas_carrito[idboleta]=cantidad_nueva;
+
+      localStorage.setItem('boletas_carrito', JSON.stringify(arr_boletas_carrito));
+
+      $('#inp_car'+idboleta).val(cantidad_nueva);
+
+      if(cantidad==1){
+        $(this).parent().parent().remove();
+
+      }
+
+      recalcularSubTotal()
+
+  });
+
+  $(document).on("click", ".sumar", function(){
+      var idboleta=$(this).attr('id');
+      var cantidad= $('#inp_car'+idboleta).val();
+      //alert("Sumar a la boleta:"+idboleta+" que tiene  una cantidad de:"+cantidad)
+
+      
+
+      var arr_boletas_carrito = JSON.parse( localStorage.getItem('boletas_carrito'));
+
+      console.log("En local storage tenia:"+arr_boletas_carrito[idboleta])
+
+      var cantidad_nueva=parseFloat(cantidad)+1;
+
+      arr_boletas_carrito[idboleta]=cantidad_nueva;
+
+      localStorage.setItem('boletas_carrito', JSON.stringify(arr_boletas_carrito));
+
+      $('#inp_car'+idboleta).val(cantidad_nueva);
+
+      recalcularSubTotal()
+
+
+  });
+
+  $(document).on("click", ".eliminar_producto", function(){
+
+      var idboleta=$(this).attr('id')
+
+      var arr_boletas_carrito = JSON.parse( localStorage.getItem('boletas_carrito'));
+
+      console.log("En local storage tenia:"+arr_boletas_carrito[idboleta])
+
+      arr_boletas_carrito[idboleta]=0;
+
+      localStorage.setItem('boletas_carrito', JSON.stringify(arr_boletas_carrito));
+
+      
+      $("#tr_bol_"+idboleta).remove();
+
+      recalcularSubTotal()
+  });
+
+  $(document).on("click", ".eliminar_todo", function(){
+
+    
+
+    var arr_boletas_carrito = JSON.parse( localStorage.getItem('boletas_carrito'));
+
+    var arr_boletas_carrito=null;
+
+    localStorage.removeItem('boletas_carrito');
+
+    $('.productos').remove();
+
+    recalcularSubTotal()
+
+    //localStorage.setItem('boletas_carrito', JSON.stringify(arr_boletas_carrito));
+
+    var span = document.getElementsByClassName("close")[0];
+
+    //span.click();
+    
+
+    
+
+    
+  });
+
+
+
+  $(document).on("click", ".irapagar", function(){
+
+    
+ 
+    window.location.href = "pagar.html";
+
+
+});
+
+if(document.getElementsByClassName("btnModal")){
+  
+			var modal = document.getElementById("myModal");
+			var btn = document.getElementsByClassName("btnModal");
+			var span = document.getElementsByClassName("close")[0];
+			var body = document.getElementsByTagName("body")[0];
+
+      
+
+			btn.onclick = function() {
+				modal.style.display = "block";
+
+				body.style.position = "static";
+				body.style.height = "100%";
+				body.style.overflow = "hidden";
+			}
+
+			span.onclick = function() {
+				modal.style.display = "none";
+
+				body.style.position = "inherit";
+				body.style.height = "auto";
+				body.style.overflow = "visible";
+			}
+
+			window.onclick = function(event) {
+				if (event.target == modal) {
+					modal.style.display = "none";
+
+					body.style.position = "inherit";
+					body.style.height = "auto";
+					body.style.overflow = "visible";
+				}
+			}
+		}
+        
+
+          window.onload = function () {
+
+            localStorage.clear();
+            
+          }
+
+        document.querySelector("#iniciar").addEventListener("click", function () {
+  
+         // alert("Iniciar proceso")
+
+          var settings = {
+            "url": "http://20.44.111.223:80/api/auth/token",
+            "method": "POST",
+            "async": false,
+            "timeout": 0,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "data": JSON.stringify({
+              "password": "$Info.2021",
+              "username": "infomedia"
+            }),
+          };
+
+          $.ajax(settings).done(function (response) {
+            console.log(response['accessToken']);
+            localStorage.setItem('accessToken',response['accessToken'] )
+          });
+
+
+          $("#iniciar").hide();
+
+          const f = new Date();
+
+          $("#boletas").removeClass('invisible')
+
+          $("#fecha").html('<h3>Fecha reserva: <span class="badge bg-secondary">'+f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear()+'</span></h3>')
+          console.log("Token"+localStorage.getItem('accessToken'))
+          
+          var settings2 = {
+            "url": "http://20.44.111.223:80/api/boleteria/tiposBoleta?incluirImagen=true",
+            "method": "GET",
+            "async": false,
+            "timeout": 0,
+            "headers": {
+              "Authorization": "Bearer "+localStorage.getItem('accessToken')
+            },
+          };
+
+          
+
+          $.ajax(settings2).done(function (response2) {
+            console.log("Boletas");
+            console.log(response2);
+            var str_remp='<div  class="row col-auto bg-danger p-5 text-center" >';
+            //$("#boletas").html('<div  class="row col-auto bg-danger p-5 text-center" ><div class="col-sm-3">');
+              var cont=1;
+            
+            localStorage.setItem('boletas_nombres',JSON.stringify(response2))
+
+            response2.forEach(function(boleta, index) {
+                console.log(boleta);
+
+               // $("#boletas").append('<div class="card" style="width: 18rem;border-radius:26px;box-shadow:2px 2px 2px 1px rgb(235, 235, 235);border-style: none;"><img src="images.jpg" style="border-radius:20px;padding:10px 10px;" class="card-img-top" alt=""><div class="card-body"><h5 class="card-title" style="font-size:16px;padding-bottom:7px;padding-top:0px;">Pasaporte 1</h5><p class="card-text"style="font-size:10px;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum libero repellendus tempore eos iusto nesciunt qui iure recusandae nobis suscipit!</p> <h1 style="font-size:20px;display:contents;">$100.000 COP</h1> <a href="" class="btn btn-primary" style="border-style:none;background-color:rgb(131, 204, 22);;margin-left:180px;border-radius:20px;height:30px;width:80px;font-size:13px;padding-top:5px;">Comprar</a> </div> </div>')
+
+
+                 str_remp=str_remp+'<div class="col-sm-3"><div class="card" style="width: 18rem;border-radius:26px;box-shadow:2px 2px 2px 1px rgb(235, 235, 235);border-style: none;"><img src="data:image/jpeg;base64, '+boleta['imagenBase64']+'" style="border-radius:20px;padding:10px 10px;" class="card-img-top" alt=""><div class="card-body"><h5 class="card-title" style="font-size:16px;padding-bottom:7px;padding-top:0px;">'+boleta['nombre']+'</h5><p class="card-text"style="font-size:10px;">'+boleta['descripcion']+'</p> <h1 style="font-size:20px;display:contents;">$'+boleta['precio'].toLocaleString()+'</h1> <a  class="btn btn-primary btnModal" idtipoBoleta="'+boleta['id']+'" style="border-style:none;background-color:rgb(131, 204, 22);;margin-left:180px;border-radius:20px;height:30px;width:80px;font-size:13px;padding-top:5px;">Comprar</a> </div> </div> </div>';
+
+                 cont++;
+
+            });
+            str_remp=str_remp+'</div> '
+            $("#boletas").html(str_remp);
+          });
+
+          
+
+          
+  
+  
+        });
+      </script>
+    </html>
