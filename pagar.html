@@ -94,7 +94,18 @@ var date = new Date();
   return formatted_date;
   }
 
+function printImg(str_img) {
+  pwin = window.open(str_img,"_blank");
+  pwin.onload = function () {window.print();}
+}
 
+function generarnueva(boleta){
+  tomarImagenPorSeccion2('divimagen',boleta);
+}
+
+function imprimir(str_img){
+  //$("#divqr2").append('<a download="FILENAME.EXT" href="'+str_img+'">Download</a>')
+}
 $(document).on("click", ".finalizar", function(){
 
   var arr_boletas_carrito = JSON.parse( localStorage.getItem('boletas_carrito'));
@@ -215,7 +226,7 @@ $(document).on("click", ".finalizar", function(){
                       console.log(boleta)
                       console.log("*** ")
 
-                      $("#divqr").append('<tr id="tr_'+boleta['id']+'" ><td style="width: 150px; height 100px; " class="centrado" >'+$("#nombres_apellidos").val()+'</td>&nbsp;<td style="width: 150px; height 100px;" class="centrado"><img src="infomedia.png" width="130" height="70" ></td>&nbsp; <td style="width: 150px; height 100px;" class="centrado"><h4>KICK OFF 2021</h4> </td>&nbsp;<td class="centrado2" style="width: 150px; height 100px;" id="qrdiv_'+boleta['id']+'"  ></td></tr> ')
+                      $("#divqr").append('<tr id="tr_'+boleta['id']+'" ><td style="width: 150px; height 100px; " class="centrado" ><h5>'+$("#nombres_apellidos").val()+'</h5></td>&nbsp;<td style="width: 150px; height 100px;" class="centrado"><img src="infomedia.png" width="130" height="70" ></td>&nbsp; <td style="width: 150px; height 100px;" class="centrado"><h4>KICK OFF 2021</h4> </td>&nbsp;<td class="centrado2" style="width: 150px; height 100px;" id="qrdiv_'+boleta['id']+'"  ></td></tr> ')
 
                        
 
@@ -235,10 +246,20 @@ $(document).on("click", ".finalizar", function(){
 
                       qrcode.makeCode(qrdata);
 
+                      
+
                       tomarImagenPorSeccion('tr_'+boleta['id'],boleta['id']);
+
+                      $("#divqr2").append('<input id="generar" type="button" onclick="generarnueva(5)" value="Generar boleta"> ')
+
+                      
+
+                       
 
                       $("#datosformulario").hide()
                       $("#divbr").hide();
+
+                     
 
                     });
                    // var str_remp='<div  class="row col-auto bg-danger p-5 text-center" >';
@@ -257,7 +278,9 @@ $(document).on("click", ".finalizar", function(){
 
               });
 
-              window.print();
+              //$("#divqr").hide();
+
+              
 
                 //str_remp=str_remp+'</div> '
                 //$("#boletas").html(str_remp);
@@ -267,7 +290,9 @@ $(document).on("click", ".finalizar", function(){
 
   }
 
+  //$("#divqr").hide();
 
+  
 
 
 });
@@ -353,7 +378,8 @@ qrcode.makeCode(qrdata);*/
       <div class="container">
 
         <div class="row">
-          <div id="divqr" style="margin-top:380px;" class="divpdf2"></div>
+          <div id="divqr" style="margin-top:20px;" class="divpdf2"></div>
+          <div id="divqr2" style="margin-top:30px;" class="divpdf2"></div>
         </div>
       </div>
 
