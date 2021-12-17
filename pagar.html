@@ -16,6 +16,14 @@
     text-align: right;
   }
 
+
+  div.divpdf {
+    -webkit-transform: rotate(90deg); /* Safari and Chrome */
+    -moz-transform: rotate(90deg);   /* Firefox */
+    -ms-transform: rotate(90deg);   /* IE 9 */
+    -o-transform: rotate(90deg);   /* Opera */
+    transform: rotate(90deg);
+}
   
 
   .modalContainer {
@@ -55,16 +63,222 @@
     cursor: pointer;
   }
 
+    .centrado {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .centrado2 {
+    margin: auto;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+  }
+
   #someid tr td:nth-child(1){
     width:30%;
   }
 
 
 </style>
+<script src="qrcode.min.js"></script>
 <script src="lib/jquery-3.6.0.min.js"></script>
+<script src="lib/htmlToCanvas.js"></script>
+	<script src="js/funciones.js"></script>
+<script>
+var date = new Date();
+  const formatDate = (date)=>{
+  let formatted_date = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
+  return formatted_date;
+  }
+
+
+$(document).on("click", ".finalizar", function(){
+
+  var arr_boletas_carrito = JSON.parse( localStorage.getItem('boletas_carrito'));
+
+          var long= 0;
+          
+          if(arr_boletas_carrito!=null){
+
+
+            arr_boletas_carrito.forEach(function(cant, idbo) {
+              if(cant>0){
+                long++;
+              }
+            });
+
+          }
+
+  var accessToken=localStorage.getItem('accessToken');
+  var f = new Date();
+
+  var fecha= f.getDate() + "-"+ f.getMonth()+ "-" +f.getFullYear();
+  var cont=1;
+
+
+  var array_reservas=Array();
+  
+
+
+  if(accessToken!=null && long>0){
+
+            arr_boletas_carrito.forEach(function(cant, idbo) {
+              if(cant>0){
+                console.log("idboleta:"+idbo+" , cant:"+cant)
+
+                
+
+                console.log("fecha:"+fecha)
+
+                  var settings = {
+                    "url": "http://20.44.111.223:80/api/boleteria/reserva",
+                    "method": "POST",
+                    "async":false,
+                    "timeout": 0,
+                    "headers": {
+                      "Authorization": "Bearer  "+accessToken,
+                      "Content-Type": "application/json"
+                    },
+                    "data": JSON.stringify({
+                      "boletas": [
+                        {
+                          "cantidad": cant,
+                          "idTipoBoleta": idbo
+                        }
+                      ],
+                      "email": $("#email").val(),
+                      "fecha": formatDate(date),
+                      "identificacion": $("#numero_documento").val(),
+                      "nombre": $("#nombres_apellidos").val(),
+                      "telefono": $("#telefono").val(),
+                      "tipoIdentificacion": $("#tipo_documento").val()
+                    }),
+                  };
+  
+                  $.ajax(settings).done(function (response) {
+                    console.log("Reserva "+cont)
+                    console.log(response);
+                    console.log(" ")
+                    console.log(" ")
+                    console.log(" ")
+
+                    if(response['message']=='Se ha creado la reserva'){
+
+                     array_reservas[idbo]=response['id'];
+                     arr_boletas_carrito[idbo]=null;
+
+                    }
+
+
+                    cont++;
+                  });
+
+
+              }
+            });
+
+            
+
+            if(array_reservas.length>0){
+
+              localStorage.setItem('array_reservas', JSON.stringify(array_reservas));
+
+              localStorage.setItem('boletas_carrito', JSON.stringify(arr_boletas_carrito));
+
+              console.log(array_reservas);
+
+              array_reservas.forEach(function(reserva, index) {
+
+                var settings2 = {
+                  "url": "http://20.44.111.223:80/api/boleteria/reserva?idReserva="+reserva,
+                  "method": "GET",
+                  "async": false,
+                  "timeout": 0,
+                  "headers": {
+                    "Authorization": "Bearer "+localStorage.getItem('accessToken')
+                  },
+                };
+
+          
+
+                  $.ajax(settings2).done(function (response2) {
+                    console.log(" ")
+                    console.log(" ")
+                    console.log(" ")
+                    console.log("reserva:"+reserva);
+                    //console.log(response2['boletas']);
+
+                    response2['boletas'].forEach(function(boleta, index) {
+                      console.log(boleta)
+                      console.log("*** ")
+
+                      $("#divqr").append('<tr id="tr_'+boleta['id']+'" ><td style="width: 150px; height 100px; " class="centrado" >'+$("#nombres_apellidos").val()+'</td>&nbsp;<td style="width: 150px; height 100px;" class="centrado"><img src="infomedia.png" width="130" height="70" ></td>&nbsp; <td style="width: 150px; height 100px;" class="centrado"><h4>KICK OFF 2021</h4> </td>&nbsp;<td class="centrado2" style="width: 150px; height 100px;" id="qrdiv_'+boleta['id']+'"  ></td></tr> ')
+
+                       
+
+                      var qrdata= boleta['id'];
+                       
+
+                      var qrcode = new QRCode(document.getElementById("qrdiv_"+boleta['id']), {
+                          text: "http://jindo.dev.naver.com/collie",
+                          width: 60,
+                          height: 60,
+                          colorDark : "#000000",
+                          colorLight : "#ffffff",
+                          correctLevel : QRCode.CorrectLevel.H
+                      });
 
 
 
+                      qrcode.makeCode(qrdata);
+
+                      tomarImagenPorSeccion('tr_'+boleta['id'],boleta['id']);
+
+                      $("#datosformulario").hide()
+                      $("#divbr").hide();
+
+                    });
+                   // var str_remp='<div  class="row col-auto bg-danger p-5 text-center" >';
+                    //var cont=1;
+                    
+                    //localStorage.setItem('boletas_nombres',JSON.stringify(response2))
+
+                   /* response2.forEach(function(boleta, index) {
+                        console.log(boleta);
+                        str_remp=str_remp+'';
+                          cont++;
+
+                    });*/
+                    
+                  });
+
+              });
+
+              window.print();
+
+                //str_remp=str_remp+'</div> '
+                //$("#boletas").html(str_remp);
+
+            }
+
+
+  }
+
+
+
+
+});
+window.onload = function () {
+/*  $("#divqr").html("<div id='qrcode'></div>")
+var qrdata= "https://www.youtube.com/watch?v=ah9PDlTpcCk";
+var qrcode = new QRCode(document.getElementById("qrcode"))
+
+qrcode.makeCode(qrdata);*/
+}
+</script>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -86,12 +300,12 @@
 <!-- Botones menus -->
 
     <body>
-
-      <br><br><br>
+      <div id="divbr" ><br><br><br></div>
+      
 
       <div class="container" >
         <div class="row">
-          <table class="table table-striped caption-top"  >
+          <table class="table table-striped caption-top" id="datosformulario" >
             <caption>Datos de compra</caption>
               <tr>
                   <td>Tipo de documento *</td>
@@ -119,24 +333,27 @@
                   <td><input type="text" id="telefono"  style="width : 300px;"></td>
               </tr>
   
-              <tr>
-                  <td>Placa de vehículo</td>
-                  <td><input type="text" id="placa" style="width : 300px;" ></td>
-              </tr>
+             
               <tr>
                   <td>E-mail para el envio de los pasaportes</td>
                   <td><input type="text" id="email"  style="width : 300px;"></td>
               </tr>
-              <tr>
-                  <td>Confirmar E-mail</td>
-                  <td><input type="text" id="email_confirm" style="width : 300px;" ></td>
-              </tr>
+              
   
               <tr>
-                <td colspan="2"><a  class="btn btn-primary "  style="border-style:none;background-color:rgb(131, 204, 22);;margin-left:810px;border-radius:20px;height:30px;width:130px;font-size:13px;padding-top:5px;"><b>Finalizar compra</b></a></td>
+                <td colspan="2"><a  class="btn btn-primary finalizar"  style="border-style:none;background-color:rgb(131, 204, 22);;margin-left:810px;border-radius:20px;height:30px;width:130px;font-size:13px;padding-top:5px;"><b>Finalizar compra</b></a></td>
               </tr>
+
+              
   
           </table>
+        </div>
+      </div>
+
+      <div class="container">
+
+        <div class="row">
+          <div id="divqr" style="margin-top:380px;" class="divpdf2"></div>
         </div>
       </div>
 
