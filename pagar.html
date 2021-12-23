@@ -167,6 +167,9 @@ $(document).on("click", ".finalizar", function(){
                       "telefono": $("#telefono").val(),
                       "tipoIdentificacion": $("#tipo_documento").val()
                     }),
+                    error: function(e) {
+                        alert("No hay disponibilidad");
+                      },
                   };
   
                   $.ajax(settings).done(function (response) {
@@ -185,6 +188,8 @@ $(document).on("click", ".finalizar", function(){
 
 
                     cont++;
+                  }).fail(function (jqXHR, textStatus) {
+                          alert("No hay disponibilidad");
                   });
 
 
