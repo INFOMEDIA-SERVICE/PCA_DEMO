@@ -540,8 +540,8 @@ if(document.getElementsByClassName("btnModal")){
           };
 
           $.ajax(settings).done(function (response) {
-            console.log(response['accessToken']);
-            localStorage.setItem('accessToken',response['accessToken'] )
+            console.log(response['accessToken']['token']);
+            localStorage.setItem('accessToken',response['accessToken']['token'] )
           });
 
 

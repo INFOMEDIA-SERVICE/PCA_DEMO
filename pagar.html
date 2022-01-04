@@ -90,6 +90,8 @@
 <script>
 var date = new Date();
   const formatDate = (date)=>{
+    console.log("prueba*")
+    console.log(date.getMonth())
   let formatted_date = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
   return formatted_date;
   }
@@ -124,9 +126,16 @@ $(document).on("click", ".finalizar", function(){
           }
 
   var accessToken=localStorage.getItem('accessToken');
-  var f = new Date();
+ 
+  let date = new Date()
+ let day = `${(date.getDate())}`.padStart(2,'0');
+ let month = `${(date.getMonth()+1)}`.padStart(2,'0');
+ let year = date.getFullYear();
 
-  var fecha= f.getDate() + "-"+ f.getMonth()+ "-" +f.getFullYear();
+ var fecha_correcta=`${day}-${month}-${year}`;
+ 
+ 
+
   var cont=1;
 
 
@@ -142,8 +151,7 @@ $(document).on("click", ".finalizar", function(){
 
                 
 
-                console.log("fecha:"+fecha)
-
+          
                   var settings = {
                     "url": "http://20.44.111.223:80/api/boleteria/reserva",
                     "method": "POST",
@@ -161,7 +169,7 @@ $(document).on("click", ".finalizar", function(){
                         }
                       ],
                       "email": $("#email").val(),
-                      "fecha": formatDate(date),
+                      "fecha": fecha_correcta,
                       "identificacion": $("#numero_documento").val(),
                       "nombre": $("#nombres_apellidos").val(),
                       "telefono": $("#telefono").val(),
@@ -231,7 +239,7 @@ $(document).on("click", ".finalizar", function(){
                       console.log(boleta)
                       console.log("*** ")
 
-                      $("#divqr").append('<tr id="tr_'+boleta['id']+'" ><td style="width: 150px; height 100px; " class="centrado" ><h5>'+$("#nombres_apellidos").val()+'</h5></td>&nbsp;<td style="width: 150px; height 100px;" class="centrado"><img src="infomedia.png" width="130" height="70" ></td>&nbsp; <td style="width: 150px; height 100px;" class="centrado"><h4>KICK OFF 2021</h4> </td>&nbsp;<td class="centrado2" style="width: 150px; height 100px;" id="qrdiv_'+boleta['id']+'"  ></td></tr> ')
+                      $("#divqr").append('<table> <tr class="centrado" ><td style="width: 150px; height 100px;" class="centrado"><img src="pca_pdf.png" width="130" height="70" ></td> </tr> <tr id="tr_'+boleta['id']+'" class="centrado" ><td style="width: 150px; height 100px; " class="centrado" ><h4>PARQUE CARIBE AVENTURA</h4></td></tr>  <tr id="tr_'+boleta['id']+'" class="centrado" ><td style="width: 150px; height 100px; " class="centrado" ><p> Fecha '+fecha_correcta+'<p></td></tr> <tr id="tr_'+boleta['id']+'" class="centrado" ><td style="width: 150px; height 100px; " class="centrado" ><h4>PASAPORTE '+boleta['tipoBoleta']['nombre']+'</h4></td></tr>   <tr id="tr_'+boleta['id']+'" class="centrado" ><td style="width: 150px; height 100px; " class="centrado" ><h6>'+$("#nombres_apellidos").val()+'</h6></td></tr> <tr class="centrado"><td class="centrado" style="width: 150px; height 100px;" id="qrdiv_'+boleta['id']+'"  ></td></tr>  <tr   class="centrado" ><td style="width: 150px; height 100px; " class="centrado" ><h6>Terminos y Condiciones</h6></td></tr> <tr  class="centrado" ><td style="width: 150px; height 100px; " class="centrado" ><p> Lorem ipsum dolor sit amet, consectetur adipiscing elit.Platea elementum nisi scelerisque massa mauris, consequat venenatis malesuada. <p></td></tr> </table>  <br><br><br>  ')
 
                        
 
@@ -240,8 +248,8 @@ $(document).on("click", ".finalizar", function(){
 
                       var qrcode = new QRCode(document.getElementById("qrdiv_"+boleta['id']), {
                           text: "http://jindo.dev.naver.com/collie",
-                          width: 60,
-                          height: 60,
+                          width: 120,
+                          height: 120,
                           colorDark : "#000000",
                           colorLight : "#ffffff",
                           correctLevel : QRCode.CorrectLevel.H
@@ -253,9 +261,9 @@ $(document).on("click", ".finalizar", function(){
 
                       
 
-                      tomarImagenPorSeccion('tr_'+boleta['id'],boleta['id']);
+                     // tomarImagenPorSeccion('tr_'+boleta['id'],boleta['id']);
 
-                      $("#divqr2").append('<input id="generar" type="button" onclick="generarnueva(5)" value="Generar boleta"> ')
+                     //$("#divqr2").append('<input id="generar" type="button" onclick="generarnueva(5)" value="Generar boleta"> ')
 
                       
 
@@ -296,7 +304,9 @@ $(document).on("click", ".finalizar", function(){
   }
 
   //$("#divqr").hide();
-
+  setTimeout(function(){
+    window.print();
+}, 2000);
   
 
 
