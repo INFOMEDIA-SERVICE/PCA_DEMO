@@ -1,0 +1,639 @@
+@charset "UTF-8";
+input[type=text]{
+	background: #E1E4EC;
+	border: 0;
+	border-bottom: 1px solid #bebebe;
+	width: 100%;
+	padding: 0.5em 2em;
+	font-size: 1em;
+	width: 80%;
+	border-radius: 30px;
+	font-size: 1em;
+	color:#707070 ;	
+}
+.campo{
+	background: #fff !important;
+	border:1px solid #BEBEBE !important;
+	border-radius: 10px !important;
+	width: 100% !important;
+	color: #919BB4!important;
+	padding: 0.8em!important;
+	font-size: 0.875em!important;
+}
+h4{
+	font-size: 0.875em;
+	color: #919BB4;
+}
+select{
+	background: transparent !important;
+     border: none !important;
+	background: #fff !important;
+	border:1px solid #BEBEBE !important;
+	border-radius: 10px !important;
+	width: 100% !important;
+	color: #919BB4!important;
+	padding: 0.8em!important;
+	font-size: 0.875em!important;
+}
+.caja {        
+     overflow: hidden;
+     position:relative;
+  }
+.caja::after{
+     content: url("../imagenes/Polígono 2.png");
+     display:table-cell;
+     text-align:center;
+     background-color: #00CD98;
+     position:absolute;
+     top:0;
+     right:0px;
+     pointer-events: none;
+	height: 60px;
+	width: 50px;
+	padding-top: 13px;
+	border-radius: 0 10px 10px 0;
+  }
+.f-icono{
+	background: #00CD98;
+	padding: 0 0.5em;
+	border-radius: 5px;
+	min-height: 30px;
+}
+
+
+
+
+input[type=button]{
+	background: #74cc0d;
+	color: #fff;
+    font-size: 0.875em;
+	border: none;
+	padding: 0.8em 1.5em;
+	border-radius: 10px;
+}
+
+.contrasena{
+	background:url("../imagenes/hide.png") no-repeat right #F5F6F8 !important;
+}
+
+.fondo-login{
+	background: url("../imagenes/Web 1280 – 1.png") no-repeat center;
+	background-size: cover;
+	min-height: 100vh;
+}
+.f-login2{
+	background: url("../imagenes/fondo-login1.jpg") no-repeat center;
+	border-radius: 10px 0 0 10px;
+	background-size: cover;
+	padding: 3em;
+}
+.f-form-logi{
+	background: #fff;
+	border-radius:0 10px 10px 0;
+	padding: 3em;
+}
+.contenedor-login{
+	max-width: 1050px;
+	margin: 0 auto;
+}
+.cont-text-login{
+	max-width: 240px;
+}
+.text-login1{
+	font-size: 1.2em;
+	line-height: 1.1em;
+	font-family: 'Rubik-Medium';
+}
+.text-login2{
+	font-size: .75em;
+	line-height: 1.1em;
+	font-family: 'Rubik-Light';
+}
+.color-text-login{
+	color: #176291;
+}
+.subraya{
+	text-decoration: underline;
+}
+
+/* nuevas clases */
+
+
+.formu2{
+	background: #fff;
+	border: #BEBEBE;
+}
+.fondo-pesta{
+	border-radius: 0 10px 0 10px;
+	
+}
+.pes-act{
+	padding: 0.5em;
+}
+.pes-act-inv{
+	padding: 0.5em;
+	background: #EBEDF3;
+	border-radius: 0 0 0 10px;
+}
+.pes-act-inv2{
+	padding: 0.5em;
+	background: #EBEDF3;
+}
+.pes-act-inv3{
+	background: #EBEDF3;
+}
+.cerrar{
+	background: url("../imagenes/Grupo 21.png") no-repeat right top;
+	height: 50px;
+	padding: 0.5em;
+}
+.sub-menues{
+	background: #176291;
+	border-radius: 0 30px 30px 0;
+	padding: 0.3em 1em 0.3em 1em;
+	margin-bottom: 0;
+	display: inline-block;
+}
+.panel3{
+	background: #fff;
+	border-radius: 10px;
+	width: 100%;
+	padding: 0.3em;
+}
+.borde-pesta{
+	border-right:1px solid #000;
+}
+.contedor-form{
+	max-width: 500px;
+	margin: 0 auto;
+	padding: 0 1em;
+}
+.separador-form{
+	height: 24px;
+	width: 4px;
+	background: #176291;
+}
+
+/* nuevas clases */
+
+
+
+/* CSS Document */
+body{
+	font-size:16px;
+	font-family: 'Rubik-Regular';
+	background: #F5F7FA;
+	color: #414D55;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+main{
+	flex-flow: column;
+}
+footer{
+	margin-top: auto;
+
+}
+
+
+/* estructura*/
+.color-cabezera{
+	background: #176291;
+}
+.color-menu{
+	background:#0A4970;
+	padding: 2em;
+	max-width: 120px;
+	min-width:71px;
+	margin-bottom: 0;
+}
+.color-menu img{
+	width: 100%;
+	min-width:30px;
+	height: auto;
+}
+.color-pie{
+	background: #D9E4E6;
+}
+.home-pie{
+	background: #176291;
+	border-radius: 0 30px 30px 0;
+	width: 100%;
+	padding: 1em;
+	margin-bottom: 0;
+}
+/* estructura*/
+
+/* paneles*/
+.panel1{
+	background: #fff;
+	border-radius: 0 10px 10px 0;
+	padding: 1em 0 ;
+	text-align: center;
+}
+.panel2{
+	background: #fff;
+	border-radius: 10px;
+	width: 100%;
+	padding: 0.5em 1em 1em 1em;
+}
+.notificacion{
+	padding: 1em 1em 0.3em 1em;
+	background: #F1F5F8;
+	border-radius: 10px;
+}
+.notificacion2{
+	padding: 1em 1em 0.3em 1em;
+	background: #fff;
+	border-radius: 10px;
+}
+.login{
+	border-radius: 50%;
+	height: 50px;
+	width: 50px;
+	background: #FBF0C8;
+	border: 2px solid #fff;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	align-items: center;
+	color: #F6B900;
+	font-size: 0.875em;
+}
+.c-verde{
+	font-size: 0.875em;
+	text-transform: uppercase;
+	color: #00CD98;
+	background: #D9F2EC;
+	display: inline-block;
+	padding:0.8em;
+	border-radius: 10px;
+	min-width: 50px;
+}
+.c-morado{
+	font-size: 0.875em;
+	text-transform: uppercase;
+	color: #5351FB;
+	background: #EEEEFF;
+	display: inline-block;
+	padding:0.8em;
+	border-radius: 10px;
+	min-width: 50px;
+}
+.c-naranja{
+	font-size: 0.875em;
+	text-transform: uppercase;
+	color: #F64000;
+	background: #FEC4B0;
+	display: inline-block;
+	padding:0.8em;
+	border-radius: 10px;
+	min-width: 50px;
+}
+.opcion{
+	padding: 0.5em 0 0.2em 0;
+	border-radius: 10px 0 0 10px;
+}
+.opcion2{
+	padding: 0.5em 0 0.2em 0;
+}
+.opcion3{
+	padding: 0.5em 0 0.2em 0;
+	border-radius: 0 10px 10px 0;
+}
+.bg-inav-op{
+  background: #FAFBFD;	
+}
+/* paneles*/
+
+/*elementos*/
+.bloque-verde{
+	height:120px ;
+	width: 100%;
+	background: #34D1BF;
+	border-radius: 10px;
+}
+.bloque-verde2{
+	height:120px ;
+	width: 100%;
+	background: #7ED321;
+	border-radius: 10px;
+}
+.puntos{
+	border-radius: 50%;
+	height: 4px;
+	width: 4px;
+	background: #707070;
+	border:1px solid #707070;
+}
+.circulo-naranja{
+	border-radius: 50%;
+	height: 8px;
+	width: 8px;
+	background: #F17105;
+	margin-top: 2px;
+}
+.circulo-verde{
+	border-radius: 50%;
+	height: 8px;
+	width: 8px;
+	background: #34D1BF;
+	margin-top: 2px;
+}
+.circulo-morado{
+	border-radius: 50%;
+	height: 8px;
+	width: 8px;
+	background: #6665DD;
+	margin-top: 2px;
+}
+.circulo-azul{
+	border-radius: 50%;
+	height: 8px;
+	width: 8px;
+	background: #0496FF;
+	margin-top: 2px;
+}
+.circulo-borde{
+	border-radius: 50%;
+	height: 12px;
+	width: 12px;
+	background: none;
+	border: 3px solid #34D1BF;	
+}
+.circulo-borde-morado{
+	border-radius: 50%;
+	height: 12px;
+	width: 12px;
+	background: none;
+	border: 3px solid #6665DD;	
+}
+.circulo-borde-azul{
+	border-radius: 50%;
+	height: 12px;
+	width: 12px;
+	background: none;
+	border: 3px solid  #0496FF;	
+}
+.circulo-borde-naranja{
+	border-radius: 50%;
+	height: 12px;
+	width: 12px;
+	background: none;
+	border: 3px solid #F17105;	
+}
+.barra{
+	height: 6px;
+	background: #E4EAF0;
+	border-radius: 0 2px 2px 0;
+}
+.barra2{
+	height: 6px;
+	background: #E4EAF0;
+	border-radius: 2px 0 2px 0;
+}
+/*elementos*/
+
+.nombre{
+	padding-left: 6.4em;
+}
+.sombra{
+	-webkit-box-shadow: 0px 1px 8px 8px rgba(20,46,110,0.1);
+    -moz-box-shadow: 0px 1px 8px 8px rgba(20,46,110,0.1);
+    box-shadow: 0px 1px 8px 8px rgba(20,46,110,0.1);
+}
+.sombra2{
+	-webkit-box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.1);
+-moz-box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.1);
+box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.1);
+}
+.pop-up1{
+	position: absolute; 
+	z-index: 100;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0,0,0,0.8);
+	display: flex;
+	align-items: center;
+}
+.pop-up2{
+	position: relative;
+	background: #fff;
+	border-radius: 10px;
+	width:70%;
+	padding: 1em 1em 1em 1em;
+	margin: 0 auto; 
+}
+.menu{
+	background: #0A4970;
+	height: 10%;
+	padding: 1em;
+}
+.listamenu{
+	margin-bottom: 10em;
+}
+.listamenu ul li{
+	border-bottom: 1px solid #497895;
+	font-size: 1.25em;
+	margin-bottom: 1em;
+}
+.separador{
+	border-bottom:2px dotted #1B6C9F;	
+}
+.separador2{
+	border-bottom:2px dotted #03253B;	
+}
+/* ==========================================================================
+   Textos
+   ========================================================================== */
+
+h1{
+	font-size: 1.75em;
+	font-family: 'Rubik-Medium';
+}
+h2{
+	font-size: 1em;
+	font-family: 'Rubik-Medium';
+}
+h3{
+	font-size: 1em;
+}
+
+h5{
+	font-size: 0.625em;
+}
+h6{
+}
+p{
+	font-size: 0.5625em;
+}
+.textos-azules{
+	color:#4C6F86;
+}
+.textos-bold{
+	font-family: 'Rubik-Bold';
+}
+.textos-medios{
+	font-family: 'Rubik-Medium';
+}
+a{
+	color: #2662F0;
+}
+.numero{
+	font-size: 2.5em;
+	font-family: 'Rubik-Light';
+	line-height: 1em;
+}
+.sub-titulo{
+	font-size: 1.5em;
+	font-family: 'Rubik-Light';
+}
+.sub-titulo-form{
+	font-size: 1.12‬em;
+}
+
+/* ==========================================================================
+   Textos
+   ========================================================================== */
+
+
+/* ==========================================================================
+  inputs
+   ========================================================================== */
+
+
+/* ==========================================================================
+  inputs
+   ========================================================================== */
+
+
+/* ==========================================================================
+   font-face
+   ========================================================================== */
+
+@font-face {
+    font-family: 'Rubik';
+    src: url('../fuentes/Rubik-Italic.woff2') format('woff2'),
+        url('../fuentes/Rubik-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Rubik';
+    src: url('../fuentes/Rubik-Black.woff2') format('woff2'),
+        url('../fuentes/Rubik-Black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Rubik-Medium';
+    src: url('../fuentes/Rubik-Medium.woff2') format('woff2'),
+        url('../fuentes/Rubik-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Rubik-Regular';
+    src: url('../fuentes/Rubik-Regular.woff2') format('woff2'),
+        url('../fuentes/Rubik-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Rubik';
+    src: url('../fuentes/Rubik-MediumItalic.woff2') format('woff2'),
+        url('../fuentes/Rubik-MediumItalic.woff') format('woff');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Rubik';
+    src: url('../fuentes/Rubik-BoldItalic.woff2') format('woff2'),
+        url('../fuentes/Rubik-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Rubik-Light';
+    src: url('../fuentes/Rubik-Light.woff2') format('woff2'),
+        url('../fuentes/Rubik-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Rubik';
+    src: url('../fuentes/Rubik-LightItalic.woff2') format('woff2'),
+        url('../fuentes/Rubik-LightItalic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Rubik';
+    src: url('../fuentes/Rubik-BlackItalic.woff2') format('woff2'),
+        url('../fuentes/Rubik-BlackItalic.woff') format('woff');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Rubik-Bold';
+    src: url('../fuentes/Rubik-Bold.woff2') format('woff2'),
+        url('../fuentes/Rubik-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+/* ==========================================================================
+  font-face
+   ========================================================================== */
+/* ==========================================================================
+  Queris
+   ========================================================================== */
+@media (max-width:1200px) {}
+
+@media (max-width:992px) {
+	body{
+	font-size:14px;
+}
+	.nombre{
+	padding-left:0;
+}
+	.panel1{
+	border-radius:10px;
+	padding: 0.5em ;
+}
+.c-verde{
+	min-width: 30px;
+}
+.c-morado{
+	min-width: 30px;
+}
+.c-naranja{
+	min-width: 30px;
+}
+	
+
+}
+
+@media (max-width:768px) {
+	
+	.f-login2{
+	border-radius: 10px 10px 0 0;
+}
+.f-form-logi{
+	border-radius: 0 0 10px 10px;
+}
+}
+/* ==========================================================================
+  Queris
+   ========================================================================== */
