@@ -18,6 +18,72 @@ function printImg() {
 	 console.log('Two second later');
    }
    
+
+   function validarToken(){
+
+		var token = localStorage.getItem('accessToken');
+		var token_refresh= localStorage.getItem('refreshToken');
+
+		console.log("accessToken"+token)
+		console.log("refreshToken"+token_refresh);
+
+		//return(false);
+
+		var settings2 = {
+            "url": "http://20.44.111.223:80/api/boleteria/tiposBoleta?incluirImagen=true",
+            "method": "GET",
+            "async": false,
+            "timeout": 0,
+            "headers": {
+              "Authorization": "Bearer "+token
+            },
+          };
+
+          
+
+          $.ajax(settings2).done(function (response2) {
+            console.log("validarToken ok");
+            console.log(response2);
+            
+          }).fail(function (jqXHR, textStatus) {
+
+			console.log(jqXHR)
+
+			if(jqXHR['responseJSON']['error']=='Unauthorized'){
+				console.log("Genere un nuevo token!!")
+				//genero el nuevo token
+
+				var settings = {
+					"url": "http://20.44.111.223:80/api/auth/refreshtoken",
+					"method": "POST",
+					"async": false,
+					"timeout": 0,
+					"headers": {
+					  "Content-Type": "application/json"
+					},
+					"data": JSON.stringify({
+						"refreshToken": token_refresh
+					}),
+				};
+
+				$.ajax(settings).done(function (response) {
+					console.log(response);
+				  console.log(response['token']);
+				  localStorage.setItem('accessToken',response['token'] )
+				  
+  
+				  if(response['accessToken']['token']!=''){
+					  
+				  }
+  
+			})
+
+
+			}
+	   });
+
+
+   }
    
 
 function tomarImagenPorSeccion(div,nombre) {
