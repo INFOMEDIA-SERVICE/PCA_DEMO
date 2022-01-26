@@ -17,6 +17,17 @@ function printImg() {
 	 sleep(2000);
 	 console.log('Two second later');
    }
+
+
+   function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+    };
    
 
    function validarToken(){
@@ -24,63 +35,59 @@ function printImg() {
 		var token = localStorage.getItem('accessToken');
 		var token_refresh= localStorage.getItem('refreshToken');
 
-		console.log("accessToken"+token)
-		console.log("refreshToken"+token_refresh);
+		const fecha = new Date();
+		var epoch = fecha.getTime();
 
-		//return(false);
+		var str = epoch;
+		str = str.toString();
+		//console.log("Original data: ",str);
+		str = str.slice(0, -3);
+		epoch_int = parseInt(str);
+		//console.log("After truncate: ",str);
 
-		var settings2 = {
-            "url": "http://20.44.111.223:80/api/boleteria/tiposBoleta?incluirImagen=true",
-            "method": "GET",
-            "async": false,
-            "timeout": 0,
-            "headers": {
-              "Authorization": "Bearer "+token
-            },
-          };
 
-          
+		var desencript_token= parseJwt(token);
 
-          $.ajax(settings2).done(function (response2) {
-            console.log("validarToken ok");
-            console.log(response2);
-            
-          }).fail(function (jqXHR, textStatus) {
+		var expira= desencript_token['exp'];
 
-			console.log(jqXHR)
+		var expira_int=parseInt(expira)
 
-			if(jqXHR['responseJSON']['error']=='Unauthorized'){
-				console.log("Genere un nuevo token!!")
-				//genero el nuevo token
+		//console.log(desencript_token)
 
-				var settings = {
-					"url": "http://20.44.111.223:80/api/auth/refreshtoken",
-					"method": "POST",
-					"async": false,
-					"timeout": 0,
-					"headers": {
-					  "Content-Type": "application/json"
-					},
-					"data": JSON.stringify({
-						"refreshToken": token_refresh
-					}),
-				};
+		console.log('esta:'+epoch_int+'es mayor que esta:'+expira_int+'?');
 
-				$.ajax(settings).done(function (response) {
-					console.log(response);
-				  console.log(response['token']);
-				  localStorage.setItem('accessToken',response['token'] )
-				  
-  
-				  if(response['accessToken']['token']!=''){
-					  
-				  }
-  
+		if(epoch_int>=expira_int){
+			console.log("Expiro el token");
+
+			var settings = {
+				"url": "http://20.44.111.223:80/api/auth/refreshtoken",
+				"method": "POST",
+				"async": false,
+				"timeout": 0,
+				"headers": {
+				  "Content-Type": "application/json"
+				},
+				"data": JSON.stringify({
+					"refreshToken": token_refresh
+				}),
+			};
+
+			$.ajax(settings).done(function (response) {
+				console.log(response);
+			  	
+			  	localStorage.setItem('accessToken',response['accessToken']['token'] )
+				localStorage.setItem('contentToken',response['contentToken']['token'] )
+
+
 			})
 
 
-			}
-	   });
+
+		}else{
+			console.log("Token valido");
+		}
+
+		
 
 
    }
