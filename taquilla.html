@@ -540,7 +540,7 @@ if(document.getElementsByClassName("btnModal")){
   
          validarToken();
 
-         return(false);
+         
 
 
           $("#iniciar").hide();
@@ -579,13 +579,13 @@ if(document.getElementsByClassName("btnModal")){
                // $("#boletas").append('<div class="card" style="width: 18rem;border-radius:26px;box-shadow:2px 2px 2px 1px rgb(235, 235, 235);border-style: none;"><img src="images.jpg" style="border-radius:20px;padding:10px 10px;" class="card-img-top" alt=""><div class="card-body"><h5 class="card-title" style="font-size:16px;padding-bottom:7px;padding-top:0px;">Pasaporte 1</h5><p class="card-text"style="font-size:10px;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum libero repellendus tempore eos iusto nesciunt qui iure recusandae nobis suscipit!</p> <h1 style="font-size:20px;display:contents;">$100.000 COP</h1> <a href="" class="btn btn-primary" style="border-style:none;background-color:rgb(131, 204, 22);;margin-left:180px;border-radius:20px;height:30px;width:80px;font-size:13px;padding-top:5px;">Comprar</a> </div> </div>')
 
 
-                 str_remp=str_remp+'<div class="col-sm-3"><div class="card" style="width: 18rem;border-radius:26px;box-shadow:2px 2px 2px 1px rgb(235, 235, 235);border-style: none;"><img src="data:image/jpeg;base64, '+boleta['imagenBase64']+'" style="border-radius:20px;padding:10px 10px;" class="card-img-top" alt=""><div class="card-body"><h5 class="card-title" style="font-size:16px;padding-bottom:7px;padding-top:0px;">'+boleta['nombre']+'</h5><p class="card-text"style="font-size:10px;">'+boleta['descripcion']+'</p> <h1 style="font-size:20px;display:contents;">$'+boleta['precio'].toLocaleString()+'</h1> <a  class="btn btn-primary btnModal" idtipoBoleta="'+boleta['id']+'" style="border-style:none;background-color:rgb(131, 204, 22);;margin-left:180px;border-radius:20px;height:30px;width:80px;font-size:13px;padding-top:5px;">Comprar</a> </div> </div> </div>';
+                 str_remp=str_remp+'<div class="col-sm-3"><div class="card" style="width: 14rem;border-radius:26px;box-shadow:2px 2px 2px 1px rgb(235, 235, 235);border-style: none;"><img src="data:image/jpeg;base64, '+boleta['imagenBase64']+'" style="border-radius:20px;padding:10px 10px;" class="card-img-top" alt=""><div class="card-body"><h5 class="card-title" style="font-size:16px;padding-bottom:7px;padding-top:0px;">'+boleta['nombre']+'</h5><p class="card-text"style="font-size:10px;">'+boleta['descripcion']+'</p> <h1 style="font-size:20px;display:contents;">$'+boleta['precio'].toLocaleString()+'</h1> <a  class="btn btn-primary btnModal" idtipoBoleta="'+boleta['id']+'" style="border-style:none;background-color:rgb(131, 204, 22);;margin-left:180px;border-radius:20px;height:30px;width:80px;font-size:13px;padding-top:5px;">Comprar</a> </div> </div> </div>';
 
                  cont++;
 
             });
             str_remp=str_remp+'</div> '
-            $("#boletas").html(str_remp);
+            $("#mi_tabla").append(str_remp);
           });
 
           

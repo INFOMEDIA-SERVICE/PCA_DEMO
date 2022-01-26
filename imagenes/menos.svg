@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="15" height="18" viewBox="0 0 15 18">
+  <g id="Grupo_45" data-name="Grupo 45" transform="translate(-1237 -108)">
+    <g id="Rectángulo_23" data-name="Rectángulo 23" transform="translate(1237 110)" fill="#fff" stroke="#5351fb" stroke-width="1">
+      <rect width="15" height="15" rx="4" stroke="none"/>
+      <rect x="0.5" y="0.5" width="14" height="14" rx="3.5" fill="none"/>
+    </g>
+    <text id="Title" transform="translate(1241 122)" fill="#5351fb" font-size="15" font-family="Rubik-Regular, Rubik"><tspan x="0" y="0">-</tspan></text>
+  </g>
+</svg>
