@@ -1,297 +1,549 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Parque Caribe Aventura Plataforma Administrativa</title>
-        <!--JQUERY-->
-        <!--<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>-->
-        <!-- Bootstrap core JavaScript -->
-        <!--<script src="lib/jquery-3.6.0.min.js"></script>-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>       
-        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-        <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
-        
-        <!-- Bootstrap -->
-        <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
-        <link rel="stylesheet" href="css/main.css">
-        <script src="js/bootstrap-4.4.1.js"></script>       
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>PCA - Atracciones</title>
+	<link href="assets/stilos.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"> 
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script> 
+	<!--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>-->
 
-        <!-- Include datatables -->
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">  
-        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
-        
-        <style>
-            body{
-                background-color:white;
-            }
-            h3.header_h3 {
-                text-align: center;
-            }
-            .boton{
-                font-size:10px;
-                font-family:Verdana,Helvetica;
-                font-weight:bold;
-                color:white;
-                background:#638cb5;
-                border:0px;
-                width:80px;
-                height:19px;
-            }
-        </style>
-    </head>
-    <body>
-        <!-- body code goes here -->
-        <section class="showcase">
-            <div class="container">
-                <div>
-                    <button type="button" id="abrirModalAtraccion" class="btn btn-primary float-right">Adicionar</button>
-                </div>
-                <div class="row padall">
-                    <div class="col-lg-12" style="padding-bottom:10px; padding-top:10px;">
-                        <!--<h3 class="header_h3">Exportar a Excel, CSV, PDF, Print Datatables</h3>-->
-                    </div>
-                </div>
-                <div class="row padall border-bottom">
-                    <div class="col-lg-12">
-                        <div class="table-responsive-sm">
-                            <table id="tbl_atracciones" class="table table-bordered table-striped table-hover dataTable">
-                                <thead>
-                                    <tr><th>Id</th>
-                                        <th>Nombre</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody id='cargar_tbody'>
+    <script src="js/funciones.js"></script>
 
-                                </tbody>        
-                            </table>
-                        </div>
-                    </div>
-                </div>                 
-            </div>
-        </section>
-        <div class="modal" id="addModalAtraccion" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title">Adicionar atracciones</h1>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">                        
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Nombre de la atracci&oacute;n</label>
-                            <input type="text" class="form-control" id="txtAddAtraccion" aria-describedby="emailHelp">                            
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Imagen 64 bit</label>
-                            <input type="text" class="form-control" id="txtAdd64bit">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                    <button type="button" id="btnGuardarAtraccion"class="btn btn-primary">Guardar</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-                    </div>
-                </div>
-            </div>
-        </div>              
-   
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
-        <!--<script src="../js/jquery-3.4.1.min.js"></script>-->
+	<script>
+		$(document).ready(function(){
+			// Activate tooltip
+			$('[data-toggle="tooltip"]').tooltip();
+			
+			// Select/Deselect checkboxes
+			var checkbox = $('table tbody input[type="checkbox"]');
+			$("#selectAll").click(function(){
+				if(this.checked){
+					checkbox.each(function(){
+						this.checked = true;                        
+					});
+				} else{
+					checkbox.each(function(){
+						this.checked = false;                        
+					});
+				} 
+			});
+			checkbox.click(function(){
+				if(!this.checked){
+					$("#selectAll").prop("checked", false);
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="container-xl">
+		<div class="table-responsive">
+			<div class="table-wrapper">
+				<div class="table-title">
+					<div class="row">
+						<div class="col-sm-6">
+							<h2>PCA - <b>Atracciones</b></h2>
+						</div>
+						<div class="col-sm-6">
+							<a href="Javascript:;" onclick="newAtraccion()" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Nueva Atracción</span></a>
+							<!--<a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>-->						
+						</div>
+					</div>
+				</div>
+				<table id="datatablesSimple" class="table table-sm table-striped table-hover dataTable">
+					<thead>
+						<tr>						
+							<th>id</th>
+							<th>Nombre</th>	
+							<th>Imagen</th>
+							<th>Estado</th>						
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody id="cargar_tbody">
+						
+					</tbody>
+				</table>			
+			</div>
+		</div>        
+	</div>
+	<!--MODALES-->
+	<!--Modal agregar atracción-->
+	<div class="modal" id="addModalAtraccion" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Adicionar atracciones</h4>
+					<button type="button" id="btnCerrarAtraccionX" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">                        
+					<div class="mb-3">
+						<label class="form-label">Nombre de la atracci&oacute;n</label>
+						<input type="text" class="form-control" id="txtAddAtraccion">                            
+					</div>
+					<div class="mb-3">						
+						<input type="file" id="file" accept=".jpg,.png" />
+						<br>
+						<div id="result">Esperando archivo...</div>
+						<br>
+						<img id="img" width="340" height="260" />
+					</div>
+				</div>
+				<div class="modal-footer">
+				<!--button type="button" id="btnGuardarAtraccion" class="btn btn-primary">Guardar</button>
+				<button type="button" id="btnCerrarAtraccion"class="btn btn-secondary" data-dismiss="modal">Salir</button>-->
+				<input type="button" class="btn btn-default" data-dismiss="modal" value="Salir">
+				<input type="submit" id="btnGuardarAtraccion" class="btn btn-success" value="Guardar">
+				</div>
+			</div>
+		</div>
+	</div>              
+	<!--Modal actualizar atracción-->
+	<div class="modal" id="upModalAtraccion" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Actualizar atracciones</h4>
+					<button type="button" id="btnCerrarAtraccionX" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">                        
+					<div class="mb-3">
+						<input type="hidden"  id="txtupIdAtraccion"> 
+						<label  class="form-label">Nombre de la atracci&oacute;n</label>
+						<input type="text" class="form-control" id="txtupAtraccion">                            
+					</div>
+                    <div class="mb-3">						
+						<input type="file" id="file2" accept=".jpg,.png" />
+						<br>
+						<div id="result2">Esperando archivo...</div>
+						<br>
+						<img id="img2" width="340" height="260" />
+					</div>
+				</div>
+				<div class="modal-footer">					
+					<input type="button"  class="btn btn-default" data-dismiss="modal" value="Cerrar">
+					<input type="button" id="btnActualizarAtraccion" class="btn btn-info" value="Actualizar">			
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Delete Modal HTML -->
+	<div id="deleteAtraccionModal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form>
+					<div class="modal-header">						
+						<h4 class="modal-title">Desactivar Atracción</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">					
+						<p id=p_delete></p>
+						<!--<p class="text-warning"><small>This action cannot be undone.</small></p>-->
+					</div>
+					<div class="modal-footer">
+						<input type="hidden"  id="txtDelIdAtraccion"> 
+						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+						<input type="button" id="btnDesactivarAtraccion" class="btn btn-danger" value="Desactivar">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- Activar Modal HTML -->
+	<div id="activarAtraccionModal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form>
+					<div class="modal-header">						
+						<h4 class="modal-title">Activar Atracción</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">					
+						<p id=p_activar></p>
+						<!--<p class="text-warning"><small>This action cannot be undone.</small></p>-->
+					</div>
+					<div class="modal-footer">
+						<input type="hidden"  id="txtActIdAtraccion"> 
+						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+						<input type="button" id="btnActivarAtraccion" class="btn btn-info" value="Activar">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	$(document).ready( function () { 
+		var respuesta;
+		localStorage.clear();               
+		var retornar                
+		cargarToken();
+		//
+		cargarDatos();
+		//llenar();
+	});
+	//
+	function cargarToken(){
+		var settings = {
+			"url": "http://20.44.111.223:80/api/auth/token",
+			"method": "POST",
+			"async": false,
+			"timeout": 0,
+			"headers": {
+			"Content-Type": "application/json"
+			},
+			"data": JSON.stringify({
+			"password": "$Info.2021",
+			"username": "infomedia"
+			}),
+		};
+		$.ajax(settings).done(function (response) {
+			console.log(response);  		
+			localStorage.setItem('accessToken',response['accessToken']['token']);
+			localStorage.setItem('contenToken',response['contentToken']['token']);				                                                                  
+		});		 				
+	}
+	//
+	function cargarDatos(){
+        //validarToken();	
+		var toke = localStorage.getItem('accessToken');
+		var contenToke = localStorage.getItem('contenToken');
+		console.log(toke);
+		if(toke != ""){
+			console.log('2');
+			var settings3 = {
+				"url": "http://20.44.111.223:80/api/boleteria/atraccion?incluirImagen=true",
+				//"url": "http://20.44.111.223:80/api/boleteria/tiposBoleta?incluirImagen=true",
+				"method": "GET",
+				"async": false,
+				"timeout": 0,
+				"headers": {
+					"Authorization": "Bearer "+localStorage.getItem('accessToken')
+				},
+			};
+			$.ajax(settings3).done(function (response) {
+				$("#datatablesSimple").dataTable().fnDestroy();
+				var str_remp;
+				//'<a class="dropdown-item" href="javascript:;" onclick="redirArea(' + n.id + ',3);">Contabilidad</a>' editEmployeeModal - deleteEmployeeModal
+				response.forEach(function(atracciones, index) {
+					console.log(atracciones);
+					var atraccion_comilla = "'"+atracciones.nombre+"'";
+					var btnEditar = '<a href="javascript:;" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar" onclick="upAtraccion('+ atracciones.id +','+ atraccion_comilla +');">&#xE254;</i></a>';
+					var btnEliminar = '<a href="javascript:;" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Desactivar" onclick="delAtraccion('+ atracciones.id +','+ atraccion_comilla +');">&#xE872;</i></a>';
+					var btnActivar = '<a href="javascript:;" class="activar" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Activar" onclick="activar_Atraccion('+ atracciones.id +','+ atraccion_comilla +');">restore</i></a>';
+					//var dlt_boton = '<button id="edit-category" class="btn btn-danger" type="button" title="Editar" class="boton">Eliminar</button>';
+					var ver_imagen = '<img id="imagen' + atracciones.id+'" src="http://20.44.111.223' + atracciones.imagenUrl + '?t='+contenToke +'" width="40" height="40" />';
+					//
+					if(atracciones.estado == 'ACTIVO'){
+						str_remp=str_remp+'<tr><td>'+ atracciones.id +'</td><td>'+ atracciones.nombre +'</td><td>'+ ver_imagen +'</td><td>'+ atracciones.estado +'</td><td>'+ btnEditar + ' ' + btnEliminar +'</td></tr>';
+					}else{
+						str_remp=str_remp+'<tr><td>'+ atracciones.id +'</td><td>'+ atracciones.nombre +'</td><td>'+ ver_imagen +'</td><td>'+ atracciones.estado +'</td><td>'+ btnActivar +'</td></tr>';
+					}
+				}); 
+				str_remp=str_remp+'</tbody>';              
+				$("#cargar_tbody").html(str_remp);
+				$('#datatablesSimple').DataTable({
+					/*"data": [
+						[
+						"response.id",
+						"Chair",
+						"20.0"
+						],
+						[
+						"2",
+						"Shoe",
+						"1.0"
+						],
+						[
+						"3",
+						"Candle",
+						"0.75"
+						]
+					],*/
+					"responsive": true,					
+					"language": { "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json" },
+					"order": [[ 0, 'desc' ], [ 3, 'desc' ]],
+					"paging": true,
+					//"processing": true,
+					'serverMethod': 'post',
+					//"ajax": "http://20.44.111.223:80/api/boleteria/atracciones",
+					dom: 'lBfrtip',
+					buttons: [
+					'excel', 'csv', 'pdf', 'print', 'copy',
+					],
+					"lengthMenu": [[25, 50, -1], [25, 50, "All"]]                            
+				});
+			});
+		}
+	}
+	//
+	function newAtraccion(){
+       //
+        $('#addModalAtraccion').modal('show'); // abrir modal  
+	} 
+	//
+	function upAtraccion(id_u, nombre_u){
+        var ximagen = "imagen"+id_u;
+        document.getElementById("img2").src = $("#"+ximagen).attr('src');
+        //console.log(ruta64);		
+		$("#txtupIdAtraccion").val(id_u);
+        $("#txtupAtraccion").val(nombre_u);
+        $('#upModalAtraccion').modal('show'); // abrir modal  
+	} 
+	//
+	function delAtraccion(id_dlt, nombre_dlt){
+		$("#txtDelIdAtraccion").val(id_dlt);
+		document.getElementById("p_delete").innerHTML = "Está seguro de que desea desactivar la atracción "+nombre_dlt+ "?";
+		$('#deleteAtraccionModal').modal('show'); // abrir modal  
+	}
+	//
+	function activar_Atraccion(id_act, nombre_act){
+		$("#txtActIdAtraccion").val(id_act);
+		document.getElementById("p_activar").innerHTML = "Está seguro de que desea activar la atracción "+nombre_act+ "?";
+		$('#activarAtraccionModal').modal('show'); // abrir modal  
+	}		
+	//
+	$('#btnGuardarAtraccion').click(function(){
 
-        
-        
-        
+		//Toma el archivo elegido por el input 
+        var value = document.getElementById("file").files[0];
+       	var v_imagen = document.getElementById("result").innerHTML;
+		var nombre = $("#txtAddAtraccion").val();		
+		if(nombre != '' && v_imagen == 'El archivo es válido'){                        
+			adicionarAtracciones(nombre);
+		}else{
+			alert('Llene todos los campos');
+		}		
+	});
+	//
+	$('#btnActualizarAtraccion').click(function(){	
+		var id_a = $("#txtupIdAtraccion").val();
+		var nombre_a = $("#txtupAtraccion").val();
+		var imagen_a = 64; //document.getElementById('file'); //$("#txtAdd64bit").val();		
+		//
+		if(nombre_a != '' && imagen_a != ''){			
+			actualizarAtracciones(id_a,nombre_a, imagen_a);
+		}else{
+			alert('Llene todos los campos, para actualizar');
+		}		
+	});
+	//
+	$('#btnDesactivarAtraccion').click(function(){
+		var id_d = $("#txtDelIdAtraccion").val();
+		if(id_d == '' || id_d == null || typeof id_d == 'undefined'){
+			console.log('No tiene permsiso para desactivar');
+		}else{
+			desactivarAtraccion(id_d);
+		}		
+	});
+	//
+	$('#btnActivarAtraccion').click(function(){
+		var id_activar = $("#txtActIdAtraccion").val();
+		if(id_activar == '' || id_activar == null || typeof id_activar == 'undefined'){
+			console.log('No tiene permsiso para Acivar');
+		}else{
+			activarAtraccion(id_activar);
+		}		
+	});
+	//
+	function openImage() { //Esta función validaría una imágen  
+		try{			
+			var input = this;
+			var file = input.files[0];
+			console.log(file);
+			var fileName = input.value;
+			var maxSize = 1048576; //bytes
+			var extensions = new RegExp(/.jpg|.jpeg|.png/i); //Extensiones válidas
+			console.log(file.size);
+			var error = {
+				state: false,
+				msg: ''
+			};  
+			if(this.files && file) {  
+				for (var i = fileName.length-1; i >= 0; i--) {  
+					if (fileName[i] == '.') {  
+						var ext = fileName.substring(fileName[i],fileName.length);  
+						if (!extensions.test(ext)) {
+							error.state = true;
+							error.msg+= 'La extensión del archivo no es válida.<br>';
+						}  
+						break;
+					}  
+				}  
+				if(file.size > maxSize) {
+					error.state = true;
+					error.msg += 'La imágen no puede ocupar más de '+maxSize/1048576+' MB.';
+				}  
+				if(error.state) {
+					input.value = '';
+					//document.getElementById(resultado).innerHTML = error.msg;
+					return;
+				}else{
+					if(file.size > 0){
+						document.getElementById("result").innerHTML = "El archivo es válido";
+						//
+						var reader = new FileReader();  
+						reader.onload = function(e) {
+							document.getElementById("img").src = e.target.result;							
+						}
+						reader.readAsDataURL(this.files[0]);
+					}else{
+						document.getElementById("result").innerHTML = "El archivo está dañado";
+						document.getElementById("img").src = "";
+					}
+				}								
+			}
+		}catch(err){
+			alert('No funciona');
+		}
+	}	
+	//
+	document.getElementById("file").addEventListener("change",openImage,false); //Añadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo al guardar
+	//document.getElementById("file2").addEventListener("change",openImage("result2","img2"),false); //Añadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo al actualizar     
+	//
+	//
+	function adicionarAtracciones(nombre){
+		var token = localStorage.getItem('accessToken');
+		if(token != null){
+			let str_base64 = document.getElementById("img").src;
+			let imagen = str_base64.substring(23);
+			console.log(imagen);
+			//		
+			var atraccion_post = {
+				"url": "http://20.44.111.223:80/api/boleteria/atraccion",
+				"method": "POST",
+				"async": false,
+				"timeout": 0,
+				"headers": {
+					"Authorization": "Bearer "+token,
+					"Content-Type": "application/json"
+				},
+				"data": JSON.stringify({
+				"estado": "ACTIVO",
+				"imagenBase64": imagen,
+				"nombre": nombre
+				})                            
+			};
+			//                        
+			$.ajax(atraccion_post).done(function (response) {                        
+				console.log(response);
+				$('#addModalAtraccion').modal('hide'); // abrir modal, se oculta
+				limpiarGuardar();
+				cargarDatos();				
+			});			                   
+		}else{
+			alert('Acceso denegado para guardar');
+		}             
+	}
+	//
+	function actualizarAtracciones(id, nombre, imagen){
+		var token = localStorage.getItem('accessToken');
+		if(token != null){
+			var atraccion_post = {
+				"url": "http://20.44.111.223:80/api/boleteria/atraccion",
+				"method": "PATCH",
+				"async": false,
+				"timeout": 0,
+				"headers": {
+					"Authorization": "Bearer "+token,
+					"Content-Type": "application/json"
+				},
+				"data": JSON.stringify({
+				"idAtraccion": id,
+				"imagenBase64": imagen,
+				"nombre": nombre
+				})                            
+			};
+			//                        
+			$.ajax(atraccion_post).done(function (response) { 
+				$('#upModalAtraccion').modal('hide'); // se oculta modal
+				cargarDatos();                         
+				console.log(response);
+			});			            
+		}else{
+			alert('Acceso denegado para guardar');
+		}                
+	}
+	//
+	function desactivarAtraccion(id){
+		var token = localStorage.getItem('accessToken');
+		if(token != null){
+			var atraccion_post = {
+				"url": "http://20.44.111.223:80/api/boleteria/atraccionEstado",
+				"method": "PATCH",
+				"async": false,
+				"timeout": 0,
+				"headers": {
+					"Authorization": "Bearer "+token,
+					"Content-Type": "application/json"
+				},
+				"data": JSON.stringify({
+					"estado": 'INACTIVO',
+					"idAtraccion": id				
+				})                            
+			};
+			//                        
+			$.ajax(atraccion_post).done(function (response) { 
+				$('#deleteAtraccionModal').modal('hide'); // se oculta modal
+				cargarDatos();                         
+				console.log(response);
+			});			            
+		}else{
+			alert('Acceso denegado para guardar');
+		}                
+	}
+	//
+	function activarAtraccion(id){
+		var token = localStorage.getItem('accessToken');
+		if(token != null){
+			var atraccion_post = {
+				"url": "http://20.44.111.223:80/api/boleteria/atraccionEstado",
+				"method": "PATCH",
+				"async": false,
+				"timeout": 0,
+				"headers": {
+					"Authorization": "Bearer "+token,
+					"Content-Type": "application/json"
+				},
+				"data": JSON.stringify({
+					"estado": 'ACTIVO',
+					"idAtraccion": id				
+				})                            
+			};
+			//                        
+			$.ajax(atraccion_post).done(function (response) { 
+				$('#activarAtraccionModal').modal('hide'); // se oculta modal
+				cargarDatos();		
+			});			            
+		}else{
+			alert('Acceso denegado para guardar');
+		}                
+	}
+	//
+	function limpiarGuardar(){
+		$('#txtAddAtraccion').val(''); // Limpia campo nombre atraccion
+		$('#file').val(''); //
+		document.getElementById("result").innerHTML = "Esperando archivo...";
+		document.getElementById("img").value = null;
+		$('#img').val("")
+		document.getElementById("img").src = "";
+	}
+	//
+//Fin script
+</script>
 
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <!--<script src="js/popper.min.js"></script>-->
-         
-
-
-        <script>
-            $(document).ready( function () { 
-                localStorage.clear();               
-                var retornar                
-                cargarToken();
-                //
-                cargarDatos();
-                //llenar();
-            });
-
-            /*function llenar()
-            {
-                $('#table_id').DataTable({
-                    "destroy": true,
-                    "data": response,
-                    "columns":[
-                        {"data":"nombre"},
-                        {"data":"codigo"}
-                    ]
-                });
-            }*/
-
-            function cargarToken(){
-                var settings = {
-                    "url": "http://20.44.111.223:80/api/auth/token",
-                    "method": "POST",
-                    "async": false,
-                    "timeout": 0,
-                    "headers": {
-                    "Content-Type": "application/json"
-                    },
-                    "data": JSON.stringify({
-                    "password": "$Info.2021",
-                    "username": "infomedia"
-                    }),
-                };
-
-                $.ajax(settings).done(function (response) {
-                    localStorage.setItem('accessToken',response['accessToken']['token'])                  
-                    //retornar = response['accessToken']['token'];                                      
-                });                  
-                //return retornar;             
-            }
-
-            function cargarDatos(){
-                var toke = localStorage.getItem('accessToken');
-                console.log('cargo2');
-                if(toke != ""){
-                    var settings3 = {
-                        "url": "http://20.44.111.223:80/api/boleteria/atracciones",
-                        //"url": "http://20.44.111.223:80/api/boleteria/tiposBoleta?incluirImagen=true",
-                        "method": "GET",
-                        "async": false,
-                        "timeout": 0,
-                        "headers": {
-                            "Authorization": "Bearer "+localStorage.getItem('accessToken')
-                        },
-                    };
-                    $.ajax(settings3).done(function (response) {
-                        console.log(response);
-                        var str_remp;
-
-                        response.forEach(function(atracciones, index) {
-                            console.log(atracciones);
-                            var boton = '<button id="edit-category" class="btn btn-sm btn-block btn-primary" type="button" title="Editar" class="boton"><i class="fa fa-fw fa-pencil"></i></button>';
-                            str_remp=str_remp+'<tr><td>'+ atracciones.id +'</td><td>'+ atracciones.nombre +'</td><td>'+ boton +'</td></tr>';
-                        }); 
-                        str_remp=str_remp+'</tbody>';              
-                        $("#cargar_tbody").html(str_remp);
-                        $('#tbl_atracciones').DataTable({
-                            rowReorder: {
-                                //selector: 'td:nth-child(2)'
-                            },
-                            responsive: true,
-                            "language": {
-                                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-                            },
-                            "bAutoWidth": true,
-                            "paging": true,
-                            "processing": true,
-                            'serverMethod': 'post',
-                            //"ajax": "http://20.44.111.223:80/api/boleteria/atracciones",
-                            dom: 'lBfrtip',
-                            buttons: [
-                            'excel', 'csv', 'pdf', 'print', 'copy',
-                            ],
-                            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-                        });
-                    });
-                }
-            }
-            //Fin cargar datos al datatable
-            //
-            $('#abrirModalAtraccion').click(function(){
-                //var tok = localStorage.getItem('accessToken');
-                //console.log('TOK: '+tok);
-                //console.log('click');
-                //CargarPrueba();
-                $('#addModalAtraccion').modal('show'); // abrir
-                /*var i=document.getElementById("a");
-                var temp = i.innerHTML;
-
-                if(temp=="Hola"){
-                    i.innerHTML = "Mundo";
-                }else{
-                    i.innerHTML = "Hola";
-                };*/
-                
-            });
-            //
-            $('#btnGuardarAtraccion').click(function(){
-                var nombre = $("#txtAddAtraccion").val();
-                var imagen = $("#txtAdd64bit").val();
-                console.log('click GUARDAR '+nombre+' - '+imagen );
-                if(nombre != '' && imagen != ''){                        
-                    //var token_add = cargarToken();
-                    //console.log('Token add '+token_add);
-                    adicionarAtracciones(nombre, imagen);
-                }else{
-                    alert('Llene todos los campos');
-                }
-                
-            });
-            //
-            function adicionarAtracciones(nombre, imagen){                    
-                var token = localStorage.getItem('accessToken');
-                if(token != null){
-                    var atraccion_post = {
-                        "url": "http://20.44.111.223:80/api/boleteria/atraccion",
-                        "method": "POST",
-                        "async": false,
-                        "timeout": 0,
-                        "headers": {
-                            "Authorization": "Bearer "+token,
-                            "Content-Type": "application/json"
-                        },
-                        "data": JSON.stringify({
-                        "estado": "ACTIVO",
-                        "imagenBase64": imagen,
-                        "nombre": nombre
-                        }) 
-                        /*{
-                        "condicionesAcceso": [
-                            0
-                        ],
-                        "imagenBase64": "string",
-                        "nombre": "string"
-                        }*/                     
-                    };
-                    //                        
-                    $.ajax(atraccion_post).done(function (response) {
-                        console.log(response);
-                    });
-                    /*fetch('http://20.44.111.223:80/api/boleteria/atraccion', {
-                                method: 'POST',
-                                body: JSON.stringify({
-                                    name: "Taylor",
-                                    surname: "Swift"
-                                }),
-                                headers: {
-                                    "Content-type": "application/json"
-                                })
-                        .then(response => response.json())
-                        .then(json => console.log(json))
-                        /*fetch('http://20.44.111.223:80/api/boleteria/atraccion')
-                            .then(response => response.json())
-                            .then(json => console.log(json));*/
-                }else{
-                    alert('Acceso denegado para guardar');
-                }
-            }
-            //
-            //
-        </script>    
-    </body>
 </html>
