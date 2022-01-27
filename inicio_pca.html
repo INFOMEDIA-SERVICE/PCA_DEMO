@@ -30,8 +30,16 @@
 
 	$(document).on("click", "#taquilla", function(){
 
-		$("#contenido").load("punto_de_venta.html")
+		//$("#contenido").load("punto_de_venta.html")
+		window.location.href="punto_de_venta.html";
 		
+	});
+
+	$(document).on("click", "#configuracion", function(){
+
+	$("#contenido").load("menu_crud.html")
+	//window.location.href="menu_crud.html";
+
 	});
 
 	</script>
@@ -124,12 +132,12 @@
 												<p class="mb-4 d-none d-lg-block">Taquilla Parqueadero</p></button>
 												</div>
 												<div class="col-3 col-lg-12">
-												<a href=""><figure class="mb-1 text-center"><img src="imagenes/configuraciones3.png" style="width:30px;"></figure>
+												<button style="height:90px;width:50px;background-color:transparent;border-style:none"><figure class="mb-1 text-center"><img src="imagenes/configuraciones3.png" style="width:30px;"></figure>
 												<p class="mb-4 d-none d-lg-block">Herramientas</p></a>
 												</div>
 												<div class="col-3 col-lg-12">
-												<a href=""><figure class="mb-1 text-center"><img src="imagenes/configuraciones1.png" style="width:30px;"></figure>
-												<p class="mb-4 d-none d-lg-block">Configuración</p></a>
+													<button style="height:90px;width:50px;background-color:transparent;border-style:none" id="configuracion"><figure class="mb-1 text-center"><img src="imagenes/configuraciones1.png"  style="width:30px;"></figure>
+												<p class="mb-4 d-none d-lg-block">Configuración</p></button>
 												</div>
 												<div class="col-3 col-lg-12">
 												<a href=""><figure class="mb-1 text-center"><img src="imagenes/ayuda2.png" style="width:30px"></figure>
