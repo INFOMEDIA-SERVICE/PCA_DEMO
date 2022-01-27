@@ -55,7 +55,7 @@
 							<h2>PCA - <b>Atracciones</b></h2>
 						</div>
 						<div class="col-sm-6">
-							<a href="Javascript:;" onclick="newAtraccion()" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Nueva Atracción</span></a>
+							<a href="Javascript:;" onclick="newAtraccion()" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Nueva Atracci&oacute;n</span></a>
 							<!--<a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>-->						
 						</div>
 					</div>
@@ -78,7 +78,7 @@
 		</div>        
 	</div>
 	<!--MODALES-->
-	<!--Modal agregar atracción-->
+	<!--Modal agregar atracciÃ³n-->
 	<div class="modal" id="addModalAtraccion" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -110,7 +110,7 @@
 			</div>
 		</div>
 	</div>              
-	<!--Modal actualizar atracción-->
+	<!--Modal actualizar atracciÃ³n-->
 	<div class="modal" id="upModalAtraccion" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -129,7 +129,7 @@
                     <div class="mb-3">						
 						<input type="file" id="file2" accept=".jpg,.png" />
 						<br>
-						<div id="result2">Esperando archivo...</div>
+						<div id="result2">El archivo es valido</div>
 						<br>
 						<img id="img2" width="340" height="260" />
 					</div>
@@ -147,7 +147,7 @@
 			<div class="modal-content">
 				<form>
 					<div class="modal-header">						
-						<h4 class="modal-title">Desactivar Atracción</h4>
+						<h4 class="modal-title">Desactivar Atracci&oacute;n</h4>
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">					
@@ -169,7 +169,7 @@
 			<div class="modal-content">
 				<form>
 					<div class="modal-header">						
-						<h4 class="modal-title">Activar Atracción</h4>
+						<h4 class="modal-title">Activar Atracci&oacute;n</h4>
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">					
@@ -189,6 +189,7 @@
 <script>
 	$(document).ready( function () { 
 		var respuesta;
+		var g_ext;
 		localStorage.clear();               
 		var retornar                
 		cargarToken();
@@ -211,8 +212,7 @@
 			"username": "infomedia"
 			}),
 		};
-		$.ajax(settings).done(function (response) {
-			console.log(response);  		
+		$.ajax(settings).done(function (response) {					
 			localStorage.setItem('accessToken',response['accessToken']['token']);
 			localStorage.setItem('contenToken',response['contentToken']['token']);				                                                                  
 		});		 				
@@ -222,12 +222,9 @@
         //validarToken();	
 		var toke = localStorage.getItem('accessToken');
 		var contenToke = localStorage.getItem('contenToken');
-		console.log(toke);
-		if(toke != ""){
-			console.log('2');
+		if(toke != ""){			
 			var settings3 = {
 				"url": "http://20.44.111.223:80/api/boleteria/atraccion?incluirImagen=true",
-				//"url": "http://20.44.111.223:80/api/boleteria/tiposBoleta?incluirImagen=true",
 				"method": "GET",
 				"async": false,
 				"timeout": 0,
@@ -238,11 +235,13 @@
 			$.ajax(settings3).done(function (response) {
 				$("#datatablesSimple").dataTable().fnDestroy();
 				var str_remp;
-				//'<a class="dropdown-item" href="javascript:;" onclick="redirArea(' + n.id + ',3);">Contabilidad</a>' editEmployeeModal - deleteEmployeeModal
 				response.forEach(function(atracciones, index) {
 					console.log(atracciones);
+					var img_ext = atracciones.imagenUrl;
+					var extension_img = img_ext.split('.'); // Saco la extensión para guardarla en la BD
+					var ext_comilla = "'"+extension_img[1]+"'";
 					var atraccion_comilla = "'"+atracciones.nombre+"'";
-					var btnEditar = '<a href="javascript:;" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar" onclick="upAtraccion('+ atracciones.id +','+ atraccion_comilla +');">&#xE254;</i></a>';
+					var btnEditar = '<a href="javascript:;" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar" onclick="upAtraccion('+ atracciones.id +','+ atraccion_comilla +','+ ext_comilla +' );">&#xE254;</i></a>';
 					var btnEliminar = '<a href="javascript:;" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Desactivar" onclick="delAtraccion('+ atracciones.id +','+ atraccion_comilla +');">&#xE872;</i></a>';
 					var btnActivar = '<a href="javascript:;" class="activar" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Activar" onclick="activar_Atraccion('+ atracciones.id +','+ atraccion_comilla +');">restore</i></a>';
 					//var dlt_boton = '<button id="edit-category" class="btn btn-danger" type="button" title="Editar" class="boton">Eliminar</button>';
@@ -257,23 +256,6 @@
 				str_remp=str_remp+'</tbody>';              
 				$("#cargar_tbody").html(str_remp);
 				$('#datatablesSimple').DataTable({
-					/*"data": [
-						[
-						"response.id",
-						"Chair",
-						"20.0"
-						],
-						[
-						"2",
-						"Shoe",
-						"1.0"
-						],
-						[
-						"3",
-						"Candle",
-						"0.75"
-						]
-					],*/
 					"responsive": true,					
 					"language": { "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json" },
 					"order": [[ 0, 'desc' ], [ 3, 'desc' ]],
@@ -296,10 +278,12 @@
         $('#addModalAtraccion').modal('show'); // abrir modal  
 	} 
 	//
-	function upAtraccion(id_u, nombre_u){
+	function upAtraccion(id_u, nombre_u, ext_img){
         var ximagen = "imagen"+id_u;
+		g_ext = ext_img;
+		console.log(g_ext);
         document.getElementById("img2").src = $("#"+ximagen).attr('src');
-        //console.log(ruta64);		
+        console.log(ximagen);			
 		$("#txtupIdAtraccion").val(id_u);
         $("#txtupAtraccion").val(nombre_u);
         $('#upModalAtraccion').modal('show'); // abrir modal  
@@ -307,36 +291,50 @@
 	//
 	function delAtraccion(id_dlt, nombre_dlt){
 		$("#txtDelIdAtraccion").val(id_dlt);
-		document.getElementById("p_delete").innerHTML = "Está seguro de que desea desactivar la atracción "+nombre_dlt+ "?";
+		document.getElementById("p_delete").innerHTML = "Est&aacute; seguro de que desea desactivar la atracci&oacute;n "+nombre_dlt+ "?";
 		$('#deleteAtraccionModal').modal('show'); // abrir modal  
 	}
 	//
 	function activar_Atraccion(id_act, nombre_act){
 		$("#txtActIdAtraccion").val(id_act);
-		document.getElementById("p_activar").innerHTML = "Está seguro de que desea activar la atracción "+nombre_act+ "?";
+		document.getElementById("p_activar").innerHTML = "Est&aacute; seguro de que desea activar la atracci&oacute;n "+nombre_act+ "?";
 		$('#activarAtraccionModal').modal('show'); // abrir modal  
 	}		
 	//
 	$('#btnGuardarAtraccion').click(function(){
-
-		//Toma el archivo elegido por el input 
-        var value = document.getElementById("file").files[0];
-       	var v_imagen = document.getElementById("result").innerHTML;
+		var v_imagen = document.getElementById("result").innerHTML;
 		var nombre = $("#txtAddAtraccion").val();		
-		if(nombre != '' && v_imagen == 'El archivo es válido'){                        
-			adicionarAtracciones(nombre);
+		if(nombre != '' && v_imagen == 'El archivo es valido'){ 
+			//Toma el archivo elegido por el input 
+			var value = document.getElementById("file").files[0];
+			let img_ext = value.name;
+			var extension_img = img_ext.split('.'); // Saco la extensión para guardarla en la BD 
+			//                      
+			adicionarAtracciones(nombre, extension_img[1]);
 		}else{
 			alert('Llene todos los campos');
 		}		
 	});
 	//
-	$('#btnActualizarAtraccion').click(function(){	
+	$('#btnActualizarAtraccion').click(function(){
+		var r_imagen = document.getElementById("result2").innerHTML;	
 		var id_a = $("#txtupIdAtraccion").val();
-		var nombre_a = $("#txtupAtraccion").val();
-		var imagen_a = 64; //document.getElementById('file'); //$("#txtAdd64bit").val();		
+		var nombre_a = $("#txtupAtraccion").val();	
 		//
-		if(nombre_a != '' && imagen_a != ''){			
-			actualizarAtracciones(id_a,nombre_a, imagen_a);
+		if(nombre_a != '' && imagen_a != '' && r_imagen == 'El archivo es valido'){
+			let str_base64 = document.getElementById("img2").src;
+			let imagen = str_base64.split(',');			
+			if(imagen[0] == "data:image/jpeg;base64"){
+				console.log("base64");////////////////////////////
+				var imagen_a = document.getElementById("file2").files[0];
+				let img_ext = imagen_a.name;
+				var extension_img = img_ext.split('.'); // Saco la extensión para guardarla en la BD 
+				//						
+				actualizarAtracciones(id_a,nombre_a, extension_img[1], imagen[1]);
+			}else{
+				console.log("URL");/////////////////////////////
+				actualizarAtracciones2(id_a,nombre_a);
+			}		
 		}else{
 			alert('Llene todos los campos, para actualizar');
 		}		
@@ -360,15 +358,13 @@
 		}		
 	});
 	//
-	function openImage() { //Esta función validaría una imágen  
+	function openImage() { //Esta funcion validara una imagen  
 		try{			
 			var input = this;
 			var file = input.files[0];
-			console.log(file);
 			var fileName = input.value;
 			var maxSize = 1048576; //bytes
-			var extensions = new RegExp(/.jpg|.jpeg|.png/i); //Extensiones válidas
-			console.log(file.size);
+			var extensions = new RegExp(/.jpg|.jpeg|.png/i); //Extensiones validas			
 			var error = {
 				state: false,
 				msg: ''
@@ -379,14 +375,14 @@
 						var ext = fileName.substring(fileName[i],fileName.length);  
 						if (!extensions.test(ext)) {
 							error.state = true;
-							error.msg+= 'La extensión del archivo no es válida.<br>';
+							error.msg+= 'La extension del archivo no es valida.<br>';
 						}  
 						break;
 					}  
 				}  
 				if(file.size > maxSize) {
 					error.state = true;
-					error.msg += 'La imágen no puede ocupar más de '+maxSize/1048576+' MB.';
+					error.msg += 'La imagen no puede ocupar más de '+maxSize/1048576+' MB.';
 				}  
 				if(error.state) {
 					input.value = '';
@@ -394,7 +390,7 @@
 					return;
 				}else{
 					if(file.size > 0){
-						document.getElementById("result").innerHTML = "El archivo es válido";
+						document.getElementById("result").innerHTML = "El archivo es valido";
 						//
 						var reader = new FileReader();  
 						reader.onload = function(e) {
@@ -402,26 +398,79 @@
 						}
 						reader.readAsDataURL(this.files[0]);
 					}else{
-						document.getElementById("result").innerHTML = "El archivo está dañado";
+						document.getElementById("result").innerHTML = "El archivo esta danado";
 						document.getElementById("img").src = "";
 					}
 				}								
 			}
 		}catch(err){
-			alert('No funciona');
+			alert('No funciona abrir mensaje para guardar');
 		}
 	}	
 	//
-	document.getElementById("file").addEventListener("change",openImage,false); //Añadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo al guardar
-	//document.getElementById("file2").addEventListener("change",openImage("result2","img2"),false); //Añadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo al actualizar     
+	function openImage2() { //Esta funcion validara una imagen  
+		try{
+			console.log("Opem2");			
+			var input = this;
+			var file = input.files[0];
+			var fileName = input.value;
+			var maxSize = 1048576; //bytes
+			var extensions = new RegExp(/.jpg|.jpeg|.png/i); //Extensiones validas			
+			var error = {
+				state: false,
+				msg: ''
+			};  
+			if(this.files && file) {  
+				for (var i = fileName.length-1; i >= 0; i--) {  
+					if (fileName[i] == '.') {  
+						var ext = fileName.substring(fileName[i],fileName.length);  
+						if (!extensions.test(ext)) {
+							error.state = true;
+							error.msg+= 'La extension del archivo no es valida.<br>';
+						}  
+						break;
+					}  
+				}  
+				if(file.size > maxSize) {
+					error.state = true;
+					error.msg += 'La imagen no puede ocupar más de '+maxSize/1048576+' MB.';
+				}  
+				if(error.state) {
+					input.value = '';
+					//document.getElementById(resultado).innerHTML = error.msg;
+					return;
+				}else{
+					if(file.size > 0){
+						document.getElementById("result2").innerHTML = "El archivo es valido";
+						//
+						var reader = new FileReader();  
+						reader.onload = function(e) {
+							document.getElementById("img2").src = e.target.result;							
+						}
+						reader.readAsDataURL(this.files[0]);
+					}else{
+						document.getElementById("result2").innerHTML = "El archivo esta danado";
+						document.getElementById("img2").src = "";
+					}
+				}								
+			}
+		}catch(err){
+			alert('No funciona abrir imagen actualizar');
+		}
+	}	
+	//
+	document.getElementById("file").addEventListener("change",openImage,false); //Anadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo al guardar
+	document.getElementById("file2").addEventListener("change",openImage2,false); //Anadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo al actualizar     
 	//
 	//
-	function adicionarAtracciones(nombre){
+	function adicionarAtracciones(nombre, extension){
+		cargarToken();
 		var token = localStorage.getItem('accessToken');
 		if(token != null){
 			let str_base64 = document.getElementById("img").src;
-			let imagen = str_base64.substring(23);
-			console.log(imagen);
+			let imagen = str_base64.split(','); //Elimino el "data:image/jpeg;base64," de la cadena
+			extension = extension.toUpperCase();   //Convierte a mayuscula 
+			console.log(str_base64);			
 			//		
 			var atraccion_post = {
 				"url": "http://20.44.111.223:80/api/boleteria/atraccion",
@@ -434,13 +483,15 @@
 				},
 				"data": JSON.stringify({
 				"estado": "ACTIVO",
-				"imagenBase64": imagen,
+				"imagen": {
+						"datosBase64": imagen[1],
+						"formato": extension
+					},
 				"nombre": nombre
-				})                            
+				})					           
 			};
 			//                        
 			$.ajax(atraccion_post).done(function (response) {                        
-				console.log(response);
 				$('#addModalAtraccion').modal('hide'); // abrir modal, se oculta
 				limpiarGuardar();
 				cargarDatos();				
@@ -450,9 +501,12 @@
 		}             
 	}
 	//
-	function actualizarAtracciones(id, nombre, imagen){
+	function actualizarAtracciones(id, nombre, ext, base64){
+		cargarToken();
+		console.log(ext);
 		var token = localStorage.getItem('accessToken');
-		if(token != null){
+		if(token != null){			
+			ext = ext.toUpperCase();   //Convierte a mayuscula 			
 			var atraccion_post = {
 				"url": "http://20.44.111.223:80/api/boleteria/atraccion",
 				"method": "PATCH",
@@ -463,10 +517,13 @@
 					"Content-Type": "application/json"
 				},
 				"data": JSON.stringify({
-				"idAtraccion": id,
-				"imagenBase64": imagen,
-				"nombre": nombre
-				})                            
+					"idAtraccion": id,
+					"imagen": {
+						"datosBase64": base64,
+						"formato": ext
+					},
+					"nombre": nombre
+				})				               
 			};
 			//                        
 			$.ajax(atraccion_post).done(function (response) { 
@@ -479,7 +536,36 @@
 		}                
 	}
 	//
+	function actualizarAtracciones2(id, nombre){
+		cargarToken();
+		var token = localStorage.getItem('accessToken');
+		if(token != null){			
+			var atraccion_post = {
+				"url": "http://20.44.111.223:80/api/boleteria/atraccion",
+				"method": "PATCH",
+				"async": false,
+				"timeout": 0,
+				"headers": {
+					"Authorization": "Bearer "+token,
+					"Content-Type": "application/json"
+				},
+				"data": JSON.stringify({
+					"idAtraccion": id,					
+					"nombre": nombre
+				})				               
+			};
+			//                        
+			$.ajax(atraccion_post).done(function (response) { 
+				$('#upModalAtraccion').modal('hide'); // se oculta modal
+				cargarDatos();			
+			});			            
+		}else{
+			alert('Acceso denegado para guardar');
+		}                
+	}
+	//
 	function desactivarAtraccion(id){
+		cargarToken();
 		var token = localStorage.getItem('accessToken');
 		if(token != null){
 			var atraccion_post = {
@@ -508,6 +594,7 @@
 	}
 	//
 	function activarAtraccion(id){
+		cargarToken();
 		var token = localStorage.getItem('accessToken');
 		if(token != null){
 			var atraccion_post = {
