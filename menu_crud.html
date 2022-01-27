@@ -87,6 +87,27 @@
 <script src="lib/jquery-3.6.0.min.js"></script>
 <script src="lib/htmlToCanvas.js"></script>
 	<script src="js/funciones.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"> 
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script> 
+	
+  <script>
+    $(document).on("click", ".listar", function(){
+      var pagina = $(this).attr('pagina');
+      //alert(pagina);
+      switch (pagina) {
+        case 'atracciones':
+          $("#contenido_crud").show();          
+          $("#contenido_crud").load('atracciones.html');
+          $("#listado").remove();
+          console.log('paso por aqui');
+          break;
+      
+        default:
+          break;
+      }
+    });
+  
+  </script>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -111,35 +132,34 @@
       <div id="divbr" ><br><br><br></div>    
 
       <div class="container">
-        <div class="row">
+        <div class="row" id="listado">
           <p align="center">Seleccione alguna de las siguientes opciones de Configuración de parámetros</p>
           <div class="col"></div>
           <div class="col">
             <table class="table">
               <tr>
-                <td align="right">1</td><td><a href="atracciones.html">Atracciones</a></td>
+                <td align="right">1</td><td><a style="cursor:pointer" class="listar" pagina="atracciones">Atracciones</a></td>
               </tr>
               <tr>
-                <td align="right">2</td><td><a href="condiciones_acceso.html">Condiciones de acceso</a></td>
+                <td align="right">2</td><td><a style="cursor:pointer" class="listar" pagina="condiciones">Condiciones de acceso</a></td>
               </tr>
               <tr>
-                <td align="right">3</td><td><a href="#">Casillero</a></td>
+                <td align="right">3</td><td><a style="cursor:pointer" class="listar" pagina="casillero">Casillero</a></td>
               </tr>
               <tr>
-                <td align="right">4</td><td><a href="#">Categoria edad</a></td>
+                <td align="right">4</td><td><a style="cursor:pointer" class="listar" pagina="categoriaedad">Categoria edad</a></td>
               </tr>     
             </table>
 
           </div>
           <div class="col"></div>
         </div>
+        <div class="row" id="contenido_crud" style="display:none;">
+
+        </div>
         
       </div>
+
     </div>
-  </body>
-
-  <script>
-
-  
-  </script>
+  </body>  
 </html>
