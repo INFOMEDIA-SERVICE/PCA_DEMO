@@ -15,7 +15,7 @@
     switch ($op) {
         case 1://Servicio Cargar datos atracciones - by:Alfonso
             //
-            $token = $llamar_token->ConsumoServicio();
+            $token = $llamar_token->generarToken();
             //print_r($token);
             //echo "</br>";
             //print_r($token->accessToken->token);

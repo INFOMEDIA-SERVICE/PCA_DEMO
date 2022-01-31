@@ -1,10 +1,10 @@
 <?php
-    class Generar_token
+    class ConsumoServicio
     {
         /**
         * Generar Token de los servicios PCA - By: Alfonso - 30-Enero-2022
         */
-        public function ConsumoServicio()
+        public function generarToken()
         {
             //Armando array y pasarlo a JSON para recibir token
             $array = ['password'=>'$Info.2021', 'username'=>'infomedia'];

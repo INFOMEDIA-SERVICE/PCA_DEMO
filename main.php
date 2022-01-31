@@ -12,6 +12,6 @@
         });
 
         $atrac = new Atracciones();
-        $llamar_token = new Generar_token();
+        $llamar_token = new ConsumoServicio();
         //
     ?>
