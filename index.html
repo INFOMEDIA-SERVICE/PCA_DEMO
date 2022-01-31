@@ -16,10 +16,19 @@
 	<script>
 
 	$(document).on("click", "#login", function(){
-       
+
 		var usuario = $("#usuario").val();
 
 		var passwd  = $("#passwd").val();
+
+		if(usuario=="" || passwd==""){
+			alert("Datos incompletos");
+			return(false);
+		}else{
+			document.getElementById("formulario").submit();
+		}
+       
+		/*
 
 
 		var settings = {
@@ -51,7 +60,7 @@
                if(jqXHR['responseJSON']['message']=='Bad credentials'){
 				   alert("Datos invalidos")
 			   }
-          });
+          }); */
 
 		console.log("usuario:"+usuario+" passwd:"+passwd);
        
@@ -71,6 +80,7 @@
   </head>
   <body>
   	<!-- body code goes here -->
+	<form action="php/login.php" id="formulario" method="post" >
 	  	<div>
 
 	   		 <div style="display:block;width:0px;height:0px;border-radius:10px;" ><img style="border-radius:10px;width:690px;height:600px;" src="imagenes/fondo-inicio.jpg"></div>
@@ -84,15 +94,15 @@
 					<div class="barra2" style="width: 10%; background: #176291; height: 2px"></div>
 					<div class="barra" style="width: 28%; height: 1px"></div>
 				</div>
-				<div class="mb-4 textos-azules"><input type="text" id="usuario" style="background: #F5F6F8; border:1px solid #DEDEDE; border-radius: 10px; width: 90%;margin-left:0%; padding: 1em 2em" placeholder="Usuario"></div>
-				<div class="mb-4"><input id="passwd" type="password" style=" border:1px solid #DEDEDE; border-radius: 10px; width:90%;margin-left:0%; padding: 1em 2em" placeholder="Contraseña" class="contrasena"></div>
+				<div class="mb-4 textos-azules"><input type="text" name="usuario" id="usuario" style="background: #F5F6F8; border:1px solid #DEDEDE; border-radius: 10px; width: 90%;margin-left:0%; padding: 1em 2em" placeholder="Usuario"></div>
+				<div class="mb-4"><input id="passwd" name="passwd" type="password" style=" border:1px solid #DEDEDE; border-radius: 10px; width:90%;margin-left:0%; padding: 1em 2em" placeholder="Contraseña" class="contrasena"></div>
 				<div class="mb-5"><input type="button" id="login" value="Entrar" class="px-5 py-3" style="margin-left:30%;" ></div>
 				
 				<h4 class="color-text-login subraya"><a>He olvidado mi contraseña</a></h4>
 			</div>
-   </div>
+   		</div>
 
-   
+	</form>
 	
 
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
