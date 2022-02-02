@@ -79,7 +79,7 @@
 					</section>
 					<section class="px-3">
 					<row id="sele">	
-						<table id="tabla_atraccion" class="table table-hover">
+						<table id="tabla_atraccion" class="table table-border">
 							<thead>
 							  	<tr>
 									<th scope="col"></th>
