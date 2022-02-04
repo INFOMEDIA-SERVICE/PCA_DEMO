@@ -32,8 +32,28 @@
             }       
         break;        
 
+        case 2://Servicio Cargar datos condiciones - by:NicolÃ¡s
+            //
+            $token = $llamar_token->generarToken();
+            //
+            if ($token->id != '') {
+                $condiDatos = $condi->cargarCondiciones($token); 
+                print_r($condiDatos);
+                exit;
+                if ($rDatos != '') {
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO']);
+                }
+
+            } else {
+
+                die('Se produjo un Error al generar el Token');
+            }       
+        break;      
+
         default:
-            echo 'No se seleccionó ninguna opción';
+            echo 'No se seleccionï¿½ ninguna opciï¿½n';
     }
 //
 ?>
