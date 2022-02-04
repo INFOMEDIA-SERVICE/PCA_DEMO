@@ -23,6 +23,10 @@ echo" </pre> ";*/
 			color:black;
 			
 		}
+
+		.pointer {
+			cursor: pointer;
+		}
 	</style>
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
