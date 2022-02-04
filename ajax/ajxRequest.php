@@ -27,10 +27,18 @@
                 }
 
             } else {
-
                 die('Se produjo un Error al generar el Token');
             }       
-        break;        
+        break;
+        
+        case 3:
+            $token = $llamar_token->generarToken();
+            //
+            $anombre = addslashes($_POST['nombre']);
+            $aimagen = addslashes($_POST['imagen']);
+            $aextension = addslashes($_POST['extension']); 
+            $rGuardar = $atrac->guardarAtraccion($anombre, $aimagen, $aextension, $token);
+        break;
 
         case 2://Servicio Cargar datos condiciones - by:Nicolás
             //
