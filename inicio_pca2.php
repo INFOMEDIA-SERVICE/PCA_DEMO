@@ -1,22 +1,101 @@
+<?php
+session_start();
+include('php/sesion.php');
+/*echo" <pre> ";
+print_r($_SESSION);
+echo" </pre> ";*/
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Untitled Document</title>
+    <title>Abacox inicio</title>
     <!-- Bootstrap -->
 	<link href="css/bootstrap-4.4.1.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/main.css">
-	
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<style>
+		a{
+			text-decoration:none;
+			color:black;
+			
+		}
+
+		.pointer {
+			cursor: pointer;
+		}
+	</style>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="js/popper.min.js"></script> 
+	<script src="js/bootstrap-4.4.1.js"></script>
+
+	<script>
+
+	$(document).on("click", "#taquilla", function(){
+
+		//$("#contenido").load("punto_de_venta.html")
+		window.location.href="punto_de_venta.html";
+		
+	});
+
+	$(document).on("click", "#configuracion", function(){
+
+	$("#contenido").load("menu_crud.html")
+	//window.location.href="menu_crud.html";
+
+	});
+
+	</script>
   </head>
   <body>
   	<!-- body code goes here -->
     <header>
 	 	<nav class="color-cabezera container-fluid">
 			<div class="row">
-				<div class="col-lg-1 col-md-2 col-2 pl-0">
-					<figure class="color-menu"><img src="imagenes/open-menu.png"></figure>
+			<!-- <button style="height:50px;width:60px;background-color:transparent;border-style:none;margin-left:10px;margin-top:20px;margin-right:-10px;" type="button"
+				data-bs-toggle="offcanvas" data-bs-target="#offcanvas"
+				aria-controls="offcanvas"
+				><img style="width:40px;" src="imagenes/menu.png" alt=""></button> -->
+
+				<button style="height:50px;width:60px;background-color:transparent;border-style:none;margin-left:10px;margin-top:20px;margin-right:-10px;" type="button"
+				data-bs-toggle="offcanvas" data-bs-target="#offcanvas"
+				aria-controls="offcanvas"
+				><img style="width:40px;" src="imagenes/menu.png" alt=""></button>
+			
+				<div style="background-color:#176291;"
+					class="offcanvas offcanvas-start" tabindex="-1"
+					id="offcanvas"	aria-labelledby="offcanvaslabel"
+				>	
+				<div class="offcanvas-header">					
+				<ul style="list-style-type:none;align-items:left">
+					<li style="margin-left:40px;">
+					<img src="imagenes/LOGO_BLANCO.png" style="width:50px;margin-left:40px;">
+					</li>
+					<li><a href=""><h6 class="offcanvas-title" style="margin-top:100px;margin-right:80px; color:white;">
+						<img src="imagenes/taquilla.png" alt="" style="width:30px;">  Taquilla Parque
+					</h6></a></li>
+					<li><a href=""><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
+						<img src="imagenes/carros.png" alt="" style="width:30px;">  Taquilla Parqueadero
+					</h6></a></li>
+					<li><a href=""><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
+						<img src="imagenes/configuraciones.png" alt="" style="width:30px;">  Herramientas
+					</h6></a></li>
+					<li><a href=""><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
+						<img src="imagenes/configuraciones2.png" alt="" style="width:30px;">  Configuración
+					</h6></a></li>
+					<li><a href=""><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
+						<img src="imagenes/ayuda.png" alt="" style="width:30px;">  Ayuda
+					</h6></a></li>
+				</ul>
+				</div>
 				</div>
 				<div class="col-lg-2 col-3 d-flex align-items-center">
 				    <figure class="pt-3">
@@ -50,15 +129,15 @@
 						<div class="row">
 							<div class="col-6 col-lg-12">
 								<div class="row">
-									<div class="col-3 col-lg-12 text-center">
-									<div class="c-verde mb-1">CXC</div>
-						<P class="mb-3 d-none d-lg-block">Cuentas</P>
+									<div class="col-3 col-lg-12 text-center pointer" id="taquilla">
+									<div class="c-verde mb-1">T</div>
+						<P class="mb-3 d-none d-lg-block">Taquilla</P>
 								</div>
-								<div class="col-3  col-lg-12">
-									<div class="c-morado mb-1">PV</div>
-						<P class="mb-3 d-none d-lg-block">Proveedores</P>
+								<div class="col-3  col-lg-12 pointer">
+									<div class="c-morado mb-1">P</div>
+						<P class="mb-3 d-none d-lg-block">Parqueadero</P>
 								</div>
-								<div class="col-3  col-lg-12">
+								<div class="col-3  col-lg-12 pointer">
 								<div class="c-naranja mb-1">RC</div>
 						<P class="mb-4 d-none d-lg-block">Recaudos</P>
 								</div>
