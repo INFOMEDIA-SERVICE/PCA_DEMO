@@ -24,24 +24,5 @@
                 
             return json_decode($result);           
         }
-    }
-    
-        /*function cargarToken(){
-            var settings = {
-                "url": "http://20.44.111.223:80/api/auth/token",
-                "method": "POST",
-                "async": false,
-                "timeout": 0,
-                "headers": {
-                "Content-Type": "application/json"
-                },
-                "data": JSON.stringify({
-                "password": "$Info.2021",
-                "username": "infomedia"
-                }),
-            };
-            $.ajax(settings).done(function (response) {
-                localStorage.setItem('accessToken',response['accessToken']['token'])                                                                        
-            });				
-        }*/
+    }        
 ?>

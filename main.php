@@ -11,6 +11,7 @@
             include "class/$file.php";
         });
 
+        $consumo = new Consumir();
         $atrac = new Atracciones();
         $condi = new Condiciones();
         $llamar_token = new ConsumoServicio();

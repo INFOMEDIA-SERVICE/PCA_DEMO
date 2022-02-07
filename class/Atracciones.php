@@ -5,7 +5,7 @@
         public function cargarAtracciones($token){
             //            
             $headers = array();
-            $header[] = 'Authorization: Bearer '.$token->accessToken->token;
+            $headers[] = 'Authorization: Bearer '.$token->accessToken->token;
             $headers[] = 'Content-Type: application/json';
             //
             //Enviamos datos para recibir respuesta de 
@@ -24,13 +24,7 @@
         //
         function guardarAtraccion($anom, $abase64, $aext, $token){
             //$array = ['estado'=>'ACTIVO', ['imagen']'datosBase64' => $abase64 'formato' => $aext), 'nombre'  => $anom ];
-            //$array = array('estado' => 'ACTIVO', [imagen] => array('datosBase64' => $abase64, 'formato' => $aext), 'nombre'  => $anom);
-            $array['estado'] = 'ACTIVO';
-            $array['imagen']['datosBase64'] = $abase64;
-            $array['imagen']['formato'] = $aext;
-            $array['nombre'] = $anom;
-                        
-            print_r(json_encode($array)); 
+            //$array = array('estado' => 'ACTIVO', [imagen] => array('datosBase64' => $abase64, 'formato' => $aext), 'nombre'  => $anom);           
             //
             $headers = array();
             $headers[] = 'Authorization: Bearer '.$token->accessToken->token;

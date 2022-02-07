@@ -9,16 +9,20 @@
     require_once '../main.php'; 
     
     //Tipo de peticion
-    $op = addslashes($_POST['op']); 
+    $op = addslashes($_POST['op']);
+    //
+    $token = $llamar_token->generarToken();
+    $headers[] = 'Authorization: Bearer '.$token->accessToken->token;
+    $headers[] = 'Content-Type: application/json'; 
     //var toke = localStorage.getItem('accessToken');
 	//var contenToke = localStorage.getItem('contenToken');
     switch ($op) {
         case 1://Servicio Cargar datos atracciones - by:Alfonso
             //
-            $token = $llamar_token->generarToken();
-            //
             if ($token->id != '') {
-                $rDatos = $atrac->cargarAtracciones($token); 
+                $url = 'http://20.44.111.223:80/api/boleteria/atraccion?incluirImagen=true';
+                //$rDatos = $atrac->cargarAtracciones($token);
+                $rDatos = $consumo->Get($url, $headers); 
                 
                 if ($rDatos != '') {
                     echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
@@ -51,17 +55,29 @@
             }       
         break;      
 
-        case 3:
-            $token = $llamar_token->generarToken();
+        case 3:            
             //
             $anombre = addslashes($_POST['nombre']);
             $aimagen = addslashes($_POST['imagen']);
-            $aextension = addslashes($_POST['extension']); 
-            $rGuardar = $atrac->guardarAtraccion($anombre, $aimagen, $aextension, $token);
+            $aextension = addslashes($_POST['extension']);
+            //
+            $array['estado'] = 'ACTIVO';
+            $array['imagen']['datosBase64'] = $aimagen;
+            $array['imagen']['formato'] = $aextension;
+            $array['nombre'] = $anombre;
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/atraccion';
+            //$rGuardar = $atrac->guardarAtraccion($anombre, $aimagen, $aextension, $token);
+            $rGuardar = $consumo->Post($url, $headers, $array);
+
+
+
+
+            
         break;
-        
+
         default:
-            echo 'No se seleccion� ninguna opci�n';
+            echo 'No se seleccionó ninguna opción';
     }
 //
 ?>
