@@ -58,51 +58,70 @@ echo" </pre> ";*/
   <body>
   	<!-- body code goes here -->
     <header>
-	 	<nav class="color-cabezera container-fluid">
+	 	<nav class="color-cabezera container-fluid" style="padding:0px;">
 			<div class="row">
-			<!-- <button style="height:50px;width:60px;background-color:transparent;border-style:none;margin-left:10px;margin-top:20px;margin-right:-10px;" type="button"
-				data-bs-toggle="offcanvas" data-bs-target="#offcanvas"
-				aria-controls="offcanvas"
-				><img style="width:40px;" src="imagenes/menu.png" alt=""></button> -->
+				<div class="col-lg-2 col-3 d-flex align-items-center" >
+					<!-- <button style="border:none;background:none;margin-right:15px;padding:0px;"  type="button" -->
+					<button style="border-color:#0A4970;margin-right:15px;padding:0px;border:none;"  type="button"
+					data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+					aria-controls="offcanvasScrolling"
+					><img style="width:10px;padding:15px;padding-bottom:20px;padding-top:20px;" class="color-menu" src="imagenes/open-menu.png" alt=""></button>
+				
+					<div style="background-color:#0A4970; height:520px;"
+						class="offcanvas offcanvas-middle" tabindex="-1"
+						data-bs-scroll="true" data-bs-backdrop="false"
+						id="offcanvasScrolling"	aria-labelledby="offcanvasScrolling'"
+					>
+					<button type="button"  data-bs-dismiss="offcanvas" aria-label="Close" style="margin-left:280px;background:none;border:none;margin-top:20px;" ><img src="imagenes/Grupo 18.png" alt=""></button>	
+					<div class="offcanvas-header">					
+					<ul style="list-style-type:none;align-items:left">
+						<li style="margin-left:40px;">
+						</li>
+						<li><a href=""><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px; color:white;">
+							<img src="imagenes/taquilla.png" alt="" style="width:30px;">  Taquilla Parque
+						</h6></a>
+							<ul>
 
-				<button style="height:50px;width:60px;background-color:transparent;border-style:none;margin-left:10px;margin-top:20px;margin-right:-10px;" type="button"
-				data-bs-toggle="offcanvas" data-bs-target="#offcanvas"
-				aria-controls="offcanvas"
-				><img style="width:40px;" src="imagenes/menu.png" alt=""></button>
-			
-				<div style="background-color:#176291;"
-					class="offcanvas offcanvas-start" tabindex="-1"
-					id="offcanvas"	aria-labelledby="offcanvaslabel"
-				>	
-				<div class="offcanvas-header">					
-				<ul style="list-style-type:none;align-items:left">
-					<li style="margin-left:40px;">
-					<img src="imagenes/LOGO_BLANCO.png" style="width:50px;margin-left:40px;">
-					</li>
-					<li><a href=""><h6 class="offcanvas-title" style="margin-top:100px;margin-right:80px; color:white;">
-						<img src="imagenes/taquilla.png" alt="" style="width:30px;">  Taquilla Parque
-					</h6></a></li>
-					<li><a href=""><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
-						<img src="imagenes/carros.png" alt="" style="width:30px;">  Taquilla Parqueadero
-					</h6></a></li>
-					<li><a href=""><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
-						<img src="imagenes/configuraciones.png" alt="" style="width:30px;">  Herramientas
-					</h6></a></li>
-					<li><a href=""><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
-						<img src="imagenes/configuraciones2.png" alt="" style="width:30px;">  Configuración
-					</h6></a></li>
-					<li><a href=""><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
-						<img src="imagenes/ayuda.png" alt="" style="width:30px;">  Ayuda
-					</h6></a></li>
-				</ul>
-				</div>
-				</div>
-				<div class="col-lg-2 col-3 d-flex align-items-center">
+							</ul>
+						</li>
+						<li><a href=""><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
+							<img src="imagenes/carros.png" alt="" style="width:30px;">  Taquilla Parqueadero
+						</h6></a>
+							<ul>
+
+							</ul>
+						</li>
+						<li><a href=""><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
+							<img src="imagenes/configuraciones.png" alt="" style="width:30px;">  Herramientas
+						</h6></a>
+							<ul>
+								
+							</ul>
+						</li>
+						<li><a href=""><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
+							<img src="imagenes/configuraciones2.png" alt="" style="width:30px;">  Configuración
+						</h6></a>
+							<ul>
+								
+							</ul>
+						</li>
+						<li><a href=""><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
+							<img src="imagenes/ayuda.png" alt="" style="width:30px;">  Ayuda
+						</h6></a>
+							<ul>
+								
+							</ul>
+						</li>
+					</ul>
+					</div>
+					</div>
+					<!-- Menú Tipo Hamburguesa inicio -->
+
 				    <figure class="pt-3">
 					 <img src="imagenes/LOGO_BLANCO.png" class="img-fluid">
 					</figure>
 				</div>
-				<div class="col-lg-5 d-lg-flex align-items-center d-none">
+				<div class="col-lg-5 d-lg-flex align-items-center d-none" style="margin-left:100px;">
 					<input type="text" class="mr-2" value="Buscar">
 					<figure class="pt-3"><img src="imagenes/s.png"></figure>
 				</div>
