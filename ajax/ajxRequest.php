@@ -23,7 +23,7 @@ session_start();
     switch ($op) {
         case 1://Servicio Cargar datos atracciones - by:Alfonso
             //
-            if ($token->id != '') {
+            if ($token != '') {
                 $url = 'http://20.44.111.223:80/api/boleteria/atraccion?incluirImagen=true';
                 //$rDatos = $atrac->cargarAtracciones($token);
                 $rDatos = $consumo->Get($url, $headers); 
