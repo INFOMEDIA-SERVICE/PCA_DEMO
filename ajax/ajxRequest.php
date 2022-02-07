@@ -1,4 +1,5 @@
 <?php
+session_start();
     /**
      * Solicitudes y respuestas con Atracciones
      * User: Alfonso Atencio
@@ -9,10 +10,13 @@
     require_once '../main.php'; 
     
     //Tipo de peticion
-    $op = addslashes($_POST['op']);
+    //$op = addslashes($_POST['op']);
+    extract($_REQUEST);
     //
-    $token = $llamar_token->generarToken();
-    $headers[] = 'Authorization: Bearer '.$token->accessToken->token;
+    //$token = $llamar_token->generarToken();
+    $tokenRefresh = $llamar_token->refreshToken();
+    $token=$_SESSION['accessToken'];
+    $headers[] = 'Authorization: Bearer '.$token;
     $headers[] = 'Content-Type: application/json'; 
     //var toke = localStorage.getItem('accessToken');
 	//var contenToke = localStorage.getItem('contenToken');
@@ -75,6 +79,14 @@
 
             
         break;
+
+        case 4:
+            $tokenRefresh = $llamar_token->refreshToken();
+
+            /*echo "<br><br> ##### <pre>";
+            print_r($tokenRefresh);
+            echo "</pre>";*/
+            break;
 
         default:
             echo 'No se seleccionó ninguna opción';
