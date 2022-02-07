@@ -34,6 +34,24 @@
                 die('Se produjo un Error al generar el Token');
             }       
         break;
+
+        case 2://Servicio Cargar datos condiciones - by:Nicolás
+            //
+            $token = $llamar_token->generarToken();
+            //
+            if ($token->id != '') {
+            $condiDatos = $condi->cargarCondiciones($token); 
+            print_r($condiDatos);
+            exit;
+            if ($rDatos != '') {
+            echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+            } else { 
+            echo json_encode(['sts'=>'NO']);
+            }
+            } else {
+            die('Se produjo un Error al generar el Token');
+            } 
+        break;
         
         case 3:            
             //
@@ -49,6 +67,11 @@
             $url = 'http://20.44.111.223:80/api/boleteria/atraccion';
             //$rGuardar = $atrac->guardarAtraccion($anombre, $aimagen, $aextension, $token);
             $rGuardar = $consumo->Post($url, $headers, $array);
+
+
+
+
+            
         break;
 
         default:
