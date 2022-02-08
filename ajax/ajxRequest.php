@@ -37,10 +37,9 @@
 
         case 2://Servicio Cargar datos condiciones - by:Nicolás
             //
-            $token = $llamar_token->generarToken();
-            //
-            if ($token->id != '') {
-                $condiDatos = $condi->cargarCondiciones($token); 
+            if ($token != '') {
+                $url = 'http://20.44.111.223:80/api/boleteria/condicionAcceso';
+                $condiDatos = $consumo->get($url, $headers); 
                 print_r($condiDatos);
                 exit;
                 if ($rDatos != '') {
