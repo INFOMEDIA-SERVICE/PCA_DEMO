@@ -36,6 +36,7 @@ echo" </pre> ";*/
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="js/popper.min.js"></script> 
 	<script src="js/bootstrap-4.4.1.js"></script>
+	<script src="js/views/taquilla.js"></script>
 
 	<script>
 
@@ -167,7 +168,7 @@ echo" </pre> ";*/
 							<div class="puntos"></div>
 										
 						</div>
-									<figure class="d-none d-lg-block"><img src="imagenes/Trazado 34.png"></figure>
+									<figure class="d-none d-lg-block pointer"><img class="pointer" src="imagenes/Trazado 34.png"></figure>
 								</div>
 								</div>
 							</div>
@@ -178,7 +179,7 @@ echo" </pre> ";*/
 						<p class="mb-3 d-none d-lg-block">Herramientas</p>
 								</div>
 								<div class="col-3 col-lg-12">
-								<figure class="mb-1"><img src="imagenes/adjust.png"></figure>
+								<figure class="mb-1"><img id="configuracion" class="pointer" src="imagenes/adjust.png"></figure>
 						<p class="mb-3 d-none d-lg-block">Configuración</p>
 								</div>
 								<div class="col-3 col-lg-12">
@@ -198,9 +199,11 @@ echo" </pre> ";*/
 					
 					</div>
 				</div>
-				<div class="col-lg-11 ">
-				  <div class="row">	
-					<div class="col-lg-4">
+				<div class="col justify-content-md-center" id="contenido">
+					 
+				<!-- <div class="col-lg-11 "> -->
+				    <div class="row">	
+						<div class="col-lg-4">
 						<div class="panel2 sombra mb-3">
 							<figure class="text-right"><img src="imagenes/update.png"></figure>
 							<h2>Panel de Notificaciones</h2>
@@ -376,8 +379,8 @@ echo" </pre> ";*/
 								<div class="barra" style="width: 90%"></div>
 							</div>
 						</div>
-					</div>
-				  </div>	  
+						</div>
+				  	</div>	  
 				</div>
 			 </div>
 		 </section>

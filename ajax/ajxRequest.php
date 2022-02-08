@@ -88,6 +88,29 @@ session_start();
             echo "</pre>";*/
             break;
 
+
+
+
+        case 6: 
+            //tibosBoleta
+
+            if ($token != '') {
+                $url = 'http://20.44.111.223:80/api/boleteria/tipoBoleta?incluirImagen=true';
+                //$rDatos = $atrac->cargarAtracciones($token);
+                $rDatos = $consumo->Get($url, $headers); 
+                
+                if ($rDatos != '') {
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO']);
+                }
+
+            } else {
+                die('Se produjo un Error al generar el Token');
+            }     
+
+        break;
+
         default:
             echo 'No se seleccionó ninguna opción';
     }
