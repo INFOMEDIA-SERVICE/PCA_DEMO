@@ -64,7 +64,16 @@ select{
 
 
 input[type=button]{
-	background: #74cc0d;
+	background: #00CD98;
+	color: #fff;
+    font-size: 0.875em;
+	border: none;
+	padding: 0.8em 1.5em;
+	border-radius: 10px;
+}
+
+input[type=submit]{
+	background: #00CD98;
 	color: #fff;
     font-size: 0.875em;
 	border: none;
