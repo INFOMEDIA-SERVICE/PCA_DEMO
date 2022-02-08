@@ -282,7 +282,7 @@ function actualizarAtracciones2(id, nombre){
     console.log(nombre);
     $.ajax({        
         url: "ajax/ajxRequest.php",
-        data: { op: '6', id: id, nombre: nombre },
+        data: { op: '7', id: id, nombre: nombre },
         dataType: 'json',
         type: 'POST',
         //async: false,
