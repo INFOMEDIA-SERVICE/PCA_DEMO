@@ -34,5 +34,19 @@
             //print_r($result->status); exit;
             return($result);                           
         }
+        //
+        public function Patch($url, $headers, $array){
+            //Enviando PATCH
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PATCH");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($array));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+            $result = curl_exec($ch);
+            curl_close($ch);
+                
+            return json_decode($result);    
+        }        
     }
 ?>

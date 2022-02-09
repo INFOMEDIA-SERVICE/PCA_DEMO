@@ -123,7 +123,7 @@
 						</section>
 						<section class="px-3">
 							<div>
-								<table id="tabla_atraccion" class="table table-hover">
+								<table id="tabla_atraccion" class="table">
 									<thead>							  
 										<tr class="row ">
 											<th class="col-1 text-center"><h2>Editar</h2></th>
@@ -198,19 +198,95 @@
 							</div>
 						</div>
 						<div class="modal-footer">							
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary" onclick="btnGuardarAtraccion()">Guardar</button>
+							<!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary" onclick="btnGuardarAtraccion()">Guardar</button>-->
+							<div class="px-3"><input type="button" id="btnGuardarAtraccion" value="Guardar"></div>
+							<div><input type="button" data-dismiss="modal" value="Cerrar"></div>
 						</div>
 					</div>
 				</div>
 			</div> 
+			<!--Modal actualizar atraccion-->
+			<div class="modal" id="upModalAtraccion" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2 class="modal-title">Actualizar atracciones</h2>
+							<button type="button" id="btnCerrarAtraccionX" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body mx-auto">                        
+							<div class="row mb-4">
+								<input type="hidden"  id="txtupIdAtraccion"> 
+								<div class="col-2 pt-2"><h4>Nombre atracci&oacute;n</h4></div>
+								<div class="col-10"><input type="text" id="txtupAtraccion" style="background: #fff; border:1px solid #BEBEBE; border-radius: 10px"></div>                            
+							</div>
+							<div class="mb-3">						
+								<input type="file" id="file2" accept=".jpg,.png" />
+								<br>
+								<div id="result2">El archivo es valido</div>
+								<br>
+								<img id="img2" width="400" height="260" />
+							</div>
+						</div>
+						<div class="modal-footer">					
+							<!--<input type="button"  class="btn btn-default" data-dismiss="modal" value="Cerrar">
+							<input type="button" onclick="btnActualizarAtraccion()" class="btn btn-info" value="Actualizar">-->							
+							<div class="px-3"><input type="submit" id="btnActualizarAtraccion" value="Editar"></div>
+							<div><input  type="button" data-dismiss="modal" value="Cerrar"></div>									
+						</div>
+					</div>
+				</div>
+			</div>
 			<!---->			
 	  	</main>
 	  	<script>
 			cargar_datos();	
 			//
 			document.getElementById("file").addEventListener("change",openImage,false); //Añadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo  
-			//		
+			//
+			document.getElementById("file2").addEventListener("change",openImage2,false); //Anadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo al actualizar 
+			//
+			$('#btnGuardarAtraccion').click(function(){
+				//Toma el archivo elegido por el input 
+				var value = document.getElementById("file").files[0];     
+				var nombre = $("#txtAddAtraccion").val();
+				if(nombre != '' && value.size != 0){
+					let img_ext = value.name;
+					img_ext = img_ext.toUpperCase(); 
+					var extension_img = img_ext.split('.'); // Saco la extensión para guardarla en la BD
+					//
+					adicionarAtracciones(nombre, extension_img[1]);
+				}else{
+					alert('Llene todos los campos');
+				}		
+			});
+			//
+			$('#btnActualizarAtraccion').click(function(){
+				var r_imagen = document.getElementById("result2").innerHTML;	
+				var id_a = $("#txtupIdAtraccion").val();
+				var nombre_a = $("#txtupAtraccion").val();	
+				//
+				if(nombre_a != '' && imagen_a != '' && r_imagen == 'El archivo es valido'){
+					let str_base64 = document.getElementById("img2").src;
+					let imagen = str_base64.split(',');			
+					if(imagen[0] == "data:image/jpeg;base64"){
+						console.log("base64");////////////////////////////
+						var imagen_a = document.getElementById("file2").files[0];
+						let img_ext = imagen_a.name;
+						var extension_img = img_ext.split('.'); // Saco la extensión para guardarla en la BD 
+						//						
+						actualizarAtracciones(id_a,nombre_a, extension_img[1], imagen[1]);
+					}else{
+						console.log("URL");/////////////////////////////
+						actualizarAtracciones2(id_a,nombre_a);
+					}		
+				}else{
+					alert('Llene todos los campos, para actualizar');
+				}		
+			});
+			//
 			/*$(document).ready(function(){
 			  //$('#tabla_atraccion').DataTable();
 				$('#tabla_atraccion').DataTable({

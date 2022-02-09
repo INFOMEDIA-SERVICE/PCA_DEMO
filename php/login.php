@@ -44,7 +44,7 @@ if(count($arr_password)>0){
         $_SESSION['contentToken']=$token->contentToken->token;  //  ['contentToken']['token'];
         $_SESSION['refreshToken']=$token->refreshToken->token; // ['refreshToken']['token'];
 
-        header('Location: ../inicio_pca.php');
+        header('Location: ../inicio_pca2.php');
 
     }else{
         //echo "Contraseña incorrecta";
