@@ -17,7 +17,7 @@
 		<!-- Bootstrap -->
 		<link href="css/bootstrap-4.4.1.css" rel="stylesheet">
 		<link rel="stylesheet" href="css/main.css">
-		<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+		<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
 
 		<!--Datatable-->
 		<link rel="stylesheet" type="text/css" href="css/dataTables.min.css"/>	
