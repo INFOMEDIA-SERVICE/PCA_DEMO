@@ -17,14 +17,54 @@ echo" </pre> ";*/
 	<link rel="stylesheet" href="css/main.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<style>
-		a{
+			a{
 			text-decoration:none;
 			color:black;
-			
+			margin:0px;
+			padding:0px;
 		}
-
+		li{
+			margin-left:5px;
+			padding:0px;
+		}
+		ul{
+			margin:0px;
+			padding:0px;
+		}
 		.pointer {
 			cursor: pointer;
+		}
+		ul, ol{
+			list-style:none;
+		}
+		#nav li ul{
+			margin-left:5px;
+			display:none;
+			position:;
+		}
+		#nav li:hover>ul{
+			display: block;
+		}
+		.administracion #controlador #primer:hover{
+			margin-bottom:300px;
+		}
+		.administracion #controlador #prueba:hover{
+			margin-bottom:300px;
+		}
+		.administracion #controlador #prueba1:hover{
+			margin-bottom:300px;
+		}
+		.administracion #controlador #prueba2:hover{
+			margin-bottom:300px;
+		}
+		.administracion #controlador #prueba3:hover{
+			margin-bottom:300px;
+		}
+		hr{
+			margin:0px;
+			width:200px;
+			size:30px;
+			color:white;
 		}
 	</style>
 
@@ -63,7 +103,7 @@ echo" </pre> ";*/
   <body>
   	<!-- body code goes here -->
     <header>
-	 	<nav class="color-cabezera container-fluid" style="padding:0px;">
+	 	<nav class="color-cabezera container-fluid" style="padding:0px;position:fixed;z-index:1;">
 			<div class="row">
 				<div class="col-lg-2 col-3 d-flex align-items-center" >
 					<!-- <button style="border:none;background:none;margin-right:15px;padding:0px;"  type="button" -->
@@ -72,54 +112,66 @@ echo" </pre> ";*/
 					aria-controls="offcanvasScrolling"
 					><img style="width:10px;padding:15px;padding-bottom:20px;padding-top:20px;" class="color-menu" src="imagenes/open-menu.png" alt=""></button>
 				
-					<div style="background-color:#0A4970; height:520px;"
-						class="offcanvas offcanvas-middle" tabindex="-1"
+					<div style="background-color:#0A4970;padding:0px;margin:0px;height:537px;width:300px;"
+						class="offcanvas offcanvas" tabindex="-1"
 						data-bs-scroll="true" data-bs-backdrop="false"
-						id="offcanvasScrolling"	aria-labelledby="offcanvasScrolling'"
-					>
-					<button type="button"  data-bs-dismiss="offcanvas" aria-label="Close" style="margin-left:280px;background:none;border:none;margin-top:20px;" ><img src="imagenes/Grupo 18.png" alt=""></button>	
-					<div class="offcanvas-header">					
-					<ul style="list-style-type:none;align-items:left">
-						<li style="margin-left:40px;">
-						</li>
-						<li><a href=""><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px; color:white;">
-							<img src="imagenes/taquilla.png" alt="" style="width:30px;">  Taquilla Parque
-						</h6></a>
-							<ul>
+						id="offcanvasScrolling"	aria-labelledby="offcanvasScrolling'">
+					<button type="button" id="btnCerrar" data-bs-dismiss="offcanvas" aria-label="Close" style="margin-left:250px;background:none;border:none;margin-top:10px;" ><img src="imagenes/close-colorblanco.png" style="width:10px;"></button>	
+						<div class="offcanvas-header">					
+						<ul style="list-style-type:none;align-items:left" id="nav" class="administracion"> 
+							<div style="width:500px;margin-left:0px;" id="controlador">
+								<li id="primer"><a><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px; color:white;">
+									Administración</h6><hr style="margin-top:5px;position:absolute;"></a>
+									<ul>
+										<li>
+											<a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:20px;margin-right:80px; color:white;">Seguridad y Permisos</h6></a><hr> 
+											<ul>
+												<li>
+													<a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:10px;margin-right:80px; color:white;">Usuarios</h6></a><hr> 
+												</li>
+												<li>
+													<a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:10px;margin-right:80px; color:white;">Perfiles</h6></a><hr>
+												</li>
+												<li>
+													<a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:10px;margin-right:80px; color:white;">Notificaciones</h6></a><hr>
+												</li>
+											</ul>
+										</li>
+										<li>
+											<a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:10px;margin-right:80px; color:white;">Sistemas</h6></a><hr>
+										</li>
+										<li>
+											<a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:10px;margin-right:80px; color:white;">Perifericos</h6></a><hr>
+										</li>
+									</ul>
+								</li>
+								<li id="prueba"><a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
+									<img src="" alt="" style="width:30px;">Taquilla Parqueadero</h6><hr style="margin-top:10px;position:absolute;"></a>
+									<ul>
 
-							</ul>
-						</li>
-						<li><a href=""><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
-							<img src="imagenes/carros.png" alt="" style="width:30px;">  Taquilla Parqueadero
-						</h6></a>
-							<ul>
-
-							</ul>
-						</li>
-						<li><a href=""><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
-							<img src="imagenes/configuraciones.png" alt="" style="width:30px;">  Herramientas
-						</h6></a>
-							<ul>
-								
-							</ul>
-						</li>
-						<li><a href=""><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
-							<img src="imagenes/configuraciones2.png" alt="" style="width:30px;">  Configuración
-						</h6></a>
-							<ul>
-								
-							</ul>
-						</li>
-						<li><a href=""><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
-							<img src="imagenes/ayuda.png" alt="" style="width:30px;">  Ayuda
-						</h6></a>
-							<ul>
-								
-							</ul>
-						</li>
-					</ul>
+									</ul>
+								</li>
+								<li id="prueba1"><a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
+									<img src="" alt="" style="width:30px;">Herramientas</h6><hr style="margin-top:10px;position:absolute;"></a>
+									<ul>
+										
+									</ul>
+								</li>
+								<li id="prueba2"><a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
+									<img src="" alt="" style="width:30px;">Configuración</h6><hr style="margin-top:10px;position:absolute;"></a>
+									<ul>
+									</ul>
+								</li>
+								<li id="prueba3"><a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
+									<img src="" alt="" style="width:30px;">Ayuda</h6><hr style="margin-top:10px;position:absolute;"></a>
+									<ul>
+									</ul>
+								</li>
+							</div>
+						</ul>
+							
 					</div>
-					</div>
+				</div>
 					<!-- Menú Tipo Hamburguesa inicio -->
 
 				    <figure class="pt-3">
