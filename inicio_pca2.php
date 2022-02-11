@@ -87,7 +87,7 @@ echo" </pre> ";*/
 	$(document).on("click", "#taquilla", function(){
 
 		//$("#contenido").load("punto_de_venta.html")
-		window.location.href="punto_de_venta.html";
+		window.location.href="taquilla.php";
 		
 	});
 

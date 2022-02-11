@@ -1,3 +1,10 @@
+<?php
+session_start();
+include('php/sesion.php');
+/*echo" <pre> ";
+print_r($_SESSION);
+echo" </pre> ";*/
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -45,6 +52,12 @@
 			z-index: 300;
 		}
 
+		.selectAltura {
+			display:block;
+			height:30px;
+			width:200px;
+		}
+
 	</style>
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
@@ -61,15 +74,161 @@
 
 	<script>
 
-	$(document).on("click", ".boleta-add", function(){
-		alert("agregar al carrito")
-	});
+$(document).on("click", ".boleta-add", function(){
+        
+
+		// alert("idboleta"+$(this).attr("idtipoBoleta"));
+ 
+		 var boletas_carrito= localStorage.getItem('boletas_carrito');
+ 
+ 
+		 //var boleta_local= localStorage.getItem('idtipoBoleta_'+$(this).attr("idtipoBoleta"));
+ 
+		 if(boletas_carrito==null || boletas_carrito==undefined){
+ 
+		   var arr_boletas_carrito=Array();
+ 
+		   var indice=$(this).attr("idboleta")
+ 
+		   if(indice>0){
+			 console.log("indice -1")
+			 console.log(indice)
+ 
+			 arr_boletas_carrito[indice]=1;
+ 
+			 console.log("arr_boletas_carrito -1")
+ 
+			 console.log(arr_boletas_carrito)
+ 
+			 var json_boletas_carrito=JSON.stringify(arr_boletas_carrito);
+ 
+			 console.log("json_boletas_carrito -1")
+			 console.log(json_boletas_carrito)
+			 
+			 localStorage.setItem('boletas_carrito',json_boletas_carrito);
+ 
+			 console.log("paso por el if")
+ 
+		   }
+ 
+		   
+		 }else{
+ 
+		   var arr_boletas_carrito = JSON.parse(boletas_carrito);
+		   if(arr_boletas_carrito[$(this).attr("idboleta")]==null){
+			 arr_boletas_carrito[$(this).attr("idboleta")]=1;
+		   }else{
+			 arr_boletas_carrito[$(this).attr("idboleta")]++;
+		   }
+		  
+		   
+		   var json_boletas_carrito=JSON.stringify(arr_boletas_carrito);
+		   
+		   localStorage.setItem('boletas_carrito',json_boletas_carrito);
+		   console.log("paso por el else")
+		 }
+ 
+		 console.log("actual")
+		 console.log(localStorage.getItem('boletas_carrito'));
+ 
+		 var arr_recorrer= JSON.parse( localStorage.getItem('boletas_carrito'));
+ 
+		 console.log("arr_recorrer")
+ 
+		 console.log(arr_recorrer);
+ 
+		 /*modal.style.display = "block";
+				 body.style.position = "static";
+				 body.style.height = "100%";
+				 body.style.overflow = "hidden";*/
+ 
+		 
+ 
+		   var cont=1;
+ 
+		   var long= 0;
+		   console.log("arr_recorrer"+arr_recorrer)
+		   if(arr_recorrer!=null){
+ 
+ 
+			 arr_recorrer.forEach(function(cant, idbo) {
+			   if(cant>0){
+				 long++;
+			   }
+			 });
+ 
+			 console.log("long:"+long)
+ 
+		   var str_div=''
+ 
+		   var sumatoria=0;
+		   var sumatoria_sub=0;
+ 
+		 arr_recorrer.forEach(function(cant, idbo) {
+		   //width="100" height="100"
+ 
+		   
+ 
+ 
+			 if(cont==1){
+			   //str_div=str_div+'<table class="table">  ';
+			 }
+ 
+			 if(cant!=null && cant!=0){
+			   console.log("idboleta:"+idbo+" cant:"+cant);
+			   var datosBoleta=retornarDatosBoleta(idbo);
+			   console.log(datosBoleta)
+ 
+			 sumatoria+=parseFloat(cant)*parseFloat(datosBoleta['precio'])
+			 sumatoria_sub=parseFloat(cant)*parseFloat(datosBoleta['precio'])
+
+			 
+ 
+			  // str_div=str_div+'<tr id="tr_bol_'+idbo+'" class="productos">  <td><img <img src="http://20.44.111.223/api/contenido/imagen/' + datosBoleta['imagenId'] + '" //width="100" height="60" ></td> <td> <b>'+datosBoleta['nombre']+'</b> <br> $'+datosBoleta['precio']+' </td> <td> <input type="button" style="width : 30px;" class="restar" id="'+idbo+'" value="-" ><input type="text" style="width : 30px;" id="inp_car'+idbo+'" value="'+cant+'"><input type="button" style="width : 30px;" class="sumar" id="'+idbo+'" value="+" > </td> <td><a  class="btn  eliminar_producto" id="'+datosBoleta['id']+'" > <img src="eliminar.png" width="20" height="20" > </a></td>  </tr>'
+
+
+			   str_div=str_div+'<div class="px-2">	 <div class="row no-gutters" style="border-bottom: #D8D4C1 solid 1px;">						 <div class="col-7">	  <h3 class="textos-medios pt-2">'+datosBoleta['nombre']+'</h3>	  	<div class="d-flex">			 	<p class="textos-azules pt-1" style="font-size: 10px;">'+cant+' Unidad / $'+datosBoleta['precio'].toLocaleString()+' / Units</p>						 	</div>	 </div>	 <div class="col-5 d-flex align-items-center justify-content-lg-end no-gutters">			   <div class="row no-gutters justify-content-end">	 <div class="col-12" style="text-align: right"><img src="imagenes/menos.svg" width="20%" alt=""></div>	 <div class="col-12" style="font-size: 18px; text-align: right">$'+sumatoria_sub.toLocaleString()+'</div> 	</div>	  </div>	 </div>	 	</div>'
+ 
+			   if(cont==long){
+				 console.log("paso por el final, cont:"+cont+" , long:"+long)
+				// str_div=str_div+'</table>';
+				str_div=str_div+'<div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">TOTAL</div>    <div style="font-size: 24px;">$'+sumatoria.toLocaleString()+'</div></div>'
+				// str_div=str_div+' <br> <div style="text-align:right" ><a class="btn eliminar_todo derecha"><span class="derecha">Vaciar carrito <img src="trash2.jpg" width="20" height="20" > </span></a></div><br> <hr class="bg-success border-2 border-top border-success"> <span class="derecha"><h3 id="div_subtotal">Subtotal $'+sumatoria.toLocaleString()+'  </h3></span> <br><a  class="btn btn-primary irapagar"  style="border-style:none;background-color:rgb(131, 204, 22);;margin-left:350px;border-radius:20px;height:30px;width:130px;font-size:13px;padding-top:5px;"><b>Ir a pagar</b></a>';
+			   }
+ 
+			   cont++;
+ 
+			 }
+			 
+		 });
+ 
+ 
+		   }
+		   
+ 
+		   
+ 
+ 
+		 
+ 
+		   $("#div_productos").html(str_div)
+ 
+		 
+ 
+		// if( ;  )
+ });
 
 	$(document).on("click", ".regresar", function(){
 		window.location.href="inicio_pca2.php";
 	});
 
-	function iniciar_proceso(){
+	$(document).on("click", "#restablecer", function(){
+		//alert("Holi")
+		localStorage.clear();
+		location.reload();
+	});
+
+/*	function iniciar_proceso(){
 	//$(document).on("click", "#iniciar", function(){
 
 		validarToken();
@@ -124,7 +283,7 @@
             $("#boletas").html(str_remp);
           });
 
-	}
+	}*/
 
 
 	window.onload = function () {
@@ -184,11 +343,22 @@
 				   </figure>
 			   </div>
 			   <div class="d-flex justify-content-start">
-				   <div class="px-2 pt-3 "><input type="text" class="campo" value="Tipo de Documento" style="height: 30px;"></div>
-				   <div class="px-2 pt-3 "><input type="text" class="campo" value="Número de Documento" style="height: 30px;"></div>
-				   <div class="px-2 pt-3 "><input type="text" class="campo" value="Nombre" style="height: 30px;"></div>
-				   <div class="px-2 pt-3 "><input type="text" class="campo" value="Email" style="height: 30px;"></div>
-				   <div class="px-2 pt-3 "><input type="text" class="campo" value="Teléfono" style="height: 30px;"></div>
+				   <div class="px-2 pt-3 ">
+
+				   <select class="selectAltura" id="tipo_documento" >
+					   <option value="">Seleccione</option>
+					   <option value="cc" >Cedula Ciudadania</option>
+					   <option value="ce">Cedula Estranjeria</option>
+					   <option vlaue="pa">Pasaporte</option>
+				   </select>
+					   
+				   
+				
+				</div>
+				   <div class="px-2 pt-3 "><input type="text" class="campo" id="numero_documento" placeholder="Número de Documento" style="height: 30px;"></div>
+				   <div class="px-2 pt-3 "><input type="text" class="campo" id="nombre" placeholder="Nombre" style="height: 30px;"></div>
+				   <div class="px-2 pt-3 "><input type="text" class="campo" id="apellido" placeholder="Email" style="height: 30px;"></div>
+				   <div class="px-2 pt-3 "><input type="text" class="campo" id="telefono" placeholder="Teléfono" style="height: 30px;"></div>
 			   </div>
 			   <div class="d-flex align-items-center justify-content-end">
 				   <div style="background: #012E4B" class="py-3 px-2"><img src="imagenes/back.svg" alt=""/></div>
@@ -270,127 +440,22 @@
 					</div>
 				   
 					  <div class="row no-gutters pt-3" id="boletas">
-					  		<div class="col-lg-4 p-2">
-								<div class="sombra2 panel2" style="padding: 0px;" >
-									<div style="background: #E5AFB0; height: 180px; border-radius: 20px 20px;">
-										<div class="pt-3 d-flex justify-content-end pr-2">
-										<img src="imagenes/info.png" width="15%" alt=""/> </div>
-									</div>
-										<div class="p-2">
-											<h4 class="pt-2">Titulo articulo</h4>
-											<div><h2>$10,378,770</h2></div>
-											
-										</div>
-								</div>
-						    </div>
-						  <div class="col-lg-4 p-2">
-						  	<div class="sombra2 panel2" style="padding: 0px;" >
-								<div style="background: #E5AFB0; height: 180px; border-radius: 20px 20px;">
-									<div class="pt-3 d-flex justify-content-end pr-2">
-								    <img src="imagenes/info.png" width="15%" alt=""/> </div>
-								</div>
-									<div class="p-2">
-										<h4 class="pt-2">Titulo articulo</h4>
-										<div><h2>$10,378,770</h2></div>
-										
-									</div>
-							</div>
-						  </div>
-						  <div class="col-lg-4 p-2">
-						  	<div class="sombra2 panel2" style="padding: 0px;" >
-								<div style="background: #E5AFB0; height: 180px; border-radius: 20px 20px;">
-									<div class="pt-3 d-flex justify-content-end pr-2">
-								    <img src="imagenes/info.png" width="15%" alt=""/> </div>
-								</div>
-									<div class="p-2">
-										<h4 class="pt-2">Titulo articulo</h4>
-										<div><h2>$10,378,770</h2></div>
-										
-									</div>
-							</div>
-						  </div>
+					  		 
+						    
 					  </div>
 					  
 				   </div>		  
 				</div>
 				<div class="col-lg-4 p-2">
-					<div class="text-lg-right pb-2" style="font-size: 13px;"><a href="">Restablecer</a></div>
-					<div class="panel3 sombra p-0" style="background:#FFFCEF">
-						<div class="px-2">
-							<div class="row no-gutters" style="border-bottom: #D8D4C1 solid 1px;">
-										<div class="col-7">
-									<h3 class="textos-medios pt-2">Titulo articulo</h3>
-								<div class="d-flex">
-									
-									<p class="textos-azules pt-1" style="font-size: 10px;">2.000 Unidad / $39.40 / Units</p>
-								</div>
-								</div>
-								<div class="col-5 d-flex align-items-center justify-content-lg-end no-gutters">
-								  <div class="row no-gutters justify-content-end">
-										<div class="col-12" style="text-align: right"><img src="imagenes/menos.svg" width="20%" alt=""/></div>
-										<div class="col-12" style="font-size: 18px; text-align: right">$10,378,770</div>
-									</div>
-									
-								</div>
-								</div>
-						</div>
-						<div class="px-2">
-							<div class="row no-gutters" style="border-bottom: #D8D4C1 solid 1px;">
-										<div class="col-7">
-									<h3 class="textos-medios pt-2">Titulo articulo</h3>
-								<div class="d-flex">
-									
-									<p class="textos-azules pt-1" style="font-size: 10px;">2.000 Unidad / $39.40 / Units</p>
-								</div>
-								</div>
-								<div class="col-5 d-flex align-items-center justify-content-lg-end no-gutters">
-								  <div class="row no-gutters justify-content-end">
-										<div class="col-12" style="text-align: right"><img src="imagenes/menos.svg" width="20%" alt=""/></div>
-										<div class="col-12" style="font-size: 18px; text-align: right">$10,378,770</div>
-									</div>
-									
-								</div>
-								</div>
-						</div>
-						<div class="px-2">
-							<div class="row no-gutters" style="border-bottom: #D8D4C1 solid 1px;">
-										<div class="col-7">
-									<h3 class="textos-medios pt-2">Titulo articulo</h3>
-								<div class="d-flex">
-									
-									<p class="textos-azules pt-1" style="font-size: 10px;">2.000 Unidad / $39.40 / Units</p>
-								</div>
-								</div>
-								<div class="col-5 d-flex align-items-center justify-content-lg-end no-gutters">
-								  <div class="row no-gutters justify-content-end">
-										<div class="col-12" style="text-align: right"><img src="imagenes/menos.svg" width="20%" alt=""/></div>
-										<div class="col-12" style="font-size: 18px; text-align: right">$10,378,770</div>
-									</div>
-									
-								</div>
-								</div>
-						</div>
-						<div class="px-2">
-							<div class="row no-gutters" style="border-bottom: #D8D4C1 solid 1px;">
-										<div class="col-7">
-									<h3 class="textos-medios pt-2">Titulo articulo</h3>
-								<div class="d-flex">
-									
-									<p class="textos-azules pt-1" style="font-size: 10px;">2.000 Unidad / $39.40 / Units</p>
-								</div>
-								</div>
-								<div class="col-5 d-flex align-items-center justify-content-lg-end no-gutters">
-								  <div class="row no-gutters justify-content-end">
-										<div class="col-12" style="text-align: right"><img src="imagenes/menos.svg" width="20%" alt=""/></div>
-										<div class="col-12" style="font-size: 18px; text-align: right">$10,378,770</div>
-									</div>
-									
-								</div>
-								</div>
-						</div>
-						<div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">
+					<div class="text-lg-right pb-2" style="font-size: 13px;"><a id="restablecer" href="#">Restablecer</a></div>
+					<div class="panel3 sombra p-0" id="div_productos" style="background:#FFFCEF">
+						 
+					
+						 
+						 
+						<div style="background: #EEEEFF"  class="p-2 d-flex justify-content-between">
 							<div class="pt-2">TOTAL</div>
-							<div style="font-size: 24px;">$10,378,770</div>
+							<div style="font-size: 24px;">$0</div>
 						</div>
 					</div>
 					<div class="panel3 sombra mt-3">

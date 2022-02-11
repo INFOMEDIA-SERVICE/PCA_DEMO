@@ -1,4 +1,22 @@
+function retornarDatosBoleta(idboleta){
+    var json_boletas_nombres=localStorage.getItem('boletas_nombres');
+    var arr_boletas_nombres= JSON.parse(json_boletas_nombres);
 
+    console.log('arr_boletas_nombres *****')
+    console.log(arr_boletas_nombres)
+    var reto='';
+    arr_boletas_nombres.forEach(function(boleta, index) {
+        
+        if(boleta['id']==idboleta){
+          reto= boleta
+        }
+
+       
+     });
+
+     return(reto);
+
+  } 
 
 function cargar_datos_taquilla(){
     console.log('Cargar datos'); 
@@ -14,6 +32,9 @@ function cargar_datos_taquilla(){
                     console.log('CORRECTO 200');
                     console.log(r2)                
                     var str_remp='';
+
+                    localStorage.setItem('boletas_nombres',JSON.stringify(r2['resultado']))
+                    //console.log();
                     $.each(r2.resultado, function(m, n) {
                         //console.log(n);
                         //var img_ext = atracciones.imagenUrl;
@@ -37,7 +58,7 @@ function cargar_datos_taquilla(){
                             
                             
 
-                            str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye boleta-info" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 boleta-add" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> </div>     </div>      </div>';
+                            str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye boleta-info" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 boleta-add" idboleta="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> </div>     </div>      </div>';
                     });				             
                     str_remp=str_remp+'</div> '
 
