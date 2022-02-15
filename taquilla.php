@@ -58,6 +58,15 @@ echo" </pre> ";*/
 			width:200px;
 		}
 
+		.tipo_pago_check{
+			background:#FFFFFF; 
+			border: #D4D4D4 solid 1px; 
+			border-radius: 10px;
+		}
+	
+
+		
+
 	</style>
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
@@ -73,6 +82,62 @@ echo" </pre> ";*/
 	<script src="js/views/taquilla.js"></script>
 
 	<script>
+
+	var modal = document.getElementById("myModal");
+	var btn = document.getElementsByClassName("btnModal");
+	var span = document.getElementsByClassName("close")[0];
+	var body = document.getElementsByTagName("body")[0];
+
+
+
+	$(document).on("click", ".informacion", function(){
+        
+		 
+		$("#miModal").modal("show");
+
+		var idboleta=$(this).attr('idboleta');
+
+		var info_boletas= JSON.parse( localStorage.getItem('boletas_nombres'));
+
+		console.log(info_boletas);
+
+		var str_remp='';
+
+		info_boletas.forEach(function(datos, index) { 
+
+
+			console.log(datos);
+			if(idboleta== datos['id'] ){
+				console.log("Encontre la boleta"+datos['id']);
+
+
+			}
+
+		});
+
+
+
+		
+		 
+  
+	 });
+
+
+	 $(document).on("click", ".close", function(){
+        
+		 
+		
+
+		$("#miModal").modal("hide");
+		 
+  
+	 });
+
+
+
+
+
+
 
 $(document).on("click", ".boleta-add", function(){
         
@@ -222,10 +287,84 @@ $(document).on("click", ".boleta-add", function(){
 		window.location.href="inicio_pca2.php";
 	});
 
+	$(document).on("click", ".numeros", function(){
+
+		if( $("#div_efectivo").hasClass('tipo_pago_check')  ){
+			//alert("Selecciono alguna de las dos")
+
+			var acumulado=$("#suma_efectivo").attr('acumulado');
+
+			var new_acumulado='';
+
+			if(acumulado=='0'){
+				 new_acumulado = $(this).attr('id');
+				 //alert("paso por el if")
+			}else{
+				 new_acumulado=acumulado+''+$(this).attr('id');
+				 //alert("paso por el else")
+			}
+
+			//alert("new acumulado 1: "+new_acumulado)
+
+			new_acumulado=parseInt(new_acumulado)
+
+			//alert("new acumulado 2: "+new_acumulado)
+
+			$("#suma_efectivo").html('$'+ new_acumulado.toLocaleString() );
+			$("#suma_efectivo").attr('acumulado', new_acumulado)
+
+
+
+		}else if( $("#div_tarjeta").hasClass('tipo_pago_check')){
+
+
+			var acumulado=$("#suma_tarjeta").attr('acumulado');
+
+			var new_acumulado='';
+
+			if(acumulado=='0'){
+				 new_acumulado = $(this).attr('id');
+				 //alert("paso por el if")
+			}else{
+				 new_acumulado=acumulado+''+$(this).attr('id');
+				 //alert("paso por el else")
+			}
+
+			//alert("new acumulado 1: "+new_acumulado)
+
+			new_acumulado=parseInt(new_acumulado)
+
+			//alert("new acumulado 2: "+new_acumulado)
+
+			$("#suma_tarjeta").html('$'+ new_acumulado.toLocaleString() );
+			$("#suma_tarjeta").attr('acumulado', new_acumulado)
+
+
+
+
+		} else{
+			alert("No selecciono ninguna")
+		}
+
+
+		var num=$(this).attr('id');
+		//alert("num:"+num);
+	});
+
 	$(document).on("click", "#restablecer", function(){
 		//alert("Holi")
 		localStorage.clear();
 		location.reload();
+	});
+
+	$(document).on("click", "#div_efectivo", function(){
+		$("#div_efectivo").addClass("tipo_pago_check");
+		$("#div_tarjeta").removeClass("tipo_pago_check");
+	});
+
+	$(document).on("click", "#div_tarjeta", function(){
+		$("#div_efectivo").removeClass("tipo_pago_check");
+		$("#div_tarjeta").addClass("tipo_pago_check");
 	});
 
 /*	function iniciar_proceso(){
@@ -462,13 +601,14 @@ $(document).on("click", ".boleta-add", function(){
 						<div class="d-flex p-1 justify-content-between no-gutters">
 							<div class="col-lg-7 p-1">
 								<div style="background: #EEEEFF; border-radius: 10px;" class="p-1 pb-3" >
-									<div class="p-1 d-flex justify-content-between" style="background:#FFFFFF; border: #D4D4D4 solid 1px; border-radius: 10px;">
-									<div style="font-size: 12px;">Efectivo</div>
-									<div style="font-size: 16px;">$10,378,200</div>
-										</div>
-									<div class="d-flex justify-content-between pt-3">
+
+									<div class="p-1 d-flex justify-content-between" style="cursor:pointer" id="div_efectivo">
+										<div style="font-size: 12px;">Efectivo</div>
+										<div style="font-size: 16px;" id="suma_efectivo" acumulado="0">$0</div>
+									</div>
+									<div class="d-flex justify-content-between pt-3" style="cursor:pointer" id="div_tarjeta">
 										<div style="font-size: 12px;">Tarjeta</div>
-									<div style="font-size: 16px;">$10,378,200</div>
+										<div style="font-size: 16px;" id="suma_tarjeta" acumulado="0">$0</div>
 									</div>
 									
 								</div>
@@ -477,24 +617,67 @@ $(document).on("click", ".boleta-add", function(){
 							</div>
 							<div class="col-lg-4">
 								<div class="row no-gutters">
-									<div class="p-1 col-4 text-center"><img src="imagenes/1.jpg" width="100%" alt=""/></div>
-									<div class="p-1 col-4 text-center"><img src="imagenes/2.jpg" width="100%" alt=""/></div>
-									<div class="p-1 col-4 text-center"><img src="imagenes/3.jpg" width="100%" alt=""/></div>
-									<div class="p-1 col-4 text-center"><img src="imagenes/4.jpg" width="100%" alt=""/></div>
-									<div class="p-1 col-4 text-center"><img src="imagenes/5.jpg" width="100%" alt=""/></div>
-									<div class="p-1 col-4 text-center"><img src="imagenes/6.jpg" width="100%" alt=""/></div>
-									<div class="p-1 col-4 text-center"><img src="imagenes/7.jpg" width="100%" alt=""/></div>
-									<div class="p-1 col-4 text-center"><img src="imagenes/8.jpg" width="100%" alt=""/></div>
-									<div class="p-1 col-4 text-center"><img src="imagenes/9.jpg" width="100%" alt=""/></div>
+									<div class="p-1 col-4 text-center numeros" id="1"  style="cursor:pointer" ><img src="imagenes/1.jpg" width="100%" alt=""/></div>
+									<div class="p-1 col-4 text-center numeros" id="2" style="cursor:pointer"><img src="imagenes/2.jpg" width="100%" alt=""/></div>
+									<div class="p-1 col-4 text-center numeros" id="3" style="cursor:pointer"><img src="imagenes/3.jpg" width="100%" alt=""/></div>
+									<div class="p-1 col-4 text-center numeros" id="4" style="cursor:pointer"><img src="imagenes/4.jpg" width="100%" alt=""/></div>
+									<div class="p-1 col-4 text-center numeros" id="5"  style="cursor:pointer"><img src="imagenes/5.jpg" width="100%" alt=""/></div>
+									<div class="p-1 col-4 text-center numeros" id="6"  style="cursor:pointer"><img src="imagenes/6.jpg" width="100%" alt=""/></div>
+									<div class="p-1 col-4 text-center numeros" id="7"  style="cursor:pointer"><img src="imagenes/7.jpg" width="100%" alt=""/></div>
+									<div class="p-1 col-4 text-center numeros" id="8"  style="cursor:pointer"><img src="imagenes/8.jpg" width="100%" alt=""/></div>
+									<div class="p-1 col-4 text-center numeros" id="9"  style="cursor:pointer"><img src="imagenes/9.jpg" width="100% numeros" alt=""/></div>
 									<div class="p-1 col-4 text-center"></div>
-									<div class="p-1 col-4 text-center"><img src="imagenes/0.jpg" width="100%" alt=""/></div>
-									<div class="p-1 col-4 text-center"><img src="imagenes/x.jpg" width="100%" alt=""/></div>
+									<div class="p-1 col-4 text-center numeros" id="0" style="cursor:pointer"><img src="imagenes/0.jpg" width="100%" alt=""/></div>
+									<div class="p-1 col-4 text-center borrar_num" style="cursor:pointer"><img src="imagenes/del.jpg" width="100%" alt=""/></div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			 </div>
+
+			<div id="miModal" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+					<!-- Contenido del modal -->
+					<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body" id="contenidoModal">
+						<div class="centrado" ><h2> Boleta Adultos </h2></div>
+
+						<table class="table-bordered" >
+							<tr>
+								<td > <h3>Precio:  </h3> </td>
+								<td colspan="2" class="centrado" > <h4>$50.000 </h4></td>
+							</tr>
+							<tr>
+								<td > <h3>Descripcion:  </h3> </td>
+								<td colspan="2" class="centrado" > <h4>Boleta diseñada para aventureros y amantes a los deportes extremos. (incluye almuerzo) </h4></td>
+							</tr>
+
+							<tr>
+								<td > <h3> Categoria Edad:  </h3> </td>
+								<td colspan="2" class="centrado" > <h4> De 18 a 99 años</h4></td>
+							</tr>
+							
+						</table><br><br>
+
+						<div  ><h2> Atracciones </h2></div>
+
+
+						<table class="table-bordered">
+
+						</table>
+
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+					</div>
+					</div>
+				</div>
+			</div>
 		 </section>
 	  </main>
 	   
