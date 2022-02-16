@@ -495,6 +495,18 @@ $(document).on("click", ".boleta-add", function(){
 		location.reload();
 	});
 
+	$(document).on("click", "#pagar", function(){
+		var identificacion=localStorage.getItem('identificacion_cliente');
+		if(identificacion!=null){
+			console.log("Cliente Existe");
+		}else{
+			console.log("Hay que crear el cliente")
+			alert("Crear Cliente")
+		}
+
+		alert("Generar Reserva");
+	});
+
 	$(document).on("click", "#div_efectivo", function(){
 		$("#div_efectivo").addClass("tipo_pago_check");
 		$("#div_tarjeta").removeClass("tipo_pago_check");
@@ -779,7 +791,7 @@ $(document).on("click", ".boleta-add", function(){
 									
 									</div>
 								
-								<div class="text-right pt-5"><input type="button" style="width: 100%" value="PAGAR"></div>
+								<div class="text-right pt-5"><input type="button" style="width: 100%" value="PAGAR" id="pagar"></div>
 							</div>
 							<div class="col-lg-4">
 								<div class="row no-gutters">

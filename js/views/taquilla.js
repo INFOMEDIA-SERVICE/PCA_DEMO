@@ -96,9 +96,13 @@ function validar_cliente(tipo_documento,numero_documento){
 
                     var telefono= r2['resultado'][0]['telefono'];
 
+                    var identificacion_cliente=r2['resultado'][0]['identificacion']['numero'];
+
                     $("#nombre").val(nombre);
                     $("#email").val(email);
-                    $("#telefono").val(telefono)
+                    $("#telefono").val(telefono);
+
+                    localStorage.setItem('identificacion_cliente',identificacion_cliente)
                    
                 }else{
                     console.log(r2.resultado.status);
