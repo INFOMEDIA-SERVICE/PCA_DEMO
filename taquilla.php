@@ -90,7 +90,34 @@ echo" </pre> ";*/
 	var span = document.getElementsByClassName("close")[0];
 	var body = document.getElementsByTagName("body")[0];
 
+		function recalcular_cambio(){
+			/* calculo el cambio */
+		var sum_ef=$("#suma_efectivo").attr('acumulado');
+		var sum_ta=$("#suma_tarjeta").attr('acumulado');
 
+		var valor_total_suma= parseInt(sum_ef)+parseInt(sum_ta);
+
+		var sumatoria_productos=$("#sumatoria_total").attr('val_sum');
+
+		var cambio= parseFloat(valor_total_suma)-parseFloat(sumatoria_productos);
+		
+
+		if(cambio==0){
+
+			$("#cambio").html('<h2>Cambio: <span class="badge bg-success">$'+cambio.toLocaleString()+'</span></h2>')
+
+		}else if(cambio>0){
+
+			$("#cambio").html('<h2>Cambio: <span class="badge bg-danger">$'+cambio.toLocaleString()+'</span></h2>')
+
+		}else if (cambio<0){
+
+			$("#cambio").html('<h2>Cambio: <span class="badge bg-light text-dark">$'+cambio.toLocaleString()+'</span></h2>')
+
+		}
+
+		
+		}
 
 	$(document).on("click", ".informacion", function(){
         
@@ -189,7 +216,7 @@ echo" </pre> ";*/
 
 
 
-
+		recalcular_cambio();
 
 
 		$(this).parent().parent().parent().parent().remove();
@@ -342,13 +369,58 @@ $(document).on("click", ".boleta-add", function(){
  
 		   $("#div_productos").html(str_div)
  
-		 
+		 recalcular_cambio();
  
 		// if( ;  )
  });
 
 	$(document).on("click", ".regresar", function(){
 		window.location.href="inicio_pca2.php";
+	});
+
+	$(document).on("click", ".borrar_num", function(){
+		if( $("#div_efectivo").hasClass('tipo_pago_check')  ){
+
+			var acumulado=$("#suma_efectivo").attr('acumulado');
+
+			console.log('acumulado_antes:'+acumulado)
+
+			var str2 = acumulado.substring(0, acumulado.length - 1);
+
+			if(str2==''){
+				console.log("llego al cero!!!!!")
+				str2=0;
+			}
+
+			console.log('acumulado_despues:'+str2)
+
+			$("#suma_efectivo").attr('acumulado',str2);
+
+			$("#suma_efectivo").html('$'+str2.toLocaleString());
+
+		}else if( $("#div_tarjeta").hasClass('tipo_pago_check')){
+
+			var acumulado=$("#suma_tarjeta").attr('acumulado');
+
+			console.log('acumulado_antes:'+acumulado)
+
+			var str2 = acumulado.substring(0, acumulado.length - 1);
+
+			if(str2==''){
+				console.log("llego al cero!!!!!")
+				str2=0;
+			}
+
+			console.log('acumulado_despues:'+str2)
+
+			$("#suma_tarjeta").attr('acumulado',str2);
+
+			$("#suma_tarjeta").html('$'+str2.toLocaleString());
+
+		}
+
+		recalcular_cambio();
+
 	});
 
 	$(document).on("click", ".numeros", function(){
@@ -411,6 +483,8 @@ $(document).on("click", ".boleta-add", function(){
 		}
 
 
+		recalcular_cambio()
+
 		var num=$(this).attr('id');
 		//alert("num:"+num);
 	});
@@ -430,6 +504,27 @@ $(document).on("click", ".boleta-add", function(){
 		$("#div_efectivo").removeClass("tipo_pago_check");
 		$("#div_tarjeta").addClass("tipo_pago_check");
 	});
+
+
+	$(document).on("blur", "#numero_documento", function(){
+		//alert("Holaaaa!!!!")
+
+		var tipo_documento=$("#tipo_documento").val();
+
+		var numero_documento=$("#numero_documento").val();
+
+		if(tipo_documento!='' && numero_documento!=''){
+
+			validar_cliente(tipo_documento,numero_documento);
+
+		}
+
+		//console.log('tipo_documento:'+tipo_documento+' numero_documento:'+numero_documento)
+
+
+	});
+
+	
 
 /*	function iniciar_proceso(){
 	//$(document).on("click", "#iniciar", function(){
@@ -550,9 +645,9 @@ $(document).on("click", ".boleta-add", function(){
 
 				   <select class="selectAltura" id="tipo_documento" >
 					   <option value="">Tipo de Documento</option>
-					   <option value="cc" >Cedula Ciudadania</option>
-					   <option value="ce">Cedula Estranjeria</option>
-					   <option vlaue="pa">Pasaporte</option>
+					   <option value="CC" >Cedula Ciudadania</option>
+					   <option value="CE">Cedula Estranjeria</option>
+					   <option vlaue="PAS">Pasaporte</option>
 				   </select>
 					   
 				   
@@ -560,7 +655,7 @@ $(document).on("click", ".boleta-add", function(){
 				</div>
 				   <div class="px-2 pt-3 "><input type="text" class="campo" id="numero_documento" placeholder="Número de Documento" style="height: 30px;"></div>
 				   <div class="px-2 pt-3 "><input type="text" class="campo" id="nombre" placeholder="Nombre" style="height: 30px;"></div>
-				   <div class="px-2 pt-3 "><input type="text" class="campo" id="apellido" placeholder="Email" style="height: 30px;"></div>
+				   <div class="px-2 pt-3 "><input type="text" class="campo" id="email" placeholder="Email" style="height: 30px;"></div>
 				   <div class="px-2 pt-3 "><input type="text" class="campo" id="telefono" placeholder="Teléfono" style="height: 30px;"></div>
 			   </div>
 			   <div class="d-flex align-items-center justify-content-end">
@@ -674,8 +769,15 @@ $(document).on("click", ".boleta-add", function(){
 										<div style="font-size: 12px;">Tarjeta</div>
 										<div style="font-size: 16px;" id="suma_tarjeta" acumulado="0">$0</div>
 									</div>
+
+									
 									
 								</div>
+								<br>
+								<div class="d-flex justify-content-between " id="cambio">
+
+									
+									</div>
 								
 								<div class="text-right pt-5"><input type="button" style="width: 100%" value="PAGAR"></div>
 							</div>

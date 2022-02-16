@@ -171,6 +171,32 @@ session_start();
             echo json_encode(['sts'=>'OK', 'stsNo'=>$no, 'stsSi'=>$si]);         
         break;
 
+        case 9:
+
+            if ($token != '') {
+                
+
+                $array['tipoIdentificacion']=$tipo_identificacion;
+                $array['numeroIdentificacion']=$numero_documento;
+
+                $url = 'http://20.44.111.223:80/api/gestionClientes/cliente?tipoIdentificacion='.$tipo_identificacion.'&numeroIdentificacion='.$numero_documento;
+                //$rDatos = $atrac->cargarAtracciones($token);
+                $rDatos = $consumo->GetParam($url, $headers,$array); 
+                
+                if ($rDatos != '') {
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO']);
+                }
+
+            } else {
+                die('Se produjo un Error al generar el Token');
+            }  
+
+
+
+        break;
+
         default:
             echo 'No se seleccionó ninguna opción';
     }

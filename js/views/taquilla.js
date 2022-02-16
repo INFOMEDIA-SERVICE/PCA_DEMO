@@ -72,3 +72,42 @@ function cargar_datos_taquilla(){
         }        
     });    
 }
+
+
+function validar_cliente(tipo_documento,numero_documento){
+    console.log("Validare el cliente");
+    $.ajax({        
+        url: "ajax/ajxRequest.php",
+        data: { op: '9',tipo_identificacion:tipo_documento,numero_documento:numero_documento },
+        dataType: 'json',
+        type: 'POST',
+        //async: false,
+        success: function(r2) { 
+            
+            
+
+            if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
+                if(typeof r2.resultado.status === 'undefined'){
+                    console.log(r2['resultado'][0])
+
+                    var nombre=r2['resultado'][0]['nombreCompleto'];
+
+                    var email =r2['resultado'][0]['email'];
+
+                    var telefono= r2['resultado'][0]['telefono'];
+
+                    $("#nombre").val(nombre);
+                    $("#email").val(email);
+                    $("#telefono").val(telefono)
+                   
+                }else{
+                    console.log(r2.resultado.status);
+                }                                            
+               
+            }
+        }        
+    }); 
+
+
+
+}
