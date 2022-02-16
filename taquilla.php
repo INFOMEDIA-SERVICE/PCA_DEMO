@@ -55,7 +55,9 @@ echo" </pre> ";*/
 		.selectAltura {
 			display:block;
 			height:30px;
-			width:200px;
+			width:200px!important;
+			padding: 0.1em!important;
+			color:#707070 ;	
 		}
 
 		.tipo_pago_check{
@@ -110,13 +112,27 @@ echo" </pre> ";*/
 			if(idboleta== datos['id'] ){
 				console.log("Encontre la boleta"+datos['id']);
 
+				str_remp=str_remp+' <div class="centrado" ><h2>'+datos['nombre']+'</h2></div>	<table class="table-bordered" >	<tr> <td > <h3>Precio:  </h3> </td> <td colspan="2" class="centrado" > <h4>$'+datos['precio'].toLocaleString() +'</h4></td> </tr> <tr> <td > <h3>Descripcion:  </h3> </td> <td colspan="2" class="centrado" > <h4>'+datos['descripcion']+'</h4></td> </tr> <tr> <td > <h3> Categoria Edad:  </h3> </td> <td colspan="2" class="centrado" > <h4> De '+datos['categoriaEdad']['edadInicial']+' a '+datos['categoriaEdad']['edadFinal']+' años</h4></td> </tr> </table><br><br> <div  ><h2> Atracciones </h2></div> <table class="table-bordered"> ';
+				
+				datos['atracciones'].forEach(function(datos2, index2) {
+
+					str_remp=str_remp+' <tr> <td colspan="2"> '+datos2['nombre']+'</td> <td> <img src="http://20.44.111.223/api/contenido/imagen/' + datos2['imagenId'] + '" width="100" height="100" style="border-radius:10px;" class=" " alt=""> </td> </tr> ';
+
+
+				});
+				
+				
+				
+				
+				str_remp=str_remp+'</table> ';
+
 
 			}
 
 		});
 
 
-
+		$("#contenidoModal").html(str_remp)
 		
 		 
   
@@ -129,6 +145,54 @@ echo" </pre> ";*/
 		
 
 		$("#miModal").modal("hide");
+		 
+  
+	 });
+
+
+	 $(document).on("click", ".eliminar_producto", function(){
+        
+		var boletas_carrito=JSON.parse( localStorage.getItem('boletas_carrito'));
+
+		console.log(boletas_carrito)
+
+		var idboletaB=$(this).attr('id');
+
+		
+		boletas_carrito[idboletaB]=0;
+
+
+
+	 
+
+		console.log()
+		console.log(boletas_carrito)
+
+
+		localStorage.setItem('boletas_carrito', JSON.stringify(boletas_carrito));
+
+		
+
+
+		var sumatoria_total=$("#sumatoria_total").attr('val_sum')
+
+		var restar= $(this).attr('sumatoria_producto')
+
+
+		var valor_nuevo= parseInt(sumatoria_total)-parseInt(restar)
+
+		console.log('sumatoria_total:'+sumatoria_total+' - valor a restar:'+restar+ ' -  resultado '+valor_nuevo)
+
+
+		$("#sumatoria_total").attr('val_sum', valor_nuevo )
+		$("#sumatoria_total").html('$'+ valor_nuevo.toLocaleString() )
+
+
+
+
+
+
+		$(this).parent().parent().parent().parent().remove();
 		 
   
 	 });
@@ -252,12 +316,12 @@ $(document).on("click", ".boleta-add", function(){
 			  // str_div=str_div+'<tr id="tr_bol_'+idbo+'" class="productos">  <td><img <img src="http://20.44.111.223/api/contenido/imagen/' + datosBoleta['imagenId'] + '" //width="100" height="60" ></td> <td> <b>'+datosBoleta['nombre']+'</b> <br> $'+datosBoleta['precio']+' </td> <td> <input type="button" style="width : 30px;" class="restar" id="'+idbo+'" value="-" ><input type="text" style="width : 30px;" id="inp_car'+idbo+'" value="'+cant+'"><input type="button" style="width : 30px;" class="sumar" id="'+idbo+'" value="+" > </td> <td><a  class="btn  eliminar_producto" id="'+datosBoleta['id']+'" > <img src="eliminar.png" width="20" height="20" > </a></td>  </tr>'
 
 
-			   str_div=str_div+'<div class="px-2">	 <div class="row no-gutters" style="border-bottom: #D8D4C1 solid 1px;">						 <div class="col-7">	  <h3 class="textos-medios pt-2">'+datosBoleta['nombre']+'</h3>	  	<div class="d-flex">			 	<p class="textos-azules pt-1" style="font-size: 10px;">'+cant+' Unidad / $'+datosBoleta['precio'].toLocaleString()+' / Units</p>						 	</div>	 </div>	 <div class="col-5 d-flex align-items-center justify-content-lg-end no-gutters">			   <div class="row no-gutters justify-content-end">	 <div class="col-12" style="text-align: right"><img src="imagenes/menos.svg" width="20%" alt=""></div>	 <div class="col-12" style="font-size: 18px; text-align: right">$'+sumatoria_sub.toLocaleString()+'</div> 	</div>	  </div>	 </div>	 	</div>'
+			   str_div=str_div+'<div class="px-2">	 <div class="row no-gutters" style="border-bottom: #D8D4C1 solid 1px;">						 <div class="col-7">	  <h3 class="textos-medios pt-2">'+datosBoleta['nombre']+'</h3>	  	<div class="d-flex">			 	<p class="textos-azules pt-1" style="font-size: 10px;">'+cant+' Unidad / $'+datosBoleta['precio'].toLocaleString()+' / Units</p>						 	</div>	 </div>	 <div class="col-5 d-flex align-items-center justify-content-lg-end no-gutters">			   <div class="row no-gutters justify-content-end">	 <div class="col-12" style="text-align: right"><img src="imagenes/menos.svg" class="eliminar_producto" sumatoria_producto="'+sumatoria_sub+'" id="'+datosBoleta['id']+'" style="cursor:pointer" width="20%" alt=""></div>	 <div class="col-12" style="font-size: 18px; text-align: right">$'+sumatoria_sub.toLocaleString()+'</div> 	</div>	  </div>	 </div>	 	</div>'
  
 			   if(cont==long){
 				 console.log("paso por el final, cont:"+cont+" , long:"+long)
 				// str_div=str_div+'</table>';
-				str_div=str_div+'<div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">TOTAL</div>    <div style="font-size: 24px;">$'+sumatoria.toLocaleString()+'</div></div>'
+				str_div=str_div+'<div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">TOTAL</div>    <div style="font-size: 24px;" id="sumatoria_total" val_sum="'+sumatoria+'"  >$'+sumatoria.toLocaleString()+'</div></div>'
 				// str_div=str_div+' <br> <div style="text-align:right" ><a class="btn eliminar_todo derecha"><span class="derecha">Vaciar carrito <img src="trash2.jpg" width="20" height="20" > </span></a></div><br> <hr class="bg-success border-2 border-top border-success"> <span class="derecha"><h3 id="div_subtotal">Subtotal $'+sumatoria.toLocaleString()+'  </h3></span> <br><a  class="btn btn-primary irapagar"  style="border-style:none;background-color:rgb(131, 204, 22);;margin-left:350px;border-radius:20px;height:30px;width:130px;font-size:13px;padding-top:5px;"><b>Ir a pagar</b></a>';
 			   }
  
@@ -485,7 +549,7 @@ $(document).on("click", ".boleta-add", function(){
 				   <div class="px-2 pt-3 ">
 
 				   <select class="selectAltura" id="tipo_documento" >
-					   <option value="">Seleccione</option>
+					   <option value="">Tipo de Documento</option>
 					   <option value="cc" >Cedula Ciudadania</option>
 					   <option value="ce">Cedula Estranjeria</option>
 					   <option vlaue="pa">Pasaporte</option>
@@ -644,31 +708,7 @@ $(document).on("click", ".boleta-add", function(){
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 					<div class="modal-body" id="contenidoModal">
-						<div class="centrado" ><h2> Boleta Adultos </h2></div>
-
-						<table class="table-bordered" >
-							<tr>
-								<td > <h3>Precio:  </h3> </td>
-								<td colspan="2" class="centrado" > <h4>$50.000 </h4></td>
-							</tr>
-							<tr>
-								<td > <h3>Descripcion:  </h3> </td>
-								<td colspan="2" class="centrado" > <h4>Boleta diseñada para aventureros y amantes a los deportes extremos. (incluye almuerzo) </h4></td>
-							</tr>
-
-							<tr>
-								<td > <h3> Categoria Edad:  </h3> </td>
-								<td colspan="2" class="centrado" > <h4> De 18 a 99 años</h4></td>
-							</tr>
-							
-						</table><br><br>
-
-						<div  ><h2> Atracciones </h2></div>
-
-
-						<table class="table-bordered">
-
-						</table>
+						
 
 						
 					</div>
