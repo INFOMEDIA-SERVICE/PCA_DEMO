@@ -320,7 +320,7 @@ tr,
 td,
 th {
   border-color: inherit;
-  border-style: solid;
+  border-style: none;
   border-width: 0;
 }
 
@@ -1979,7 +1979,7 @@ progress {
   vertical-align: bottom;
 }
 .table > :not(:first-child) {
-  border-top: 2px solid currentColor;
+  border-top: 2px none currentColor;
 }
 
 .caption-top {
@@ -6832,7 +6832,7 @@ textarea.form-control-lg {
 }
 
 .border-top {
-  border-top: 1px solid #dee2e6 !important;
+  border-top: 1px none #dee2e6 !important;
 }
 
 .border-top-0 {

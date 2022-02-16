@@ -90,24 +90,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"> 
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script> 
 	<script type="text/javascript" charset="utf8"  src="js/views/atracciones.js"></script>
-  <script>
-    $(document).on("click", ".listar", function(){
-      var pagina = $(this).attr('pagina');
-      //alert(pagina);
-      switch (pagina) {
-        case 'atracciones':
-          $("#contenido_crud").show();          
-          $("#contenido_crud").load('tabla_atracciones.php');
-          $("#listado").remove();
-          console.log('paso por aqui');
-          break;
-      
-        default:
-          break;
-      }
-    });
   
-  </script>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -161,5 +144,30 @@
       </div>
 
     </div>
-  </body>  
+  </body>
+  <script>
+    $(document).on("click", ".listar", function(){
+      var pagina = $(this).attr('pagina');
+      //alert(pagina);
+      console.log(pagina);
+      switch (pagina) {        
+        case 'atracciones':
+          $("#contenido_crud").show();          
+          $("#contenido_crud").load('tabla_atracciones.php');
+          $("#listado").remove();
+          console.log('paso por aqui');
+        break;
+        
+        case 'condiciones':
+          $("#contenido_crud").show();          
+          $("#contenido_crud").load('tabla_atracciones_datatable.php');
+          $("#listado").remove();
+          console.log('paso por aqui22');
+        break;
+
+        default:
+          break;
+      }
+    }); 
+  </script> 
 </html>

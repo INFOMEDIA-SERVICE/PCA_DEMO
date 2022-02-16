@@ -13,7 +13,7 @@ function cargar_datos(){
         success: function(r2) {            
             if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
                 if(typeof r2.resultado.status === 'undefined'){
-                    console.log('CORRECTO 200');                
+                    $("#tabla_atraccion").dataTable().fnDestroy();
                     var str_remp;
                     $.each(r2.resultado, function(m, n) {
                         //console.log(n);
@@ -38,7 +38,38 @@ function cargar_datos(){
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2"><img src="imagenes/+.png"></div></td>'+										
                             '</tr>';				
                     });				             
-                    $("#tbody_atraccion").html(str_remp); 
+                    $("#tbody_atraccion").html(str_remp);
+                    //Cargamos DataTable
+                    $('#tabla_atraccion').DataTable({
+                        "responsive": true,					
+                        "language": { "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json" },
+                        "order": [[ 0, 'desc' ], [ 3, 'desc' ]],
+                        "paging": true,
+                        //"processing": true,
+                        'serverMethod': 'post',
+                        //"ajax": "http://20.44.111.223:80/api/boleteria/atracciones",
+                        dom: 'lBfrtip',
+                        buttons: [
+                            {
+                                extend: 'print',
+                                text: "Imprimir",
+                                title: "",
+                                footer: true,
+                                exportOptions: {
+                                    columns: [ 0, 1, 5, 6, 7, 8 ],
+                                    stripHtml: false, /* Aquí indicamos que no se eliminen las imágenes */
+                                },
+                                customize: function (win) {
+                                    /* ... */
+                                }
+                            },
+                            {extend:'excel',text: "Exportar Excel",title: "Informe de Seguros",footer:true,exportOptions:{columns:[0,1,5,6,7,8]} },
+                            {extend:'pdf',text: "Exportar PDF",title: "Informe de Seguros",footer:true,exportOptions:{columns:[0,1,5,6,7,8]}},
+                            {extend:'copy',text: "Copiar portapapeles",title: "Informe de Seguros",footer:true,exportOptions:{columns:[0,1,2,3,4,5,6]}}
+                            /* ... */
+                        ],
+                        "lengthMenu": [[25, 50, -1], [25, 50, "All"]]                            
+                    }); 
                 }else{
                     console.log(r2.resultado.status);
                 }                                            

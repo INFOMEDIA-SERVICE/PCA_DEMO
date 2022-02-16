@@ -22,7 +22,7 @@
 		<!--Datatable-->
 		<link rel="stylesheet" type="text/css" href="css/dataTables.min.css"/>	
 		<script type="text/javascript" charset="utf8"  src="js/jquery.dataTables.min.js"></script>
-		<script type="text/javascript" charset="utf8"  src="js/views/atracciones.js"></script>
+		<script type="text/javascript" charset="utf8"  src="js/views/atracciones2.js"></script>
 		
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script src="js/popper.min.js"></script> 
@@ -56,7 +56,7 @@
 					   		</div>
 						</div>
 				   		<section class="px-3 pt-3">					  
-							<div class="text-center sub-titulo-form textos-medios  mb-4">Consultar Atracciones</div>
+							<div class="text-center sub-titulo-form textos-medios  mb-4">Consultar Atracciones datatable</div>
 					  		<div class="border rounded p-3 mb-4">
 								<div class="row">
 					  				<div class="col-md-5 mb-3 mb-md-0">

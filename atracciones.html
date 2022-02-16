@@ -237,15 +237,15 @@
 				var str_remp;
 				response.forEach(function(atracciones, index) {
 					console.log(atracciones);
-					var img_ext = atracciones.imagenUrl;
-					var extension_img = img_ext.split('.'); // Saco la extensión para guardarla en la BD
-					var ext_comilla = "'"+extension_img[1]+"'";
+					//var img_ext = atracciones.imagenUrl;
+					//var extension_img = img_ext.split('.'); // Saco la extensión para guardarla en la BD
+					var ext_comilla; // = "'"+extension_img[1]+"'";
 					var atraccion_comilla = "'"+atracciones.nombre+"'";
 					var btnEditar = '<a href="javascript:;" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar" onclick="upAtraccion('+ atracciones.id +','+ atraccion_comilla +','+ ext_comilla +' );">&#xE254;</i></a>';
 					var btnEliminar = '<a href="javascript:;" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Desactivar" onclick="delAtraccion('+ atracciones.id +','+ atraccion_comilla +');">&#xE872;</i></a>';
 					var btnActivar = '<a href="javascript:;" class="activar" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Activar" onclick="activar_Atraccion('+ atracciones.id +','+ atraccion_comilla +');">restore</i></a>';
 					//var dlt_boton = '<button id="edit-category" class="btn btn-danger" type="button" title="Editar" class="boton">Eliminar</button>';
-					var ver_imagen = '<img id="imagen' + atracciones.id+'" src="http://20.44.111.223' + atracciones.imagenUrl + '?t='+contenToke +'" width="40" height="40" />';
+					var ver_imagen; // = '<img id="imagen' + atracciones.id+'" src="http://20.44.111.223' + atracciones.imagenUrl + '?t='+contenToke +'" width="40" height="40" />';
 					//
 					if(atracciones.estado == 'ACTIVO'){
 						str_remp=str_remp+'<tr><td>'+ atracciones.id +'</td><td>'+ atracciones.nombre +'</td><td>'+ ver_imagen +'</td><td>'+ atracciones.estado +'</td><td>'+ btnEditar + ' ' + btnEliminar +'</td></tr>';

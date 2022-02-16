@@ -146,6 +146,31 @@ session_start();
             }           
         break;
 
+        case 8:
+            $si = 0;
+            $no = 0;
+            $id_c = Array();
+            $id_check = json_decode($_POST['id']);
+            //
+            foreach ($id_check as $clave => $valor) {
+                $id_c = explode("-", $valor);
+                $id_at = $id_c[2];
+                $estado_at = ($id_c[1]=='ACTIVO') ? 'INACTIVO' : 'ACTIVO';            
+                //
+                $array4['estado'] = $estado_at;
+                $array4['idAtraccion'] = $id_at;
+                //
+                $url = 'http://20.44.111.223:80/api/boleteria/atraccionEstado';
+                $rActualizar_base = $consumo->Patch($url, $headers, $array4);
+                if($rActualizar_base->message == 'Se ha cambiado el estado'){
+                    $si++;
+                }else{
+                   $no++;
+                }
+            }
+            echo json_encode(['sts'=>'OK', 'stsNo'=>$no, 'stsSi'=>$si]);         
+        break;
+
         default:
             echo 'No se seleccionó ninguna opción';
     }
