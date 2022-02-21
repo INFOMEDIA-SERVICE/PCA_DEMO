@@ -185,8 +185,16 @@ echo" </pre> ";*/
 
 		var idboletaB=$(this).attr('id');
 
+		var valor_actual= boletas_carrito[idboletaB];
+
+		console.log("Valor actual:"+valor_actual)
+
+		var nuevo_valor=parseInt(valor_actual)-1;
+
+		console.log("nuevo_valor:"+nuevo_valor)
+
 		
-		boletas_carrito[idboletaB]=0;
+		boletas_carrito[idboletaB]=nuevo_valor;
 
 
 
@@ -203,10 +211,18 @@ echo" </pre> ";*/
 
 		var sumatoria_total=$("#sumatoria_total").attr('val_sum')
 
-		var restar= $(this).attr('sumatoria_producto')
+		var sumatoria_pro= $(this).attr('sumatoria_producto');
+
+		var restar= $(this).attr('precio_unidad')
 
 
 		var valor_nuevo= parseInt(sumatoria_total)-parseInt(restar)
+
+		var valor_nuevo_producto= parseInt(sumatoria_pro)-parseInt(restar)
+
+		
+
+		$(this).attr('sumatoria_producto',valor_nuevo_producto)
 
 		console.log('sumatoria_total:'+sumatoria_total+' - valor a restar:'+restar+ ' -  resultado '+valor_nuevo)
 
@@ -215,11 +231,53 @@ echo" </pre> ";*/
 		$("#sumatoria_total").html('$'+ valor_nuevo.toLocaleString() )
 
 
+		var info_boletas= JSON.parse( localStorage.getItem('boletas_nombres'));
 
-		recalcular_cambio();
+		console.log(info_boletas)
+
+		var cantidad_actual=$(this).attr('cantidad');
+
+		info_boletas.forEach(function(datos, index) {
+
+			console.log(datos)
+
+			if(datos['id']== idboletaB ){
+				console.log("entro")
+				var precioB=datos['precio'];
+
+				
+
+				var cantidad_nueva = parseInt(cantidad_actual)-1;
 
 
-		$(this).parent().parent().parent().parent().remove();
+				$("#unidad_producto_"+idboletaB).html(''+cantidad_nueva+' Unidad / $'+precioB.toLocaleString()+' / Units')
+
+				console.log('valor_nuevo_producto:'+valor_nuevo_producto)
+
+				
+
+				$("#sumatoria_producto_"+idboletaB).html('$'+valor_nuevo_producto.toLocaleString());
+
+				//console.log(info_boletas)
+
+
+				recalcular_cambio();
+
+				console.log("Nuevo Valor:"+nuevo_valor)
+
+				if(nuevo_valor==0){
+					$(this).parent().parent().parent().parent().remove();
+				}
+			}
+
+		});
+
+		
+
+		if(nuevo_valor==0){
+					$(this).parent().parent().parent().parent().remove();
+		}
+		
 		 
   
 	 });
@@ -343,7 +401,7 @@ $(document).on("click", ".boleta-add", function(){
 			  // str_div=str_div+'<tr id="tr_bol_'+idbo+'" class="productos">  <td><img <img src="http://20.44.111.223/api/contenido/imagen/' + datosBoleta['imagenId'] + '" //width="100" height="60" ></td> <td> <b>'+datosBoleta['nombre']+'</b> <br> $'+datosBoleta['precio']+' </td> <td> <input type="button" style="width : 30px;" class="restar" id="'+idbo+'" value="-" ><input type="text" style="width : 30px;" id="inp_car'+idbo+'" value="'+cant+'"><input type="button" style="width : 30px;" class="sumar" id="'+idbo+'" value="+" > </td> <td><a  class="btn  eliminar_producto" id="'+datosBoleta['id']+'" > <img src="eliminar.png" width="20" height="20" > </a></td>  </tr>'
 
 
-			   str_div=str_div+'<div class="px-2">	 <div class="row no-gutters" style="border-bottom: #D8D4C1 solid 1px;">						 <div class="col-7">	  <h3 class="textos-medios pt-2">'+datosBoleta['nombre']+'</h3>	  	<div class="d-flex">			 	<p class="textos-azules pt-1" style="font-size: 10px;">'+cant+' Unidad / $'+datosBoleta['precio'].toLocaleString()+' / Units</p>						 	</div>	 </div>	 <div class="col-5 d-flex align-items-center justify-content-lg-end no-gutters">			   <div class="row no-gutters justify-content-end">	 <div class="col-12" style="text-align: right"><img src="imagenes/menos.svg" class="eliminar_producto" sumatoria_producto="'+sumatoria_sub+'" id="'+datosBoleta['id']+'" style="cursor:pointer" width="20%" alt=""></div>	 <div class="col-12" style="font-size: 18px; text-align: right">$'+sumatoria_sub.toLocaleString()+'</div> 	</div>	  </div>	 </div>	 	</div>'
+			   str_div=str_div+'<div class="px-2">	 <div class="row no-gutters" style="border-bottom: #D8D4C1 solid 1px;">						 <div class="col-7">	  <h3 class="textos-medios pt-2">'+datosBoleta['nombre']+'</h3>	  	<div class="d-flex">			 	<p class="textos-azules pt-1" style="font-size: 10px;" id="unidad_producto_'+datosBoleta['id']+'">'+cant+' Unidad / $'+datosBoleta['precio'].toLocaleString()+' / Units</p>						 	</div>	 </div>	 <div class="col-5 d-flex align-items-center justify-content-lg-end no-gutters">			   <div class="row no-gutters justify-content-end">	 <div class="col-12" style="text-align: right"><img src="imagenes/menos.svg" id="restar_" class="eliminar_producto" precio_unidad="'+datosBoleta['precio']+'" sumatoria_producto="'+sumatoria_sub+'" id="'+datosBoleta['id']+'" cantidad="'+cant+'" style="cursor:pointer" width="20%" alt=""></div>	 <div class="col-12" style="font-size: 18px; text-align: right" id="sumatoria_producto_'+datosBoleta['id']+'">$'+sumatoria_sub.toLocaleString()+'</div> 	</div>	  </div>	 </div>	 	</div>'
  
 			   if(cont==long){
 				 console.log("paso por el final, cont:"+cont+" , long:"+long)
@@ -602,6 +660,8 @@ $(document).on("click", ".boleta-add", function(){
 	//$("#iniciar").click();
 
 	//iniciar_proceso();
+
+	localStorage.clear();
 
 
 	$("#contenido_taquilla").show();
