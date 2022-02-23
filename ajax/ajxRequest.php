@@ -273,7 +273,7 @@ session_start();
             if($rGuardar->message == 'Se ha creado la reserva'){
                 echo json_encode(['sts'=>'OK','resultado'=>$rGuardar]); 
             }else{
-                echo json_encode(['sts'=>'NO']);
+                echo json_encode(['sts'=>'NO','resultado'=>$rGuardar]);
             } 
 
         break;
@@ -297,7 +297,7 @@ session_start();
             if($rGuardar->message == 'Se han agregado los servicios adicionales a la reserva'){
                 echo json_encode(['sts'=>'OK','resultado'=>$rGuardar]); 
             }else{
-                echo json_encode(['sts'=>'NO']);
+                echo json_encode(['sts'=>'NO','resultado'=>$rGuardar]);
             } 
 
         break;

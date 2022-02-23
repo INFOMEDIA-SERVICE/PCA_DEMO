@@ -362,14 +362,18 @@ function pagar(){
                                 console.log(r3)
                     
                                 if (r3.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
-                                    alert(r3.resultado.message)                                       
+                                    alert(r3.resultado.message) 
+                                    location.reload();                                      
                                    
                                 }else{
                                     alert("Error al crear la reserva")
+                                    location.reload();
                                 }
                             }        
                         });
 
+                    }else{
+                        location.reload();
                     }
 
                    
@@ -385,7 +389,7 @@ function pagar(){
 
 
     
-
+    
 
 
 
