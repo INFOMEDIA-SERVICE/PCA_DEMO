@@ -171,6 +171,137 @@ session_start();
             echo json_encode(['sts'=>'OK', 'stsNo'=>$no, 'stsSi'=>$si]);         
         break;
 
+        case 9:
+
+            if ($token != '') {
+                
+
+                $array['tipoIdentificacion']=$tipo_identificacion;
+                $array['numeroIdentificacion']=$numero_documento;
+
+                $url = 'http://20.44.111.223:80/api/gestionClientes/cliente?tipoIdentificacion='.$tipo_identificacion.'&numeroIdentificacion='.$numero_documento;
+                //$rDatos = $atrac->cargarAtracciones($token);
+                $rDatos = $consumo->GetParam($url, $headers,$array); 
+                
+                if ($rDatos != '') {
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO']);
+                }
+
+            } else {
+                die('Se produjo un Error al generar el Token');
+            }  
+
+
+
+        break;
+
+        case 10:
+
+            if ($token != '') {
+                $url = 'http://20.44.111.223:80/api/boleteria/servicioAdicional';
+                //$rDatos = $atrac->cargarAtracciones($token);
+                $rDatos = $consumo->Get($url, $headers); 
+                
+                if ($rDatos != '') {
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO']);
+                }
+
+            } else {
+                die('Se produjo un Error al generar el Token');
+            } 
+
+
+        break;
+
+        case 11:
+
+            $arr_nombres=explode(" ",$nombre);
+
+            $nombresN=$arr_nombres[0];
+            $apellidosN=$arr_nombres[1];
+
+
+            $array['email']=$email;
+            $array['telefono']=$telefono;
+            $array['estado']='ACTIVO';
+            $array['fechaNacimiento']='01-01-1920';
+            $array['tipoIdentificacion']=$tipo_identificacion;
+            $array['numeroIdentificacion']=$numero_documento;
+            $array['primerNombre']=$nombresN;
+            $array['primerApellido']=$apellidosN;
+
+            
+            //
+            $url = 'http://20.44.111.223:80/api/gestionClientes/cliente';
+            //$rGuardar = $atrac->guardarAtraccion($anombre, $aimagen, $aextension, $token);
+            $rGuardar = $consumo->Post($url, $headers, $array);
+            if($rGuardar->message == 'Se ha creado el cliente'){
+                echo json_encode(['sts'=>'OK','resultado'=>$rGuardar]); 
+            }else{
+                echo json_encode(['sts'=>'NO']);
+            } 
+            
+
+
+        break;
+
+        case 12:
+
+            $fecha_actual=date('d-m-Y');
+
+            //echo "Fecha Actual:$fecha_actual";
+
+
+           //print_r($boletas);
+            
+            $array['fecha']=$fecha_actual;
+            $array['tipoIdentificacion']=$tipo_identificacion;
+            $array['numeroIdentificacion']=$numero_documento;
+            $array['boletas']= json_decode($boletas) ;
+            
+
+            
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/reserva';
+            //$rGuardar = $atrac->guardarAtraccion($anombre, $aimagen, $aextension, $token);
+            $rGuardar = $consumo->Post($url, $headers, $array);
+            //print_r($rGuardar);
+            if($rGuardar->message == 'Se ha creado la reserva'){
+                echo json_encode(['sts'=>'OK','resultado'=>$rGuardar]); 
+            }else{
+                echo json_encode(['sts'=>'NO','resultado'=>$rGuardar]);
+            } 
+
+        break;
+
+
+        case 13:
+
+          
+            $array['idReserva']=$idreserva;
+
+            
+            $array['serviciosAdicionales']= json_decode($adicionales) ;
+            
+
+            
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/reservaServicioAdicional';
+            //$rGuardar = $atrac->guardarAtraccion($anombre, $aimagen, $aextension, $token);
+            $rGuardar = $consumo->Post($url, $headers, $array);
+            //print_r($rGuardar);
+            if($rGuardar->message == 'Se han agregado los servicios adicionales a la reserva'){
+                echo json_encode(['sts'=>'OK','resultado'=>$rGuardar]); 
+            }else{
+                echo json_encode(['sts'=>'NO','resultado'=>$rGuardar]);
+            } 
+
+        break;
+
         default:
             echo 'No se seleccionó ninguna opción';
     }

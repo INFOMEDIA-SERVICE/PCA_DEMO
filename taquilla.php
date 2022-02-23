@@ -46,6 +46,8 @@ echo" </pre> ";*/
 			left:80%;
 		}
 
+		.txttab { color: #097BDC; }
+
 		.heaven{
 			
 			
@@ -90,7 +92,34 @@ echo" </pre> ";*/
 	var span = document.getElementsByClassName("close")[0];
 	var body = document.getElementsByTagName("body")[0];
 
+		function recalcular_cambio(){
+			/* calculo el cambio */
+		var sum_ef=$("#suma_efectivo").attr('acumulado');
+		var sum_ta=$("#suma_tarjeta").attr('acumulado');
 
+		var valor_total_suma= parseInt(sum_ef)+parseInt(sum_ta);
+
+		var sumatoria_productos=$("#sumatoria_total").attr('val_sum');
+
+		var cambio= parseFloat(valor_total_suma)-parseFloat(sumatoria_productos);
+		
+
+		if(cambio==0){
+
+			$("#cambio").html('<h2>Cambio: <span class="badge bg-success">$'+cambio.toLocaleString()+'</span></h2>')
+
+		}else if(cambio>0){
+
+			$("#cambio").html('<h2>Cambio: <span class="badge bg-danger">$'+cambio.toLocaleString()+'</span></h2>')
+
+		}else if (cambio<0){
+
+			$("#cambio").html('<h2>Cambio: <span class="badge bg-light text-dark">$'+cambio.toLocaleString()+'</span></h2>')
+
+		}
+
+		
+		}
 
 	$(document).on("click", ".informacion", function(){
         
@@ -150,49 +179,237 @@ echo" </pre> ";*/
 	 });
 
 
-	 $(document).on("click", ".eliminar_producto", function(){
+	 $(document).on("click", ".eliminar_boleta", function(){
         
-		var boletas_carrito=JSON.parse( localStorage.getItem('boletas_carrito'));
-
-		console.log(boletas_carrito)
+		var boletas_nombres=JSON.parse( localStorage.getItem('boletas_nombres'));
 
 		var idboletaB=$(this).attr('id');
 
+		let new_array=[];
+
+		var nuevo_valor=0;
+
+		$.each(boletas_nombres, function(index, datos) {
+
+			//console.log("datos")
+			//console.log(datos)
+
+			if(datos['id']==idboletaB){
+
+				//console.log("Entrooooooo")
+
+				datos['cant_taquilla']-=1;
+				nuevo_valor=datos['cant_taquilla'];
+
+				//console.log(" Nuevo valor **"+nuevo_valor)
+			}
+
+			let nuevaLongitud = new_array.push(datos)
+
+		});
+
+		localStorage.setItem("boletas_nombres",JSON.stringify(new_array));
+
 		
-		boletas_carrito[idboletaB]=0;
-
-
-
-	 
-
-		console.log()
-		console.log(boletas_carrito)
-
-
-		localStorage.setItem('boletas_carrito', JSON.stringify(boletas_carrito));
 
 		
 
 
 		var sumatoria_total=$("#sumatoria_total").attr('val_sum')
 
-		var restar= $(this).attr('sumatoria_producto')
+		var sumatoria_pro= $(this).attr('sumatoria_producto');
+
+		var restar= $(this).attr('precio_unidad')
 
 
 		var valor_nuevo= parseInt(sumatoria_total)-parseInt(restar)
 
-		console.log('sumatoria_total:'+sumatoria_total+' - valor a restar:'+restar+ ' -  resultado '+valor_nuevo)
+		var valor_nuevo_producto= parseInt(sumatoria_pro)-parseInt(restar)
+
+		
+
+		$(this).attr('sumatoria_producto',valor_nuevo_producto)
+
+		//console.log('sumatoria_total:'+sumatoria_total+' - valor a restar:'+restar+ ' -  resultado '+valor_nuevo)
 
 
 		$("#sumatoria_total").attr('val_sum', valor_nuevo )
 		$("#sumatoria_total").html('$'+ valor_nuevo.toLocaleString() )
 
 
+		var info_boletas= JSON.parse( localStorage.getItem('boletas_nombres'));
+
+		//console.log(info_boletas)
+
+		var cantidad_actual=$(this).attr('cantidad');
+
+		var cantidad_nueva = parseInt(cantidad_actual)-1;
+
+		$.each(info_boletas, function(index, datos) {
+
+			//console.log(datos)
+
+			if(datos['id']== idboletaB ){
+				//console.log("entro")
+				var precioB=datos['precio'];
+
+				
+
+				 
+
+				//console.log('cantidad_nueva:'+cantidad_nueva)
+
+
+				$("#unidad_producto_"+datos['tipo_producto']+'_'+idboletaB).html(''+cantidad_nueva+' Unidad / $'+precioB.toLocaleString()+' / Units')
+
+				//console.log('valor_nuevo_producto:'+valor_nuevo_producto)
+
+				
+
+				$("#sumatoria_producto_"+datos['tipo_producto']+'_'+idboletaB).html('$'+valor_nuevo_producto.toLocaleString());
+
+				//console.log(info_boletas)
+
+
+				recalcular_cambio();
+
+				//console.log("Nuevo Valor:"+nuevo_valor)
+
+				if(nuevo_valor==0){
+					$(this).parent().parent().parent().parent().remove();
+				}
+			}
+
+		});
+
+		//console.log("Actualizo la cantidad")
+		$(this).attr('cantidad',cantidad_nueva)
+
+		
+
+		if(nuevo_valor==0){
+					$(this).parent().parent().parent().parent().remove();
+		}
+		
+		 
+  
+	 });
 
 
 
 
-		$(this).parent().parent().parent().parent().remove();
+	 $(document).on("click", ".eliminar_adicional", function(){
+        
+		var adicionales_nombres=JSON.parse( localStorage.getItem('adicionales_nombres'));
+
+		var idadicionalB=$(this).attr('id');
+
+		let new_array=[];
+
+		var nuevo_valor=0;
+
+		$.each(adicionales_nombres, function(index, datos) {
+
+			//console.log("datos")
+			//console.log(datos)
+
+			if(datos['id']==idadicionalB){
+
+				//console.log("Entrooooooo")
+
+				datos['cant_taquilla']-=1;
+				nuevo_valor=datos['cant_taquilla'];
+
+				//console.log(" Nuevo valor **"+nuevo_valor)
+			}
+
+			let nuevaLongitud = new_array.push(datos)
+
+		});
+
+		localStorage.setItem("adicionales_nombres",JSON.stringify(new_array));
+
+		
+
+		
+
+
+		var sumatoria_total=$("#sumatoria_total").attr('val_sum')
+
+		var sumatoria_pro= $(this).attr('sumatoria_producto');
+
+		var restar= $(this).attr('precio_unidad')
+
+
+		var valor_nuevo= parseInt(sumatoria_total)-parseInt(restar)
+
+		var valor_nuevo_producto= parseInt(sumatoria_pro)-parseInt(restar)
+
+		
+
+		$(this).attr('sumatoria_producto',valor_nuevo_producto)
+
+		//console.log('sumatoria_total:'+sumatoria_total+' - valor a restar:'+restar+ ' -  resultado '+valor_nuevo)
+
+
+		$("#sumatoria_total").attr('val_sum', valor_nuevo )
+		$("#sumatoria_total").html('$'+ valor_nuevo.toLocaleString() )
+
+
+		var info_boletas= JSON.parse( localStorage.getItem('adicionales_nombres'));
+
+		//console.log(info_boletas)
+
+		var cantidad_actual=$(this).attr('cantidad');
+
+		var cantidad_nueva = parseInt(cantidad_actual)-1;
+
+		$.each(info_boletas, function(index, datos) {
+
+			//console.log(datos)
+
+			if(datos['id']== idadicionalB ){
+				//console.log("entro")
+				var precioB=datos['precio'];
+
+				
+
+				 
+
+				//console.log('cantidad_nueva:'+cantidad_nueva)
+
+
+				$("#unidad_producto_"+datos['tipo_producto']+'_'+idadicionalB).html(''+cantidad_nueva+' Unidad / $'+precioB.toLocaleString()+' / Units')
+
+				//console.log('valor_nuevo_producto:'+valor_nuevo_producto)
+
+				
+
+				$("#sumatoria_producto_"+datos['tipo_producto']+'_'+idadicionalB).html('$'+valor_nuevo_producto.toLocaleString());
+
+				//console.log(info_boletas)
+
+
+				recalcular_cambio();
+
+				//console.log("Nuevo Valor:"+nuevo_valor)
+
+				if(nuevo_valor==0){
+					$(this).parent().parent().parent().parent().remove();
+				}
+			}
+
+		});
+
+		//console.log("Actualizo la cantidad")
+		$(this).attr('cantidad',cantidad_nueva)
+
+		
+
+		if(nuevo_valor==0){
+					$(this).parent().parent().parent().parent().remove();
+		}
+		
 		 
   
 	 });
@@ -204,151 +421,301 @@ echo" </pre> ";*/
 
 
 $(document).on("click", ".boleta-add", function(){
-        
 
-		// alert("idboleta"+$(this).attr("idtipoBoleta"));
- 
-		 var boletas_carrito= localStorage.getItem('boletas_carrito');
- 
- 
-		 //var boleta_local= localStorage.getItem('idtipoBoleta_'+$(this).attr("idtipoBoleta"));
- 
-		 if(boletas_carrito==null || boletas_carrito==undefined){
- 
-		   var arr_boletas_carrito=Array();
- 
-		   var indice=$(this).attr("idboleta")
- 
-		   if(indice>0){
-			 console.log("indice -1")
-			 console.log(indice)
- 
-			 arr_boletas_carrito[indice]=1;
- 
-			 console.log("arr_boletas_carrito -1")
- 
-			 console.log(arr_boletas_carrito)
- 
-			 var json_boletas_carrito=JSON.stringify(arr_boletas_carrito);
- 
-			 console.log("json_boletas_carrito -1")
-			 console.log(json_boletas_carrito)
-			 
-			 localStorage.setItem('boletas_carrito',json_boletas_carrito);
- 
-			 console.log("paso por el if")
- 
-		   }
- 
-		   
-		 }else{
- 
-		   var arr_boletas_carrito = JSON.parse(boletas_carrito);
-		   if(arr_boletas_carrito[$(this).attr("idboleta")]==null){
-			 arr_boletas_carrito[$(this).attr("idboleta")]=1;
-		   }else{
-			 arr_boletas_carrito[$(this).attr("idboleta")]++;
-		   }
-		  
-		   
-		   var json_boletas_carrito=JSON.stringify(arr_boletas_carrito);
-		   
-		   localStorage.setItem('boletas_carrito',json_boletas_carrito);
-		   console.log("paso por el else")
-		 }
- 
-		 console.log("actual")
-		 console.log(localStorage.getItem('boletas_carrito'));
- 
-		 var arr_recorrer= JSON.parse( localStorage.getItem('boletas_carrito'));
- 
-		 console.log("arr_recorrer")
- 
-		 console.log(arr_recorrer);
- 
-		 /*modal.style.display = "block";
-				 body.style.position = "static";
-				 body.style.height = "100%";
-				 body.style.overflow = "hidden";*/
- 
-		 
- 
-		   var cont=1;
- 
-		   var long= 0;
-		   console.log("arr_recorrer"+arr_recorrer)
-		   if(arr_recorrer!=null){
- 
- 
-			 arr_recorrer.forEach(function(cant, idbo) {
-			   if(cant>0){
-				 long++;
-			   }
-			 });
- 
-			 console.log("long:"+long)
- 
-		   var str_div=''
- 
-		   var sumatoria=0;
-		   var sumatoria_sub=0;
- 
-		 arr_recorrer.forEach(function(cant, idbo) {
-		   //width="100" height="100"
- 
-		   
- 
- 
-			 if(cont==1){
-			   //str_div=str_div+'<table class="table">  ';
-			 }
- 
-			 if(cant!=null && cant!=0){
-			   console.log("idboleta:"+idbo+" cant:"+cant);
-			   var datosBoleta=retornarDatosBoleta(idbo);
-			   console.log(datosBoleta)
- 
-			 sumatoria+=parseFloat(cant)*parseFloat(datosBoleta['precio'])
-			 sumatoria_sub=parseFloat(cant)*parseFloat(datosBoleta['precio'])
+		var arr_recorrer= JSON.parse( localStorage.getItem('boletas_nombres'));
+		var indice=$(this).attr("idboleta")
+		let new_array=[];
 
-			 
+		$.each(arr_recorrer, function(index, datos) {
+		   //console.log(datos)
  
-			  // str_div=str_div+'<tr id="tr_bol_'+idbo+'" class="productos">  <td><img <img src="http://20.44.111.223/api/contenido/imagen/' + datosBoleta['imagenId'] + '" //width="100" height="60" ></td> <td> <b>'+datosBoleta['nombre']+'</b> <br> $'+datosBoleta['precio']+' </td> <td> <input type="button" style="width : 30px;" class="restar" id="'+idbo+'" value="-" ><input type="text" style="width : 30px;" id="inp_car'+idbo+'" value="'+cant+'"><input type="button" style="width : 30px;" class="sumar" id="'+idbo+'" value="+" > </td> <td><a  class="btn  eliminar_producto" id="'+datosBoleta['id']+'" > <img src="eliminar.png" width="20" height="20" > </a></td>  </tr>'
-
-
-			   str_div=str_div+'<div class="px-2">	 <div class="row no-gutters" style="border-bottom: #D8D4C1 solid 1px;">						 <div class="col-7">	  <h3 class="textos-medios pt-2">'+datosBoleta['nombre']+'</h3>	  	<div class="d-flex">			 	<p class="textos-azules pt-1" style="font-size: 10px;">'+cant+' Unidad / $'+datosBoleta['precio'].toLocaleString()+' / Units</p>						 	</div>	 </div>	 <div class="col-5 d-flex align-items-center justify-content-lg-end no-gutters">			   <div class="row no-gutters justify-content-end">	 <div class="col-12" style="text-align: right"><img src="imagenes/menos.svg" class="eliminar_producto" sumatoria_producto="'+sumatoria_sub+'" id="'+datosBoleta['id']+'" style="cursor:pointer" width="20%" alt=""></div>	 <div class="col-12" style="font-size: 18px; text-align: right">$'+sumatoria_sub.toLocaleString()+'</div> 	</div>	  </div>	 </div>	 	</div>'
+		   	if(datos['id']==indice){
+			   //console.log("Encontre la boleta"+datos['id'])
+			   datos['cant_taquilla']+=1;	
+			}
  
-			   if(cont==long){
-				 console.log("paso por el final, cont:"+cont+" , long:"+long)
-				// str_div=str_div+'</table>';
-				str_div=str_div+'<div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">TOTAL</div>    <div style="font-size: 24px;" id="sumatoria_total" val_sum="'+sumatoria+'"  >$'+sumatoria.toLocaleString()+'</div></div>'
-				// str_div=str_div+' <br> <div style="text-align:right" ><a class="btn eliminar_todo derecha"><span class="derecha">Vaciar carrito <img src="trash2.jpg" width="20" height="20" > </span></a></div><br> <hr class="bg-success border-2 border-top border-success"> <span class="derecha"><h3 id="div_subtotal">Subtotal $'+sumatoria.toLocaleString()+'  </h3></span> <br><a  class="btn btn-primary irapagar"  style="border-style:none;background-color:rgb(131, 204, 22);;margin-left:350px;border-radius:20px;height:30px;width:130px;font-size:13px;padding-top:5px;"><b>Ir a pagar</b></a>';
-			   }
- 
-			   cont++;
- 
-			 }
+			 let nuevaLongitud = new_array.push(datos)
 			 
 		 });
- 
- 
-		   }
-		   
- 
-		   
- 
- 
+
+		 localStorage.setItem("boletas_nombres",JSON.stringify(new_array));
+
+
+
 		 
- 
-		   $("#div_productos").html(str_div)
- 
+
+
+		 var arr_pintar= JSON.parse( localStorage.getItem('boletas_nombres'));
+
+		 var arr_pintarAdd= JSON.parse( localStorage.getItem('adicionales_nombres'));
+
+		 var long_val=0;
+
+		 var pinta_adicionales=1;
+
+		 if(arr_pintarAdd==null){
+			 //console.log("Flayo")
+			pinta_adicionales=0;
+		 }else{
+			long_val=arr_pintarAdd.length;
+		 }
+
 		 
+
+		 var validacion=0;
+
+		 if(long_val>0){
+
+		 }else{
+			 validacion=1;
+		 }
+
+		 var str_div='';
+		 var sumatoria=0;
+		 var sumatoria_sub=0;
+		 var cont=1;
+
+		 var long=arr_pintar.length;
+
+		 //console.log("long: "+long)
+
+		 $.each(arr_pintar, function(index, datos) {
+
+			if(datos['cant_taquilla']>0){
+
+				sumatoria+=parseFloat(datos['cant_taquilla'])*parseFloat(datos['precio'])
+				sumatoria_sub=parseFloat(datos['cant_taquilla'])*parseFloat(datos['precio'])
+
+			 	str_div=str_div+'<div class="px-2">	 <div class="row no-gutters" style="border-bottom: #D8D4C1 solid 1px;">						 <div class="col-7">	  <h3 class="textos-medios pt-2">'+datos['nombre']+'</h3>	  	<div class="d-flex">			 	<p class="textos-azules pt-1" style="font-size: 10px;" id="unidad_producto_'+datos['tipo_producto']+'_'+datos['id']+'">'+datos['cant_taquilla']+' Unidad / $'+datos['precio'].toLocaleString()+' / Units</p>						 	</div>	 </div>	 <div class="col-5 d-flex align-items-center justify-content-lg-end no-gutters">			   <div class="row no-gutters justify-content-end">	 <div class="col-12" style="text-align: right"><img src="imagenes/menos.svg" id="'+datos['id']+'" tipo_producto="'+datos['tipo_producto']+'"  class="eliminar_boleta" precio_unidad="'+datos['precio']+'" sumatoria_producto="'+sumatoria_sub+'" id="'+datos['id']+'" cantidad="'+datos['cant_taquilla']+'" style="cursor:pointer" width="20%" alt=""></div>	 <div class="col-12" style="font-size: 18px; text-align: right" id="sumatoria_producto_'+datos['tipo_producto']+'_'+datos['id']+'">$'+sumatoria_sub.toLocaleString()+'</div> 	</div>	  </div>	 </div>	 	</div>';
+
+			}
+
+
+			if(cont==long && validacion==1){
+
+				str_div=str_div+'<div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">TOTAL</div>    <div style="font-size: 24px;" id="sumatoria_total" val_sum="'+sumatoria+'"  >$'+sumatoria.toLocaleString()+'</div></div>'
+
+			}
+
+			cont++;
+
+		 });
+
+
+		
+
+		//var str_div='';
+		//var sumatoria=0;
+		//var sumatoria_sub=0;
+
+		 if(pinta_adicionales==1){
+
+			cont=1;
+
+		long=arr_pintarAdd.length;
+
+
+
+		 $.each(arr_pintarAdd, function(index, datos) {
+
+			if(datos['cant_taquilla']>0){
+
+				sumatoria+=parseFloat(datos['cant_taquilla'])*parseFloat(datos['precio'])
+				sumatoria_sub=parseFloat(datos['cant_taquilla'])*parseFloat(datos['precio'])
+
+				str_div=str_div+'<div class="px-2">	 <div class="row no-gutters" style="border-bottom: #D8D4C1 solid 1px;">						 <div class="col-7">	  <h3 class="textos-medios pt-2">'+datos['nombre']+'</h3>	  	<div class="d-flex">			 	<p class="textos-azules pt-1" style="font-size: 10px;" id="unidad_producto_'+datos['tipo_producto']+'_'+datos['id']+'">'+datos['cant_taquilla']+' Unidad / $'+datos['precio'].toLocaleString()+' / Units</p>						 	</div>	 </div>	 <div class="col-5 d-flex align-items-center justify-content-lg-end no-gutters">			   <div class="row no-gutters justify-content-end">	 <div class="col-12" style="text-align: right"><img src="imagenes/menos.svg" id="'+datos['id']+'" tipo_producto="'+datos['tipo_producto']+'"  class="eliminar_adicional" precio_unidad="'+datos['precio']+'" sumatoria_producto="'+sumatoria_sub+'" id="'+datos['id']+'" cantidad="'+datos['cant_taquilla']+'" style="cursor:pointer" width="20%" alt=""></div>	 <div class="col-12" style="font-size: 18px; text-align: right" id="sumatoria_producto_'+datos['tipo_producto']+'_'+datos['id']+'">$'+sumatoria_sub.toLocaleString()+'</div> 	</div>	  </div>	 </div>	 	</div>';
+
+			}
+
+
+			if(cont==long){
+
+				str_div=str_div+'<div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">TOTAL</div>    <div style="font-size: 24px;" id="sumatoria_total" val_sum="'+sumatoria+'"  >$'+sumatoria.toLocaleString()+'</div></div>'
+
+			}
+
+			cont++;
+
+		});
+
+		 }
+
+
+		
+
  
-		// if( ;  )
+		$("#div_productos").html(str_div)
+ 
+		recalcular_cambio();
+ 
+		
  });
+
+
+ $(document).on("click", ".adicional-add", function(){
+
+var arr_recorrer= JSON.parse( localStorage.getItem('adicionales_nombres'));
+var indice=$(this).attr("idadicional")
+let new_array=[];
+
+$.each(arr_recorrer, function(index, datos) {
+   //console.log(datos)
+
+	   if(datos['id']==indice){
+	   //console.log("Encontre la boleta"+datos['id'])
+	   datos['cant_taquilla']+=1;	
+	}
+
+	 let nuevaLongitud = new_array.push(datos)
+	 
+ });
+
+ localStorage.setItem("adicionales_nombres",JSON.stringify(new_array));
+
+
+
+
+
+
+ var arr_pintar= JSON.parse( localStorage.getItem('boletas_nombres'));
+
+ var arr_pintarAdd= JSON.parse( localStorage.getItem('adicionales_nombres'));
+
+	var long_val=arr_pintarAdd.length;
+
+	var validacion=0;
+
+	if(long_val>0){
+
+	}else{
+		validacion=1;
+	}
+
+		 var str_div='';
+		 var sumatoria=0;
+		 var sumatoria_sub=0;
+		 var cont=1;
+
+		 var long=arr_pintar.length;
+
+		 console.log("long: "+long)
+
+		 $.each(arr_pintar, function(index, datos) {
+
+			if(datos['cant_taquilla']>0){
+
+				sumatoria+=parseFloat(datos['cant_taquilla'])*parseFloat(datos['precio'])
+				sumatoria_sub=parseFloat(datos['cant_taquilla'])*parseFloat(datos['precio'])
+
+			 	str_div=str_div+'<div class="px-2">	 <div class="row no-gutters" style="border-bottom: #D8D4C1 solid 1px;">						 <div class="col-7">	  <h3 class="textos-medios pt-2">'+datos['nombre']+'</h3>	  	<div class="d-flex">			 	<p class="textos-azules pt-1" style="font-size: 10px;" id="unidad_producto_'+datos['tipo_producto']+'_'+datos['id']+'">'+datos['cant_taquilla']+' Unidad / $'+datos['precio'].toLocaleString()+' / Units</p>						 	</div>	 </div>	 <div class="col-5 d-flex align-items-center justify-content-lg-end no-gutters">			   <div class="row no-gutters justify-content-end">	 <div class="col-12" style="text-align: right"><img src="imagenes/menos.svg" id="'+datos['id']+'" tipo_producto="'+datos['tipo_producto']+'"  class="eliminar_boleta" precio_unidad="'+datos['precio']+'" sumatoria_producto="'+sumatoria_sub+'" id="'+datos['id']+'" cantidad="'+datos['cant_taquilla']+'" style="cursor:pointer" width="20%" alt=""></div>	 <div class="col-12" style="font-size: 18px; text-align: right" id="sumatoria_producto_'+datos['tipo_producto']+'_'+datos['id']+'">$'+sumatoria_sub.toLocaleString()+'</div> 	</div>	  </div>	 </div>	 	</div>';
+
+			}
+
+
+			if(cont==long && validacion==1){
+
+				str_div=str_div+'<div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">TOTAL</div>    <div style="font-size: 24px;" id="sumatoria_total" val_sum="'+sumatoria+'"  >$'+sumatoria.toLocaleString()+'</div></div>'
+
+			}
+
+			cont++;
+
+		 });
+
+
+
+
+
+
+ //var str_div='';
+ //var sumatoria=0;
+ //var sumatoria_sub=0;
+ cont=1;
+
+ long=arr_pintarAdd.length;
+
+
+ $.each(arr_pintarAdd, function(index, datos) {
+
+	if(datos['cant_taquilla']>0){
+
+		sumatoria+=parseFloat(datos['cant_taquilla'])*parseFloat(datos['precio'])
+		sumatoria_sub=parseFloat(datos['cant_taquilla'])*parseFloat(datos['precio'])
+
+		 str_div=str_div+'<div class="px-2">	 <div class="row no-gutters" style="border-bottom: #D8D4C1 solid 1px;">						 <div class="col-7">	  <h3 class="textos-medios pt-2">'+datos['nombre']+'</h3>	  	<div class="d-flex">			 	<p class="textos-azules pt-1" style="font-size: 10px;" id="unidad_producto_'+datos['tipo_producto']+'_'+datos['id']+'">'+datos['cant_taquilla']+' Unidad / $'+datos['precio'].toLocaleString()+' / Units</p>						 	</div>	 </div>	 <div class="col-5 d-flex align-items-center justify-content-lg-end no-gutters">			   <div class="row no-gutters justify-content-end">	 <div class="col-12" style="text-align: right"><img src="imagenes/menos.svg" id="'+datos['id']+'" tipo_producto="'+datos['tipo_producto']+'"  class="eliminar_adicional" precio_unidad="'+datos['precio']+'" sumatoria_producto="'+sumatoria_sub+'" id="'+datos['id']+'" cantidad="'+datos['cant_taquilla']+'" style="cursor:pointer" width="20%" alt=""></div>	 <div class="col-12" style="font-size: 18px; text-align: right" id="sumatoria_producto_'+datos['tipo_producto']+'_'+datos['id']+'">$'+sumatoria_sub.toLocaleString()+'</div> 	</div>	  </div>	 </div>	 	</div>';
+
+	}
+
+
+	if(cont==long){
+
+		str_div=str_div+'<div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">TOTAL</div>    <div style="font-size: 24px;" id="sumatoria_total" val_sum="'+sumatoria+'"  >$'+sumatoria.toLocaleString()+'</div></div>'
+
+	}
+
+	cont++;
+
+ });
+
+
+$("#div_productos").html(str_div)
+
+recalcular_cambio();
+
+
+});
+
+
+
+
 
 	$(document).on("click", ".regresar", function(){
 		window.location.href="inicio_pca2.php";
+	});
+
+	$(document).on("click", ".borrar_num", function(){
+		if( $("#div_efectivo").hasClass('tipo_pago_check')  ){
+
+			var acumulado=$("#suma_efectivo").attr('acumulado');
+
+			console.log('acumulado_antes:'+acumulado)
+
+			var str2 = acumulado.substring(0, acumulado.length - 1);
+
+			if(str2==''){
+				console.log("llego al cero!!!!!")
+				str2=0;
+			}
+
+			console.log('acumulado_despues:'+str2)
+
+			$("#suma_efectivo").attr('acumulado',str2);
+
+			$("#suma_efectivo").html('$'+str2.toLocaleString());
+
+		}else if( $("#div_tarjeta").hasClass('tipo_pago_check')){
+
+			var acumulado=$("#suma_tarjeta").attr('acumulado');
+
+			console.log('acumulado_antes:'+acumulado)
+
+			var str2 = acumulado.substring(0, acumulado.length - 1);
+
+			if(str2==''){
+				console.log("llego al cero!!!!!")
+				str2=0;
+			}
+
+			console.log('acumulado_despues:'+str2)
+
+			$("#suma_tarjeta").attr('acumulado',str2);
+
+			$("#suma_tarjeta").html('$'+str2.toLocaleString());
+
+		}
+
+		recalcular_cambio();
+
 	});
 
 	$(document).on("click", ".numeros", function(){
@@ -411,6 +778,8 @@ $(document).on("click", ".boleta-add", function(){
 		}
 
 
+		recalcular_cambio()
+
 		var num=$(this).attr('id');
 		//alert("num:"+num);
 	});
@@ -421,15 +790,128 @@ $(document).on("click", ".boleta-add", function(){
 		location.reload();
 	});
 
+	$(document).on("click", ".tabbla", function(){
+		
+
+		var id=$(this).attr('id');
+		var tipo=$(this).attr('tipo');
+
+		if(id=='tabboletas'){
+
+			if( $(this).hasClass("pes-act-inv") ){
+				$(this).removeClass( "pes-act-inv" )
+				$(this).addClass('active pes-act')
+				$("#tabadicionales").removeClass("active pes-act")
+				$("#tabadicionales").addClass( "pes-act-inv" )
+
+				$("#ntab_adicionales").removeClass("txttab");
+				$("#ntab_boletas").addClass("txttab");
+
+				cargar_datos_taquilla();
+			}
+
+		}else if(id=='tabadicionales') {
+
+			//alert("Activameros los adicionales")
+
+			if( $(this).hasClass("pes-act-inv") ){
+				//click inicio
+				$(this).removeClass( "pes-act-inv" )
+				$(this).addClass('active pes-act')
+				$("#tabboletas").removeClass("active pes-act")
+				$("#tabboletas").addClass( "pes-act-inv" )
+
+				$("#ntab_boletas").removeClass("txttab");
+				$("#ntab_adicionales").addClass("txttab");
+
+				cargar_adicionales();
+				
+			}else if( $(this).hasClass("pes-act") ){
+
+			}
+
+			
+
+		}
+
+		
+		console.log("id:"+id)
+	});
+
+	$(document).on("click", "#pagar", function(){
+
+		var sumatoria_total=$("#sumatoria_total").attr('val_sum');
+
+		if(sumatoria_total==undefined || sumatoria_total==0){
+			
+		}else{
+
+			pagar();
+
+		}
+
+		
+	});
+
 	$(document).on("click", "#div_efectivo", function(){
+
+		var sumatoria_total =$("#sumatoria_total").attr('val_sum');
+
+		var suma_tarjeta=$("#suma_tarjeta").attr('acumulado');
+
+		if(suma_tarjeta>0){
+			var valor_complementario= parseInt(sumatoria_total)-parseInt(suma_tarjeta);
+			$("#suma_efectivo").html('$'+valor_complementario.toLocaleString());
+			$("#suma_efectivo").attr('acumulado',valor_complementario)
+			recalcular_cambio();
+		}else{
+
+		}
+
 		$("#div_efectivo").addClass("tipo_pago_check");
 		$("#div_tarjeta").removeClass("tipo_pago_check");
 	});
 
+
 	$(document).on("click", "#div_tarjeta", function(){
+
+		var sumatoria_total =$("#sumatoria_total").attr('val_sum');
+
+		var suma_efectivo=$("#suma_efectivo").attr('acumulado');
+
+		if(suma_efectivo>0){
+			var valor_complementario= parseInt(sumatoria_total)-parseInt(suma_efectivo);
+			$("#suma_tarjeta").html('$'+valor_complementario.toLocaleString());
+			$("#suma_tarjeta").attr('acumulado',valor_complementario)
+			recalcular_cambio();
+		}else{
+
+		}
+
 		$("#div_efectivo").removeClass("tipo_pago_check");
 		$("#div_tarjeta").addClass("tipo_pago_check");
 	});
+
+
+	$(document).on("blur", "#numero_documento", function(){
+		//alert("Holaaaa!!!!")
+
+		var tipo_documento=$("#tipo_documento").val();
+
+		var numero_documento=$("#numero_documento").val();
+
+		if(tipo_documento!='' && numero_documento!=''){
+
+			validar_cliente(tipo_documento,numero_documento);
+
+		}
+
+		//console.log('tipo_documento:'+tipo_documento+' numero_documento:'+numero_documento)
+
+
+	});
+
+	
 
 /*	function iniciar_proceso(){
 	//$(document).on("click", "#iniciar", function(){
@@ -496,6 +978,8 @@ $(document).on("click", ".boleta-add", function(){
 
 	//iniciar_proceso();
 
+	localStorage.clear();
+
 
 	$("#contenido_taquilla").show();
 
@@ -550,9 +1034,9 @@ $(document).on("click", ".boleta-add", function(){
 
 				   <select class="selectAltura" id="tipo_documento" >
 					   <option value="">Tipo de Documento</option>
-					   <option value="cc" >Cedula Ciudadania</option>
-					   <option value="ce">Cedula Estranjeria</option>
-					   <option vlaue="pa">Pasaporte</option>
+					   <option value="CC" >Cedula Ciudadania</option>
+					   <option value="CE">Cedula Estranjeria</option>
+					   <option vlaue="PAS">Pasaporte</option>
 				   </select>
 					   
 				   
@@ -560,7 +1044,7 @@ $(document).on("click", ".boleta-add", function(){
 				</div>
 				   <div class="px-2 pt-3 "><input type="text" class="campo" id="numero_documento" placeholder="Número de Documento" style="height: 30px;"></div>
 				   <div class="px-2 pt-3 "><input type="text" class="campo" id="nombre" placeholder="Nombre" style="height: 30px;"></div>
-				   <div class="px-2 pt-3 "><input type="text" class="campo" id="apellido" placeholder="Email" style="height: 30px;"></div>
+				   <div class="px-2 pt-3 "><input type="text" class="campo" id="email" placeholder="Email" style="height: 30px;"></div>
 				   <div class="px-2 pt-3 "><input type="text" class="campo" id="telefono" placeholder="Teléfono" style="height: 30px;"></div>
 			   </div>
 			   <div class="d-flex align-items-center justify-content-end">
@@ -611,24 +1095,27 @@ $(document).on("click", ".boleta-add", function(){
 				  <div class="panel3 sombra">
 				  	<div class="fondo-pesta">
 					     <div class="row pr-0 pl-0 ml-0 mr-0">
-								<div class="active col-2 pes-act">
-							<div class="text-center d-flex align-items-center align-self-center justify-content-center cerrar">
-								<a href="">Pasaportes</a>
+							<div style="cursor:pointer" id="tabboletas" tipo="boletas" class="active col-2 pes-act tabbla">
+								<div class="text-center d-flex align-items-center align-self-center justify-content-center cerrar">
+									<h3 id="ntab_boletas" class="txttab">Pasaportes</h3>
+								</div>
 							</div>
-						</div>
 						
-						<div class="col-2 pes-act-inv d-flex justify-content-center">
-							<div class="d-flex align-items-center cerrar mr-3 ">
-								<div class="text-left"><a>Lockers</a></div>
+							
+							 <div style="cursor:pointer" id="tabadicionales" tipo="adicionales" class="col-3 pes-act-inv d-flex justify-content-center tabbla" 	style="border-radius: 0px;">
+								<div class="d-flex align-items-center cerrar mr-3 ">
+									<div class="text-left"><h3  id="ntab_adicionales">Otros Servicios</h3></div>
+								</div>
+								<figure class="d-flex align-items-center pt-3"><img src="imagenes/Línea 5.png"></figure>
 							</div>
-							<figure class="d-flex align-items-center pt-3"><img src="imagenes/Línea 5.png"></figure>
-						</div>
-							 <div class="col-3 pes-act-inv d-flex justify-content-center" style="border-radius: 0px;">
-							<div class="d-flex align-items-center cerrar mr-3 ">
-								<div class="text-left"><a>Otros Servicios</a></div>
-							</div>
-							<figure class="d-flex align-items-center pt-3"><img src="imagenes/Línea 5.png"></figure>
-						</div>
+							 <div class="col-1 pes-act-inv3">
+							 
+							 </div>
+
+							 <div class="col-1 pes-act-inv3">
+							 
+							 </div>
+
 							 <div class="col-1 pes-act-inv3">
 							 
 							 </div>
@@ -666,18 +1153,25 @@ $(document).on("click", ".boleta-add", function(){
 							<div class="col-lg-7 p-1">
 								<div style="background: #EEEEFF; border-radius: 10px;" class="p-1 pb-3" >
 
-									<div class="p-1 d-flex justify-content-between" style="cursor:pointer" id="div_efectivo">
+									<div class="p-1 d-flex justify-content-between" style="cursor:pointer" class="metodo_pago" id="div_efectivo">
 										<div style="font-size: 12px;">Efectivo</div>
 										<div style="font-size: 16px;" id="suma_efectivo" acumulado="0">$0</div>
 									</div>
-									<div class="d-flex justify-content-between pt-3" style="cursor:pointer" id="div_tarjeta">
+									<div class="d-flex justify-content-between pt-3" style="cursor:pointer" class="metodo_pago" id="div_tarjeta">
 										<div style="font-size: 12px;">Tarjeta</div>
 										<div style="font-size: 16px;" id="suma_tarjeta" acumulado="0">$0</div>
 									</div>
+
+									
 									
 								</div>
+								<br>
+								<div class="d-flex justify-content-between " id="cambio">
+
+									
+									</div>
 								
-								<div class="text-right pt-5"><input type="button" style="width: 100%" value="PAGAR"></div>
+								<div class="text-right pt-5"><input type="button" style="width: 100%" value="PAGAR" id="pagar"></div>
 							</div>
 							<div class="col-lg-4">
 								<div class="row no-gutters">
