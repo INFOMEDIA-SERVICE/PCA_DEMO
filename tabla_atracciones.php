@@ -1,6 +1,7 @@
 <?php
 	session_start();
 	include('php/sesion.php');
+	//global $paginar = 1;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +14,7 @@
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
 		<!--<script src="js/jquery-3.4.1.min.js"></script>--><!--Este es el JQUERY original que viene la plantilla-->
 		<!--<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>-->
+		<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
 		<!---->
 		<!-- Bootstrap -->
 		<link href="css/bootstrap-4.4.1.css" rel="stylesheet">
@@ -20,9 +22,9 @@
 		<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
 
 		<!--Datatable-->
-		<link rel="stylesheet" type="text/css" href="css/dataTables.min.css"/>	
+		<!--<link rel="stylesheet" type="text/css" href="css/dataTables.min.css"/>	
 		<script type="text/javascript" charset="utf8"  src="js/jquery.dataTables.min.js"></script>
-		<script type="text/javascript" charset="utf8"  src="js/views/atracciones.js"></script>
+		<script type="text/javascript" charset="utf8"  src="js/views/atracciones.js"></script>-->
 		
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script src="js/popper.min.js"></script> 
@@ -134,7 +136,7 @@
 											<th class="col-1 text-center"><h2>Creado Por</h2></th>
 											<th class="col-1 text-center"><h2>Fecha Creacion</h2></th>
 											<th class="col-1 text-center"><h2>Modificado Por</h2></th>
-											<th class="col-1 text-center"><h2>Fecha Modificación</h2></th>
+											<th class="col-1 text-center"><h2>Fecha ModificaciÃ³n</h2></th>
 											<th class="col-1 text-center"><h2>Estado</h2></th>
 											<th class="col-1 text-center"><h2>Condiciones Acceso</h2></th>										
 										</tr>
@@ -168,13 +170,15 @@
 										</tr>-->
 									</tboby>	
 								</table>
+								<ul class="pagination pagination-lg pager" id="myPager"></ul>
+								<div><p id="ratracciones" style="font-size: 12px">n&uacute;meros de registros: 24</P> </div>
 							</div>
 					  	</section>	 
 					</div>		  
 				</div>
 			</section>
 			<!--MODALES-->
-			<!--Modal agregar atracción-->
+			<!--Modal agregar atracci&oacute;n-->
 			<div class="modal" id="addModalAtraccion" tabindex="-1" role="dialog">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
@@ -206,7 +210,7 @@
 					</div>
 				</div>
 			</div> 
-			<!--Modal actualizar atraccion-->
+			<!--Modal actualizar atracci&oacute;n-->
 			<div class="modal" id="upModalAtraccion" tabindex="-1" role="dialog">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
@@ -239,7 +243,7 @@
 					</div>
 				</div>
 			</div>
-			<!--Modal Activar/Desactivar atracciónes--><!--tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true"-->
+			<!--Modal Activar/Desactivar atracciones--><!--tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true"-->
 			<div class="modal" tabindex="-1" id="estadoModalAtraccion">
 				<div class="modal-dialog">
 					<div class="modal-content">			
@@ -279,9 +283,116 @@
 			<!---->			
 	  	</main>
 	  	<script>
-			cargar_datos();	
+			//cargar_datos();
+			$.fn.pageMe = function(opts){
+				console.log(opts);
+				var $this = this,
+					defaults = {
+						perPage: 7,
+						showPrevNext: false,
+						hidePageNumbers: false
+					},
+					settings = $.extend(defaults, opts);
+				
+				var listElement = $this.find('tbody');
+				var perPage = settings.perPage; 
+				var children = listElement.children();
+				var pager = $('.pager');
+				
+				if (typeof settings.childSelector!="undefined") {
+					children = listElement.find(settings.childSelector);
+				}
+				
+				if (typeof settings.pagerSelector!="undefined") {
+					pager = $(settings.pagerSelector);
+				}
+				
+				var numItems = children.length;
+				var numPages = Math.ceil(numItems/perPage);
+
+				pager.data("curr",0);
+				
+				if (settings.showPrevNext){
+					$('<li><a href="#" class="prev_link">«</a></li>').appendTo(pager);
+				}
+				
+				var curr = 0;
+				while(numPages > curr && (settings.hidePageNumbers==false)){
+					$('<li><a href="#" class="page_link">'+(curr+1)+'</a></li>').appendTo(pager);
+					curr++;
+				}
+				
+				if (settings.showPrevNext){
+					$('<li><a href="#" class="next_link">»</a></li>').appendTo(pager);
+				}
+				
+				pager.find('.page_link:first').addClass('active');
+				pager.find('.prev_link').hide();
+				if (numPages<=1) {
+					pager.find('.next_link').hide();
+				}
+				pager.children().eq(1).addClass("active");
+				
+				children.hide();
+				children.slice(0, perPage).show();
+				
+				pager.find('li .page_link').click(function(){
+					var clickedPage = $(this).html().valueOf()-1;
+					goTo(clickedPage,perPage);
+					return false;
+				});
+				pager.find('li .prev_link').click(function(){
+					previous();
+					return false;
+				});
+				pager.find('li .next_link').click(function(){
+					next();
+					return false;
+				});
+				
+				function previous(){
+					var goToPage = parseInt(pager.data("curr")) - 1;
+					goTo(goToPage);
+				}
+				
+				function next(){
+					goToPage = parseInt(pager.data("curr")) + 1;
+					goTo(goToPage);
+				}
+				
+				function goTo(page){
+					var startAt = page * perPage,
+						endOn = startAt + perPage;
+					
+					children.css('display','none').slice(startAt, endOn).show();
+					
+					if (page>=1) {
+						pager.find('.prev_link').show();
+					}
+					else {
+						pager.find('.prev_link').hide();
+					}
+					
+					if (page<(numPages-1)) {
+						pager.find('.next_link').show();
+					}
+					else {
+						pager.find('.next_link').hide();
+					}
+					
+					pager.data("curr",page);
+					pager.children().removeClass("active");
+					pager.children().eq(page+1).addClass("active");
+				
+				}
+			};
+			$(document).ready(function(){
+				cargar_datos();	
+				$('#tbody_atraccion').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:4});
+			
+			});
 			//
-			document.getElementById("file").addEventListener("change",openImage,false); //Añadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo  
+			document.getElementById("file").addEventListener("change",openImage,false); //Anadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo  
 			//
 			document.getElementById("file2").addEventListener("change",openImage2,false); //Anadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo al actualizar 
 			//
@@ -292,7 +403,7 @@
 				if(nombre != '' && value.size != 0){
 					let img_ext = value.name;
 					img_ext = img_ext.toUpperCase(); 
-					var extension_img = img_ext.split('.'); // Saco la extensión para guardarla en la BD
+					var extension_img = img_ext.split('.'); // Saco la extension para guardarla en la BD
 					//
 					adicionarAtracciones(nombre, extension_img[1]);
 				}else{
@@ -312,7 +423,7 @@
 						console.log("base64");////////////////////////////
 						var imagen_a = document.getElementById("file2").files[0];
 						let img_ext = imagen_a.name;
-						var extension_img = img_ext.split('.'); // Saco la extensión para guardarla en la BD 
+						var extension_img = img_ext.split('.'); // Saco la extension para guardarla en la BD 
 						//						
 						actualizarAtracciones(id_a,nombre_a, extension_img[1], imagen[1]);
 					}else{
@@ -324,18 +435,11 @@
 				}		
 			});
 			//
-			/*$(document).ready(function(){
-			  //$('#tabla_atraccion').DataTable();
-				$('#tabla_atraccion').DataTable({
-					"language": { "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json" }
-				});
-			});*/
-			//
 			function marcar(source){
 				checkboxes=document.getElementsByTagName('input'); //obtenemos todos los controles del tipo Input
 				for(i=0;i<checkboxes.length;i++){ //recoremos todos los controles				
 					if(checkboxes[i].type == "checkbox"){ //solo si es un checkbox entramos					
-						checkboxes[i].checked=source.checked; //si es un checkbox le damos el valor del checkbox que lo llamó (Marcar/Desmarcar Todos)
+						checkboxes[i].checked=source.checked; //si es un checkbox le damos el valor del checkbox que lo llamo (Marcar/Desmarcar Todos)
 					}
 				}
 			}		

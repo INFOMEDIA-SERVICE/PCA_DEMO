@@ -15,6 +15,9 @@ function cargar_datos(){
                 if(typeof r2.resultado.status === 'undefined'){
                     $("#tabla_atraccion").dataTable().fnDestroy();
                     var str_remp;
+                    let date = new Date();
+                    let output = String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear();
+
                     $.each(r2.resultado, function(m, n) {
                         //console.log(n);
                         //var img_ext = atracciones.imagenUrl;
@@ -56,16 +59,16 @@ function cargar_datos(){
                                 title: "",
                                 footer: true,
                                 exportOptions: {
-                                    columns: [ 0, 1, 5, 6, 7, 8 ],
+                                    columns: [ 2, 5, 6, 7, 8 ],
                                     stripHtml: false, /* Aquí indicamos que no se eliminen las imágenes */
                                 },
                                 customize: function (win) {
                                     /* ... */
                                 }
                             },
-                            {extend:'excel',text: "Exportar Excel",title: "Informe de Seguros",footer:true,exportOptions:{columns:[0,1,5,6,7,8]} },
-                            {extend:'pdf',text: "Exportar PDF",title: "Informe de Seguros",footer:true,exportOptions:{columns:[0,1,5,6,7,8]}},
-                            {extend:'copy',text: "Copiar portapapeles",title: "Informe de Seguros",footer:true,exportOptions:{columns:[0,1,2,3,4,5,6]}}
+                            {extend:'excel',text: "Exportar Excel",title: "Informe_de_Atracciones_"+date ,footer:true,exportOptions:{columns:[3,5,6,7,8]} },
+                            {extend:'pdf',text: "Exportar PDF",title: "Informe_de_Atracciones_"+output,footer:true,exportOptions:{columns:[5,6,7,8]}},
+                            {extend:'copy',text: "Copiar portapapeles",title: "Informe_de_Atracciones_"+output,footer:true,exportOptions:{columns:[2,3,5,6]}}
                             /* ... */
                         ],
                         "lengthMenu": [[25, 50, -1], [25, 50, "All"]]                            

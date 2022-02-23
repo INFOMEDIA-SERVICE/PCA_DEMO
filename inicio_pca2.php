@@ -12,6 +12,7 @@ echo" </pre> ";*/
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Abacox inicio</title>
+	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
     <!-- Bootstrap -->
 	<link href="css/bootstrap-4.4.1.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/main.css">
@@ -78,9 +79,9 @@ echo" </pre> ";*/
 	<script src="js/bootstrap-4.4.1.js"></script>
 	<script src="js/views/taquilla.js"></script>
 	<script type="text/javascript" charset="utf8"  src="js/views/atracciones.js"></script>
-	<link rel="stylesheet" type="text/css" href="css/dataTables.min.css"/>	
-		<script type="text/javascript" charset="utf8"  src="js/jquery.dataTables.min.js"></script>
-		<link rel="stylesheet" href="css/main.css">
+	<!--<link rel="stylesheet" type="text/css" href="css/dataTables.min.css"/>	
+	<script type="text/javascript" charset="utf8"  src="js/jquery.dataTables.min.js"></script>-->
+	<link rel="stylesheet" href="css/main.css">
 
 	<script>
 
@@ -449,7 +450,7 @@ echo" </pre> ";*/
 	  </footer> 
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
-	<script src="../js/jquery-3.4.1.min.js"></script>
+	<!--<script src="js/jquery-3.4.1.min.js"></script>-->
 
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="js/popper.min.js"></script> 

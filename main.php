@@ -14,6 +14,7 @@
         $consumo = new Consumir();
         $atrac = new Atracciones();
         $condi = new Condiciones();
+        //$functions = new Funciones();
         $llamar_token = new ConsumoServicio();
         
 
