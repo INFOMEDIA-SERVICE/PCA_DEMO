@@ -39,6 +39,8 @@ function cargar_datos(){
                             '</tr>';				
                     });				             
                     $("#tbody_atraccion").html(str_remp); 
+                    $('#tbody_atraccion').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:20});
+
                 }else{
                     console.log(r2.resultado.status);
                 }                                            

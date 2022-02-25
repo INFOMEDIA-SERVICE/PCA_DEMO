@@ -104,13 +104,13 @@
 								<div class="col-2 d-flex justify-content-center">
 									<div class="d-flex align-items-center">
 										<h4 class="mr-2">Filtrar por:</h4>
-										<figure class="mr-2 pt-1"><img src="imagenes/pdf.png"></figure>
-										<figure class="mr-2 pt-1"><img src="imagenes/file-word.png"></figure>
-										<figure class="pt-1"><img src="imagenes/file-excel.png"></figure>
+										<figure class="mr-2 pt-1"><a href="exportar/atracciones/atraccion_pdf.php"><img src="imagenes/pdf.png"></a></figure>
+										<figure class="mr-2 pt-1"><a href="exportar/atracciones/atraccion_word.php"><img src="imagenes/file-word.png"></a></figure>
+										<figure class="pt-1"><a href="exportar/atracciones/atraccion_excel.php"><img src="imagenes/file-excel.png"></a></figure>
 									</div>
 								</div>
 								<div class="col-3 d-flex align-items-center justify-content-center">
-									<h4 class="text-right pt-3 mr-2">Filtrar por:</h4>
+									<h4 class="text-right pt-3 mr-2">Exportar en:</h4>
 									<div class="caja" style="width: 100px">
 										<select>
 											<option>10</option>
@@ -118,8 +118,8 @@
 									</div>
 								</div>
 								<div class="col-2 d-flex align-items-center justify-content-end">
-									<h4 class="mr-2 pt-2">1 <a href=""> 2 3 4</a></h4>
-									<div class="f-icono mr-2"><img src="imagenes/Imagen 6.png"></div>
+									<ul class="pagination pagination-lg pager mr-2 pt-2" id="myPager"></ul>
+									<!--<div class="f-icono mr-2"><img src="imagenes/Imagen 6.png"></div>-->
 								</div>
 							</div>
 						</section>
@@ -169,9 +169,8 @@
 											<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2"><img src="imagenes/+.png"></div></td>										
 										</tr>-->
 									</tboby>	
-								</table>
-								<ul class="pagination pagination-lg pager" id="myPager"></ul>
-								<div><p id="ratracciones" style="font-size: 12px">n&uacute;meros de registros: 24</P> </div>
+								</table>								
+								<!--<div><p id="ratracciones" style="font-size: 12px">n&uacute;meros de registros: 24</P> </div>-->
 							</div>
 					  	</section>	 
 					</div>		  
@@ -294,7 +293,7 @@
 					},
 					settings = $.extend(defaults, opts);
 				
-				var listElement = $this.find('tbody');
+				var listElement = $this;//.find('tbody');
 				var perPage = settings.perPage; 
 				var children = listElement.children();
 				var pager = $('.pager');
@@ -323,7 +322,7 @@
 				}
 				
 				if (settings.showPrevNext){
-					$('<li><a href="#" class="next_link">»</a></li>').appendTo(pager);
+					$('<li><a href="#" class="next_link"><div class="f-icono mr-2"><img src="imagenes/Imagen 6.png"></div></a></li>').appendTo(pager);
 				}
 				
 				pager.find('.page_link:first').addClass('active');
@@ -388,7 +387,7 @@
 			};
 			$(document).ready(function(){
 				cargar_datos();	
-				$('#tbody_atraccion').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:4});
+				//$('#tbody_atraccion').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:4});
 			
 			});
 			//
