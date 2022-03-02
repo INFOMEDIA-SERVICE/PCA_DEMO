@@ -79,6 +79,8 @@ echo" </pre> ";*/
 	<script src="js/bootstrap-4.4.1.js"></script>
 	<script src="js/views/taquilla.js"></script>
 	<script type="text/javascript" charset="utf8"  src="js/views/atracciones.js"></script>
+	<script type="text/javascript" charset="utf8"  src="js/views/condicion.js"></script>
+	<script type="text/javascript" charset="utf8"  src="js/views/casillero.js"></script>
 	<!--<link rel="stylesheet" type="text/css" href="css/dataTables.min.css"/>	
 	<script type="text/javascript" charset="utf8"  src="js/jquery.dataTables.min.js"></script>-->
 	<link rel="stylesheet" href="css/main.css">

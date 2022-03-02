@@ -1,16 +1,13 @@
 <?php
     session_start();
     /**
-    * Exportar con Word para Atracciones
+    * Exportar con Word para Condiciones de acceso
     * User: Alfonso Atencio
-    * Date: 02/25/2022
-    * Time: 14:30
+    * Date: 03/01/2022
+    * Time: 12:56
     */
     require_once '../../lib/dompdf/autoload.inc.php'; 
     require_once '../../main.php'; 
-
-    header("Content-type: application/vnd.ms-word");
-    header("Content-Disposition: attachment; Filename=Atracciones.doc");
 
     $tokenRefresh = $llamar_token->refreshToken();
     $token=$_SESSION['accessToken'];
@@ -18,7 +15,7 @@
     $headers[] = 'Content-Type: application/json'; 
     //
     if ($token != '') {
-      $url = 'http://20.44.111.223:80/api/boleteria/atraccion?incluirImagen=true';
+      $url = 'http://20.44.111.223:80/api/boleteria/condicionAcceso?incluirImagen=true';  
       $rDatos = $consumo->Get($url, $headers);            
     }else {
         die('Se produjo un Error al generar el Token');
@@ -30,7 +27,7 @@
         <meta charset="Windows-1252" />
     </head>    
     <body>       
-        <h3>Atracciones</h3>
+        <h3>Condiciones de acceso</h3>
         <table border="0">
             <thead>							  
                 <tr>               
@@ -82,6 +79,6 @@
     //$dompdf->setPaper('A4', 'landscape'); 
 
     $dompdf->render(); 
-    $dompdf->stream("Atracciones.pdf");
+    $dompdf->stream("Condiciondeacceso.pdf");
     //$dompdf->stream("niceshipest", array("Attachment" => 0));
 ?>

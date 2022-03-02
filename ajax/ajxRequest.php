@@ -302,6 +302,119 @@ session_start();
 
         break;
 
+        case 14: //OBTIENE CONDICION DE ACCESO
+            if ($token != '') {
+                $url = 'http://20.44.111.223:80/api/boleteria/condicionAcceso?incluirImagen=true';                
+                $rDatos = $consumo->Get($url, $headers);                 
+                if ($rDatos != '') {
+
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO']);
+                }
+
+            } else {
+                die('Se produjo un Error al generar el Token');
+            }       
+        break;
+
+        case 15: //OBTIENE LOS CASILLEROS
+            if ($token != '') {
+                $url = 'http://20.44.111.223:80/api/boleteria/casilleros';                
+                $rDatos = $consumo->Get($url, $headers);                 
+                if ($rDatos != '') {
+                    
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO']);
+                }
+
+            } else {
+                die('Se produjo un Error al generar el Token');
+            }       
+        break;
+
+        case 16:
+            $si = 0;
+            $no = 0;
+            $id_c = Array();
+            $id_check = json_decode($_POST['id']);
+            //
+            foreach ($id_check as $clave => $valor) {
+                $id_c = explode("-", $valor);
+                $id_at = $id_c[2];
+                $estado_at = ($id_c[1]=='ACTIVO') ? 'INACTIVO' : 'ACTIVO';            
+                //
+                $array5['estado'] = $estado_at;
+                $array5['idCondicionAcceso'] = $id_at;
+                //
+                $url = 'http://20.44.111.223:80/api/boleteria/condicionAccesoEstado';
+                $rActualizar_base = $consumo->Patch($url, $headers, $array5);
+                if($rActualizar_base->message == 'Se ha cambiado el estado'){
+                    $si++;
+                }else{
+                   $no++;
+                }
+            }
+            echo json_encode(['sts'=>'OK', 'stsNo'=>$no, 'stsSi'=>$si]);         
+        break;
+
+        case 17: //Actualiza solo nombre condicion acceso
+            $id_c = addslashes($_POST['id']);
+            $nombre_c = addslashes($_POST['nombre']);
+            //
+            $array6['idCondicionAcceso'] = $id_c;
+            $array6['nombre'] = $nombre_c;
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/condicionAcceso';
+            $rActualizar_base = $consumo->Patch($url, $headers, $array6);
+            if($rActualizar_base->message == 'Se han realizado los cambios'){
+                echo json_encode(['sts'=>'OK']); 
+            }else{
+                echo json_encode(['sts'=>'NO']);
+            }           
+        break;
+
+        case 18: //Actualiza imagen y nombre condicion de acceso
+            $a_id = addslashes($_POST['id']);
+            $a_nombre = addslashes($_POST['nombre']);
+            $a_base = addslashes($_POST['base']);
+            $a_extension = addslashes($_POST['extension']);
+            //
+            $array7['idCondicionAcceso'] = $a_id;
+            $array7['imagen']['datosBase64'] = $a_base;
+            $array7['imagen']['formato'] = $a_extension;
+            $array7['nombre'] = $a_nombre;
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/condicionAcceso';
+            $rActualizar_base = $consumo->Patch($url, $headers, $array7);
+            if($rActualizar_base->message == 'Se han realizado los cambios'){
+                echo json_encode(['sts'=>'OK']); 
+            }else{
+                echo json_encode(['sts'=>'NO']);
+            }           
+        break;
+
+        case 19:            
+            //
+            $anombre = addslashes($_POST['nombre']);
+            $aimagen = addslashes($_POST['imagen']);
+            $aextension = addslashes($_POST['extension']);
+            //
+            $array['estado'] = 'ACTIVO';
+            $array['imagen']['datosBase64'] = $aimagen;
+            $array['imagen']['formato'] = $aextension;
+            $array['nombre'] = $anombre;
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/condicionAcceso';
+            $rGuardar = $consumo->Post($url, $headers, $array);
+            if($rGuardar->message == 'Se ha creado la condicion de acceso'){
+                echo json_encode(['sts'=>'OK']); 
+            }else{
+                echo json_encode(['sts'=>'NO']);
+            }            
+        break;
+
         default:
             echo 'No se seleccionó ninguna opción';
     }

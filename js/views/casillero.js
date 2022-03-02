@@ -3,11 +3,11 @@ var myArray = new Array();
 var nRegistros;  
 
   
-function cargar_datos(){
+function cargar_datos_casillero(){
     console.log('Cargar datos'); 
     $.ajax({        
         url: "ajax/ajxRequest.php",
-        data: { op: '1' },
+        data: { op: '15' },
         dataType: 'json',
         type: 'POST',
         //async: false,
@@ -19,7 +19,7 @@ function cargar_datos(){
                     $.each(r2.resultado, function(m, n) {
                         //console.log(n);
                         //var img_ext = atracciones.imagenUrl;
-                        //var extension_img = img_ext.split('.'); // Saco la extensión para guardarla en la BD
+                        //var extension_img = img_ext.split('.'); // Saco la extensiÃ³n para guardarla en la BD
                         //var ext_comilla = "'"+extension_img[1]+"'";
                         var atraccion_comilla = "'"+n.nombre+"'";
                         var idCheck = n.nombre+'-'+n.estado+'-'+n.id;
@@ -29,21 +29,12 @@ function cargar_datos(){
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2">'+ btnEditar +'</div></td>'+
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4><input type="checkbox" name="'+idCheck+'"></h4></td>'+
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.id +'</h4></td>'+
-                                '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.nombre +'</h4></td>'+
-                                '<td class="col-2 d-flex align-items-center justify-content-center">' + ver_imagen + '</td>'+
-                                '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.creadoPor +'</h4></td>'+
-                                '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.fechaCreado +'</h4></td>'+
-                                '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.modificadoPor +'</h4></td>'+
-                                '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.fechaModificado +'</h4></td>'+
-                                '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.estado +'</h4></td>'+
-                                '<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2"><img src="imagenes/+.png"></div></td>'+										
+                                '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.nombre +'</h4></td>'+                                               									
                             '</tr>';				
                     });				             
-                    $("#tbody_atraccion").html(str_remp); 
-                    restaurar_paginacion('myPager');
-                    //$("myPager").html("");
-                    //document.myPager.innerHTML = ""; 
-                    $('#tbody_atraccion').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:20});
+                    $("#tbody_casillero").html(str_remp); 
+                    restaurar_paginacion('myPager3');
+                    $('#tbody_casillero').pageMe({pagerSelector:'#myPager3',showPrevNext:true,hidePageNumbers:false,perPage:20});
 
                 }else{
                     console.log(r2.resultado.status);
@@ -108,13 +99,13 @@ function upAtraccion(id_u, nombre_u, ext_img){
     $('#upModalAtraccion').modal('show'); // abrir modal  
 } 
 //
-function openImage() { //Esta función validaría una imágen  
+function openImage() { //Esta funciÃ³n validarÃ­a una imÃ¡gen  
     try{			
         var input = this;
         var file = input.files[0];
         var fileName = input.value;
         var maxSize = 1048576; //bytes
-        var extensions = new RegExp(/.jpg|.jpeg|.png/i); //Extensiones válidas
+        var extensions = new RegExp(/.jpg|.jpeg|.png/i); //Extensiones vÃ¡lidas
         console.log(file.size);
         var error = {
             state: false,
@@ -126,14 +117,14 @@ function openImage() { //Esta función validaría una imágen
                     var ext = fileName.substring(fileName[i],fileName.length);  
                     if (!extensions.test(ext)) {
                         error.state = true;
-                        error.msg+= 'La extensión del archivo no es válida.<br>';
+                        error.msg+= 'La extensiÃ³n del archivo no es vÃ¡lida.<br>';
                     }  
                     break;
                 }  
             }  
             if(file.size > maxSize) {
                 error.state = true;
-                error.msg += 'La imágen no puede ocupar m&aacute;s de '+maxSize/1048576+' MB.';
+                error.msg += 'La imÃ¡gen no puede ocupar m&aacute;s de '+maxSize/1048576+' MB.';
             }  
             if(error.state) {
                 input.value = '';
@@ -185,7 +176,7 @@ function openImage2() { //Esta funcion validara una imagen
             }  
             if(file.size > maxSize) {
                 error.state = true;
-                error.msg += 'La imagen no puede ocupar más de '+maxSize/1048576+' MB.';
+                error.msg += 'La imagen no puede ocupar mÃ¡s de '+maxSize/1048576+' MB.';
             }  
             if(error.state) {
                 input.value = '';
@@ -218,7 +209,7 @@ function openImage2() { //Esta funcion validara una imagen
     if(nombre != '' && value.size != 0){
         let img_ext = value.name;
         img_ext = img_ext.toUpperCase(); 
-        var extension_img = img_ext.split('.'); // Saco la extensión para guardarla en la BD
+        var extension_img = img_ext.split('.'); // Saco la extensiÃ³n para guardarla en la BD
         //
         adicionarAtracciones(nombre, extension_img[1]);
     }else{
@@ -262,7 +253,7 @@ function adicionarAtracciones(nombre, ext){
             console.log("base64");////////////////////////////
             var imagen_a = document.getElementById("file2").files[0];
             let img_ext = imagen_a.name;
-            var extension_img = img_ext.split('.'); // Saco la extensión para guardarla en la BD 
+            var extension_img = img_ext.split('.'); // Saco la extensiÃ³n para guardarla en la BD 
             //						
             actualizarAtracciones(id_a,nombre_a, extension_img[1], imagen[1]);
         }else{

@@ -154,15 +154,19 @@
         case 'atracciones':
           $("#contenido_crud").show();          
           $("#contenido_crud").load('tabla_atracciones.php');
-          $("#listado").remove();
-          console.log('paso por aqui');
+          $("#listado").remove();          
         break;
         
         case 'condiciones':
           $("#contenido_crud").show();          
-          $("#contenido_crud").load('tabla_atracciones_datatable.php');
-          $("#listado").remove();
-          console.log('paso por aqui22');
+          $("#contenido_crud").load('tabla_condicion_acceso.php');
+          $("#listado").remove();          
+        break;
+
+        case 'casillero':
+          $("#contenido_crud").show();          
+          $("#contenido_crud").load('tabla_casillero.php');
+          $("#listado").remove();          
         break;
 
         default:

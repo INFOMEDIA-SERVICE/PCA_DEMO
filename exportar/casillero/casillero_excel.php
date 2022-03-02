@@ -3,14 +3,14 @@
    /**
     * Exportar con excel para Atracciones
     * User: Alfonso Atencio
-    * Date: 02/25/2022
-    * Time: 09:18
+    * Date: 03/01/2022
+    * Time: 13:00
     */
 
    require_once '../../main.php'; 
 
    header("Content-type: application/vnd.ms-excel");
-   header("Content-Disposition: attachment; Filename=Atracciones.xls");
+   header("Content-Disposition: attachment; Filename=Casilleros.xls");
 ?>
  
 <!DOCTYPE html>
@@ -28,14 +28,14 @@
          $headers[] = 'Content-Type: application/json'; 
          //
          if ($token != '') {
-            $url = 'http://20.44.111.223:80/api/boleteria/atraccion?incluirImagen=true';
+            $url = 'http://20.44.111.223:80/api/boleteria/casilleros';
             $rDatos = $consumo->Get($url, $headers);            
         } else {
             die('Se produjo un Error al generar el Token');
         }       
       ?>
  
-      <h3>Atracciones</h3>
+      <h3>Casilleros</h3>
       <table border="0">
          <thead>							  
             <tr>               

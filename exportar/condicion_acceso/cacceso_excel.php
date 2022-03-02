@@ -10,7 +10,7 @@
    require_once '../../main.php'; 
 
    header("Content-type: application/vnd.ms-excel");
-   header("Content-Disposition: attachment; Filename=Atracciones.xls");
+   header("Content-Disposition: attachment; Filename=condiciondeacceso.xls");
 ?>
  
 <!DOCTYPE html>
@@ -28,14 +28,14 @@
          $headers[] = 'Content-Type: application/json'; 
          //
          if ($token != '') {
-            $url = 'http://20.44.111.223:80/api/boleteria/atraccion?incluirImagen=true';
+            $url = 'http://20.44.111.223:80/api/boleteria/condicionAcceso?incluirImagen=true'; 
             $rDatos = $consumo->Get($url, $headers);            
         } else {
             die('Se produjo un Error al generar el Token');
         }       
       ?>
  
-      <h3>Atracciones</h3>
+      <h3>Condici&oacute;n de acceso</h3>
       <table border="0">
          <thead>							  
             <tr>               

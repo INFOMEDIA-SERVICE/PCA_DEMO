@@ -1,7 +1,6 @@
 <?php
 	session_start();
 	include('php/sesion.php');
-	//global $paginar = 1;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +57,7 @@
 					   		</div>
 						</div>
 				   		<section class="px-3 pt-3">					  
-							<div class="text-center sub-titulo-form textos-medios  mb-4">Consultar Atracciones</div>
+							<div class="text-center sub-titulo-form textos-medios  mb-4">Casillero</div>
 					  		<div class="border rounded p-3 mb-4">
 								<div class="row">
 									<div class="col-2 d-flex justify-content-center">
@@ -76,7 +75,7 @@
 									<div class="col-2"></div>
 									<div class="col-5 d-flex justify-content-center">
 										<div class="d-flex align-items-center">
-											Buscar:&nbsp;&nbsp;&nbsp;<input id="searchTerm" type="text" onkeyup="doSearch('tabla_atraccion', 'searchTerm')" class="campo" value="Que quieres consultar" onclick = "if(this.value=='Que quieres consultar') this.value=''">
+											Buscar:&nbsp;&nbsp;&nbsp;<input id="searchCasillero" type="text" onkeyup="doSearch('tabla_casillero', 'searchCasillero')" class="campo" value="Que quieres consultar" onclick = "if(this.value=='Que quieres consultar') this.value=''">
 										</div>
 									</div>													
 					  			</div>
@@ -87,7 +86,7 @@
 							  	<div class="col-3 d-flex align-items-center justify-content-center">
 									<h4 class="text-right pt-3 mr-2">Mostrar:</h4>
 									<div class="caja" style="width: 100px">
-										<select name="nmostrar" id="nmostrar">
+										<select name="nmostrar_casillero" id="nmostrar_casillero">
 											<option>20</option>
 											<option>40</option>
 											<option>60</option>
@@ -105,56 +104,23 @@
 									</div>
 								</div>								
 								<div class="col-3 d-flex align-items-center justify-content-end">
-									<ul class="pagination pagination-lg pager mr-2 pt-2" id="myPager"></ul>
-									<!--<div class="f-icono mr-2"><img src="imagenes/Imagen 6.png"></div>-->
+									<ul class="pagination pagination-lg pager mr-2 pt-2" id="myPager3"></ul>									
 								</div>
 							</div>
 						</section>
 						<section class="px-3">
 							<div>
-								<table id="tabla_atraccion" class="table">
+								<table id="tabla_casillero" class="table">
 									<thead>							  
 										<tr class="row ">
 											<th class="col-1 text-center"><h2>Editar</h2></th>
 											<th class="col-1 text-center"><h2><input type="checkbox" name="atraccion_todos" onclick="marcar(this);"></h2></th>
 											<th class="col-1 text-center"><h2>Id</h2></th>
-											<th class="col-1 text-center"><h2>Nombre</h2></th>
-											<th class="col-2 text-center"><h2>Imagen</h2></th>
-											<th class="col-1 text-center"><h2>Creado Por</h2></th>
-											<th class="col-1 text-center"><h2>Fecha Creacion</h2></th>
-											<th class="col-1 text-center"><h2>Modificado Por</h2></th>
-											<th class="col-1 text-center"><h2>Fecha Modificaci&oacute;n</h2></th>
-											<th class="col-1 text-center"><h2>Estado</h2></th>
-											<th class="col-1 text-center"><h2>Condiciones Acceso</h2></th>										
+											<th class="col-1 text-center"><h2>Nombre</h2></th>																													
 										</tr>
 									</thead>
-									<tbody id="tbody_atraccion">	
-										<!--<tr class="row py-3">
-											<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2"><img src="imagenes/edit.png" class="img-fluid"></div></td>
-											<td class="col-1 d-flex align-items-center justify-content-center"><h4><input type="checkbox"></h4></td>
-											<td class="col-1 d-flex align-items-center justify-content-center"><h4>1</h2></td>
-											<td class="col-1 d-flex align-items-center justify-content-center"><h4>Sierra Nevada</h4></td>
-											<td class="col-2 d-flex align-items-center justify-content-center"><img src="imagenes/atraccion.jpg" width="50%" height="50%" ></td>
-											<td class="col-1 d-flex align-items-center justify-content-center"><h4>usuario1</h4></td>
-											<td class="col-1 d-flex align-items-center justify-content-center"><h4>21-02-2022 10:00:00</h4></td>
-											<td class="col-1 d-flex align-items-center justify-content-center"><h4>usuario2</h4></td>
-											<td class="col-1 d-flex align-items-center justify-content-center"><h4>21-02-2022 10:00:00</h4></td>
-											<td class="col-1 d-flex align-items-center justify-content-center"><h4>Activo</h4></td>
-											<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2"><img src="imagenes/+.png"></div></td>										
-										</tr>	
-										<tr class="row py-3">
-											<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2"><img src="imagenes/edit.png" class="img-fluid"></div></td>
-											<td class="col-1 d-flex align-items-center justify-content-center"><h4><input type="checkbox"></h4></td>
-											<td class="col-1 d-flex align-items-center justify-content-center"><h4>2</h2></td>
-											<td class="col-1 d-flex align-items-center justify-content-center"><h4>Coco Loco</h4></td>
-											<td class="col-2 d-flex align-items-center justify-content-center"><img src="imagenes/atraccion.jpg" width="50%" height="50%"></td>
-											<td class="col-1 d-flex align-items-center justify-content-center"><h4>usuario1</h4></td>
-											<td class="col-1 d-flex align-items-center justify-content-center"><h4>21-02-2022 10:00:00</h4></td>
-											<td class="col-1 d-flex align-items-center justify-content-center"><h4>usuario2</h4></td>
-											<td class="col-1 d-flex align-items-center justify-content-center"><h4>21-02-2022 10:00:00</h4></td>
-											<td class="col-1 d-flex align-items-center justify-content-center"><h4>Activo</h4></td>
-											<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2"><img src="imagenes/+.png"></div></td>										
-										</tr>-->
+									<tbody id="tbody_casillero">	
+										
 									</tboby>	
 								</table>								
 								<!--<div><p id="ratracciones" style="font-size: 12px">n&uacute;meros de registros: 24</P> </div>-->
@@ -164,7 +130,7 @@
 				</div>
 			</section>
 			<!--MODALES-->
-			<!--Modal agregar atracci&oacute;n-->
+			<!--Modal agregar casillero-->
 			<div class="modal" id="addModalAtraccion" tabindex="-1" role="dialog">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
@@ -176,16 +142,9 @@
 						</div>
 						<div class="modal-body mx-auto">
 							<div class="row mb-4">
-								<div class="col-2 pt-2"><h4>Nombre atraccion</h4></div>
-								<div class="col-10"><input type="text" id="txtAddAtraccion" style="background: #fff; border:1px solid #BEBEBE; border-radius: 10px"></div>
-							</div>					
-							<div class="mb-3">
-								<input type="file" id="file" accept=".jpg,.png"/>								
-								<br>
-								<div id="result"><h4>Esperando archivo...</h4></div>								
-								<br>
-								<img id="img" width="400" height="260"/>
-							</div>
+								<div class="col-2 pt-2"><h4>Nombre casillero</h4></div>
+								<div class="col-10"><input type="text" id="txtAddCasillero" style="background: #fff; border:1px solid #BEBEBE; border-radius: 10px"></div>
+							</div>						
 						</div>
 						<div class="modal-footer">							
 							<!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -269,18 +228,15 @@
 			<!---->			
 	  	</main>
 	  	<script>
-			var select = document.getElementById('nmostrar');
+			var select = document.getElementById('nmostrar_casillero');
 			select.addEventListener('change', function(){
-				restaurar_paginacion('myPager');				
+				restaurar_paginacion('myPager3');				
 				var selectedOption = this.options[select.selectedIndex];
-				$('#tbody_atraccion').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:selectedOption.text});
-				//console.log(selectedOption.text);
+				$('#tbody_caccion').pageMe({pagerSelector:'#myPager3',showPrevNext:true,hidePageNumbers:false,perPage:selectedOption.text});
 			});
 			//
 			$(document).ready(function(){
-				cargar_datos();	
-				//$('#tbody_atraccion').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:4});
-			
+				cargar_datos_casillero();
 			});
 			//
 			document.getElementById("file").addEventListener("change",openImage,false); //Anadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo  

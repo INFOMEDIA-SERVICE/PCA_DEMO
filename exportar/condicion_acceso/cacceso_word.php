@@ -1,7 +1,7 @@
 <?php
    session_start();
    /**
-    * Exportar con excel para Atracciones
+    * Exportar con Word para Atracciones
     * User: Alfonso Atencio
     * Date: 02/25/2022
     * Time: 09:18
@@ -9,8 +9,8 @@
 
    require_once '../../main.php'; 
 
-   header("Content-type: application/vnd.ms-excel");
-   header("Content-Disposition: attachment; Filename=Atracciones.xls");
+   header("Content-type: application/vnd.ms-word");
+   header("Content-Disposition: attachment; Filename=Condiciondeacceso.doc");
 ?>
  
 <!DOCTYPE html>
@@ -28,14 +28,14 @@
          $headers[] = 'Content-Type: application/json'; 
          //
          if ($token != '') {
-            $url = 'http://20.44.111.223:80/api/boleteria/atraccion?incluirImagen=true';
+            $url = 'http://20.44.111.223:80/api/boleteria/condicionAcceso?incluirImagen=true';
             $rDatos = $consumo->Get($url, $headers);            
         } else {
             die('Se produjo un Error al generar el Token');
         }       
       ?>
  
-      <h3>Atracciones</h3>
+      <h3>Condiciones de acceso</h3>
       <table border="0">
          <thead>							  
             <tr>               
