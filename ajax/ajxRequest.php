@@ -44,8 +44,8 @@ session_start();
             if ($token != '') {
                 $url = 'http://20.44.111.223:80/api/boleteria/condicionAcceso';
                 $condiDatos = $consumo->get($url, $headers); 
-                print_r($condiDatos);
-                exit;
+                //print_r($condiDatos);
+                //exit;
                 if ($rDatos != '') {
                     echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
                 } else {                
