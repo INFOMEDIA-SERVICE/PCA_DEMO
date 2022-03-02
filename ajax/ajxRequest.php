@@ -302,21 +302,30 @@ session_start();
 
         break;
 
-        case 14: //OBTIENE CONDICION DE ACCESO
-            if ($token != '') {
-                $url = 'http://20.44.111.223:80/api/boleteria/condicionAcceso?incluirImagen=true';                
-                $rDatos = $consumo->Get($url, $headers);                 
-                if ($rDatos != '') {
 
+        case 14:
+
+            $fecha_hoy=date('d-m-Y');
+            if ($token != '' && $numero_identificacion!='' && $tipo_identificacion!='') {
+                $url = "http://20.44.111.223:80/api/boleteria/buscarReserva?filter=cliente.identificacion.numero%3A%27".$numero_identificacion."%27%20and%20cliente.identificacion.tipo%3A%27".$tipo_identificacion."%27%20and%20fecha%3A%27".$fecha_hoy."%27";
+                //$rDatos = $atrac->cargarAtracciones($token);
+                $rDatos = $consumo->Get($url, $headers); 
+            
+                //print_r($rDatos);exit;
+                
+                if ($rDatos != '') {
                     echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
                 } else {                
-                    echo json_encode(['sts'=>'NO']);
+                    echo json_encode(['sts'=>'NO', 'resultado'=>$url]);
+            
                 }
-
+            
             } else {
                 die('Se produjo un Error al generar el Token');
-            }       
+            }
         break;
+
+                
 
         case 15: //OBTIENE LOS CASILLEROS
             if ($token != '') {
@@ -327,11 +336,10 @@ session_start();
                     echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
                 } else {                
                     echo json_encode(['sts'=>'NO']);
-                }
-
-            } else {
-                die('Se produjo un Error al generar el Token');
-            }       
+                } 
+            }else {
+                    die('Se produjo un Error al generar el Token');
+            }        
         break;
 
         case 16:
@@ -412,7 +420,22 @@ session_start();
                 echo json_encode(['sts'=>'OK']); 
             }else{
                 echo json_encode(['sts'=>'NO']);
-            }            
+            }
+
+        case 20: //OBTIENE CONDICION DE ACCESO
+            if ($token != '') {
+                $url = 'http://20.44.111.223:80/api/boleteria/condicionAcceso?incluirImagen=true';                
+                $rDatos = $consumo->Get($url, $headers);                 
+                if ($rDatos != '') {
+
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO']);
+                }
+
+            } else {
+                die('Se produjo un Error al generar el Token');
+            }       
         break;
 
         default:

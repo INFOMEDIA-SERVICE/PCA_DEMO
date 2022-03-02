@@ -7,7 +7,7 @@ function cargar_datos_condicion(){
     console.log('Cargar datos'); 
     $.ajax({        
         url: "ajax/ajxRequest.php",
-        data: { op: '14' },
+        data: { op: '20' },
         dataType: 'json',
         type: 'POST',
         //async: false,
