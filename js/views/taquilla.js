@@ -18,7 +18,7 @@ function retornarDatosBoleta(idboleta){
 
   } 
 
-function cargar_datos_taquilla(){
+function cargar_datos_taquilla(filtro){
     console.log('Cargar datos'); 
 
     var info_boletas= JSON.parse( localStorage.getItem('boletas_nombres'));
@@ -75,14 +75,31 @@ function cargar_datos_taquilla(){
 
     }else{
         //console.log("El array tiene datos")
+
+        console.log("filtro:"+filtro)
+
+
         str_remp ='';
         $.each(info_boletas, function(m, n) {
     
+            if(filtro!=undefined){
+
+                if( n.nombre.toLowerCase().includes(filtro.toLowerCase()) ){
+                    //console.log("Coincide con:"+n.nombre)
+    
+                    str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye boleta-info informacion" idboleta="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 boleta-add"    idboleta="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> </div>     </div>      </div>';
+    
+                }
+
+            }else{
+                str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye boleta-info informacion" idboleta="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 boleta-add"    idboleta="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> </div>     </div>      </div>';
+            }
+
             
 
            
 
-                str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye boleta-info informacion" idboleta="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 boleta-add"    idboleta="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> </div>     </div>      </div>';
+                
         
             });
             
@@ -105,53 +122,93 @@ function cargar_datos_taquilla(){
 }
 
 
-function cargar_adicionales(){
+function cargar_adicionales(filtro){
 
-    $.ajax({        
-        url: "ajax/ajxRequest.php",
-        data: { op: '10' },
-        dataType: 'json',
-        type: 'POST',
-        //async: false,
-        success: function(r2) {            
-            if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
-                if(typeof r2.resultado.status === 'undefined'){
-                    console.log('CORRECTO 200');
-                    console.log(r2)                
-                    var str_remp='';
+    var info_adicionales= JSON.parse( localStorage.getItem('adicionales_nombres'));
 
-                    let productos = [];
+    if(info_adicionales==null){
 
-                    //localStorage.setItem('boletas_nombres',JSON.stringify(r2['resultado']))
-                    //console.log();
-                    $.each(r2.resultado, function(m, n) {
-
-                        n.cant_taquilla=0;
-                        n.tipo_producto="adicional";
-
-                        let nuevaLongitud = productos.push(n)
-
-                            str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye adicional-info informacion" idadicional="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 adicional-add"    idadicional="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> </div>     </div>      </div>';
-                    
-                        });
+        $.ajax({        
+            url: "ajax/ajxRequest.php",
+            data: { op: '10' },
+            dataType: 'json',
+            type: 'POST',
+            //async: false,
+            success: function(r2) {            
+                if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
+                    if(typeof r2.resultado.status === 'undefined'){
+                        console.log('CORRECTO 200');
+                        console.log(r2)                
+                        var str_remp='';
+    
+                        let productos = [];
+    
+                         
+                        $.each(r2.resultado, function(m, n) {
+    
+                            n.cant_taquilla=0;
+                            n.tipo_producto="adicional";
+    
+                            let nuevaLongitud = productos.push(n)
+    
+                                str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye adicional-info informacion" idadicional="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 adicional-add"    idadicional="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> </div>     </div>      </div>';
                         
-                        //console.log('array_productos')
+                            });
+                            
+                            //console.log('array_productos')
+    
+                            //console.log(productos);
+    
+                            localStorage.setItem('adicionales_nombres',JSON.stringify(productos))
+                            
+                            str_remp=str_remp+'</div> '
+    
+                            //console.log(str_remp);
+                            $("#boletas").html(str_remp);
+                    }else{
+                        console.log(r2.resultado.status);
+                    }                                            
+                   
+                }
+            }        
+        });
 
-                        //console.log(productos);
+    }else{
 
-                        localStorage.setItem('adicionales_nombres',JSON.stringify(productos))
-                        
-                        str_remp=str_remp+'</div> '
+        console.log("filtro ***:"+filtro)
 
-                        //console.log(str_remp);
-                        $("#boletas").html(str_remp);
-                }else{
-                    console.log(r2.resultado.status);
-                }                                            
-               
+        var str_remp='';
+        $.each(info_adicionales, function(m, n) {
+
+            if(filtro!=undefined){
+
+                if( n.nombre.toLowerCase().includes(filtro.toLowerCase()) ){
+
+                    str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye adicional-info informacion" idadicional="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 adicional-add"    idadicional="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> </div>     </div>      </div>';
+
+                }
+
+            }else{
+
+                    str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye adicional-info informacion" idadicional="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 adicional-add"    idadicional="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> </div>     </div>      </div>';
             }
-        }        
-    });
+    
+            
+                
+            
+
+                
+        
+        });
+
+            str_remp=str_remp+'</div> '
+
+            //console.log(str_remp);
+            $("#boletas").html(str_remp);
+
+    }
+
+    
     
 }
 
@@ -191,11 +248,46 @@ function validar_cliente(tipo_documento,numero_documento){
 
                     localStorage.setItem('identificacion_cliente',identificacion_cliente)
                     localStorage.setItem('tipo_identificacion_cliente',tipo_documento)
+
+                    //Aqui consulto si tiene una reserva para el dia de hoy
+
+                    $.ajax({        
+                        url: "ajax/ajxRequest.php",
+                        data: { op: '14',tipo_identificacion:tipo_documento,numero_identificacion:numero_documento },
+                        dataType: 'json',
+                        type: 'POST',
+                        //async: false,
+                        success: function(r3) { 
+                
+                            console.log("id:"+r3.id)
+                            
+                
+                            if (r3.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
+                                alert("Cliente tiene Reserva")                                          
+                               
+                            }else{
+                                //alert("Error al crear la reserva")
+                            }
+                        }        
+                    });
+
                    
                 }else{
-                    console.log(r2.resultado.status);
+                    //console.log(r2.resultado.status);
+                    console.log("No encontrado")
+                    $("#numero_documento").attr('readonly', false);
+                    $("#tipo_documento").attr('readonly', false);
+                    $("#nombre").attr('readonly', false);
+                    $("#email").attr('readonly', false);
+                    $("#telefono").attr('readonly', false);
+
+                    $("#nombre").val('');
+                    $("#email").val('');
+                    $("#telefono").val('');
                 }                                            
                
+            }else{
+                
             }
         }        
     }); 
@@ -267,6 +359,7 @@ function pagar(){
     //valida si el cliente existe, de lo contrario lo crea
     crear_cliente();
 
+    var url="exportar/reserva/reserva_pdf.php";
 
 
     //armo los arrays que voy a enviar
@@ -343,6 +436,8 @@ function pagar(){
     
                 if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
                     alert(r2.resultado.message+" "+r2.resultado.id) 
+
+                    
                     
                     console.log("new_array_adicionales")
                     console.log(new_array_adicionales)
@@ -363,6 +458,8 @@ function pagar(){
                     
                                 if (r3.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
                                     alert(r3.resultado.message) 
+                                    window.open(url+'?idreserva='+r2.resultado.id, '_blank');
+                                    location.reload();
                                     location.reload();                                      
                                    
                                 }else{
@@ -373,10 +470,13 @@ function pagar(){
                         });
 
                     }else{
+                        window.open(url+'?idreserva='+r2.resultado.id, '_blank');
                         location.reload();
                     }
 
                    
+                }else{
+                    alert(r2.resultado.message)
                 }
             }        
         });

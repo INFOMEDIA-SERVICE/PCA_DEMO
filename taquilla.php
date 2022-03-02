@@ -178,6 +178,30 @@ echo" </pre> ";*/
   
 	 });
 
+	 //keypress
+
+	 $(document).on("keyup", "#filtrarBoletas", function(){
+
+		var filtro = $("#filtrarBoletas").val();
+        
+		$(".active").each(function(index) {
+			
+			//console.log("Sub filtro:"+filtro)
+			var tipo = $(this).attr('tipo');
+			//console.log("Tipo:"+tipo)
+			if(tipo=='boletas'){
+				cargar_datos_taquilla(filtro);
+			}else if(tipo=='adicionales'){
+				console.log("Entro a los adicionales!!")
+				cargar_adicionales(filtro)
+			}
+		});
+
+		//console.log("Escribiendo...")
+		 
+  
+	 });
+
 
 	 $(document).on("click", ".eliminar_boleta", function(){
         
@@ -792,7 +816,7 @@ recalcular_cambio();
 
 	$(document).on("click", ".tabbla", function(){
 		
-
+		$("#filtrarBoletas").val('')
 		var id=$(this).attr('id');
 		var tipo=$(this).attr('tipo');
 
@@ -1123,7 +1147,7 @@ recalcular_cambio();
 					
 							 <div class="col-md-4 col-0 pes-act-inv3">
 							 	<div class="d-flex justify-content-end pt-3">
-								 	<div><input type="text" class="campo" value="Buscar" style="height: 30px;"></div>
+								 	<div><input type="text" class="campo" id="filtrarBoletas" placeholder="Buscar" style="height: 30px;"></div>
 								 </div>
 							 </div>
 					   </div>
