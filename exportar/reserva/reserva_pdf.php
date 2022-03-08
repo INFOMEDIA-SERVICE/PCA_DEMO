@@ -7,7 +7,7 @@
 
     extract($_REQUEST);
 
-    echo" prueba 1 ";exit;
+    
 
     $tokenRefresh = $llamar_token->refreshToken();
     $token=$_SESSION['accessToken'];
@@ -72,6 +72,8 @@
     } else {
         die('Se produjo un Error al generar el Token');
     }  
+
+    echo" prueba 222 ";exit;
 
 
                 /*echo"<pre>";
