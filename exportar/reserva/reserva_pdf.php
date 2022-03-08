@@ -227,7 +227,7 @@
     // Load HTML content 
      $dompdf->loadHtml($html); 
 
-     echo" prueba 33344444 ";exit;
+     #echo" prueba 33344444 ";exit;
      
     // Load html file 
     //$html = file_get_contents("index_pdf.html"); 
