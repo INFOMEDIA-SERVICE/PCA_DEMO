@@ -73,7 +73,7 @@
         die('Se produjo un Error al generar el Token');
     }  
 
-    echo" prueba 222 ";exit;
+    
 
 
                 /*echo"<pre>";
@@ -171,7 +171,7 @@
     
     $html.=' <h2>Detalle pasaportes</h2><br>';
 
-
+    echo" prueba 3333 ";exit;
 
     include('../../lib/phpqrcode/qrlib.php'); 
  
