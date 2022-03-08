@@ -93,7 +93,7 @@
 
     
 
-    echo" prueba 88888 ";exit;
+    
     
 
     $html=' 
@@ -179,7 +179,7 @@
     
     $html.=' <h2>Detalle pasaportes</h2><br>';
 
-
+    echo" prueba 999999 ";exit;
 
     include('../../lib/phpqrcode/qrlib.php'); 
  
