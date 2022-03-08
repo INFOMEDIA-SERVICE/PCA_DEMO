@@ -55,6 +55,7 @@ function cargar_datos(){
 }
 //
 function abreModalatraccion(){
+    limpiarGuardar('txtAddAtraccion', 'file', 'result', 'img');
     $('#addModalAtraccion').modal('show'); // abrir modal agregar atraccion 
 } 
 //
@@ -98,6 +99,7 @@ function abreModalActiDesactivaatraccion(){
 }
 //
 function upAtraccion(id_u, nombre_u, ext_img){
+    limpiarGuardar('txtupAtraccion', 'file2', 'result2', 'img2');
     var ximagen = "imagen"+id_u;
     g_ext = ext_img;
     console.log(g_ext);
@@ -126,14 +128,14 @@ function openImage() { //Esta función validaría una imágen
                     var ext = fileName.substring(fileName[i],fileName.length);  
                     if (!extensions.test(ext)) {
                         error.state = true;
-                        error.msg+= 'La extensión del archivo no es válida.<br>';
+                        error.msg+= 'La extensi&oacute;n del archivo no es v&aacute;lida.<br>';
                     }  
                     break;
                 }  
             }  
             if(file.size > maxSize) {
                 error.state = true;
-                error.msg += 'La imágen no puede ocupar m&aacute;s de '+maxSize/1048576+' MB.';
+                error.msg += 'La im&aacute;gen no puede ocupar m&aacute;s de '+maxSize/1048576+' MB.';
             }  
             if(error.state) {
                 input.value = '';
@@ -178,14 +180,14 @@ function openImage2() { //Esta funcion validara una imagen
                     var ext = fileName.substring(fileName[i],fileName.length);  
                     if (!extensions.test(ext)) {
                         error.state = true;
-                        error.msg+= 'La extension del archivo no es valida.<br>';
+                        error.msg+= 'La extensi&oacute;n del archivo no es valida.<br>';
                     }  
                     break;
                 }  
             }  
             if(file.size > maxSize) {
                 error.state = true;
-                error.msg += 'La imagen no puede ocupar más de '+maxSize/1048576+' MB.';
+                error.msg += 'La imagen no puede ocupar m&aacute;s de '+maxSize/1048576+' MB.';
             }  
             if(error.state) {
                 input.value = '';
@@ -193,7 +195,7 @@ function openImage2() { //Esta funcion validara una imagen
                 return;
             }else{
                 if(file.size > 0){
-                    document.getElementById("result2").innerHTML = "El archivo es valido";
+                    document.getElementById("result2").innerHTML = "El archivo es v&aacute;lido";
                     //
                     var reader = new FileReader();  
                     reader.onload = function(e) {
@@ -201,7 +203,7 @@ function openImage2() { //Esta funcion validara una imagen
                     }
                     reader.readAsDataURL(this.files[0]);
                 }else{
-                    document.getElementById("result2").innerHTML = "El archivo esta danado";
+                    document.getElementById("result2").innerHTML = "El archivo esta da&nacute;ado";
                     document.getElementById("img2").src = "";
                 }
             }								
@@ -228,9 +230,10 @@ function openImage2() { //Esta funcion validara una imagen
 //
 function adicionarAtracciones(nombre, ext){
     let str_base64 = document.getElementById("img").src;
-    let imagen = str_base64.substring(23);
-    //console.log(imagen);
-    $.ajax({        
+    let imagen = (ext == 'JPG') ? str_base64.substring(23) : str_base64.substring(22);
+    console.log(str_base64);
+    //
+    /*$.ajax({        
         url: "ajax/ajxRequest.php",
         data: { op: '3', nombre: nombre, imagen: imagen, extension: ext },
         dataType: 'json',
@@ -240,14 +243,13 @@ function adicionarAtracciones(nombre, ext){
             console.log(r);           
             if (r.sts == 'OK') {
                 //alert('Guardo');
-                $('#addModalAtraccion').modal('hide'); // oculta modal agregar atraccion
-                limpiarGuardar();
+                $('#addModalAtraccion').modal('hide'); // oculta modal agregar atraccion                
 				cargar_datos();              
             }else{
                 alert('Error al guardar');
             }
         }        
-    });    
+    });*/   
 }
 //
 /*$('#btnActualizarAtraccion').click(function(){
@@ -317,13 +319,15 @@ $('#btnActivarAtraccion').click(function(){
     }		
 });
 //
-function limpiarGuardar(){
-    $('#txtAddAtraccion').val(''); // Limpia campo nombre atraccion
-    $('#file').val(''); //
-    document.getElementById("result").innerHTML = "Esperando archivo...";
-    document.getElementById("img").value = null;
+function limpiarGuardar(txt, fil, resul, imagen){
+    txt = '#'+txt;
+    fil = '#'+fil;
+    $(txt).val(''); // Limpia campo nombre atraccion
+    $(fil).val(''); //
+    document.getElementById(resul).innerHTML = "Esperando archivo...";
+    document.getElementById(imagen).value = null;
     $('#img').val("")
-    document.getElementById("img").src = "";
+    document.getElementById(imagen).src = "";
 }
 //
 function actualizarAtracciones(id, nombre, ext, base64){

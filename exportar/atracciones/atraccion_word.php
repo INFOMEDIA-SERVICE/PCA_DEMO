@@ -9,7 +9,7 @@
 
    require_once '../../main.php'; 
 
-   header("Content-type: application/vnd.ms-word");
+   header("Content-Type: application/vnd.ms-word; charset=UTF-8");
    header("Content-Disposition: attachment; Filename=Atracciones.doc");
 ?>
  
@@ -17,7 +17,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
  
    <head>
-      <meta charset="Windows-1252" />
+      <meta charset="UTF-8"/>
    </head>
  
    <body>
