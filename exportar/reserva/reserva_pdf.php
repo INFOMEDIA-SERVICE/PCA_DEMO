@@ -85,11 +85,13 @@
 
     //exit;
 
+    echo" prueba 55555 ";exit;
+
     use Dompdf\Dompdf; 
     $dompdf = new Dompdf();
 
 
-    echo" prueba 4444 ";exit;
+    
 
     $html=' 
     <style> 
