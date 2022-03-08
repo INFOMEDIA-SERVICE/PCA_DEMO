@@ -311,12 +311,12 @@ session_start();
                 //$rDatos = $atrac->cargarAtracciones($token);
                 $rDatos = $consumo->Get($url, $headers); 
             
-                //print_r($rDatos);exit;
+                #print_r($rDatos);exit;
                 
-                if ($rDatos != '') {
-                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                if (count($rDatos)>0) {
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos[0]]); 
                 } else {                
-                    echo json_encode(['sts'=>'NO', 'resultado'=>$url]);
+                    echo json_encode(['sts'=>'NO', 'resultado'=>'No tiene reserva']);
             
                 }
             

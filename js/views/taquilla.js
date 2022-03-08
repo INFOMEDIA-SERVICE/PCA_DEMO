@@ -259,7 +259,8 @@ function validar_cliente(tipo_documento,numero_documento){
                         //async: false,
                         success: function(r3) { 
                 
-                            console.log("id:"+r3.id)
+                            console.log(r3.resultado.id)
+                            localStorage.setItem("idreserva", r3.resultado.id)
                             
                 
                             if (r3.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
@@ -359,7 +360,7 @@ function pagar(){
     //valida si el cliente existe, de lo contrario lo crea
     crear_cliente();
 
-    var url="exportar/reserva/reserva_pdf.php";
+    var url_pdf="exportar/reserva/reserva_pdf.php";
 
 
     //armo los arrays que voy a enviar
@@ -408,8 +409,40 @@ function pagar(){
 
     console.log(new_array.length)
 
-    if(new_array.length==0){
+    if(new_array.length==0 ){
         //solo envio adicionales, entonces debo capturar la reserva
+        if(new_array_adicionales.length>0){
+            var idreserva=localStorage.getItem('idreserva')
+            //console.log("Reserva:"+idreserva)
+            if(idreserva!="undefined"){
+
+                $.ajax({        
+                    url: "ajax/ajxRequest.php",
+                    data: { op: '13',idreserva:idreserva,adicionales:JSON.stringify(new_array_adicionales) },
+                    dataType: 'json',
+                    type: 'POST',
+                    //async: false,
+                    success: function(r3) { 
+
+                        if (r3.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
+                            alert(r3.resultado.message) 
+                            window.open(url_pdf+'?idreserva='+idreserva, '_blank');
+                            location.reload();
+                            location.reload();                                      
+                           
+                        }else{
+                            alert("Error al crear la reserva")
+                            location.reload();
+                        }
+                    }        
+                }); 
+
+
+            }else{
+                alert("No se puede continuar con la venta ya que el usuario no tiene una reserva");
+                return(false);
+            }
+        }
 
 
     }else{
@@ -458,7 +491,7 @@ function pagar(){
                     
                                 if (r3.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
                                     alert(r3.resultado.message) 
-                                    window.open(url+'?idreserva='+r2.resultado.id, '_blank');
+                                    window.open(url_pdf+'?idreserva='+r2.resultado.id, '_blank');
                                     location.reload();
                                     location.reload();                                      
                                    
@@ -470,7 +503,7 @@ function pagar(){
                         });
 
                     }else{
-                        window.open(url+'?idreserva='+r2.resultado.id, '_blank');
+                        window.open(url_pdf+'?idreserva='+r2.resultado.id, '_blank');
                         location.reload();
                     }
 
