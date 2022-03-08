@@ -1,5 +1,7 @@
 <?php
 //use PHPMailer\PHPMailer\PHPMailer;
+    ini_set("memory_limit", "800M"); 
+    ini_set("max_execution_time", "800");
     session_start();
     require_once '../../lib/dompdf/autoload.inc.php';  
     require_once '../../main.php';
