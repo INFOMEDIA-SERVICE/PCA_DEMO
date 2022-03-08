@@ -179,34 +179,21 @@
     
     $html.=' <h2>Detalle pasaportes</h2><br>';
 
-    echo" prueba 999999 ";exit;
+    
 
     include('../../lib/phpqrcode/qrlib.php'); 
  
     $codesDir = "codes/";
     
     $html.='<table width="100%"> <tr> <td width="100%" ><b>Pasaporte</b>   -   <b>Valor</b></td> <td width="40%" style="text-align:center;"></td> </tr><tr> <td td width="100%" colspan="2" ><br></td> </tr>';
-    
+    echo" prueba 111111 ";exit;
     foreach ($rDatos->boletas as $key ) {
 
         $codeFile= $key->id.".png";
 
-        #$codeFile = date('d-m-Y-h-i-s').'.png';
         QRcode::png($key->id, $codesDir.$codeFile, "H", 4); 
-       // $html= '<img class="img-thumbnail" src="'.$codesDir.$codeFile.'" />';
 
-        
         $html.=' <tr> <td width="100%" >'.$key->tipoBoleta->nombre.' - $'.number_format($key->tipoBoleta->precio).' <br> <img class="img-thumbnail" src="'.$codesDir.$codeFile.'" /> </td>  <td style="text-align:center;" width="40%"></td> </tr> <tr></tr> <tr> <td td width="100%" colspan="2" ><br><br></td> </tr> ';
-
-    
-   
-
-    
-
-    //echo $html;
-    //echo "<br>";
-    
-    
        
     }
 
