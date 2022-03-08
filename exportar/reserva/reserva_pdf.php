@@ -1,11 +1,13 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
+//use PHPMailer\PHPMailer\PHPMailer;
     session_start();
     require_once '../../lib/dompdf/autoload.inc.php';  
     require_once '../../main.php';
     error_reporting(0); 
 
     extract($_REQUEST);
+
+    echo" prueba 1 ";exit;
 
     $tokenRefresh = $llamar_token->refreshToken();
     $token=$_SESSION['accessToken'];
