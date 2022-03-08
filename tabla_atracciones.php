@@ -273,8 +273,8 @@
 			select.addEventListener('change', function(){
 				restaurar_paginacion('myPager');				
 				var selectedOption = this.options[select.selectedIndex];
-				$('#tbody_atraccion').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:selectedOption.text});
-				//console.log(selectedOption.text);
+				var Mostrar = selectedOption.text == 'Todos' ? 1000000 : selectedOption.text;
+				$('#tbody_atraccion').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:Mostrar});				
 			});
 			//
 			$(document).ready(function(){
@@ -307,14 +307,16 @@
 				var id_a = $("#txtupIdAtraccion").val();
 				var nombre_a = $("#txtupAtraccion").val();	
 				//
-				if(nombre_a != '' && imagen_a != '' && r_imagen == 'El archivo es valido'){
+				if(nombre_a != '' && imagen_a != '' && r_imagen == 'El archivo es válido'){
 					let str_base64 = document.getElementById("img2").src;
-					let imagen = str_base64.split(',');			
-					if(imagen[0] == "data:image/jpeg;base64"){
-						console.log("base64");////////////////////////////
+					let imagen = str_base64.split(',');	
+					console.log('IMAGEN: '+imagen[0]);		
+					if(imagen[0] == "data:image/jpeg;base64" || imagen[0] == 'data:image/png;base64'){
+						//console.log("base64: " imagen[0]);////////////////////////////
 						var imagen_a = document.getElementById("file2").files[0];
 						let img_ext = imagen_a.name;
 						var extension_img = img_ext.split('.'); // Saco la extension para guardarla en la BD 
+						console.log('EXTENSION: '+extension_img[1]);
 						//						
 						actualizarAtracciones(id_a,nombre_a, extension_img[1], imagen[1]);
 					}else{
