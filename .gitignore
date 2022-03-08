@@ -30,3 +30,4 @@
 *.exe
 *.out
 *.app
+/exportar/reserva/codes/*.png
