@@ -88,9 +88,10 @@
     
 
     use Dompdf\Dompdf; 
+    echo" prueba 77777 ";exit;
     $dompdf = new Dompdf();
 
-    echo" prueba 77777 ";exit;
+    
 
 
     
