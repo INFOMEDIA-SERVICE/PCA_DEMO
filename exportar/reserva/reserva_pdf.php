@@ -203,13 +203,13 @@ use PHPMailer\PHPMailer\PHPMailer;
 
     #echo $html;exit;
 
-    include("../../lib/mailer/src/PHPMailer.php");
+    #include("../../lib/mailer/src/PHPMailer.php");
 
     
 
     
     
-    try{
+    /*try{
 
         $mail= new PHPMailer();
 
@@ -219,7 +219,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 
     }
 
-    exit;
+    exit;*/
 
     // Load HTML content 
      $dompdf->loadHtml($html); 
@@ -233,6 +233,6 @@ use PHPMailer\PHPMailer\PHPMailer;
     //$dompdf->set_paper(array(0, 0, 595, 841), 'portrait');
 
     $dompdf->render(); 
-    $dompdf->stream("Atracciones.pdf");
-    //$dompdf->stream("niceshipest", array("Attachment" => 0));
+    #$dompdf->stream("Atracciones.pdf");
+    $dompdf->stream("niceshipest", array("Attachment" => 0));
 ?>

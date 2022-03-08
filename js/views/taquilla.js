@@ -492,7 +492,7 @@ function pagar(){
                                 if (r3.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
                                     alert(r3.resultado.message) 
                                     window.open(url_pdf+'?idreserva='+r2.resultado.id, '_blank');
-                                    location.reload();
+                                    //location.reload();
                                     location.reload();                                      
                                    
                                 }else{
