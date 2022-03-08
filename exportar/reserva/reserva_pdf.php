@@ -88,6 +88,9 @@
     use Dompdf\Dompdf; 
     $dompdf = new Dompdf();
 
+
+    echo" prueba 4444 ";exit;
+
     $html=' 
     <style> 
     h1 { font-size: 80% }  
@@ -171,7 +174,7 @@
     
     $html.=' <h2>Detalle pasaportes</h2><br>';
 
-    echo" prueba 3333 ";exit;
+
 
     include('../../lib/phpqrcode/qrlib.php'); 
  
