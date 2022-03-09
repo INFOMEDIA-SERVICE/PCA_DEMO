@@ -763,6 +763,10 @@ recalcular_cambio();
 
 			new_acumulado=parseInt(new_acumulado)
 
+			if(new_acumulado<0){
+				new_acumulado=0;
+			}
+
 			//alert("new acumulado 2: "+new_acumulado)
 
 			$("#suma_efectivo").html('$'+ new_acumulado.toLocaleString() );
@@ -788,6 +792,10 @@ recalcular_cambio();
 			//alert("new acumulado 1: "+new_acumulado)
 
 			new_acumulado=parseInt(new_acumulado)
+
+			if(new_acumulado<0){
+				new_acumulado=0;
+			}
 
 			//alert("new acumulado 2: "+new_acumulado)
 
@@ -865,12 +873,30 @@ recalcular_cambio();
 	$(document).on("click", "#pagar", function(){
 
 		var sumatoria_total=$("#sumatoria_total").attr('val_sum');
+		var tipo_documento=$("#tipo_documento").val();
+		var numero_documento = $("#numero_documento").val();
+		var nombre = $("#nombre").val();
+		var email = $("#email").val()
+		var telefono=$("#telefono").val();
 
-		if(sumatoria_total==undefined || sumatoria_total==0){
-			
+		var suma_efectivo=$("#suma_efectivo").attr('acumulado');
+		var suma_tarjeta=$("#suma_tarjeta").attr('acumulado');
+
+		var total_ingreso=parseInt(suma_efectivo)+parseInt(suma_tarjeta);
+
+		if(sumatoria_total==undefined || sumatoria_total==0  || total_ingreso<sumatoria_total ){
+			alert("Valor ingresado no coincide!");
+			return(false);
 		}else{
 
-			pagar();
+			if(tipo_documento=='' || numero_documento=='' || nombre=='' || email=='' || telefono==''){
+				alert("Complete los datos del cliente");
+				return(false);
+			}else{
+				pagar();
+			}
+
+			//pagar();
 
 		}
 
@@ -885,6 +911,11 @@ recalcular_cambio();
 
 		if(suma_tarjeta>0){
 			var valor_complementario= parseInt(sumatoria_total)-parseInt(suma_tarjeta);
+
+			if(valor_complementario<0){
+				valor_complementario=0;
+			}
+
 			$("#suma_efectivo").html('$'+valor_complementario.toLocaleString());
 			$("#suma_efectivo").attr('acumulado',valor_complementario)
 			recalcular_cambio();
@@ -905,6 +936,10 @@ recalcular_cambio();
 
 		if(suma_efectivo>0){
 			var valor_complementario= parseInt(sumatoria_total)-parseInt(suma_efectivo);
+
+			if(valor_complementario<0){
+				valor_complementario=0;
+			}
 			$("#suma_tarjeta").html('$'+valor_complementario.toLocaleString());
 			$("#suma_tarjeta").attr('acumulado',valor_complementario)
 			recalcular_cambio();

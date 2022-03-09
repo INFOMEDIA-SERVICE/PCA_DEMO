@@ -264,7 +264,7 @@ function validar_cliente(tipo_documento,numero_documento){
                             
                 
                             if (r3.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
-                                alert("Cliente tiene Reserva")                                          
+                                //alert("Cliente tiene Reserva")                                          
                                
                             }else{
                                 //alert("Error al crear la reserva")
@@ -322,26 +322,27 @@ if(identificacion_cliente==null && tipo_identificacion_cliente==null){
         url: "ajax/ajxRequest.php",
         data: { op: '11',tipo_identificacion:tipo_documento,numero_documento:numero_documento,nombre:nombre,email:email,telefono:telefono },
         dataType: 'json',
+        async: false, 
         type: 'POST',
         //async: false,
         success: function(r2) { 
 
-            console.log("Creo el clinete")
+            //console.log("Creo el clinete")
             
             console.log(r2)
 
             if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
-                alert("Cliente creado exitosamente")                                          
+                //alert("Cliente creado exitosamente")                                          
                
             }else{
-                alert("Error al crear la reserva")
+                alert("Error al crear el cliente")
             }
         }        
     }); 
 
 
 }else{
-    alert("Cliente ya existe");
+    //alert("Cliente ya existe");
 }
 
 
@@ -420,6 +421,7 @@ function pagar(){
                     url: "ajax/ajxRequest.php",
                     data: { op: '13',idreserva:idreserva,adicionales:JSON.stringify(new_array_adicionales) },
                     dataType: 'json',
+                    async: false, 
                     type: 'POST',
                     //async: false,
                     success: function(r3) { 
@@ -459,6 +461,7 @@ function pagar(){
             url: "ajax/ajxRequest.php",
             data: { op: '12',tipo_identificacion:tipo_documento,numero_documento:numero_documento,boletas:JSON.stringify(new_array)},
             dataType: 'json',
+            async: false, 
             type: 'POST',
             //async: false,
             success: function(r2) {
@@ -468,7 +471,7 @@ function pagar(){
                 console.log(r2)
     
                 if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
-                    alert(r2.resultado.message+" "+r2.resultado.id) 
+                    //alert(r2.resultado.message+" "+r2.resultado.id) 
 
                     
                     
@@ -482,6 +485,7 @@ function pagar(){
                             data: { op: '13',idreserva:r2.resultado.id,adicionales:JSON.stringify(new_array_adicionales) },
                             dataType: 'json',
                             type: 'POST',
+                            async: false, 
                             //async: false,
                             success: function(r3) { 
                     
@@ -490,7 +494,7 @@ function pagar(){
                                 console.log(r3)
                     
                                 if (r3.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
-                                    alert(r3.resultado.message) 
+                                    alert("Reserva: "+r2.resultado.id+" A nombre de:"+$("#nombre").val()+" Creada con exito!") 
                                     window.open(url_pdf+'?idreserva='+r2.resultado.id, '_blank');
                                     //location.reload();
                                     location.reload();                                      
@@ -503,6 +507,7 @@ function pagar(){
                         });
 
                     }else{
+                        alert("Reserva: "+r2.resultado.id+" A nombre de:"+$("#nombre").val()+" Creada con exito!")           
                         window.open(url_pdf+'?idreserva='+r2.resultado.id, '_blank');
                         location.reload();
                     }
