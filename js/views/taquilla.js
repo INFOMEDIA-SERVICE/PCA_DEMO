@@ -427,7 +427,7 @@ function pagar(){
                     success: function(r3) { 
 
                         if (r3.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
-                            alert(r3.resultado.message) 
+                            //alert(r3.resultado.message) 
                             window.open(url_pdf+'?idreserva='+idreserva, '_blank');
                             location.reload();
                             location.reload();                                      
@@ -494,7 +494,7 @@ function pagar(){
                                 console.log(r3)
                     
                                 if (r3.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
-                                    alert("Reserva: "+r2.resultado.id+" A nombre de:"+$("#nombre").val()+" Creada con exito!") 
+                                    //alert("Reserva: "+r2.resultado.id+" A nombre de:"+$("#nombre").val()+" Creada con exito!") 
                                     window.open(url_pdf+'?idreserva='+r2.resultado.id, '_blank');
                                     //location.reload();
                                     location.reload();                                      
@@ -507,7 +507,7 @@ function pagar(){
                         });
 
                     }else{
-                        alert("Reserva: "+r2.resultado.id+" A nombre de:"+$("#nombre").val()+" Creada con exito!")           
+                        //alert("Reserva: "+r2.resultado.id+" A nombre de:"+$("#nombre").val()+" Creada con exito!")           
                         window.open(url_pdf+'?idreserva='+r2.resultado.id, '_blank');
                         location.reload();
                     }
