@@ -1,11 +1,15 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
+//use PHPMailer\PHPMailer\PHPMailer;
+    ini_set("memory_limit", "800M"); 
+    ini_set("max_execution_time", "800");
     session_start();
     require_once '../../lib/dompdf/autoload.inc.php';  
     require_once '../../main.php';
     error_reporting(0); 
 
     extract($_REQUEST);
+
+    
 
     $tokenRefresh = $llamar_token->refreshToken();
     $token=$_SESSION['accessToken'];
@@ -71,6 +75,8 @@ use PHPMailer\PHPMailer\PHPMailer;
         die('Se produjo un Error al generar el Token');
     }  
 
+    
+
 
                 /*echo"<pre>";
                 print_r($array_detalle);
@@ -81,8 +87,16 @@ use PHPMailer\PHPMailer\PHPMailer;
 
     //exit;
 
+    
+
     use Dompdf\Dompdf; 
+    
     $dompdf = new Dompdf();
+
+    
+
+    
+    
 
     $html=' 
     <style> 
@@ -167,7 +181,7 @@ use PHPMailer\PHPMailer\PHPMailer;
     
     $html.=' <h2>Detalle pasaportes</h2><br>';
 
-
+    
 
     include('../../lib/phpqrcode/qrlib.php'); 
  
@@ -179,37 +193,26 @@ use PHPMailer\PHPMailer\PHPMailer;
 
         $codeFile= $key->id.".png";
 
-        #$codeFile = date('d-m-Y-h-i-s').'.png';
         QRcode::png($key->id, $codesDir.$codeFile, "H", 4); 
-       // $html= '<img class="img-thumbnail" src="'.$codesDir.$codeFile.'" />';
 
-        
         $html.=' <tr> <td width="100%" >'.$key->tipoBoleta->nombre.' - $'.number_format($key->tipoBoleta->precio).' <br> <img class="img-thumbnail" src="'.$codesDir.$codeFile.'" /> </td>  <td style="text-align:center;" width="40%"></td> </tr> <tr></tr> <tr> <td td width="100%" colspan="2" ><br><br></td> </tr> ';
-
-    
-   
-
-    
-
-    //echo $html;
-    //echo "<br>";
-    
-    
        
     }
+
+    
 
     $html.='</table> <script> window.print(); </script> ';
 
 
     #echo $html;exit;
 
-    include("../../lib/mailer/src/PHPMailer.php");
+    #include("../../lib/mailer/src/PHPMailer.php");
 
     
 
     
     
-    try{
+    /*try{
 
         $mail= new PHPMailer();
 
@@ -219,10 +222,12 @@ use PHPMailer\PHPMailer\PHPMailer;
 
     }
 
-    exit;
+    exit;*/
 
     // Load HTML content 
      $dompdf->loadHtml($html); 
+
+     #echo" prueba 33344444 ";exit;
      
     // Load html file 
     //$html = file_get_contents("index_pdf.html"); 
@@ -233,6 +238,6 @@ use PHPMailer\PHPMailer\PHPMailer;
     //$dompdf->set_paper(array(0, 0, 595, 841), 'portrait');
 
     $dompdf->render(); 
-    $dompdf->stream("Atracciones.pdf");
-    //$dompdf->stream("niceshipest", array("Attachment" => 0));
+    #$dompdf->stream("Atracciones.pdf");
+    $dompdf->stream("niceshipest", array("Attachment" => 0));
 ?>
