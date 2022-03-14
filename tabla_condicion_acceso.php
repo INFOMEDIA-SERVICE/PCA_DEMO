@@ -69,59 +69,59 @@
 										</div>
 									</div>													
 					  			</div>
-							</div>
-					  	</section>
-					  	<section class="px-3 mb-3">
-					  		<div class="row">
-							  	<div class="col-3 d-flex align-items-center justify-content-center">
-									<h4 class="text-right pt-3 mr-2">Mostrar:</h4>
-									<div class="caja" style="width: 100px">
-										<select name="nmostrar_cacceso" id="nmostrar_cacceso">
-											<option>20</option>
-											<option>40</option>
-											<option>60</option>
-											<option>Todos</option>
-										</select>
-									</div>&nbsp;&nbsp;
-									<h4 class="text-right pt-3 mr-2">registros</h4>
-								</div>
-								<div class="col-6 d-flex justify-content-center">
-									<div class="d-flex align-items-center">
-										<h4 class="mr-2">Filtrar por:</h4>
-										<figure class="mr-2 pt-1"><a href="exportar/condicion_acceso/cacceso_pdf.php"><img src="imagenes/pdf.png"></a></figure>
-										<figure class="mr-2 pt-1"><a href="exportar/condicion_acceso/cacceso_word.php"><img src="imagenes/file-word.png"></a></figure>
-										<figure class="pt-1"><a href="exportar/condicion_acceso/cacceso_excel.php"><img src="imagenes/file-excel.png"></a></figure>
+							</div>					  	
+						  	<section class="px-3 mb-3">
+						  		<div class="row">
+								  	<div class="col-3 d-flex align-items-center justify-content-center">
+										<h4 class="text-right pt-3 mr-2">Mostrar:</h4>
+										<div class="caja" style="width: 100px">
+											<select name="nmostrar_cacceso" id="nmostrar_cacceso">
+												<option>20</option>
+												<option>40</option>
+												<option>60</option>
+												<option>Todos</option>
+											</select>
+										</div>&nbsp;&nbsp;
+										<h4 class="text-right pt-3 mr-2">registros</h4>
 									</div>
-								</div>								
-								<div class="col-3 d-flex align-items-center justify-content-end">
-									<ul class="pagination pagination-lg pager mr-2 pt-2" id="myPager2"></ul>									
+									<div class="col-6 d-flex justify-content-center">
+										<div class="d-flex align-items-center">
+											<h4 class="mr-2">Filtrar por:</h4>
+											<figure class="mr-2 pt-1"><a href="exportar/condicion_acceso/cacceso_pdf.php"><img src="imagenes/pdf.png"></a></figure>
+											<figure class="mr-2 pt-1"><a href="exportar/condicion_acceso/cacceso_word.php"><img src="imagenes/file-word.png"></a></figure>
+											<figure class="pt-1"><a href="exportar/condicion_acceso/cacceso_excel.php"><img src="imagenes/file-excel.png"></a></figure>
+										</div>
+									</div>								
+									<div class="col-3 d-flex align-items-center justify-content-end">
+										<ul class="pagination pagination-lg pager mr-2 pt-2" id="myPager2"></ul>									
+									</div>
 								</div>
-							</div>
-						</section>
-						<section class="px-3">
-							<div>
-								<table id="tabla_cacceso" class="table">
-									<thead>							  
-										<tr class="row ">
-											<th class="col-1 text-center"><h2>Editar</h2></th>
-											<th class="col-1 text-center"><h2><input type="checkbox" name="atraccion_todos" onclick="marcar(this);"></h2></th>
-											<th class="col-1 text-center"><h2>Id</h2></th>
-											<th class="col-1 text-center"><h2>Nombre</h2></th>
-											<th class="col-2 text-center"><h2>Imagen</h2></th>
-											<th class="col-1 text-center"><h2>Creado Por</h2></th>
-											<th class="col-1 text-center"><h2>Fecha Creacion</h2></th>
-											<th class="col-1 text-center"><h2>Modificado Por</h2></th>
-											<th class="col-1 text-center"><h2>Fecha Modificaci&oacute;n</h2></th>
-											<th class="col-1 text-center"><h2>Estado</h2></th>																					
-										</tr>
-									</thead>
-									<tbody id="tbody_cacceso">	
-										
-									</tboby>	
-								</table>								
-								<!--<div><p id="ratracciones" style="font-size: 12px">n&uacute;meros de registros: 24</P> </div>-->
-							</div>
-					  	</section>	 
+							</section>
+							<section class="px-3">
+								<div>
+									<table id="tabla_cacceso" class="table">
+										<thead>							  
+											<tr class="row ">
+												<th class="col-1 text-center"><h2>Editar</h2></th>
+												<th class="col-1 text-center"><h2><input type="checkbox" name="atraccion_todos" onclick="marcar(this);"></h2></th>
+												<th class="col-1 text-center"><h2>Id</h2></th>
+												<th class="col-1 text-center"><h2>Nombre</h2></th>
+												<th class="col-2 text-center"><h2>Imagen</h2></th>
+												<th class="col-1 text-center"><h2>Creado Por</h2></th>
+												<th class="col-1 text-center"><h2>Fecha Creacion</h2></th>
+												<th class="col-1 text-center"><h2>Modificado Por</h2></th>
+												<th class="col-1 text-center"><h2>Fecha Modificaci&oacute;n</h2></th>
+												<th class="col-1 text-center"><h2>Estado</h2></th>																					
+											</tr>
+										</thead>
+										<tbody id="tbody_cacceso">	
+											
+										</tboby>	
+									</table>								
+									<!--<div><p id="ratracciones" style="font-size: 12px">n&uacute;meros de registros: 24</P> </div>-->
+								</div>
+						  	</section>	
+					  	</section> 
 					</div>		  
 				</div>
 			</section>

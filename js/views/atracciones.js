@@ -67,18 +67,6 @@ function abreModalActiDesactivaatraccion(){
     for(i=0;i<checkboxes.length;i++){ //recoremos todos los controles    
         if(checkboxes[i].type == "checkbox" && checkboxes[i].checked == true && checkboxes[i].name != 'atraccion_todos'){ //solo si es un checkbox entramos y si es true 
             myArray[x] = checkboxes[i].name;
-            /*let text = checkboxes[i].name;
-            var mySplit = new Array();
-            mySplit = text.split("-");             
-            // 
-            if(typeof mySplit['2'] != 'undefined'){                            
-                str_remp2 += '<tr>' +
-                        '<td><h4>'+ mySplit['2'] +'</h4></td>'+
-                        '<td><h4>'+ mySplit['0'] +'</h4></td>'+
-                        '<td><h4>'+ mySplit['1'] +'</h4></td>'+                                       
-                '</tr>';
-            }*/              
-            //
             x++;          
         }
     }    
@@ -233,7 +221,7 @@ function adicionarAtracciones(nombre, ext){
     let imagen = (ext == 'JPG') ? str_base64.substring(23) : str_base64.substring(22);
     console.log(str_base64);
     //
-    /*$.ajax({        
+    $.ajax({        
         url: "ajax/ajxRequest.php",
         data: { op: '3', nombre: nombre, imagen: imagen, extension: ext },
         dataType: 'json',
@@ -249,7 +237,7 @@ function adicionarAtracciones(nombre, ext){
                 alert('Error al guardar');
             }
         }        
-    });*/   
+    });   
 }
 //
 /*$('#btnActualizarAtraccion').click(function(){
@@ -373,22 +361,6 @@ function actualizarAtracciones2(id, nombre){
         }        
     });   
 }
-//
-/*const d = document;
-$main = d.querySelector("main");
-$link = d.querySelector(".link");
-
-async function loadAtraccion(url){
-    try{
-        let res = await fetch(url);
-        json = await res.json();
-
-        console.log(json);
-    }catch(err){
-
-    }
-}
-d.addEventListener("DOMCcontentLoaded",e=> loadAtraccion("http://20.44.111.223:80/api/boleteria/atraccion?incluirImagen=true"));*/
 //
 //Fin lineas
 //
