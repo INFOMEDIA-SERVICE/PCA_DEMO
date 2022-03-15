@@ -20,6 +20,17 @@ input[type=text]{
 	padding: 0.8em!important;
 	font-size: 0.875em!important;
 }
+
+.boton_campo{
+	
+	padding: 0.8em 1.5em;
+	
+	border-radius: 5px !important;
+	width: 100% !important;
+	
+	padding: 0.4em!important;
+	
+}
 h4{
 	font-size: 0.875em;
 	color: #919BB4;
@@ -246,6 +257,13 @@ footer{
 	background: #fff;
 	border-radius: 10px;
 	width: 100%;
+	padding: 0.5em 1em 1em 1em;
+}
+
+.panel3_2{
+	background: rgb(255, 255, 255);
+	border-radius: 10px;
+	width: 80%;
 	padding: 0.5em 1em 1em 1em;
 }
 .notificacion{

@@ -41,7 +41,7 @@ echo" </pre> ";*/
 		#nav li ul{
 			margin-left:5px;
 			display:none;
-			position:;
+			
 		}
 		#nav li:hover>ul{
 			display: block;
@@ -89,9 +89,14 @@ echo" </pre> ";*/
 
 	$(document).on("click", "#taquilla", function(){
 
-		//$("#contenido").load("punto_de_venta.html")
 		window.location.href="taquilla.php";
 		
+	});
+
+	$(document).on("click", "#registro", function(){
+
+	window.location.href="registro_pasaportes.php";
+
 	});
 
 	$(document).on("click", "#configuracion", function(){
@@ -208,17 +213,17 @@ echo" </pre> ";*/
 						<div class="row">
 							<div class="col-6 col-lg-12">
 								<div class="row">
-									<div class="col-3 col-lg-12 text-center pointer" id="taquilla">
+								<div class="col-3 col-lg-12 text-center pointer" id="taquilla">
 									<div class="c-verde mb-1">T</div>
-						<P class="mb-3 d-none d-lg-block">Taquilla</P>
+									<P class="mb-3 d-none d-lg-block">Taquilla</P>
 								</div>
 								<div class="col-3  col-lg-12 pointer">
 									<div class="c-morado mb-1">P</div>
-						<P class="mb-3 d-none d-lg-block">Parqueadero</P>
+									<P class="mb-3 d-none d-lg-block">Parqueadero</P>
 								</div>
-								<div class="col-3  col-lg-12 pointer">
-								<div class="c-naranja mb-1">RC</div>
-						<P class="mb-4 d-none d-lg-block">Recaudos</P>
+								<div class="col-3  col-lg-12 pointer" id="registro">
+									<div class="c-naranja mb-1">RP</div>
+									<P class="mb-4 d-none d-lg-block">Registo<br>Pasaportes</P>
 								</div>
 								<div class="col-3  col-lg-12">
 								    <div class="d-flex justify-content-center mb-2 align-items-end">

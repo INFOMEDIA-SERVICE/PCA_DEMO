@@ -167,6 +167,8 @@
     
     <td width="33%">$'.number_format($sum_total).'</td>
     </tr> </table> 
+
+    <div style="page-break-after:always;"></div>
     
     <h2>Terminos y condiciones</h2>
 

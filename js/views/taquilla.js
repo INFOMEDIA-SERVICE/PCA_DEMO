@@ -36,7 +36,7 @@ function cargar_datos_taquilla(filtro){
                 if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
                     if(typeof r2.resultado.status === 'undefined'){
                         console.log('CORRECTO 200');
-                        console.log(r2)                
+                        //console.log(r2)                
                         var str_remp='';
     
                         let productos = [];
@@ -44,13 +44,16 @@ function cargar_datos_taquilla(filtro){
                         //localStorage.setItem('boletas_nombres',JSON.stringify(r2['resultado']))
                         //console.log();
                         $.each(r2.resultado, function(m, n) {
+
+                            //console.log(n)
     
-                            n.cant_taquilla=0;
-                            n.tipo_producto="boleta";
+                            n.tipoBoleta.cant_taquilla=0;
+                            n.tipoBoleta.tipo_producto="boleta";
+                            n.tipoBoleta.cantidadDisponible=n.cantidadDisponible;
     
-                            let nuevaLongitud = productos.push(n)
+                            let nuevaLongitud = productos.push(n.tipoBoleta)
     
-                                str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye boleta-info informacion" idboleta="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 boleta-add"    idboleta="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> </div>     </div>      </div>';
+                                str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye boleta-info informacion" idboleta="'+n.tipoBoleta.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 boleta-add"    idboleta="'+n.tipoBoleta.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.tipoBoleta.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.tipoBoleta.nombre +'</h4> <div><h2>$'+n.tipoBoleta.precio.toLocaleString()+'</h2></div> <div><h2>Cantidad disponible: <span class="badge bg-success">'+n.tipoBoleta.cantidadDisponible+'</span></h2></div> </div>     </div>      </div>';
                         
                             });
                             

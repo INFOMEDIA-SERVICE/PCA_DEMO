@@ -111,9 +111,10 @@ session_start();
 
         case 6: 
             //tibosBoleta
+            $fecha=date('d-m-Y');
 
             if ($token != '') {
-                $url = 'http://20.44.111.223:80/api/boleteria/tipoBoleta?incluirImagen=true';
+                $url = 'http://20.44.111.223:80/api/boleteria/disponibilidad?fecha='.$fecha;
                 //$rDatos = $atrac->cargarAtracciones($token);
                 $rDatos = $consumo->Get($url, $headers); 
                 

@@ -146,39 +146,25 @@ echo" </pre> ";*/
 				datos['atracciones'].forEach(function(datos2, index2) {
 
 					str_remp=str_remp+' <tr> <td colspan="2"> '+datos2['nombre']+'</td> <td> <img src="http://20.44.111.223/api/contenido/imagen/' + datos2['imagenId'] + '" width="100" height="100" style="border-radius:10px;" class=" " alt=""> </td> </tr> ';
-
-
+					
 				});
 				
-				
-				
-				
 				str_remp=str_remp+'</table> ';
-
 
 			}
 
 		});
 
-
 		$("#contenidoModal").html(str_remp)
-		
-		 
-  
+
 	 });
 
 
 	 $(document).on("click", ".close", function(){
         
-		 
-		
-
 		$("#miModal").modal("hide");
-		 
   
 	 });
-
-	 //keypress
 
 	 $(document).on("keyup", "#filtrarBoletas", function(){
 
@@ -186,9 +172,8 @@ echo" </pre> ";*/
         
 		$(".active").each(function(index) {
 			
-			//console.log("Sub filtro:"+filtro)
 			var tipo = $(this).attr('tipo');
-			//console.log("Tipo:"+tipo)
+			
 			if(tipo=='boletas'){
 				cargar_datos_taquilla(filtro);
 			}else if(tipo=='adicionales'){
@@ -197,9 +182,6 @@ echo" </pre> ";*/
 			}
 		});
 
-		//console.log("Escribiendo...")
-		 
-  
 	 });
 
 
@@ -215,17 +197,11 @@ echo" </pre> ";*/
 
 		$.each(boletas_nombres, function(index, datos) {
 
-			//console.log("datos")
-			//console.log(datos)
-
 			if(datos['id']==idboletaB){
-
-				//console.log("Entrooooooo")
 
 				datos['cant_taquilla']-=1;
 				nuevo_valor=datos['cant_taquilla'];
 
-				//console.log(" Nuevo valor **"+nuevo_valor)
 			}
 
 			let nuevaLongitud = new_array.push(datos)
@@ -234,17 +210,11 @@ echo" </pre> ";*/
 
 		localStorage.setItem("boletas_nombres",JSON.stringify(new_array));
 
-		
-
-		
-
-
 		var sumatoria_total=$("#sumatoria_total").attr('val_sum')
 
 		var sumatoria_pro= $(this).attr('sumatoria_producto');
 
 		var restar= $(this).attr('precio_unidad')
-
 
 		var valor_nuevo= parseInt(sumatoria_total)-parseInt(restar)
 
@@ -253,17 +223,10 @@ echo" </pre> ";*/
 		
 
 		$(this).attr('sumatoria_producto',valor_nuevo_producto)
-
-		//console.log('sumatoria_total:'+sumatoria_total+' - valor a restar:'+restar+ ' -  resultado '+valor_nuevo)
-
-
 		$("#sumatoria_total").attr('val_sum', valor_nuevo )
 		$("#sumatoria_total").html('$'+ valor_nuevo.toLocaleString() )
 
-
 		var info_boletas= JSON.parse( localStorage.getItem('boletas_nombres'));
-
-		//console.log(info_boletas)
 
 		var cantidad_actual=$(this).attr('cantidad');
 
@@ -271,33 +234,17 @@ echo" </pre> ";*/
 
 		$.each(info_boletas, function(index, datos) {
 
-			//console.log(datos)
+			
 
 			if(datos['id']== idboletaB ){
-				//console.log("entro")
+
 				var precioB=datos['precio'];
-
-				
-
-				 
-
-				//console.log('cantidad_nueva:'+cantidad_nueva)
-
 
 				$("#unidad_producto_"+datos['tipo_producto']+'_'+idboletaB).html(''+cantidad_nueva+' Unidad / $'+precioB.toLocaleString()+' / Units')
 
-				//console.log('valor_nuevo_producto:'+valor_nuevo_producto)
-
-				
-
 				$("#sumatoria_producto_"+datos['tipo_producto']+'_'+idboletaB).html('$'+valor_nuevo_producto.toLocaleString());
 
-				//console.log(info_boletas)
-
-
 				recalcular_cambio();
-
-				//console.log("Nuevo Valor:"+nuevo_valor)
 
 				if(nuevo_valor==0){
 					$(this).parent().parent().parent().parent().remove();
@@ -306,20 +253,14 @@ echo" </pre> ";*/
 
 		});
 
-		//console.log("Actualizo la cantidad")
 		$(this).attr('cantidad',cantidad_nueva)
-
-		
 
 		if(nuevo_valor==0){
 					$(this).parent().parent().parent().parent().remove();
 		}
-		
 		 
   
 	 });
-
-
 
 
 	 $(document).on("click", ".eliminar_adicional", function(){
@@ -334,17 +275,11 @@ echo" </pre> ";*/
 
 		$.each(adicionales_nombres, function(index, datos) {
 
-			//console.log("datos")
-			//console.log(datos)
-
 			if(datos['id']==idadicionalB){
-
-				//console.log("Entrooooooo")
 
 				datos['cant_taquilla']-=1;
 				nuevo_valor=datos['cant_taquilla'];
 
-				//console.log(" Nuevo valor **"+nuevo_valor)
 			}
 
 			let nuevaLongitud = new_array.push(datos)
@@ -352,11 +287,6 @@ echo" </pre> ";*/
 		});
 
 		localStorage.setItem("adicionales_nombres",JSON.stringify(new_array));
-
-		
-
-		
-
 
 		var sumatoria_total=$("#sumatoria_total").attr('val_sum')
 
@@ -369,12 +299,7 @@ echo" </pre> ";*/
 
 		var valor_nuevo_producto= parseInt(sumatoria_pro)-parseInt(restar)
 
-		
-
 		$(this).attr('sumatoria_producto',valor_nuevo_producto)
-
-		//console.log('sumatoria_total:'+sumatoria_total+' - valor a restar:'+restar+ ' -  resultado '+valor_nuevo)
-
 
 		$("#sumatoria_total").attr('val_sum', valor_nuevo )
 		$("#sumatoria_total").html('$'+ valor_nuevo.toLocaleString() )
@@ -382,41 +307,21 @@ echo" </pre> ";*/
 
 		var info_boletas= JSON.parse( localStorage.getItem('adicionales_nombres'));
 
-		//console.log(info_boletas)
-
 		var cantidad_actual=$(this).attr('cantidad');
 
 		var cantidad_nueva = parseInt(cantidad_actual)-1;
 
 		$.each(info_boletas, function(index, datos) {
 
-			//console.log(datos)
-
 			if(datos['id']== idadicionalB ){
-				//console.log("entro")
+
 				var precioB=datos['precio'];
-
-				
-
-				 
-
-				//console.log('cantidad_nueva:'+cantidad_nueva)
-
 
 				$("#unidad_producto_"+datos['tipo_producto']+'_'+idadicionalB).html(''+cantidad_nueva+' Unidad / $'+precioB.toLocaleString()+' / Units')
 
-				//console.log('valor_nuevo_producto:'+valor_nuevo_producto)
-
-				
-
 				$("#sumatoria_producto_"+datos['tipo_producto']+'_'+idadicionalB).html('$'+valor_nuevo_producto.toLocaleString());
 
-				//console.log(info_boletas)
-
-
 				recalcular_cambio();
-
-				//console.log("Nuevo Valor:"+nuevo_valor)
 
 				if(nuevo_valor==0){
 					$(this).parent().parent().parent().parent().remove();
@@ -425,10 +330,7 @@ echo" </pre> ";*/
 
 		});
 
-		//console.log("Actualizo la cantidad")
-		$(this).attr('cantidad',cantidad_nueva)
-
-		
+		$(this).attr('cantidad',cantidad_nueva)	
 
 		if(nuevo_valor==0){
 					$(this).parent().parent().parent().parent().remove();
@@ -464,11 +366,6 @@ $(document).on("click", ".boleta-add", function(){
 
 		 localStorage.setItem("boletas_nombres",JSON.stringify(new_array));
 
-
-
-		 
-
-
 		 var arr_pintar= JSON.parse( localStorage.getItem('boletas_nombres'));
 
 		 var arr_pintarAdd= JSON.parse( localStorage.getItem('adicionales_nombres'));
@@ -478,7 +375,6 @@ $(document).on("click", ".boleta-add", function(){
 		 var pinta_adicionales=1;
 
 		 if(arr_pintarAdd==null){
-			 //console.log("Flayo")
 			pinta_adicionales=0;
 		 }else{
 			long_val=arr_pintarAdd.length;
@@ -500,8 +396,6 @@ $(document).on("click", ".boleta-add", function(){
 		 var cont=1;
 
 		 var long=arr_pintar.length;
-
-		 //console.log("long: "+long)
 
 		 $.each(arr_pintar, function(index, datos) {
 
@@ -525,13 +419,6 @@ $(document).on("click", ".boleta-add", function(){
 
 		 });
 
-
-		
-
-		//var str_div='';
-		//var sumatoria=0;
-		//var sumatoria_sub=0;
-
 		 if(pinta_adicionales==1){
 
 			cont=1;
@@ -546,16 +433,12 @@ $(document).on("click", ".boleta-add", function(){
 
 				sumatoria+=parseFloat(datos['cant_taquilla'])*parseFloat(datos['precio'])
 				sumatoria_sub=parseFloat(datos['cant_taquilla'])*parseFloat(datos['precio'])
-
 				str_div=str_div+'<div class="px-2">	 <div class="row no-gutters" style="border-bottom: #D8D4C1 solid 1px;">						 <div class="col-7">	  <h3 class="textos-medios pt-2">'+datos['nombre']+'</h3>	  	<div class="d-flex">			 	<p class="textos-azules pt-1" style="font-size: 10px;" id="unidad_producto_'+datos['tipo_producto']+'_'+datos['id']+'">'+datos['cant_taquilla']+' Unidad / $'+datos['precio'].toLocaleString()+' / Units</p>						 	</div>	 </div>	 <div class="col-5 d-flex align-items-center justify-content-lg-end no-gutters">			   <div class="row no-gutters justify-content-end">	 <div class="col-12" style="text-align: right"><img src="imagenes/menos.svg" id="'+datos['id']+'" tipo_producto="'+datos['tipo_producto']+'"  class="eliminar_adicional" precio_unidad="'+datos['precio']+'" sumatoria_producto="'+sumatoria_sub+'" id="'+datos['id']+'" cantidad="'+datos['cant_taquilla']+'" style="cursor:pointer" width="20%" alt=""></div>	 <div class="col-12" style="font-size: 18px; text-align: right" id="sumatoria_producto_'+datos['tipo_producto']+'_'+datos['id']+'">$'+sumatoria_sub.toLocaleString()+'</div> 	</div>	  </div>	 </div>	 	</div>';
 
 			}
 
-
 			if(cont==long){
-
 				str_div=str_div+'<div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">TOTAL</div>    <div style="font-size: 24px;" id="sumatoria_total" val_sum="'+sumatoria+'"  >$'+sumatoria.toLocaleString()+'</div></div>'
-
 			}
 
 			cont++;
@@ -563,10 +446,6 @@ $(document).on("click", ".boleta-add", function(){
 		});
 
 		 }
-
-
-		
-
  
 		$("#div_productos").html(str_div)
  
@@ -583,10 +462,8 @@ var indice=$(this).attr("idadicional")
 let new_array=[];
 
 $.each(arr_recorrer, function(index, datos) {
-   //console.log(datos)
 
 	   if(datos['id']==indice){
-	   //console.log("Encontre la boleta"+datos['id'])
 	   datos['cant_taquilla']+=1;	
 	}
 
@@ -646,14 +523,6 @@ $.each(arr_recorrer, function(index, datos) {
 
 		 });
 
-
-
-
-
-
- //var str_div='';
- //var sumatoria=0;
- //var sumatoria_sub=0;
  cont=1;
 
  long=arr_pintarAdd.length;
@@ -688,10 +557,6 @@ recalcular_cambio();
 
 
 });
-
-
-
-
 
 	$(document).on("click", ".regresar", function(){
 		window.location.href="inicio_pca2.php";
@@ -745,7 +610,6 @@ recalcular_cambio();
 	$(document).on("click", ".numeros", function(){
 
 		if( $("#div_efectivo").hasClass('tipo_pago_check')  ){
-			//alert("Selecciono alguna de las dos")
 
 			var acumulado=$("#suma_efectivo").attr('acumulado');
 
@@ -753,21 +617,15 @@ recalcular_cambio();
 
 			if(acumulado=='0'){
 				 new_acumulado = $(this).attr('id');
-				 //alert("paso por el if")
 			}else{
 				 new_acumulado=acumulado+''+$(this).attr('id');
-				 //alert("paso por el else")
 			}
-
-			//alert("new acumulado 1: "+new_acumulado)
 
 			new_acumulado=parseInt(new_acumulado)
 
 			if(new_acumulado<0){
 				new_acumulado=0;
 			}
-
-			//alert("new acumulado 2: "+new_acumulado)
 
 			$("#suma_efectivo").html('$'+ new_acumulado.toLocaleString() );
 			$("#suma_efectivo").attr('acumulado', new_acumulado)
@@ -783,21 +641,15 @@ recalcular_cambio();
 
 			if(acumulado=='0'){
 				 new_acumulado = $(this).attr('id');
-				 //alert("paso por el if")
 			}else{
 				 new_acumulado=acumulado+''+$(this).attr('id');
-				 //alert("paso por el else")
 			}
-
-			//alert("new acumulado 1: "+new_acumulado)
 
 			new_acumulado=parseInt(new_acumulado)
 
 			if(new_acumulado<0){
 				new_acumulado=0;
 			}
-
-			//alert("new acumulado 2: "+new_acumulado)
 
 			$("#suma_tarjeta").html('$'+ new_acumulado.toLocaleString() );
 			$("#suma_tarjeta").attr('acumulado', new_acumulado)
@@ -813,11 +665,9 @@ recalcular_cambio();
 		recalcular_cambio()
 
 		var num=$(this).attr('id');
-		//alert("num:"+num);
 	});
 
 	$(document).on("click", "#restablecer", function(){
-		//alert("Holi")
 		localStorage.clear();
 		location.reload();
 	});
@@ -843,8 +693,6 @@ recalcular_cambio();
 			}
 
 		}else if(id=='tabadicionales') {
-
-			//alert("Activameros los adicionales")
 
 			if( $(this).hasClass("pes-act-inv") ){
 				//click inicio
@@ -896,7 +744,6 @@ recalcular_cambio();
 				pagar();
 			}
 
-			//pagar();
 
 		}
 
@@ -953,7 +800,6 @@ recalcular_cambio();
 
 
 	$(document).on("blur", "#numero_documento", function(){
-		//alert("Holaaaa!!!!")
 
 		var tipo_documento=$("#tipo_documento").val();
 
@@ -965,77 +811,12 @@ recalcular_cambio();
 
 		}
 
-		//console.log('tipo_documento:'+tipo_documento+' numero_documento:'+numero_documento)
-
 
 	});
-
-	
-
-/*	function iniciar_proceso(){
-	//$(document).on("click", "#iniciar", function(){
-
-		validarToken();
-
-		//return(false);
-
-		//alert("Proceso de compra iniciado con exito")
-
-		$("#contenido_taquilla").show();
-
-		
-
-		$("#iniciar").hide();
-
-		const f = new Date();
-
-		//$("#fecha").html('<h3>Fecha reserva: <span class="badge bg-secondary">'+f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear()+'</span></h3> <div id="mi_tabla" class="container"> <table class="table table-hover   tableFixHead">  <tr> <td align="left"> Tipo Documento: <select   id="tipo_doc" > <option value="">Seleccione una opcion</option><option value="cc">Cedula Ciudadania</option><option value="ce">Cedula Extranjeria</option><option value="pa">Pasaporte</option> </select> </td><td align="left"> Numero documento:  <input type="text" id="numero_documento" ></td> </tr> <tr> <td align="left"> Nombres: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="nombres" > </td><td align="left"> Apellidos: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="apellidos" ></td> </tr> </table></div>')
-         // console.log("Token"+localStorage.getItem('accessToken'))
-
-		  var settings2 = {
-            "url": "http://20.44.111.223:80/api/boleteria/tipoBoleta?incluirImagen=true",
-            "method": "GET",
-            "async": false,
-            "timeout": 0,
-            "headers": {
-              "Authorization": "Bearer "+localStorage.getItem('accessToken')
-            },
-          };
-
-          
-
-          $.ajax(settings2).done(function (response2) {
-            console.log("Boletas");
-            console.log(response2);
-            var str_remp=' ';
-            //$("#boletas").html('<div  class="row col-auto bg-danger p-5 text-center" ><div class="col-sm-3">');
-              var cont=1;
-            
-            localStorage.setItem('boletas_nombres',JSON.stringify(response2))
-
-            response2.forEach(function(boleta, index) {
-                console.log(boleta);
-
-				str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye boleta-info" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 boleta-add" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img  src="data:image/jpeg;base64, '+boleta['imagenBase64']+'" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+boleta['nombre']+'</h4> <div><h2>$'+boleta['precio'].toLocaleString()+'</h2></div> </div>     </div>      </div>';
-
-                // str_remp=str_remp+'<div class="col-sm-3"><div class="card" style="width: 14rem;border-radius:26px;box-shadow:2px 2px 2px 1px rgb(235, 235, 235);border-style: none;"><img src="data:image/jpeg;base64, '+boleta['imagenBase64']+'" style="border-radius:20px;padding:10px 10px;" class="card-img-top" alt=""><div class="card-body"><h5 class="card-title" style="font-size:16px;padding-bottom:7px;padding-top:0px;">'+boleta['nombre']+'</h5><p class="card-text"style="font-size:10px;">'+boleta['descripcion']+'</p> <h1 style="font-size:20px;display:contents;">$'+boleta['precio'].toLocaleString()+'</h1> <a  class="btn btn-primary btnModal" idtipoBoleta="'+boleta['id']+'" style="border-style:none;background-color:rgb(131, 204, 22);;margin-left:180px;border-radius:20px;height:30px;width:80px;font-size:13px;padding-top:5px;">Comprar</a> </div> </div> </div>';
-
-                 cont++;
-
-            });
-            str_remp=str_remp+'</div> '
-            $("#boletas").html(str_remp);
-          });
-
-	}*/
 
 
 	window.onload = function () {
 
-	//alert("Hola magola 2")
-	//$("#iniciar").click();
-
-	//iniciar_proceso();
 
 	localStorage.clear();
 
@@ -1055,29 +836,7 @@ recalcular_cambio();
 	</script>
   </head>
   <body>
-  	<!-- body code goes here -->
-	  <!-- <header>
-		<nav style="background-color:#009fd0;">
-		   <div class="row justify-content-between">
-			   
-			   <div class="col-lg-1 col-3 d-flex align-items-center">
-				   <figure class="pt-3">
-					<img src="imagenes/logo_pca_color.png" style="width:40px;margin-left:20px;">
-				   </figure>
-			   </div>
-			   <div class="d-flex justify-content-start">
-				   <div class="px-2 pt-3 "><input type="text" class="campo" value="Tipo de Documento" style="height: 30px;"></div>
-				   <div class="px-2 pt-3 "><input type="text" class="campo" value="Número de Documento" style="height: 30px;"></div>
-				   <div class="px-2 pt-3 "><input type="text" class="campo" value="Nombre" style="height: 30px;"></div>
-				   <div class="px-2 pt-3 "><input type="text" class="campo" value="Email" style="height: 30px;"></div>
-				   <div class="px-2 pt-3 "><input type="text" class="campo" value="Teléfono" style="height: 30px;"></div>
-			   </div>
-			   <div class="d-flex align-items-center justify-content-end">
-				   <div style="background: #009fd0" class="py-3 px-2"><img src="imagenes/back.svg" alt=""/></div>
-			 </div>
-		   </div>
-	   </nav> 
-	</header> -->
+  	
 
 	<header>
 		<nav class="color-cabezera container-fluid">
