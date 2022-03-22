@@ -422,6 +422,8 @@ session_start();
             }else{
                 echo json_encode(['sts'=>'NO']);
             }
+            
+        break;
 
         case 20: //OBTIENE CONDICION DE ACCESO
             if ($token != '') {
@@ -437,6 +439,109 @@ session_start();
             } else {
                 die('Se produjo un Error al generar el Token');
             }       
+        break;
+
+        case 21:
+
+            $fecha_hoy=date('d-m-Y');
+            if ($token != '' && $numero_identificacion!='' && $tipo_identificacion!='') {
+                $url = "http://20.44.111.223:80/api/boleteria/buscarReserva?filter=cliente.identificacion.numero%3A%27".$numero_identificacion."%27%20and%20cliente.identificacion.tipo%3A%27".$tipo_identificacion."%27%20and%20fecha%3A%27".$fecha_hoy."%27";
+                //$rDatos = $atrac->cargarAtracciones($token);
+                $rDatos = $consumo->Get($url, $headers); 
+            
+                #print_r($rDatos);exit;
+                
+                if (count($rDatos)>0) {
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO', 'resultado'=>'No tiene reserva']);
+            
+                }
+            
+            } else {
+                die('Se produjo un Error al generar el Token');
+            }
+        break;
+
+
+        case 22:            
+            
+            
+            /*$array['estado'] = 'ACTIVO';
+            $array['imagen']['datosBase64'] = $aimagen;
+            $array['imagen']['formato'] = $aextension;
+            $array['nombre'] = $anombre;*/
+
+            $arr_nombres=explode(" ",$nombre);
+
+            
+
+            if($token!='' && $nombre!='' && $apellido!='' && $fecha_nacimiento!='' && $idreserva!='' && $idboleta!=''){
+                $array['nombre'] = $nombre;
+                $array['apellido']=$apellido;
+                $array['idReserva']=$idreserva;
+                $array['idBoleta']=$idboleta;
+
+                $ar_fecha=explode("-",$fecha_nacimiento);
+
+                $nueva_fecha_nacimiento=$ar_fecha[2]."-".$ar_fecha[1]."-".$ar_fecha[0];
+
+                $array['fechaNacimiento']=$nueva_fecha_nacimiento;
+
+
+                if($tipo_identificacion!='' ){
+                    $array['tipoIdentificacion']=$tipo_identificacion;
+                }
+
+                if($numero_identificacion!=''){
+                    $array['numeroIdentificacion']=$numero_identificacion;
+                }
+
+                //
+                $url = 'http://20.44.111.223:80/api/boleteria/visitante';
+                $rGuardar = $consumo->Post($url, $headers, $array);
+
+               // print_r($rGuardar);exit;
+
+                if($rGuardar->message == 'Se ha creado el visitante'){
+                    echo json_encode(['sts'=>'OK','resultado'=>'Se ha creado el visitante']); 
+                }else{
+                    echo json_encode(['sts'=>'NO']);
+                }
+                    
+
+                
+
+
+            }else{
+                echo "datos_incompletos";
+            }
+            
+            
+        break;
+
+        case 23:
+
+            if ($token != '' && $idboleta!='') {
+                $url = "http://20.44.111.223/api/boleteria/buscarReserva?filter=boletas.id%3A%27".$idboleta."%27";
+                //$rDatos = $atrac->cargarAtracciones($token);
+                $rDatos = $consumo->Get($url, $headers); 
+            
+                //print_r($rDatos);exit;
+                
+                if (count($rDatos)>0) {
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO', 'resultado'=>'No tiene visitante']);
+            
+                }
+            
+            } else {
+                die('Se produjo un Error al generar el Token');
+            }
+
+
+
         break;
 
         default:

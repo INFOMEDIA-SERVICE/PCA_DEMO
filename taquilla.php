@@ -854,7 +854,7 @@ recalcular_cambio();
 					   <option value="">Tipo de Documento</option>
 					   <option value="CC" >Cedula Ciudadania</option>
 					   <option value="CE">Cedula Estranjeria</option>
-					   <option vlaue="PAS">Pasaporte</option>
+					   <option value="PAS">Pasaporte</option>
 				   </select>
 					   
 				   

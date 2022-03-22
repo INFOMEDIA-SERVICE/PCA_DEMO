@@ -93,7 +93,8 @@ echo" </pre> ";*/
 	<script src="js/funciones.js"></script>
 
 	<script src="js/views/registro.js"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>
 	<script>
 
 	var modal = document.getElementById("myModal");
@@ -103,7 +104,7 @@ echo" </pre> ";*/
 
 		
 
-	$(document).on("click", ".informacion", function(){
+	$(document).on("click", ".check", function(){
         
 		 
 		$("#miModal").modal("show");
@@ -142,14 +143,56 @@ echo" </pre> ";*/
 	 });
 
 
-	 $(document).on("click", ".close", function(){
+	 $(document).on("click", "#close", function(){
+
+
+		$("#idreservaR").val("");
+		$("#idboletaR").val("");
+		$("#nombreR").val("");
+		$("#apellidoR").val("");
+		$("#tipo_documentoR").val("");
+		$("#numero_documentoR").val("");
+		$("#fecha_nacimientoR").val("");
         
 		$("#miModal").modal("hide");
   
 	 });
 
-	 
+	 $(document).on("click", "#close2", function(){
 
+		$("#miModal2").modal("hide");
+
+	});
+
+	 
+	 $(document).on("click", ".agregar", function(){
+        
+		var idreserva=$(this).attr('idreserva');
+		var idboleta =$(this).attr('idboleta');
+
+		$("#idreservaR").val(idreserva);
+		$("#idboletaR").val(idboleta);
+		 
+		//alert("idreserva:"+idreserva+" , idboleta:"+idboleta);
+		$("#miModal").modal("show");
+
+		
+
+	 });
+
+
+	 $(document).on("click", ".verVisitante", function(){
+        var idreserva=$(this).attr('idreserva');
+		var idboleta =$(this).attr('idboleta');
+
+		$("#idreservaV").val(idreserva);
+		$("#idboletaV").val(idboleta);
+		$("#miModal2").modal("show");
+		visitante();
+
+		
+
+	 });
 
 
 	$(document).on("click", ".regresar", function(){
@@ -160,7 +203,7 @@ echo" </pre> ";*/
 
 
 
-	$(document).on("click", "#pagar", function(){
+	/*$(document).on("click", "#pagar", function(){
 
 		var sumatoria_total=$("#sumatoria_total").attr('val_sum');
 		var tipo_documento=$("#tipo_documento").val();
@@ -190,7 +233,7 @@ echo" </pre> ";*/
 		}
 
 		
-	});
+	});*/
 
 
 
@@ -202,14 +245,6 @@ echo" </pre> ";*/
 
 
 	$("#contenido_taquilla").show();
-
-		
-
-	$("#iniciar").hide();
-
-	//cargar_datos_taquilla();
-
-
 
 	}
 
@@ -234,7 +269,7 @@ echo" </pre> ";*/
 					   <option value="">Tipo de Documento</option>
 					   <option value="CC" >Cedula Ciudadania</option>
 					   <option value="CE">Cedula Estranjeria</option>
-					   <option vlaue="PAS">Pasaporte</option>
+					   <option value="PAS">Pasaporte</option>
 				   </select>
 					   
 				   
@@ -242,7 +277,7 @@ echo" </pre> ";*/
 				</div>
 				   <div class="px-2 pt-3 "><input type="text" class="campo" id="numero_documento" placeholder="Número de Documento" style="height: 30px;"></div>
 				   
-				   <div class="px-2 pt-3 "><input type="button" class="boton_campo" style="width: 100%" value="CONSULTAR" id="pagar"></div>
+				   <div class="px-2 pt-3 "><input type="button" onclick="consultar_reserva();" class="boton_campo" style="width: 100%" value="CONSULTAR" id="pagar"></div>
 			   </div>
 			   <div class="d-flex align-items-center justify-content-end">
 				   <div style="background: #012E4B" class="py-3 px-2"><img src="imagenes/back.svg" alt=""/></div>
@@ -255,7 +290,7 @@ echo" </pre> ";*/
 		<div class="container"> 
 			<div class="row w-100 align-items-center">
 			  <div class="col text-center">
-				<a ><button type="button" class="btn btn-warning " id="iniciar" style="border-radius:0px 0px 10px 10px;color: white; background:rgb(255, 157, 0); border-bottom:5px solid rgb(233, 113, 0);margin-bottom:20px;">Iniciar proceso de compra</button></a>
+				
 	  
 				<div id="fecha" class=""> </div>
 	  
@@ -290,17 +325,19 @@ echo" </pre> ";*/
 			 	 
 				<div class="col-lg-10 pt-2 d-flex">
 				  <div class="panel3 sombra">
-
-                    <div class=" pr-2 centrado" ><h2>Cliente: Camilo Espinosa</h2></div><br>
+                    
+                    <div class=" pr-2 centrado" id="div_cliente" ><h1>Consultar Reserva Boletas </h1></div>
                         
-                    <div class=" pr-2 centrado" ><h2>Idreserva: s2d4f4-4rfd45-y7ju8j</h2></div><br>
+                    
                         
-                    <div class=" pr-2 centrado" ><h2>Fecha Reserva: 15-03-2022</h2></div>
+                    <div class=" pr-2 centrado" id="div_fecha_reserva"> </div>
 				  	
 				   
 					  <div class="row no-gutters pt-3" id="boletas">
+
+					  
 					  	
-                      
+                      <!-- <div class=" pr-2 " ><h2>Idreserva: s2d4f4-4rfd45-y7ju8j</h2></div><br>
 
                         <div class="sombra2 panel3_2 boleta-add" idboleta="1" style="margin-top: 12px;" >         
                              
@@ -336,7 +373,7 @@ echo" </pre> ";*/
                                 </div> 
                             
                                  
-                        </div>
+                        </div> -->
 						    
 					  </div>
 					  
@@ -350,16 +387,108 @@ echo" </pre> ";*/
 					<!-- Contenido del modal -->
 					<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
 					</div>
 					<div class="modal-body" id="contenidoModal">
 						
+					<form>
+					<div class="form-group">
+						<label for="nombreR">Nombres:*</label>
+						<input type="email" class="form-control" id="nombreR" aria-describedby="emailHelp" placeholder="Nombres">
+						
+					</div>
+					<div class="form-group">
+						<label for="apellidoR"*>Apellidos:</label>
+						<input type="email" class="form-control" id="apellidoR" aria-describedby="emailHelp" placeholder="Apellidos">
+						
+					</div>
+					<div class="form-group">
+						<label for="tipo_documento">Tipo Documento</label>
+						<select class="selectAltura" id="tipo_documentoR" >
+							<option value="">Tipo de Documento</option>
+							<option value="CC" >Cedula Ciudadania</option>
+							<option value="CE">Cedula Estranjeria</option>
+							<option value="PAS">Pasaporte</option>
+						</select>
+						
+					</div>
+
+					<div class="form-group">
+						<label for="numero_documento">Numero Documento:</label>
+						<input type="email" class="form-control" id="numero_documentoR" aria-describedby="emailHelp" placeholder="Numero documento">
+						
+					</div>
+
+					<div class="form-group">
+						<label for="fecha_nacimiento">Fecha Nacimiento:*</label>
+					<input type="date" id="fecha_nacimientoR" class="form-control" name="trip-start"  min="1920-01-01" >
+					</div>
+
+					<input type="hidden" id="idreservaR" value="">
+					<input type="hidden" id="idboletaR" value="">
+					
+					<input type="button" onclick="registrarBoleta();" class="boton_campo" style="width: 100%" value="REGISTRAR" id="registrar">
+					</form>
 
 						
 					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+					
 					</div>
+				</div>
+			</div>
+
+
+			<div id="miModal2" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+					<!-- Contenido del modal -->
+					<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" id="close2" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body" id="contenidoModal">
+						
+					<form>
+					<div class="form-group">
+						<label for="nombreR">Nombres:*</label>
+						<input type="email" class="form-control" id="nombreV" aria-describedby="emailHelp" placeholder="Nombres">
+						
+					</div>
+					<div class="form-group">
+						<label for="apellidoV"*>Apellidos:</label>
+						<input type="email" class="form-control" id="apellidoV" aria-describedby="emailHelp" placeholder="Apellidos">
+						
+					</div>
+					<div class="form-group">
+						<label for="tipo_documentoV">Tipo Documento</label>
+						<select class="selectAltura" id="tipo_documentoV" >
+							<option value="">Tipo de Documento</option>
+							<option value="CC" >Cedula Ciudadania</option>
+							<option value="CE">Cedula Estranjeria</option>
+							<option value="PAS">Pasaporte</option>
+						</select>
+						
+					</div>
+
+					<div class="form-group">
+						<label for="numero_documentoV">Numero Documento:</label>
+						<input type="email" class="form-control" id="numero_documentoV" aria-describedby="emailHelp" placeholder="Numero documento">
+						
+					</div>
+
+					<div class="form-group">
+						<label for="fecha_nacimientoV">Fecha Nacimiento:*</label>
+					<input type="email" id="fecha_nacimientoV" class="form-control"  >
+					</div>
+
+					<input type="hidden" id="idreservaV" value="">
+					<input type="hidden" id="idboletaV" value="">
+					
+					<!-- <input type="button" onclick="registrarBoleta();" class="boton_campo" style="width: 100%" value="REGISTRAR" id="registrar"> -->
+					</form>
+
+						
+					</div>
+					
 					</div>
 				</div>
 			</div>
