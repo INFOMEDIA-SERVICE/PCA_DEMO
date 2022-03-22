@@ -17,6 +17,7 @@
     $headers[] = 'Content-Type: application/json'; 
     $fecha_actual=date('Y-m-d h:i:s A');
 
+
     if ($token != '') {
         $url = 'http://20.44.111.223:80/api/boleteria/reserva?idReserva='.$idreserva;
         //$rDatos = $atrac->cargarAtracciones($token);
@@ -92,14 +93,24 @@
     use Dompdf\Dompdf; 
     
     $dompdf = new Dompdf();
-
-    
-
-    
     
 
     $html=' 
     <style> 
+
+    .center2 {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+      }
+
+    @page {
+		margin-left: 0.2cm;
+		margin-right: 0.2cm;
+        margin-top: 0.1cm;
+	}
+
     h1 { font-size: 80% }  
     h2 { font-size: 80% }  
     td { font-size: 80% } 
@@ -108,7 +119,7 @@
 
    
     
-    <h1 style="text-align:center;"><img  src="../../imagenes/pca_pdf.png" />PARQUE CARIBE AVENTURA</h1>
+    <h1 style="text-align:center;"> PARQUE CARIBE AVENTURA</h1>
     <hr width="100%"> 
 
     <table width="100%">
@@ -117,60 +128,65 @@
         </tr>
 
         <tr>
-            <td style="text-align:center;" width="100%"><b>Reserva No.</b> <br> <h2>'.$idreserva.'</h2> </td>
+            <td style="text-align:center;" width="100%"><b>Reserva No.</b>    '.$idreserva.'  </td>
         </tr>
 
         <tr>
-            <td style="text-align:center;" width="100%"><b>Fecha y hora de la transacción</b> <br> <h2>'.$fecha_actual.'</h2> </td>
+            <td style="text-align:center;" width="100%"><b>Fecha:</b> '.$fecha_actual.'  </td>
         </tr>
 
         <tr>
-            <td style="text-align:center;" width="100%"><b>Cliente: </b>'.$nombre_cliente.' </td>
-        </tr>
-        <tr>
-            <td style="text-align:center;" width="100%"><b>Identificacion: </b>'.$documento_reserva.' </td>
+            <td style="text-align:center;" width="100%"><b>Cliente: </b>'.$nombre_cliente.' - '.$documento_reserva.' </td>
         </tr>
     </table>
 
-    <div style="page-break-after:always;"></div>
+    
 
-    <h2 style="text-align:center;">Detalle de su compra</h2><br> 
+    <h2 style="text-align:center;">Detalle de su compra</h2> 
     
     
-    <table width="100%" border="1"> 
+    <table width="100%" > 
     <tr>
-        <td width="33%"><b>Descripción</b></td>
-        <td width="33%"><b>Cantidad</b></td>
-        <td width="33%"><b>Valor</b></td>
+        <td width="33%" style="text-align:center;"><b>Descripción</b></td>
+        <td width="33%" style="text-align:center;"><b>Cantidad</b></td>
+        <td width="33%" style="text-align:center;"><b>Valor</b></td>
     </tr>  ';
     $sum_total=0;
     foreach ($array_detalle as $key)  {
+        if($key['precio']>0){
         $html.=' <tr> 
-        <td width="33%">'.$key['nombre'].'</td>
-        <td width="33%">'.$key['cantidad'].'</td>
-        <td width="33%">$'. number_format($key['precio']) .'</td>
+        <td width="33%" style="text-align:center;">'.$key['nombre'].'</td>
+        <td width="33%" style="text-align:center;">'.$key['cantidad'].'</td>
+        <td width="33%" style="text-align:center;">$'. number_format($key['precio']) .'</td>
         </tr> ';
         $sum_total+=$key['precio'];
+        }
     }
 
     foreach ($array_detalle_adicionales as $key)  {
-        $html.=' <tr> 
-        <td width="33%">'.$key['nombre'].'</td>
-        <td width="33%">'.$key['cantidad'].'</td>
-        <td width="33%">$'.number_format($key['precio']).'</td>
+
+        if($key['precio']>0){
+
+            $html.=' <tr> 
+        <td width="33%" style="text-align:center;">'.$key['nombre'].'</td>
+        <td width="33%" style="text-align:center;">'.$key['cantidad'].'</td>
+        <td width="33%" style="text-align:center;">$'.number_format($key['precio']).'</td>
         </tr> ';
         $sum_total+=$key['precio'];
+
+        }
+        
     }
     $html.=' <tr> 
-    <td colspan="2" width="66%"><b>TOTAL</b></td>
+    <td colspan="2" width="66%" ><b>TOTAL</b></td>
     
     
-    <td width="33%">$'.number_format($sum_total).'</td>
+    <td width="33%" style="text-align:center;">$'.number_format($sum_total).'</td>
     </tr> </table> 
 
     <div style="page-break-after:always;"></div>
     
-    <h2>Terminos y condiciones</h2>
+    <h2 style="text-align:center;">Terminos y condiciones</h2>
 
     <table width="100%">
         <tr>
@@ -181,7 +197,7 @@
     
     <div style="page-break-after:always;"></div>';
     
-    $html.=' <h2>Detalle pasaportes</h2><br>';
+
 
     
 
@@ -189,15 +205,17 @@
  
     $codesDir = "codes/";
     
-    $html.='<table width="100%"> <tr> <td width="100%" ><b>Pasaporte</b>   -   <b>Valor</b></td> <td width="40%" style="text-align:center;"></td> </tr><tr> <td td width="100%" colspan="2" ><br></td> </tr>';
+    $html.='<table width="100%">  ';
     
     foreach ($rDatos->boletas as $key ) {
 
         $codeFile= $key->id.".png";
 
-        QRcode::png($key->id, $codesDir.$codeFile, "H", 4); 
+        QRcode::png($key->id, $codesDir.$codeFile, "H", 5); 
 
-        $html.=' <tr> <td width="100%" >'.$key->tipoBoleta->nombre.' - $'.number_format($key->tipoBoleta->precio).' <br> <img class="img-thumbnail" src="'.$codesDir.$codeFile.'" /> </td>  <td style="text-align:center;" width="40%"></td> </tr> <tr></tr> <tr> <td td width="100%" colspan="2" ><br><br></td> </tr> ';
+        $html.=' <tr> <td width="100%" style="text-align:center;" >'.$key->tipoBoleta->nombre.' <br> Boleta valida para: '.$fecha_reserva.' <br> <img class="img-thumbnail " src="'.$codesDir.$codeFile.'" /> <br> <span class="El-cdigo-QR-te-servir-para-identificarte-e-ingresar-al-parque">
+        El código QR te servirá para identificarte e ingresar al parque
+      </span> </td>  <td style="text-align:center;" width="40%"></td> </tr> <tr></tr> <tr> <td td width="100%" colspan="2" ><br><br></td> </tr> ';
        
     }
 
