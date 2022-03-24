@@ -147,17 +147,17 @@
     
     <table width="100%" > 
     <tr>
-        <td width="33%" style="text-align:center;"><b>Descripción</b></td>
+        <td width="33%" style="text-align:left;"><b>Descripción</b></td>
         <td width="33%" style="text-align:center;"><b>Cantidad</b></td>
-        <td width="33%" style="text-align:center;"><b>Valor</b></td>
+        <td width="33%" style="text-align:right;"><b>Valor</b></td>
     </tr>  ';
     $sum_total=0;
     foreach ($array_detalle as $key)  {
         if($key['precio']>0){
         $html.=' <tr> 
-        <td width="33%" style="text-align:center;">'.$key['nombre'].'</td>
+        <td width="33%" style="text-align:left;">'.$key['nombre'].'</td>
         <td width="33%" style="text-align:center;">'.$key['cantidad'].'</td>
-        <td width="33%" style="text-align:center;">$'. number_format($key['precio']) .'</td>
+        <td width="33%" style="text-align:right;">$'. number_format($key['precio']) .'</td>
         </tr> ';
         $sum_total+=$key['precio'];
         }
@@ -168,9 +168,9 @@
         if($key['precio']>0){
 
             $html.=' <tr> 
-        <td width="33%" style="text-align:center;">'.$key['nombre'].'</td>
+        <td width="33%" style="text-align:left;">'.$key['nombre'].'</td>
         <td width="33%" style="text-align:center;">'.$key['cantidad'].'</td>
-        <td width="33%" style="text-align:center;">$'.number_format($key['precio']).'</td>
+        <td width="33%" style="text-align:right;">$'.number_format($key['precio']).'</td>
         </tr> ';
         $sum_total+=$key['precio'];
 
@@ -181,10 +181,10 @@
     <td colspan="2" width="66%" ><b>TOTAL</b></td>
     
     
-    <td width="33%" style="text-align:center;">$'.number_format($sum_total).'</td>
+    <td width="33%" style="text-align:right;">$'.number_format($sum_total).'</td>
     </tr> </table> 
 
-    <div style="page-break-after:always;"></div>
+  
     
     <h2 style="text-align:center;">Terminos y condiciones</h2>
 

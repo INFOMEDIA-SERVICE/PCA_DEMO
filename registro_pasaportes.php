@@ -199,6 +199,12 @@ echo" </pre> ";*/
 		window.location.href="inicio_pca2.php";
 	});
 
+
+
+	$(document).on("blur", "#fecha_nacimientoR", function(){
+		alert($(this).val())
+	});
+
 	
 
 
@@ -402,6 +408,12 @@ echo" </pre> ";*/
 						<input type="email" class="form-control" id="apellidoR" aria-describedby="emailHelp" placeholder="Apellidos">
 						
 					</div>
+
+					<div class="form-group">
+						<label for="fecha_nacimiento">Fecha Nacimiento:*</label>
+					<input type="date" id="fecha_nacimientoR" class="form-control" name="trip-start"  min="1920-01-01" >
+					</div>
+
 					<div class="form-group">
 						<label for="tipo_documento">Tipo Documento</label>
 						<select class="selectAltura" id="tipo_documentoR" >
@@ -419,10 +431,7 @@ echo" </pre> ";*/
 						
 					</div>
 
-					<div class="form-group">
-						<label for="fecha_nacimiento">Fecha Nacimiento:*</label>
-					<input type="date" id="fecha_nacimientoR" class="form-control" name="trip-start"  min="1920-01-01" >
-					</div>
+					
 
 					<input type="hidden" id="idreservaR" value="">
 					<input type="hidden" id="idboletaR" value="">
