@@ -82,8 +82,56 @@ echo" </pre> ";*/
 	<script src="js/popper.min.js"></script> 
 	<script src="js/bootstrap-4.4.1.js"></script>
 	<script src="js/funciones.js"></script>
+	<script src="https://jquery-formatcurrency.googlecode.com/files/jquery.formatCurrency-1.4.0.min.js"></script>
 
 	<script src="js/views/taquilla.js"></script>
+
+	<script type="text/javascript">
+		$(function() {
+			// jQuery formatCurrency plugin: http://plugins.jquery.com/project/formatCurrency
+
+			// Format while typing & warn on decimals entered, 2 decimal places
+			$('#suma_tarjeta').blur(function() {
+				 
+				$(this).formatCurrency({ colorize: true, negativeFormat: '-%s%n', roundToDecimalPlace: 2 });
+			})
+			.keyup(function(e) {
+				var e = window.event || e;
+				var keyUnicode = e.charCode || e.keyCode;
+				if (e !== undefined) {
+					switch (keyUnicode) {
+						case 16: break; // Shift
+						case 17: break; // Ctrl
+						case 18: break; // Alt
+						case 27: this.value = ''; break; // Esc: clear entry
+						case 35: break; // End
+						case 36: break; // Home
+						case 37: break; // cursor left
+						case 38: break; // cursor up
+						case 39: break; // cursor right
+						case 40: break; // cursor down
+						case 78: break; // N (Opera 9.63+ maps the "." from the number key section to the "N" key too!) (See: http://unixpapa.com/js/key.html search for ". Del")
+						case 110: break; // . number block (Opera 9.63+ maps the "." from the number block to the "N" key (78) !!!)
+						case 190: break; // .
+						default: $(this).formatCurrency({ colorize: true, negativeFormat: '-%s%n', roundToDecimalPlace: -1, eventOnDecimalsEntered: true });
+					}
+				}
+			})
+			.bind('decimalsEntered', function(e, cents) {
+				if (String(cents).length > 2) {
+					var errorMsg = 'Please do not enter any cents (0.' + cents + ')';
+					 
+					log('Event on decimals entered: ' + errorMsg);
+				}
+			});
+
+
+			 
+
+
+
+		});
+	</script>
 
 	<script>
 
@@ -94,15 +142,31 @@ echo" </pre> ";*/
 
 		function recalcular_cambio(){
 			/* calculo el cambio */
-		var sum_ef=$("#suma_efectivo").attr('acumulado');
-		var sum_ta=$("#suma_tarjeta").attr('acumulado');
+		//alert("Entro")
+		var sum_ef_sub=$("#suma_efectivo").val()
+		var sum_ef_sub2= sum_ef_sub.substr(0, sum_ef_sub.length-3)
+		var sum_ef= sum_ef_sub2.replace(",", "");
+
+		var sum_ta_sub=$("#suma_tarjeta").val()
+		var sum_ta_sub2= sum_ta_sub.substr(0, sum_ta_sub.length-3)
+		var sum_ta= sum_ta_sub2.replace(",", "");
+
+		if(sum_ef==''){
+			sum_ef=0;
+		}
+		if(sum_ta==''){
+			sum_ta=0;
+		}
+
+		console.log("sum_ef:"+sum_ef+" , sum_ta:"+sum_ta)
 
 		var valor_total_suma= parseInt(sum_ef)+parseInt(sum_ta);
 
 		var sumatoria_productos=$("#sumatoria_total").attr('val_sum');
 
 		var cambio= parseFloat(valor_total_suma)-parseFloat(sumatoria_productos);
-		
+			
+		//console.log("cambio:"+cambio)
 
 		if(cambio==0){
 
@@ -582,9 +646,11 @@ recalcular_cambio();
 
 			$("#suma_efectivo").html('$'+str2.toLocaleString());
 
+			
+
 		}else if( $("#div_tarjeta").hasClass('tipo_pago_check')){
 
-			var acumulado=$("#suma_tarjeta").attr('acumulado');
+			var acumulado=$("#suma_tarjeta").val();
 
 			console.log('acumulado_antes:'+acumulado)
 
@@ -750,48 +816,129 @@ recalcular_cambio();
 		
 	});
 
+	$(document).on("keyup", "#suma_efectivo", function(){
+
+		$(event.target).val(function (index, value ) {
+            return value.replace(/\D/g, "")
+                        .replace(/([0-9])([0-9]{2})$/, '$1.$2')
+                        .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+        });
+		recalcular_cambio();
+	});
+
+
+	/*$(document).on("keyup", "#suma_tarjeta", function(){
+
+		$(event.target).val(function (index, value ) {
+			return value.replace(/\D/g, "")
+						.replace(/([0-9])([0-9]{2})$/, '$1.$2')
+						.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+		});
+		recalcular_cambio();
+	});*/
+
+	/*$(document).on("focus", "#suma_tarjeta", function(){
+
+		//alert("Hola")
+
+		$(event.target).val(function (index, value ) {
+			return value.replace(/\D/g, "")
+						.replace(/([0-9])([0-9]{2})$/, '$1.$2')
+						.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+		});
+		recalcular_cambio();
+	});*/
+
+	$(document).on("focus", "#suma_efectivo", function(){
+
+		//alert("Hola")
+
+		$(event.target).val(function (index, value ) {
+			return value.replace(/\D/g, "")
+						.replace(/([0-9])([0-9]{2})$/, '$1.$2')
+						.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+		});
+		recalcular_cambio();
+	});
+	
+
 	$(document).on("click", "#div_efectivo", function(){
 
+		$("#suma_efectivo").removeAttr("readonly");
+		
 		var sumatoria_total =$("#sumatoria_total").attr('val_sum');
 
-		var suma_tarjeta=$("#suma_tarjeta").attr('acumulado');
+		//var suma_tarjeta=$("#suma_tarjeta").attr('acumulado');
+
+		var suma_tarjeta_sub=$("#suma_tarjeta").val();
+		var suma_tarjeta_sub2= suma_tarjeta_sub.substr(0, suma_tarjeta_sub.length-3)
+		var suma_tarjeta= suma_tarjeta_sub2.replace(",", "");
 
 		if(suma_tarjeta>0){
 			var valor_complementario= parseInt(sumatoria_total)-parseInt(suma_tarjeta);
 
 			if(valor_complementario<0){
 				valor_complementario=0;
+			}else{
+				valor_complementario=valor_complementario*100;
 			}
 
-			$("#suma_efectivo").html('$'+valor_complementario.toLocaleString());
-			$("#suma_efectivo").attr('acumulado',valor_complementario)
+			$("#suma_efectivo").val(valor_complementario)
+
+			$("#suma_efectivo").focus();
+
 			recalcular_cambio();
 		}else{
-
+			
 		}
 
 		$("#div_efectivo").addClass("tipo_pago_check");
 		$("#div_tarjeta").removeClass("tipo_pago_check");
 	});
 
+	function sleep (time) {
+		return new Promise((resolve) => setTimeout(resolve, time));
+	}
+
 
 	$(document).on("click", "#div_tarjeta", function(){
 
+		$("#suma_tarjeta").removeAttr("readonly");
+
 		var sumatoria_total =$("#sumatoria_total").attr('val_sum');
 
-		var suma_efectivo=$("#suma_efectivo").attr('acumulado');
+		var suma_efectivo_sub=$("#suma_efectivo").val();
+		var suma_efectivo_sub2= suma_efectivo_sub.substr(0, suma_efectivo_sub.length-3)
+		var suma_efectivo= suma_efectivo_sub2.replace(",", "");
+
+		if(suma_efectivo==''){
+			suma_efectivo=0;
+		}
 
 		if(suma_efectivo>0){
 			var valor_complementario= parseInt(sumatoria_total)-parseInt(suma_efectivo);
 
 			if(valor_complementario<0){
 				valor_complementario=0;
+			}else{
+				valor_complementario=valor_complementario*100;
 			}
-			$("#suma_tarjeta").html('$'+valor_complementario.toLocaleString());
-			$("#suma_tarjeta").attr('acumulado',valor_complementario)
+
+			$("#suma_tarjeta").val(valor_complementario);
+
+			sleep(1000).then(() => {
+				$("#suma_tarjeta").focus();
+			});
+
+			
+
+		
+
+			//$("#suma_tarjeta").html('$'+valor_complementario.toLocaleString());
+			//$("#suma_tarjeta").attr('acumulado',valor_complementario)
 			recalcular_cambio();
 		}else{
-
+			console.log("Por aqui es camilito")
 		}
 
 		$("#div_efectivo").removeClass("tipo_pago_check");
@@ -969,15 +1116,16 @@ recalcular_cambio();
 					<div class="panel3 sombra mt-3">
 						<div class="d-flex p-1 justify-content-between no-gutters">
 							<div class="col-lg-7 p-1">
-								<div style="background: #EEEEFF; border-radius: 10px;" class="p-1 pb-3" >
-
+								<div style="background: #EEEEFF; border-radius: 10px;" class="" >
+						
 									<div class="p-1 d-flex justify-content-between" style="cursor:pointer" class="metodo_pago" id="div_efectivo">
-										<div style="font-size: 12px;">Efectivo</div>
-										<div style="font-size: 16px;" id="suma_efectivo" acumulado="0">$0</div>
+										<div style="font-size: 12px;">Efectivo $<input type="numeric" id="suma_efectivo" class="campo" value="" readonly="readonly"></div>
+										
+										<!-- <div style="font-size: 16px;" id="suma_efectivo" acumulado="0">$0</div> -->
 									</div>
 									<div class="d-flex justify-content-between pt-3" style="cursor:pointer" class="metodo_pago" id="div_tarjeta">
-										<div style="font-size: 12px;">Tarjeta</div>
-										<div style="font-size: 16px;" id="suma_tarjeta" acumulado="0">$0</div>
+										<div style="font-size: 12px;">&nbsp;&nbsp;Tarjeta &nbsp;&nbsp;$<input type="numeric" class="campo" id="suma_tarjeta" value="" readonly="readonly" ></div>
+										<!-- <div style="font-size: 16px;" id="suma_tarjeta" acumulado="0">$0</div> -->
 									</div>
 
 									
@@ -991,7 +1139,7 @@ recalcular_cambio();
 								
 								<div class="text-right pt-5"><input type="button" style="width: 100%" value="PAGAR" id="pagar"></div>
 							</div>
-							<div class="col-lg-4">
+							<!-- <div class="col-lg-4">
 								<div class="row no-gutters">
 									<div class="p-1 col-4 text-center numeros" id="1"  style="cursor:pointer" ><img src="imagenes/1.jpg" width="100%" alt=""/></div>
 									<div class="p-1 col-4 text-center numeros" id="2" style="cursor:pointer"><img src="imagenes/2.jpg" width="100%" alt=""/></div>
@@ -1006,7 +1154,7 @@ recalcular_cambio();
 									<div class="p-1 col-4 text-center numeros" id="0" style="cursor:pointer"><img src="imagenes/0.jpg" width="100%" alt=""/></div>
 									<div class="p-1 col-4 text-center borrar_num" style="cursor:pointer"><img src="imagenes/del.jpg" width="100%" alt=""/></div>
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
@@ -1024,9 +1172,7 @@ recalcular_cambio();
 
 						
 					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
-					</div>
+					
 					</div>
 				</div>
 			</div>

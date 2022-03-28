@@ -4,7 +4,7 @@ function consultar_reserva(){
     var numero_documento=$("#numero_documento").val();
 
     $.ajax({        
-        url: "ajax/ajxRequest.php",
+        url: "ajax/ajxRequest2.php",
         data: { op: '21',tipo_identificacion:tipo_documento,numero_identificacion:numero_documento},
         dataType: 'json',
         async: false, 
@@ -32,11 +32,11 @@ function consultar_reserva(){
 
                     if(datos2['visitante']!=undefined){
 
-                        str_remp+='<img src="imagenes/chulito.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'" class="centrado pointer verVisitante" width="50" height="50" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
+                        str_remp+='<img src="imagenes/chulito.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'" edadInicial="'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+'" edadFinal="'+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+'" class="centrado pointer verVisitante" width="50" height="50" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
 
                     }else{
 
-                        str_remp+='<img src="imagenes/agregar.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'" class="centrado pointer agregar" width="70" height="70" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
+                        str_remp+='<img src="imagenes/agregar.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'"  edadInicial="'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+'" edadFinal="'+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+'" class="centrado pointer agregar" width="70" height="70" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
 
                     }
                 });
@@ -76,16 +76,23 @@ function registrarBoleta(){
     var tipo_documento= $("#tipo_documentoR").val();
     var numero_documento=$("#numero_documentoR").val();
     var fecha_nacimiento=$("#fecha_nacimientoR").val();
+    var altura=$("#alturaR").val();
+    if(nombre!='' && apellido!='' && fecha_nacimiento!='' && altura>0 ){
 
-    if(nombre!='' && apellido!=''){
+
+        if(altura>0 && altura<=270){
+            
+        }else{
+            alert("La altura ingresada no es valida!")
+        }
 
        // alert("Ingresaste: nombre:"+nombre+" , apellido:"+apellido+" , tipo_documento:"+tipo_documento+" , numero_documento:"+numero_documento+" , fecha_nacimiento:"+fecha_nacimiento);
 
 
 
         $.ajax({        
-            url: "ajax/ajxRequest.php",
-            data: { op: '22',tipo_identificacion:tipo_documento,numero_identificacion:numero_documento,nombre:nombre,apellido:apellido,fecha_nacimiento:fecha_nacimiento,idreserva:idreserva,idboleta:idboleta},
+            url: "ajax/ajxRequest2.php",
+            data: { op: '22',tipo_identificacion:tipo_documento,numero_identificacion:numero_documento,nombre:nombre,apellido:apellido,fecha_nacimiento:fecha_nacimiento,idreserva:idreserva,idboleta:idboleta,altura:altura},
             dataType: 'json',
             async: false, 
             type: 'POST',
@@ -109,7 +116,7 @@ function registrarBoleta(){
 
 
     }else{
-        alert("Nombre , apellido y fecha nacimiento son obligatorios!!");
+        alert("Nombre , apellido , fecha nacimiento y altura son obligatorios!!");
         return(false);
     }
 }
@@ -149,6 +156,8 @@ function visitante(){
                              $("#numero_documentoV").attr('readonly', true);
                              $("#fecha_nacimientoV").val(datos2['visitante']['fechaNacimiento']);
                              $("#fecha_nacimientoV").attr('readonly', true);
+                             $("#alturaV").val(datos2['visitante']['estaturaCm']);
+                             $("#alturaV").attr('readonly', true);
 
                         }
 
@@ -169,5 +178,32 @@ function visitante(){
             }        
         });
     }
+
+}
+
+function validar_fecha(edadInicial,edadFinal,fecha_nacimiento){
+
+
+
+
+    $.ajax({        
+        url: "ajax/ajxRequest2.php",
+        data: { op: '24',edadInicial:edadInicial,edadFinal:edadFinal,fecha_nacimiento:fecha_nacimiento},
+        dataType: 'json',
+        async: false, 
+        type: 'POST',
+        //async: false,
+        success: function(r2) { 
+            console.log(r2)
+
+            if(r2.sts == 'OK'){
+                $("#alertaFechaNacimiento").html("Edad aplica para el pasaporte!")
+                $("#registrar").show();
+            }else{
+                $("#alertaFechaNacimiento").html('<h3 style="color:#FF0000";>'+r2.resultado+'</h3>');
+                $("#registrar").hide();
+            }
+        }        
+    });
 
 }

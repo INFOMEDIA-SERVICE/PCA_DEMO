@@ -169,9 +169,13 @@ echo" </pre> ";*/
         
 		var idreserva=$(this).attr('idreserva');
 		var idboleta =$(this).attr('idboleta');
+		var edadInicial=$(this).attr('edadInicial');
+		var edadFinal=$(this).attr('edadFinal');
 
 		$("#idreservaR").val(idreserva);
 		$("#idboletaR").val(idboleta);
+		$("#edadInicialR").val(edadInicial);
+		$("#edadFinalR").val(edadFinal);
 		 
 		//alert("idreserva:"+idreserva+" , idboleta:"+idboleta);
 		$("#miModal").modal("show");
@@ -202,7 +206,13 @@ echo" </pre> ";*/
 
 
 	$(document).on("blur", "#fecha_nacimientoR", function(){
-		alert($(this).val())
+
+		var fecha_nacimiento=$(this).val()
+		var edadInicial=$("#edadInicialR").val();
+		var edadFinal=$("#edadFinalR").val();
+
+	//	alert("edadInicial:"+edadInicial+" , edadFinal:"+edadFinal+" , fecha_nacimiento:"+fecha_nacimiento)
+		validar_fecha(edadInicial,edadFinal,fecha_nacimiento)
 	});
 
 	
@@ -242,6 +252,9 @@ echo" </pre> ";*/
 	});*/
 
 
+	$('.solo-numero').keyup(function (){
+        this.value = (this.value + '').replace(/[^0-9]/g, '');
+    });
 
 
 	window.onload = function () {
@@ -404,14 +417,20 @@ echo" </pre> ";*/
 						
 					</div>
 					<div class="form-group">
-						<label for="apellidoR"*>Apellidos:</label>
+						<label for="apellidoR">Apellidos:*</label>
 						<input type="email" class="form-control" id="apellidoR" aria-describedby="emailHelp" placeholder="Apellidos">
 						
 					</div>
 
 					<div class="form-group">
 						<label for="fecha_nacimiento">Fecha Nacimiento:*</label>
-					<input type="date" id="fecha_nacimientoR" class="form-control" name="trip-start"  min="1920-01-01" >
+						<input type="date" id="fecha_nacimientoR" class="form-control" name="trip-start"  min="1920-01-01" >
+						<small id="alertaFechaNacimiento" class="form-text text-muted"></small>	
+					</div>
+					<div class="form-group">
+						<label for="apellidoR">Estatura:</label>
+						<input type="number"  class="form-control solo-numero" id="alturaR" aria-describedby="emailHelp" placeholder="Estatura (cm ej:150)">
+						
 					</div>
 
 					<div class="form-group">
@@ -435,6 +454,8 @@ echo" </pre> ";*/
 
 					<input type="hidden" id="idreservaR" value="">
 					<input type="hidden" id="idboletaR" value="">
+					<input type="hidden" id="edadInicialR" value="">
+					<input type="hidden" id="edadFinalR" value="">
 					
 					<input type="button" onclick="registrarBoleta();" class="boton_campo" style="width: 100%" value="REGISTRAR" id="registrar">
 					</form>
@@ -487,6 +508,12 @@ echo" </pre> ";*/
 					<div class="form-group">
 						<label for="fecha_nacimientoV">Fecha Nacimiento:*</label>
 					<input type="email" id="fecha_nacimientoV" class="form-control"  >
+					</div>
+
+					<div class="form-group">
+						<label for="apellidoV">Estatura CM:</label>
+						<input type="number"  class="form-control solo-numero" id="alturaV" aria-describedby="emailHelp" placeholder="altura (cm ej:150)">
+						
 					</div>
 
 					<input type="hidden" id="idreservaV" value="">
