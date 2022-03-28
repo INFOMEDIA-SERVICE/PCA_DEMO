@@ -1,6 +1,6 @@
 //Variables Globales
 var myArray = new Array();
-var nRegistros;  
+var nRegistros;
 
   
 function cargar_datos(){
@@ -19,11 +19,12 @@ function cargar_datos(){
                     $.each(r2.resultado, function(m, n) {
                         //console.log(n);
                         //var img_ext = atracciones.imagenUrl;
-                        //var extension_img = img_ext.split('.'); // Saco la extensi髇 para guardarla en la BD
+                        //var extension_img = img_ext.split('.'); // Saco la extensi贸n para guardarla en la BD
                         //var ext_comilla = "'"+extension_img[1]+"'";
                         var atraccion_comilla = "'"+n.nombre+"'";
                         var idCheck = n.nombre+'-'+n.estado+'-'+n.id;
                         var btnEditar = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/edit.png" class="img-fluid title="Editar" onclick="upAtraccion('+ n.id +','+ atraccion_comilla +');"></a>' : '<img src="imagenes/edit.png" class="img-fluid title="Editar">';
+                        var btnCondicion = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/+.png" class="img-fluid title="Condiciones de acceso" onclick="abreModalCondicion('+ n.id +','+ atraccion_comilla +');"></a>' : '<img src="imagenes/+.png" class="img-fluid title="Agregar condiciones">';
                         var ver_imagen = '<img id="imagen' + n.id+'" src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="40" height="40" />';
                         str_remp += '<tr class="row py-3">' +
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2">'+ btnEditar +'</div></td>'+
@@ -36,15 +37,44 @@ function cargar_datos(){
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.modificadoPor +'</h4></td>'+
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.fechaModificado +'</h4></td>'+
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.estado +'</h4></td>'+
-                                '<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2"><img src="imagenes/+.png"></div></td>'+										
+                                '<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2">'+ btnCondicion +'</div></td>'+										
                             '</tr>';				
                     });				             
                     $("#tbody_atraccion").html(str_remp); 
-                    restaurar_paginacion('myPager');
-                    //$("myPager").html("");
-                    //document.myPager.innerHTML = ""; 
+                    restaurar_paginacion('myPager');                     
                     $('#tbody_atraccion').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:20});
 
+                }else{
+                    console.log(r2.resultado.status);
+                }                                            
+               
+            }
+        }        
+    });    
+}
+//
+function cargar_datos_ac(id){    
+    $.ajax({        
+        url: "ajax/ajxRequest.php",
+        data: { op: '25', id: id},
+        dataType: 'json',
+        type: 'POST',
+        //async: false,
+        success: function(r2) {            
+            if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA
+                var str_remp = "";                
+                if(typeof r2.resultado.status === 'undefined'){                                  
+                    var str_remp;
+                    $.each(r2.resultado[0]['condicionesAcceso'], function(m, n) {                        
+                        var atraccion_comilla = "'"+n.nombre+"'";
+                        var btnCondicion = '<a href="javascript:;"><img src="imagenes/trash.jpg" class="img-fluid title="Condiciones de acceso" onclick="abreBorarModalCondicion('+ n.id +','+ atraccion_comilla +');"></a>';
+                        str_remp += '<tr class="row py-3">' +
+                                '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.id +'</h4></td>'+
+                                '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.nombre +'</h4></td>'+
+                                '<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2">'+ btnCondicion +'</div></td>'+                                       
+                            '</tr>';                
+                    });                          
+                    $("#tbody_atraccion_condicion").html(str_remp);
                 }else{
                     console.log(r2.resultado.status);
                 }                                            
@@ -86,6 +116,19 @@ function abreModalActiDesactivaatraccion(){
     $('#estadoModalAtraccion ').modal('show'); // abrir modal actualizar estado atraccion    		
 }
 //
+function abreModalCondicion(id_con, nombre_con){
+    $("#txtIdAtraccion_condicion").val(id_con);
+    $("#txtAtraccion_condicion").val(nombre_con);
+    cargar_datos_ac(id_con);
+    $('#condicionModalAcceso').modal('show'); // abrir modal actualizar estado atraccion 
+}
+//
+function abreBorarModalCondicion(id, nombre){
+    $("#txtBorrarAC").val(id);
+    $("#del_ca").html("Est&aacute; seguro de Eliminar la condicion de acceso: "+nombre+" ?"); 
+    $('#BorrarModalAtraccion_condicion').modal('show'); // abrir modal borrar condicion de la atraccion 
+}
+//
 function upAtraccion(id_u, nombre_u, ext_img){
     limpiarGuardar('txtupAtraccion', 'file2', 'result2', 'img2');
     var ximagen = "imagen"+id_u;
@@ -98,13 +141,13 @@ function upAtraccion(id_u, nombre_u, ext_img){
     $('#upModalAtraccion').modal('show'); // abrir modal  
 } 
 //
-function openImage() { //Esta funci髇 validar韆 una im醙en  
+function openImage() { //Esta funci贸n validar铆a una im谩gen  
     try{			
         var input = this;
         var file = input.files[0];
         var fileName = input.value;
         var maxSize = 1048576; //bytes
-        var extensions = new RegExp(/.jpg|.jpeg|.png/i); //Extensiones v醠idas
+        var extensions = new RegExp(/.jpg|.jpeg|.png/i); //Extensiones v谩lidas
         console.log(file.size);
         var error = {
             state: false,
@@ -208,7 +251,7 @@ function openImage2() { //Esta funcion validara una imagen
     if(nombre != '' && value.size != 0){
         let img_ext = value.name;
         img_ext = img_ext.toUpperCase(); 
-        var extension_img = img_ext.split('.'); // Saco la extensi髇 para guardarla en la BD
+        var extension_img = img_ext.split('.'); // Saco la extensi贸n para guardarla en la BD
         //
         adicionarAtracciones(nombre, extension_img[1]);
     }else{
@@ -219,7 +262,6 @@ function openImage2() { //Esta funcion validara una imagen
 function adicionarAtracciones(nombre, ext){
     let str_base64 = document.getElementById("img").src;
     let imagen = (ext == 'JPG') ? str_base64.substring(23) : str_base64.substring(22);
-    console.log(str_base64);
     //
     $.ajax({        
         url: "ajax/ajxRequest.php",
@@ -252,7 +294,7 @@ function adicionarAtracciones(nombre, ext){
             console.log("base64");////////////////////////////
             var imagen_a = document.getElementById("file2").files[0];
             let img_ext = imagen_a.name;
-            var extension_img = img_ext.split('.'); // Saco la extensi髇 para guardarla en la BD 
+            var extension_img = img_ext.split('.'); // Saco la extensi贸n para guardarla en la BD 
             //						
             actualizarAtracciones(id_a,nombre_a, extension_img[1], imagen[1]);
         }else{
@@ -289,6 +331,62 @@ function btnADAtraccion(){
     } 
 }
 //
+function btnAddAtraccion_condicion(){
+    var id_condicion = $('#condicion_mostrar').val();
+    var id_atraccion = $('#txtIdAtraccion_condicion').val();
+    if(id_condicion != 0){     
+        $.ajax({         
+            url: "ajax/ajxRequest.php",
+            data: { op: '24', id_con: id_condicion, id_atra: id_atraccion },
+            dataType: 'json',
+            type: 'POST',
+            //async: false,
+            success: function(r) { 
+                console.log(r);           
+                if (r.sts == 'OK') {
+                    alert('Actualizado');
+                    var id = $("#txtIdAtraccion_condicion").val();
+                    cargar_datos_ac(id);                    
+                }else if(r.sts == 'RPT'){
+                    alert('La condicion est&aacute; agregada');                            
+                }else{
+                    alert('Error al actualizar');
+                }
+            }        
+        }); 
+    }else{
+        alert('No ha seleccionado ninguna condici\u00F3n');
+    } 
+}
+//
+function btnDelAtraccion_condicion(){
+    console.log('elimiar');
+    var id_del_condicion = $('#txtBorrarAC').val();
+    var id_del_atraccion = $('#txtIdAtraccion_condicion').val();
+    if(id_del_condicion != 0){     
+        $.ajax({         
+            url: "ajax/ajxRequest.php",
+            data: { op: '26', id_del_con: id_del_condicion, id_del_atra: id_del_atraccion },
+            dataType: 'json',
+            type: 'POST',
+            //async: false,
+            success: function(r) { 
+                console.log(r);           
+                if (r.sts == 'OK') {
+                    alert('Eliminado');
+                    $('#BorrarModalAtraccion_condicion').modal('hide'); // se oculta modal
+                    var id = $("#txtIdAtraccion_condicion").val();
+                    cargar_datos_ac(id);
+                }else{
+                    alert('Error al actualizar');
+                }
+            }        
+        }); 
+    }else{
+        alert('No ha seleccionado ninguna condici\u00F3n');
+    } 
+}
+//
 $('#btnDesactivarAtraccion').click(function(){
     var id_d = $("#txtDelIdAtraccion").val();
     if(id_d == '' || id_d == null || typeof id_d == 'undefined'){
@@ -313,9 +411,8 @@ function limpiarGuardar(txt, fil, resul, imagen){
     $(txt).val(''); // Limpia campo nombre atraccion
     $(fil).val(''); //
     document.getElementById(resul).innerHTML = "Esperando archivo...";
-    document.getElementById(imagen).value = null;
-    $('#img').val("")
-    document.getElementById(imagen).src = "";
+    document.getElementById(imagen).value = "Sin_imagen.png";
+    document.getElementById(imagen).src = "imagenes/Sin_imagen.png";    
 }
 //
 function actualizarAtracciones(id, nombre, ext, base64){

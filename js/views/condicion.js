@@ -16,15 +16,17 @@ function cargar_datos_condicion(){
                 if(typeof r2.resultado.status === 'undefined'){
                     console.log('CORRECTO 200');                
                     var str_remp;
+                    var option = '<option value="0">Seleccione una condicion</option>';
                     $.each(r2.resultado, function(m, n) {
                         //console.log(n);
                         //var img_ext = atracciones.imagenUrl;
                         //var extension_img = img_ext.split('.'); // Saco la extensión para guardarla en la BD
                         //var ext_comilla = "'"+extension_img[1]+"'";
+                        option += '<option value="' + n.id + '">' + n.nombre + '</option>';
                         var atraccion_comilla = "'"+n.nombre+"'";
                         var idCheck = n.nombre+'-'+n.estado+'-'+n.id;
                         var btnEditar = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/edit.png" class="img-fluid title="Editar" onclick="upCacceso('+ n.id +','+ atraccion_comilla +');"></a>' : '<img src="imagenes/edit.png" class="img-fluid title="Editar">';
-                        var ver_imagen = '<img id="imagen' + n.id+'" src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="40" height="40" />';
+                        var ver_imagen = '<img id="imagenc' + n.id+'" src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="40" height="40" />';
                         str_remp += '<tr class="row py-3">' +
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2">'+ btnEditar +'</div></td>'+
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4><input type="checkbox" name="'+idCheck+'"></h4></td>'+
@@ -38,7 +40,8 @@ function cargar_datos_condicion(){
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.estado +'</h4></td>'+                                									
                             '</tr>';				
                     });				             
-                    $("#tbody_cacceso").html(str_remp); 
+                    $("#tbody_cacceso").html(str_remp);
+                    $('#condicion_mostrar').html(option); 
                     restaurar_paginacion('myPager2');
                     $('#tbody_cacceso').pageMe({pagerSelector:'#myPager2',showPrevNext:true,hidePageNumbers:false,perPage:20});
 
@@ -52,7 +55,8 @@ function cargar_datos_condicion(){
 }
 //
 function abreModalcacceso(){
-    $('#addModalCacceso').modal('show'); // abrir modal agregar atraccion 
+    limpiarGuardarC('txtAddCacceso', 'file_condicion', 'result_condicion', 'img_condicion');
+    $('#addModalCacceso').modal('show'); // abrir modal agregar condición de acceso 
 } 
 //
 function abreModalActiDesactivacacceso(){ 
@@ -81,17 +85,17 @@ function abreModalActiDesactivacacceso(){
 }
 //
 function upCacceso(id_u, nombre_u, ext_img){
-    var ximagen = "imagen"+id_u;
+    var ximagen = "imagenc"+id_u;
     g_ext = ext_img;
-    console.log(g_ext);
-    document.getElementById("img2").src = $("#"+ximagen).attr('src');
+    console.log(id_u+' - '+ximagen);
+    document.getElementById("img2_condicion").src = $("#"+ximagen).attr('src');
     console.log(ximagen);			
     $("#txtupIdCacceso").val(id_u);
     $("#txtupCacceso").val(nombre_u);
     $('#upModalCacceso').modal('show'); // abrir modal  
 } 
 //
-function openImage() { //Esta función validaría una imágen  
+function openImage_condicion() { //Esta función validaría una imágen  
     try{			
         var input = this;
         var file = input.files[0];
@@ -120,21 +124,21 @@ function openImage() { //Esta función validaría una imágen
             }  
             if(error.state) {
                 input.value = '';
-                document.getElementById("result").innerHTML = error.msg;
+                document.getElementById("result_condicion").innerHTML = error.msg;
                 return;
             }else{
                 if(file.size > 0){
-                    document.getElementById("result").innerHTML = "El archivo es v&aacute;lido";
+                    document.getElementById("result_condicion").innerHTML = "El archivo es v&aacute;lido";
                     //
                     var reader = new FileReader();  
                     reader.onload = function(e) {
-                        document.getElementById("img").src = e.target.result;
+                        document.getElementById("img_condicion").src = e.target.result;
                         console.log();
                     }
                     reader.readAsDataURL(this.files[0]);
                 }else{
-                    document.getElementById("result").innerHTML = "El archivo est&aacute; da&ntilde;ado";
-                    document.getElementById("img").src = "";
+                    document.getElementById("result_condicion").innerHTML = "El archivo est&aacute; da&ntilde;ado";
+                    document.getElementById("img_condicion").src = "";
                 }
             }								
         }
@@ -143,7 +147,7 @@ function openImage() { //Esta función validaría una imágen
     }
 }	
 //
-function openImage2() { //Esta funcion validara una imagen  
+function openImage2_condicion() { //Esta funcion validara una imagen  
     try{
         console.log("Opem2");			
         var input = this;
@@ -172,20 +176,20 @@ function openImage2() { //Esta funcion validara una imagen
             }  
             if(error.state) {
                 input.value = '';
-                //document.getElementById(resultado).innerHTML = error.msg;
+                document.getElementById("result2_condicion").innerHTML = error.msg;
                 return;
             }else{
                 if(file.size > 0){
-                    document.getElementById("result2").innerHTML = "El archivo es valido";
+                    document.getElementById("result2_condicion").innerHTML = "El archivo es valido";
                     //
                     var reader = new FileReader();  
                     reader.onload = function(e) {
-                        document.getElementById("img2").src = e.target.result;							
+                        document.getElementById("img2_condicion").src = e.target.result;							
                     }
                     reader.readAsDataURL(this.files[0]);
                 }else{
-                    document.getElementById("result2").innerHTML = "El archivo esta danado";
-                    document.getElementById("img2").src = "";
+                    document.getElementById("result2_condicion").innerHTML = "El archivo esta danado";
+                    document.getElementById("img2_condicion").src = "";
                 }
             }								
         }
@@ -210,9 +214,9 @@ function openImage2() { //Esta funcion validara una imagen
 });*/
 //
 function adicionarCacceso(nombre, ext){
-    let str_base64 = document.getElementById("img").src;
-    let imagen = str_base64.substring(23);
-    //console.log(imagen);
+    let str_base64 = document.getElementById("img_condicion").src;
+    let imagen = (ext == 'JPG') ? str_base64.substring(23) : str_base64.substring(22);
+    //
     $.ajax({        
         url: "ajax/ajxRequest.php",
         data: { op: '19', nombre: nombre, imagen: imagen, extension: ext },
@@ -224,7 +228,7 @@ function adicionarCacceso(nombre, ext){
             if (r.sts == 'OK') {
                 //alert('Guardo');
                 $('#addModalCacceso').modal('hide'); // oculta modal agregar atraccion
-                limpiarGuardar();
+                limpiarGuardarC('txtAddCacceso', 'file_condicion', 'result_condicion', 'img_condicion');
 				cargar_datos_condicion();              
             }else{
                 alert('Error al guardar');
@@ -276,13 +280,14 @@ $('#btnActivarAtraccion').click(function(){
     }		
 });
 //
-function limpiarGuardar(){
-    $('#txtAddCacceso').val(''); // Limpia campo nombre atraccion
-    $('#file').val(''); //
-    document.getElementById("result").innerHTML = "Esperando archivo...";
-    document.getElementById("img").value = null;
-    $('#img').val("")
-    document.getElementById("img").src = "";
+function limpiarGuardarC(txt, fil, resul, imagen){
+    txt = '#'+txt;
+    fil = '#'+fil;
+    $(txt).val(''); // Limpia campo nombre atraccion
+    $(fil).val(''); //
+    document.getElementById(resul).innerHTML = "Esperando archivo...";
+    document.getElementById(imagen).value = "Sin_imagen.png";
+    document.getElementById(imagen).src = "imagenes/Sin_imagen.png";    
 }
 //
 function actualizarCacceso(id, nombre, ext, base64){

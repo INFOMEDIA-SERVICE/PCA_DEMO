@@ -131,7 +131,7 @@
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h2 class="modal-title">Adicionar atracciones</h2>
+							<h2 class="modal-title">Adicionar condici&oacute;n acceso</h2>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
@@ -173,11 +173,11 @@
 								<div class="col-10"><input type="text" id="txtupCacceso" style="background: #fff; border:1px solid #BEBEBE; border-radius: 10px"></div>                            
 							</div>
 							<div class="mb-3">						
-								<input type="file" id="file2" accept=".jpg,.png" />
+								<input type="file" id="file2_condicion" accept=".jpg,.png" />
 								<br>
 								<div id="result2">El archivo es valido</div>
 								<br>
-								<img id="img2" width="400" height="260" />
+								<img id="img2_condicion" width="400" height="260" />
 							</div>
 						</div>
 						<div class="modal-footer">					
@@ -226,9 +226,9 @@
 				cargar_datos_condicion();
 			});
 			//
-			document.getElementById("file").addEventListener("change",openImage,false); //Anadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo  
+			document.getElementById("file_condicion").addEventListener("change",openImage,false); //Anadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo  
 			//
-			document.getElementById("file2").addEventListener("change",openImage2,false); //Anadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo al actualizar 
+			document.getElementById("file2_condicion").addEventListener("change",openImage2,false); //Anadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo al actualizar 
 			//
 			$('#btnGuardarCacceso').click(function(){
 				//Toma el archivo elegido por el input 
@@ -252,7 +252,7 @@
 				var nombre_a = $("#txtupCacceso").val();	
 				//
 				if(nombre_a != '' && imagen_a != '' && r_imagen == 'El archivo es valido'){
-					let str_base64 = document.getElementById("img2").src;
+					let str_base64 = document.getElementById("img2_condicion").src;
 					let imagen = str_base64.split(',');			
 					if(imagen[0] == "data:image/jpeg;base64"){
 						console.log("base64");////////////////////////////
