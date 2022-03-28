@@ -82,56 +82,8 @@ echo" </pre> ";*/
 	<script src="js/popper.min.js"></script> 
 	<script src="js/bootstrap-4.4.1.js"></script>
 	<script src="js/funciones.js"></script>
-	<script src="https://jquery-formatcurrency.googlecode.com/files/jquery.formatCurrency-1.4.0.min.js"></script>
 
 	<script src="js/views/taquilla.js"></script>
-
-	<script type="text/javascript">
-		$(function() {
-			// jQuery formatCurrency plugin: http://plugins.jquery.com/project/formatCurrency
-
-			// Format while typing & warn on decimals entered, 2 decimal places
-			$('#suma_tarjeta').blur(function() {
-				 
-				$(this).formatCurrency({ colorize: true, negativeFormat: '-%s%n', roundToDecimalPlace: 2 });
-			})
-			.keyup(function(e) {
-				var e = window.event || e;
-				var keyUnicode = e.charCode || e.keyCode;
-				if (e !== undefined) {
-					switch (keyUnicode) {
-						case 16: break; // Shift
-						case 17: break; // Ctrl
-						case 18: break; // Alt
-						case 27: this.value = ''; break; // Esc: clear entry
-						case 35: break; // End
-						case 36: break; // Home
-						case 37: break; // cursor left
-						case 38: break; // cursor up
-						case 39: break; // cursor right
-						case 40: break; // cursor down
-						case 78: break; // N (Opera 9.63+ maps the "." from the number key section to the "N" key too!) (See: http://unixpapa.com/js/key.html search for ". Del")
-						case 110: break; // . number block (Opera 9.63+ maps the "." from the number block to the "N" key (78) !!!)
-						case 190: break; // .
-						default: $(this).formatCurrency({ colorize: true, negativeFormat: '-%s%n', roundToDecimalPlace: -1, eventOnDecimalsEntered: true });
-					}
-				}
-			})
-			.bind('decimalsEntered', function(e, cents) {
-				if (String(cents).length > 2) {
-					var errorMsg = 'Please do not enter any cents (0.' + cents + ')';
-					 
-					log('Event on decimals entered: ' + errorMsg);
-				}
-			});
-
-
-			 
-
-
-
-		});
-	</script>
 
 	<script>
 
@@ -145,11 +97,13 @@ echo" </pre> ";*/
 		//alert("Entro")
 		var sum_ef_sub=$("#suma_efectivo").val()
 		var sum_ef_sub2= sum_ef_sub.substr(0, sum_ef_sub.length-3)
-		var sum_ef= sum_ef_sub2.replace(",", "");
+		var sum_ef_sub3=sum_ef_sub2.replace(",", "");
+		var sum_ef= sum_ef_sub3.replace(",", "");
 
 		var sum_ta_sub=$("#suma_tarjeta").val()
 		var sum_ta_sub2= sum_ta_sub.substr(0, sum_ta_sub.length-3)
-		var sum_ta= sum_ta_sub2.replace(",", "");
+		var sum_ta_sub3=sum_ta_sub2.replace(",", "");
+		var sum_ta= sum_ta_sub3.replace(",", "");
 
 		if(sum_ef==''){
 			sum_ef=0;
@@ -827,7 +781,7 @@ recalcular_cambio();
 	});
 
 
-	/*$(document).on("keyup", "#suma_tarjeta", function(){
+	$(document).on("keyup", "#suma_tarjeta", function(){
 
 		$(event.target).val(function (index, value ) {
 			return value.replace(/\D/g, "")
@@ -835,9 +789,9 @@ recalcular_cambio();
 						.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
 		});
 		recalcular_cambio();
-	});*/
+	});
 
-	/*$(document).on("focus", "#suma_tarjeta", function(){
+	$(document).on("focus", "#suma_tarjeta", function(){
 
 		//alert("Hola")
 
@@ -847,7 +801,7 @@ recalcular_cambio();
 						.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
 		});
 		recalcular_cambio();
-	});*/
+	});
 
 	$(document).on("focus", "#suma_efectivo", function(){
 
@@ -860,6 +814,10 @@ recalcular_cambio();
 		});
 		recalcular_cambio();
 	});
+
+	function sleep (time) {
+		return new Promise((resolve) => setTimeout(resolve, time));
+	}
 	
 
 	$(document).on("click", "#div_efectivo", function(){
@@ -872,7 +830,8 @@ recalcular_cambio();
 
 		var suma_tarjeta_sub=$("#suma_tarjeta").val();
 		var suma_tarjeta_sub2= suma_tarjeta_sub.substr(0, suma_tarjeta_sub.length-3)
-		var suma_tarjeta= suma_tarjeta_sub2.replace(",", "");
+		var suma_tarjeta_sub3=suma_tarjeta_sub2.replace(",", "");
+		var suma_tarjeta= suma_tarjeta_sub3.replace(",", "");
 
 		if(suma_tarjeta>0){
 			var valor_complementario= parseInt(sumatoria_total)-parseInt(suma_tarjeta);
@@ -884,7 +843,7 @@ recalcular_cambio();
 			}
 
 			$("#suma_efectivo").val(valor_complementario)
-
+			$("#suma_efectivo").blur();
 			$("#suma_efectivo").focus();
 
 			recalcular_cambio();
@@ -896,9 +855,7 @@ recalcular_cambio();
 		$("#div_tarjeta").removeClass("tipo_pago_check");
 	});
 
-	function sleep (time) {
-		return new Promise((resolve) => setTimeout(resolve, time));
-	}
+	
 
 
 	$(document).on("click", "#div_tarjeta", function(){
@@ -909,7 +866,8 @@ recalcular_cambio();
 
 		var suma_efectivo_sub=$("#suma_efectivo").val();
 		var suma_efectivo_sub2= suma_efectivo_sub.substr(0, suma_efectivo_sub.length-3)
-		var suma_efectivo= suma_efectivo_sub2.replace(",", "");
+		var suma_efectivo_sub3=suma_efectivo_sub2.replace(",", "");
+		var suma_efectivo= suma_efectivo_sub3.replace(",", "");
 
 		if(suma_efectivo==''){
 			suma_efectivo=0;
@@ -925,10 +883,11 @@ recalcular_cambio();
 			}
 
 			$("#suma_tarjeta").val(valor_complementario);
+			$("#suma_tarjeta").blur();
 
-			sleep(1000).then(() => {
+			//sleep(300).then(() => {
 				$("#suma_tarjeta").focus();
-			});
+			//});
 
 			
 
