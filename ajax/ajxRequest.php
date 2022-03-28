@@ -27,7 +27,7 @@ session_start();
                 $url = 'http://20.44.111.223:80/api/boleteria/atraccion?incluirImagen=true';
                 //$rDatos = $atrac->cargarAtracciones($token);
                 $rDatos = $consumo->Get($url, $headers); 
-                
+                //print_r($rDatos);
                 if ($rDatos != '') {
                     echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
                 } else {                
@@ -542,6 +542,56 @@ session_start();
 
 
 
+        break;
+
+        case 24:
+            $id_co = addslashes($_POST['id_con']);
+            $id_at = addslashes($_POST['id_atra']);
+            //            
+            $array['idAtraccion'] = $id_at;
+            $array['idCondicionAcceso'] = $id_co;
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/atraccionCondicionAcceso';
+            $rGuardar = $consumo->Post($url, $headers, $array);
+            //
+            if($rGuardar->message == 'Se ha agregado la condicion de acceso'){
+                echo json_encode(['sts'=>'OK']); 
+            }else if($rGuardar->message == 'La atraccion ya tiene esta condicion de acceso'){
+                echo json_encode(['sts'=>'RPT']); 
+            }else{
+                echo json_encode(['sts'=>'NO']);
+            }
+        break;
+
+        case 25:
+            if ($token != '') {
+                $id_a = addslashes($_POST['id']);
+                $url = 'http://20.44.111.223:80/api/boleteria/atraccion?idAtraccion='.$id_a;
+                $rDatos = $consumo->Get($url, $headers); 
+                if ($rDatos != '') {
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO']);
+                }
+            } else {
+                die('Se produjo un Error al generar el Token');
+            }       
+        break;
+
+        case 26:
+            $id_co = addslashes($_POST['id_del_con']);
+            $id_at = addslashes($_POST['id_del_atra']);
+            //            
+            $array['idAtraccion'] = $id_at;
+            $array['idCondicionAcceso'] = $id_co;
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/atraccionCondicionAcceso';
+            $rEliminar = $consumo->Delete($url, $headers, $array);
+            if($rEliminar->message == 'Se ha removido la condicion de acceso'){
+                echo json_encode(['sts'=>'OK']); 
+            }else{
+                echo json_encode(['sts'=>'NO']);
+            }
         break;
 
         default:

@@ -214,7 +214,7 @@
 					</div>		  
 				</div>
 			</section>
-			<!--MODALES-->
+			<!--MODALES ATRACCIONES-->
 			<!--Modal agregar atracci&oacute;n-->
 			<div class="modal" id="addModalAtraccion" tabindex="-1" role="dialog">
 				<div class="modal-dialog modal-dialog-centered" role="document">
@@ -247,36 +247,6 @@
 					</div>
 				</div>
 			</div>
-			<!--Modal agregar atracci&oacute;n-->
-			<div class="modal" id="addModalCacceso" tabindex="-1" role="dialog">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h2 class="modal-title">Adicionar atracciones</h2>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body mx-auto">
-							<div class="row mb-4">
-								<div class="col-2 pt-2"><h4>Nombre atraccion</h4></div>
-								<div class="col-10"><input type="text" id="txtAddCacceso" style="background: #fff; border:1px solid #BEBEBE; border-radius: 10px"></div>
-							</div>					
-							<div class="mb-3">
-								<input type="file" id="file" accept=".jpg,.png"/>								
-								<br>
-								<div id="result"><h4>Esperando archivo...</h4></div>								
-								<br>
-								<img id="img" width="400" height="260"/>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<div class="px-3"><input type="button" id="btnGuardarCacceso" value="Guardar"></div>
-							<div><input type="button" data-dismiss="modal" value="Cerrar"></div>
-						</div>
-					</div>
-				</div>
-			</div>			
 			<!--Modal actualizar atracci&oacute;n-->
 			<div class="modal" id="upModalAtraccion" tabindex="-1" role="dialog">
 				<div class="modal-dialog" role="document">
@@ -310,39 +280,8 @@
 					</div>
 				</div>
 			</div>
-			<!--Modal actualizar condicion de acceso-->
-			<div class="modal" id="upModalCacceso" tabindex="-1" role="dialog">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h2 class="modal-title">Actualizar condici&oacute;n de acceso</h2>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body mx-auto">                        
-							<div class="row mb-4">
-								<input type="hidden"  id="txtupIdCacceso"> 
-								<div class="col-2 pt-2"><h4>Nombre condici&oacute;n acceso</h4></div>
-								<div class="col-10"><input type="text" id="txtupCacceso" style="background: #fff; border:1px solid #BEBEBE; border-radius: 10px"></div>                            
-							</div>
-							<div class="mb-3">						
-								<input type="file" id="file2" accept=".jpg,.png" />
-								<br>
-								<div id="result2">El archivo es valido</div>
-								<br>
-								<img id="img2" width="400" height="260" />
-							</div>
-						</div>
-						<div class="modal-footer">					
-							<div class="px-3"><input type="submit" id="btnActualizarCacceso" value="Editar"></div>
-							<div><input  type="button" data-dismiss="modal" value="Cerrar"></div>									
-						</div>
-					</div>
-				</div>
-			</div> 
 			<!--Modal Activar/Desactivar atracciones--><!--tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true"-->
-			<div class="modal" tabindex="-1" id="estadoModalAtraccion">
+			<div class="modal" id="estadoModalAtraccion" tabindex="-1">
 				<div class="modal-dialog">
 					<div class="modal-content">			
 					<!--<div class="modal-dialog modal-dialog-scrollable" role="document">-->
@@ -377,6 +316,173 @@
 					</div>
 				</div>
 			</div>
+			<!--Modal Condiciones de la Atracion-->
+			<div class="modal" id="condicionModalAcceso" tabindex="-1" style="overflow-y: scroll;">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">			
+					<!--<div class="modal-dialog modal-dialog-scrollable" role="document">-->
+						<div class="modal-content">
+						<div class="modal-header">
+							<input type="hidden"  id="txtIdAtraccion_condicion">
+							<h2 class="modal-title">Condiciones de las atracci&oacute;n</h2>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-sm-4">
+									<h4>Nombre atraccion</h4>
+									<input type="text" id="txtAtraccion_condicion" style="background: #fff; border:1px solid #BEBEBE; border-radius: 10px" disabled>
+								</div>
+  								<div class="col-sm-4">
+  									<h4>Condicion acceso</h4>
+  									<div class="caja">
+										<select type="text" name="condicion_mostrar" id="condicion_mostrar"></select>
+									</div>
+								</div>								
+								<div class="col-sm-4">
+									<br>
+									<input type="button" onclick="btnAddAtraccion_condicion();" value="Guardar">
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-sm-12">									
+									<table id="tabla_atraccion_condicion" class="table">
+										<thead>							  
+											<tr class="row ">
+												<th class="col-1 text-center"><h2>Id</h2></th>
+												<th class="col-1 text-center"><h2>Nombre</h2></th>
+												<th class="col-2 text-center"><h2>Eliminar</h2></th>																						
+											</tr>
+										</thead>
+										<tbody id="tbody_atraccion_condicion">
+											<!--Se llena la tabla-->
+										</tboby>	
+									</table>											
+								</div>
+							</div>													
+						</div>			
+						<div class="modal-footer">							
+								<div class="px-3"></div>
+								<div><input type="button" data-dismiss="modal" value="Cerrar"></div>
+							</div>
+						</div>
+					<!--</div>-->
+					</div>
+				</div>
+			</div>
+			<!--Modal Borrar Condiciones de la atraccion-->
+			<div class="modal" id="BorrarModalAtraccion_condicion" tabindex="-1">
+				<div class="modal-dialog">
+					<div class="modal-content">			
+						<div class="modal-content">
+							<div class="modal-header">
+								<h2 class="modal-title">Eliminar condici&oacute;n atracci&oacute;n</h2>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+
+							<div class="modal-body">
+							<input type="hidden"  id="txtBorrarAC">						
+								<h3 id="del_ca"></h3>
+							</div>					
+							<div class="modal-footer">							
+								<div class="px-3"><input type="button" onclick="btnDelAtraccion_condicion();" value="Eliminar"></div><!--id="btnADAtraccion"--> 
+								<div><input type="button" data-dismiss="modal" value="Cerrar"></div>
+							</div>
+						</div>					
+					</div>
+				</div>
+			</div>
+			<!--MODALES CONDICIONES-->
+			<!--Modal agregar atracci&oacute;n-->
+			<div class="modal" id="addModalCacceso" tabindex="-1" role="dialog">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2 class="modal-title">Adicionar atracciones</h2>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body mx-auto">
+							<div class="row mb-4">
+								<div class="col-2 pt-2"><h4>Nombre condici&oacute;n acceso</h4></div>
+								<div class="col-10"><input type="text" id="txtAddCacceso" style="background: #fff; border:1px solid #BEBEBE; border-radius: 10px"></div>
+							</div>					
+							<div class="mb-3">
+								<input type="file" id="file_condicion" accept=".jpg,.png"/>								
+								<br>
+								<div id="result_condicion"><h4>Esperando archivo...</h4></div>								
+								<br>
+								<img id="img_condicion" width="400" height="260"/>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<div class="px-3"><input type="button" id="btnGuardarCacceso" value="Guardar"></div>
+							<div><input type="button" data-dismiss="modal" value="Cerrar"></div>
+						</div>
+					</div>
+				</div>
+			</div> 
+			<!--Modal actualizar condicion de acceso-->
+			<div class="modal" id="upModalCacceso" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2 class="modal-title">Actualizar condici&oacute;n de acceso</h2>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body mx-auto">                        
+							<div class="row mb-4">
+								<input type="hidden"  id="txtupIdCacceso"> 
+								<div class="col-2 pt-2"><h4>Nombre condici&oacute;n acceso</h4></div>
+								<div class="col-10"><input type="text" id="txtupCacceso" style="background: #fff; border:1px solid #BEBEBE; border-radius: 10px"></div>                            
+							</div>
+							<div class="mb-3">						
+								<input type="file" id="file2_condicion" accept=".jpg,.png" />
+								<br>
+								<div id="result2_condicion">El archivo es valido</div>
+								<br>
+								<img id="img2_condicion" width="400" height="260" />
+							</div>
+						</div>
+						<div class="modal-footer">					
+							<div class="px-3"><input type="submit" id="btnActualizarCacceso" value="Editar"></div>
+							<div><input  type="button" data-dismiss="modal" value="Cerrar"></div>									
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Modal Activar/Desactivar atracciones--><!--tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true"-->
+			<div class="modal" tabindex="-1" id="estadoModalCacceso">
+				<div class="modal-dialog">
+					<div class="modal-content">			
+					<!--<div class="modal-dialog modal-dialog-scrollable" role="document">-->
+						<div class="modal-content">
+						<div class="modal-header">
+							<h2 class="modal-title">Activar/Desactivar condiciones de acceso</h2>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">						
+							<h3 id="p_cant"></h3>
+						</div>					
+						<div class="modal-footer">							
+								<div class="px-3"><input type="button" onclick="btnADCacceso();" value="Guardar"></div><!--id="btnADCacceso"--> 
+								<div><input type="button" data-dismiss="modal" value="Cerrar"></div>
+							</div>
+						</div>
+					<!--</div>-->
+					</div>
+				</div>
+			</div>
 			<!--/////////////-->
 			<!---->			
 	  	</main>
@@ -389,28 +495,51 @@
 				$('#tbody_atraccion').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:Mostrar});				
 			});
 			//
+			var select_condicion = document.getElementById('nmostrar_cacceso');
+			select_condicion.addEventListener('change', function(){
+				restaurar_paginacion('myPager2');				
+				var selectedOption2 = this.options[select_condicion.selectedIndex];
+				var Mostrar2 = selectedOption2.text == 'Todos' ? 1000000 : selectedOption2.text;
+				$('#tbody_cacceso').pageMe({pagerSelector:'#myPager2',showPrevNext:true,hidePageNumbers:false,perPage:Mostrar2});
+			});
+			//		
 			$(document).ready(function(){
+				$('#panel_Cacceso').hide(); //muestro mediante id
 				cargar_datos();
-				cargar_datos_condicion();	
-				$('#panel_Cacceso').hide(); //muestro mediante id			
+				cargar_datos_condicion();
+				$('#condicion_mostrar').on('change', function (){
+			        console.log('pulso');
+			        var id = $("#txtIdAtraccion_condicion").val();
+			        cargar_datos_ac(id);
+			    });	
+							
 			});
 			//
 			document.getElementById("file").addEventListener("change",openImage,false); //Anadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo  
 			//
 			document.getElementById("file2").addEventListener("change",openImage2,false); //Anadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo al actualizar 
 			//
+			document.getElementById("file_condicion").addEventListener("change",openImage_condicion,false); //Anadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo  
+			//
+			document.getElementById("file2_condicion").addEventListener("change",openImage2_condicion,false); //Anadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo al actualizar 
+			//
 			$('#btnGuardarAtraccion').click(function(){
 				//Toma el archivo elegido por el input 
-				var value = document.getElementById("file").files[0];     
+				var value = document.getElementById("file").files[0];
+				var sin_imagen = document.getElementById("result").innerHTML;    
 				var nombre = $("#txtAddAtraccion").val();
-				if(nombre != '' && value.size != 0){
-					let img_ext = value.name;
-					img_ext = img_ext.toUpperCase(); 
-					var extension_img = img_ext.split('.'); // Saco la extension para guardarla en la BD
-					//
-					adicionarAtracciones(nombre, extension_img[1]);
+				if(nombre != ''){
+					if(sin_imagen != "Esperando archivo..."){
+						let img_ext = value.name;
+						img_ext = img_ext.toUpperCase(); 
+						var extension_img = img_ext.split('.'); // Saco la extension para guardarla en la BD
+						//
+						adicionarAtracciones(nombre, extension_img[1]);
+					}else{
+						alert('Escoga una imagen JPG o PNG');
+					}
 				}else{
-					alert('Llene todos los campos');
+					alert('Escriba el nombre de la Atraccion');
 				}		
 			});
 			//
@@ -419,7 +548,7 @@
 				var id_a = $("#txtupIdAtraccion").val();
 				var nombre_a = $("#txtupAtraccion").val();	
 				//
-				if(nombre_a != '' && imagen_a != '' && r_imagen == 'El archivo es válido'){
+				if(nombre_a != '' && imagen_a != ''){
 					let str_base64 = document.getElementById("img2").src;
 					let imagen = str_base64.split(',');	
 					console.log('IMAGEN: '+imagen[0]);		
@@ -472,6 +601,51 @@
 				}else if( $(this).hasClass("pes-act") ){				
 				}				
 			});
+			//
+			//<<<<<<<<<<<<<<<<<<<<<<<<<CONDICION ACCESO>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			//			
+			$('#btnGuardarCacceso').click(function(){
+				//Toma el archivo elegido por el input 
+				var value = document.getElementById("file_condicion").files[0];
+				var sin_imagen = document.getElementById("result_condicion").innerHTML;     
+				var nombre = $("#txtAddCacceso").val();
+				if(nombre != ''){
+					if(sin_imagen != "Esperando archivo..."){
+						let img_ext = value.name;
+						img_ext = img_ext.toUpperCase(); 
+						var extension_img = img_ext.split('.'); // Saco la extension para guardarla en la BD
+						//
+						adicionarCacceso(nombre, extension_img[1]);
+					}else{
+						alert('Escoga una imagen JPG o PNG');
+					}	
+				}else{
+					alert('Escriba el nombre de la Condicion acceso');
+				}		
+			});
+			//
+			$('#btnActualizarCacceso').click(function(){
+				var r_imagen = document.getElementById("result2").innerHTML;	
+				var id_a = $("#txtupIdCacceso").val();
+				var nombre_a = $("#txtupCacceso").val();	
+				//
+				if(nombre_a != '' && imagen_a != ''){
+					let str_base64 = document.getElementById("img2_condicion").src;
+					let imagen = str_base64.split(',');			
+					if(imagen[0] == "data:image/jpeg;base64" || imagen[0] == 'data:image/png;base64'){
+						var imagen_a = document.getElementById("file2_condicion").files[0];
+						let img_ext = imagen_a.name;
+						var extension_img = img_ext.split('.'); // Saco la extension para guardarla en la BD 
+						//						
+						actualizarCacceso(id_a,nombre_a, extension_img[1], imagen[1]);
+					}else{
+						actualizarCacceso2(id_a,nombre_a);
+					}		
+				}else{
+					alert('Llene todos los campos, para actualizar');
+				}		
+			});
+			//			
 			//			
 		</script>	
 	

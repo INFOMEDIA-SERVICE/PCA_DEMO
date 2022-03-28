@@ -64,6 +64,20 @@
             curl_close($ch);
                 
             return json_decode($result);    
-        }        
+        }
+        //
+        public function Delete($url, $headers, $array){
+            //Enviando DELETE
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($array));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+            $result = curl_exec($ch);
+            curl_close($ch);
+                
+            return json_decode($result);    
+        }                
     }
 ?>
