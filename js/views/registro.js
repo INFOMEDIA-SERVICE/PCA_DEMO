@@ -26,17 +26,17 @@ function consultar_reserva(){
 
                 $.each(datos['boletas'], function(index, datos2) {
 
-                    str_remp+=' <div class="sombra2 panel3_2 boleta-add"  style="margin-top: 12px;" >   <div class="pt-3 d-flex   pr-2 " style="justify-content: space-between">   <img src="http://20.44.111.223/api/contenido/imagen/' + datos2['tipoBoleta']['imagenId'] + '" width="120" height="90" style="border-radius:10px;"  alt=""> <div class="p-2 centrado"> <h2 class="pt-2">'+datos2['tipoBoleta']['nombre']+'</h2>  </div> <div class="p-2 centrado"><h2>'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+' - '+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+' Años </h2></div> <div class="p-2 centrado"> <h2>$'+datos2['tipoBoleta']['precio'].toLocaleString()+'</h2> </div>  <div class="p-2 centrado">'; 
+                    str_remp+=' <div class="sombra2 panel3_2 boleta-add"  style="margin-top: 12px;" >   <div class="pt-3 d-flex   pr-2 " style="justify-content: space-between">   <img src="http://20.44.111.223/api/contenido/imagen/' + datos2['tipoBoleta']['imagenId'] + '" width="120" height="90" style="border-radius:10px;"  alt=""> <div class="p-2 centrado"> <h2 class="pt-2">'+datos2['tipoBoleta']['nombre']+'</h2>  </div> <div class="p-2 centrado"><h2>'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+' - '+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+' Años </h2></div>  <div class="p-2 centrado"> <h2>'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMin']+' - '+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMax']+' CM </h2> </div>    <div class="p-2 centrado"> <h2>$'+datos2['tipoBoleta']['precio'].toLocaleString()+'</h2> </div>  <div class="p-2 centrado">'; 
                     
                     console.log(datos2['visitante']);
 
                     if(datos2['visitante']!=undefined){
 
-                        str_remp+='<img src="imagenes/chulito.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'" edadInicial="'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+'" edadFinal="'+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+'" class="centrado pointer verVisitante" width="50" height="50" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
+                        str_remp+='<img src="imagenes/chulito.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'" edadInicial="'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+'" edadFinal="'+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+'" estaturaCmMin="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMin']+'" estaturaCmMax="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMax']+'" class="centrado pointer verVisitante" width="50" height="50" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
 
                     }else{
 
-                        str_remp+='<img src="imagenes/agregar.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'"  edadInicial="'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+'" edadFinal="'+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+'" class="centrado pointer agregar" width="70" height="70" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
+                        str_remp+='<img src="imagenes/agregar.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'"  edadInicial="'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+'" edadFinal="'+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+'" estaturaCmMin="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMin']+'" estaturaCmMax="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMax']+'"  class="centrado pointer agregar" width="70" height="70" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
 
                     }
                 });
@@ -205,5 +205,19 @@ function validar_fecha(edadInicial,edadFinal,fecha_nacimiento){
             }
         }        
     });
+
+}
+
+
+function validar_estatura(altura,estaturaCmMin,estaturaCmMax){
+
+    if(altura>=estaturaCmMin && altura<=estaturaCmMax){
+        
+        $("#alertaEstatura").html("Estatura aplica para el pasaporte!")
+        $("#registrar").show();
+    }else{
+        $("#alertaEstatura").html('<h3 style="color:#FF0000";>La estatura esta fuera del rango permitido por el pasaporte!</h3>');
+        $("#registrar").hide();
+    }
 
 }

@@ -547,7 +547,7 @@ session_start();
 
         case 24:
 
-            if($edadInicial>0 && $edadFinal>0 && $fecha_nacimiento!=''){
+            if($edadInicial>=0 && $edadFinal>0 && $fecha_nacimiento!=''){
 
                 $fecha_actual=date("Y-m-d");
 
