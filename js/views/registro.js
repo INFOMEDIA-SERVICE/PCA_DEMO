@@ -32,11 +32,11 @@ function consultar_reserva(){
 
                     if(datos2['visitante']!=undefined){
 
-                        str_remp+='<img src="imagenes/chulito.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'" edadInicial="'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+'" edadFinal="'+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+'" estaturaCmMin="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMin']+'" estaturaCmMax="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMax']+'" class="centrado pointer verVisitante" width="50" height="50" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
+                        str_remp+='<b>Ver Visitante</b><img src="imagenes/chulito.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'" edadInicial="'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+'" edadFinal="'+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+'" estaturaCmMin="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMin']+'" estaturaCmMax="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMax']+'" class="centrado pointer verVisitante" width="50" height="50" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
 
                     }else{
 
-                        str_remp+='<img src="imagenes/agregar.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'"  edadInicial="'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+'" edadFinal="'+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+'" estaturaCmMin="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMin']+'" estaturaCmMax="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMax']+'"  class="centrado pointer agregar" width="70" height="70" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
+                        str_remp+='<b>Registar Visitante</b><img src="imagenes/agregar.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'"  edadInicial="'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+'" edadFinal="'+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+'" estaturaCmMin="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMin']+'" estaturaCmMax="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMax']+'"  class="centrado pointer agregar" width="70" height="70" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
 
                     }
                 });
@@ -211,7 +211,9 @@ function validar_fecha(edadInicial,edadFinal,fecha_nacimiento){
 
 function validar_estatura(altura,estaturaCmMin,estaturaCmMax){
 
-    if(altura>=estaturaCmMin && altura<=estaturaCmMax){
+    console.log("prueba dos: "+altura+">="+estaturaCmMin+" && "+altura+"<="+estaturaCmMax)
+
+    if( parseFloat(altura) >= parseFloat(estaturaCmMin) && parseFloat(altura) <= parseFloat(estaturaCmMax) ){
         
         $("#alertaEstatura").html("Estatura aplica para el pasaporte!")
         $("#registrar").show();

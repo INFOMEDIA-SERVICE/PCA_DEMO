@@ -24,6 +24,13 @@ echo" </pre> ";*/
 			padding: 0px !important;
 		}
 
+		.derecha {
+			margin: auto;
+			
+			text-align: right;
+			padding: 0px !important;
+		}
+
 		.cmn-divfloat {
 			position: fixed !important;
 			bottom: 45px;
@@ -236,7 +243,9 @@ echo" </pre> ";*/
 		var estaturaCmMin=$("#estaturaCmMinR").val();
 		var estaturaCmMax=$("#estaturaCmMaxR").val();
 
-		//	alert("edadInicial:"+edadInicial+" , edadFinal:"+edadFinal+" , fecha_nacimiento:"+fecha_nacimiento)
+		console.log("altura:"+altura+" , estaturaCmMin:"+estaturaCmMin+" , estaturaCmMax:"+estaturaCmMax)
+
+		//alert("edadInicial:"+edadInicial+" , edadFinal:"+edadFinal+" , fecha_nacimiento:"+fecha_nacimiento)
 		validar_estatura(altura,estaturaCmMin,estaturaCmMax)
 	});
 
@@ -280,6 +289,11 @@ echo" </pre> ";*/
 	$('.solo-numero').keyup(function (){
         this.value = (this.value + '').replace(/[^0-9]/g, '');
     });
+
+	$(document).on("click", "#restablecer", function(){
+		localStorage.clear();
+		location.reload();
+	});
 
 
 	window.onload = function () {
@@ -369,12 +383,16 @@ echo" </pre> ";*/
 			 	 
 				<div class="col-lg-10 pt-2 d-flex">
 				  <div class="panel3 sombra">
+
+				  	<div class="pr-2 derecha" > <a id="restablecer" href="#">Restablecer</a> </div>
                     
                     <div class=" pr-2 centrado" id="div_cliente" ><h1>Consultar Reserva Boletas </h1></div>
                         
                     
                         
                     <div class=" pr-2 centrado" id="div_fecha_reserva"> </div>
+
+					<div class=" pr-2 centrado" id="div_instrucciones"> </div>
 				  	
 				   
 					  <div class="row no-gutters pt-3" id="boletas">
@@ -467,6 +485,7 @@ echo" </pre> ";*/
 							<option value="CC" >Cedula Ciudadania</option>
 							<option value="CE">Cedula Estranjeria</option>
 							<option value="PAS">Pasaporte</option>
+							<option value="TI">Tarjeta de Identidad</option>
 						</select>
 						
 					</div>
@@ -524,6 +543,7 @@ echo" </pre> ";*/
 							<option value="CC" >Cedula Ciudadania</option>
 							<option value="CE">Cedula Estranjeria</option>
 							<option value="PAS">Pasaporte</option>
+							<option value="TI">Tarjeta de Identidad</option>
 						</select>
 						
 					</div>
