@@ -359,7 +359,16 @@ echo" </pre> ";*/
 	 });
 
 
+	 $(document).on("click", "#close2", function(){
 
+		$("#miModalPlaca").modal("hide");
+
+	});
+
+	function registrarPlaca(){
+		alert("Placa registrada con exito!")
+		$("#miModalPlaca").modal("hide");
+	}
 
 
 
@@ -474,6 +483,19 @@ $(document).on("click", ".boleta-add", function(){
 
 
  $(document).on("click", ".adicional-add", function(){
+
+
+	var idtipo_servicio=$(this).attr('idtipo_servicio');
+
+	if(idtipo_servicio==2){
+
+		$("#miModalPlaca").modal("show");
+
+		$("#placa").val('')
+
+	}
+
+
 
 var arr_recorrer= JSON.parse( localStorage.getItem('adicionales_nombres'));
 var indice=$(this).attr("idadicional")
@@ -1129,6 +1151,31 @@ recalcular_cambio();
 					<div class="modal-body" id="contenidoModal">
 						
 
+						
+					</div>
+					
+					</div>
+				</div>
+			</div>
+
+
+			<div id="miModalPlaca" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+					<!-- Contenido del modal -->
+					<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" id="close2" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body" id="contenidoModal">
+						
+					<div class="form-group">
+						<label for="placa">Placa:</label>
+						<input type="text"  class="form-control " id="placa" aria-describedby="emailHelp" placeholder="Placa (cm ej:SEJ-567)">
+
+						<small id="alertaEstatura" class="form-text text-muted"></small>	
+						
+						<input type="button" onclick="registrarPlaca();" class="boton_campo" style="width: 100%" value="REGISTRAR" id="registrarPlaca">
+					</div>
 						
 					</div>
 					
