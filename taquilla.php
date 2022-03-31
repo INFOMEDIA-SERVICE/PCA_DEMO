@@ -769,10 +769,25 @@ recalcular_cambio();
 		var email = $("#email").val()
 		var telefono=$("#telefono").val();
 
-		var suma_efectivo=$("#suma_efectivo").attr('acumulado');
-		var suma_tarjeta=$("#suma_tarjeta").attr('acumulado');
+		var suma_efectivo=$("#suma_efectivo").val();
+		var suma_tarjeta=$("#suma_tarjeta").val();
+
+		if(suma_efectivo==''){
+			suma_efectivo=0;
+		}
+
+		if(suma_tarjeta==''){
+			suma_tarjeta=0;
+		}
+
+		//alert("suma_efectivo:"+suma_efectivo+" , suma_tarjeta:"+suma_tarjeta)
 
 		var total_ingreso=parseInt(suma_efectivo)+parseInt(suma_tarjeta);
+
+
+
+		//alert("sumatoria:"+sumatoria_total+" , total_ingreso:*"+parseInt( total_ingreso) );
+		//return(false);
 
 		if(sumatoria_total==undefined || sumatoria_total==0  || total_ingreso<sumatoria_total ){
 			alert("Valor ingresado no coincide!");
