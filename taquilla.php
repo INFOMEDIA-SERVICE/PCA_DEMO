@@ -769,8 +769,16 @@ recalcular_cambio();
 		var email = $("#email").val()
 		var telefono=$("#telefono").val();
 
-		var suma_efectivo=$("#suma_efectivo").val();
-		var suma_tarjeta=$("#suma_tarjeta").val();
+		var suma_efectivo_sub=$("#suma_efectivo").val();
+		var suma_efectivo_sub2= suma_efectivo_sub.substr(0, suma_efectivo_sub.length-3)
+		var suma_efectivo_sub3=suma_efectivo_sub2.replace(",", "");
+		var suma_efectivo= suma_efectivo_sub3.replace(",", "");
+
+		
+		var suma_tarjeta_sub=$("#suma_tarjeta").val();
+		var suma_tarjeta_sub2= suma_tarjeta_sub.substr(0, suma_tarjeta_sub.length-3)
+		var suma_tarjeta_sub3=suma_tarjeta_sub2.replace(",", "");
+		var suma_tarjeta= suma_tarjeta_sub3.replace(",", "");
 
 		if(suma_efectivo==''){
 			suma_efectivo=0;
@@ -786,7 +794,7 @@ recalcular_cambio();
 
 
 
-		//alert("sumatoria:"+sumatoria_total+" , total_ingreso:*"+parseInt( total_ingreso) );
+		alert("sumatoria:"+sumatoria_total+" , total_ingreso:*"+parseInt( total_ingreso) );
 		//return(false);
 
 		if(sumatoria_total==undefined || sumatoria_total==0  || total_ingreso<sumatoria_total ){
