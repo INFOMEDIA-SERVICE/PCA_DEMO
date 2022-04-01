@@ -103,7 +103,7 @@ function registrarBoleta(){
     
     
                 if (r2.sts == 'OK') {               
-                    window.open(url_pdf+'?idreserva='+idreserva+'&idboleta='+idboleta,  '_blank');
+                    window.open(url_pdf+'?idreserva='+idreserva+'&idboleta='+idboleta+'&nombre='+nombre+'&apellido='+apellido,  '_blank');
                     $(".close").click();
                     consultar_reserva();                                          
                    

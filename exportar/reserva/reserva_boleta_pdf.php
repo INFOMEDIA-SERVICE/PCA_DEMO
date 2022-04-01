@@ -217,9 +217,9 @@
 
             QRcode::png($key->id, $codesDir.$codeFile, "H", 5); 
 
-            $html.=' <tr> <td width="100%" style="text-align:center;" >'.$key->tipoBoleta->nombre.' <br> Boleta valida para: '.$fecha_reserva.' <br> # Boleta: '.$rest.' <img class="img-thumbnail " src="'.$codesDir.$codeFile.'" /> <br> <span class="El-cdigo-QR-te-servir-para-identificarte-e-ingresar-al-parque">
+            $html.=' <tr> <td width="100%" style="text-align:center;" >'.$key->tipoBoleta->nombre.' <br> Boleta valida para: '.$fecha_reserva.' <br> '.$nombre.' '.$apellido.' <br> # Boleta: '.$rest.' <img class="img-thumbnail " src="'.$codesDir.$codeFile.'" /> <br> <span class="El-cdigo-QR-te-servir-para-identificarte-e-ingresar-al-parque">
             El código QR te servirá para identificarte e ingresar al parque
-            </span> </td>  <td style="text-align:center;" width="40%"></td> </tr> <tr></tr> <tr> <td td width="100%" colspan="2" ><br><br></td> </tr> ';
+            </span> </td>  <td style="text-align:center;" width="40%"></td> </tr>  ';
        
 
         }
