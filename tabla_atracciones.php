@@ -472,7 +472,7 @@
 							</button>
 						</div>
 						<div class="modal-body">						
-							<h3 id="p_cant"></h3>
+							<h3 id="p_cant_condicion"></h3>
 						</div>					
 						<div class="modal-footer">							
 								<div class="px-3"><input type="button" onclick="btnADCacceso();" value="Guardar"></div><!--id="btnADCacceso"--> 
@@ -620,7 +620,7 @@
 						alert('Escoga una imagen JPG o PNG');
 					}	
 				}else{
-					alert('Escriba el nombre de la Condicion acceso');
+					alert('Escriba el nombre de la Condici\u00F3n acceso');
 				}		
 			});
 			//

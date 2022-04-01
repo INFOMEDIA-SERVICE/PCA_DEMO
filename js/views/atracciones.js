@@ -102,13 +102,13 @@ function abreModalActiDesactivaatraccion(){
     }    
     if(x == 0){
         //$("#tbody_modal_atraccion").html(" ");
-        $("#p_cant").html("No se ha seleccionado ninguna atracci&oacute;n");               
+        $("#p_cant").html("No se ha seleccionado ninguna atracci\u00F3n");               
     }else{
         //$("#tbody_modal_atraccion").html(str_remp2);
         if(x == 1){
-            $("#p_cant").html("Est&aacute; seguro de Activar/Desactivar "+x+" atracci&oacute;n?"); 
+            $("#p_cant").html("Est\u00E1 seguro de Activar/Desactivar "+x+" atracci\u00F3n?"); 
         }else{
-            $("#p_cant").html("Est&aacute; seguro de Activar/Desactivar "+x+" atracciones?"); 
+            $("#p_cant").html("Est\u00E1 seguro de Activar/Desactivar "+x+" atracciones?"); 
         }
         
     }
@@ -125,7 +125,7 @@ function abreModalCondicion(id_con, nombre_con){
 //
 function abreBorarModalCondicion(id, nombre){
     $("#txtBorrarAC").val(id);
-    $("#del_ca").html("Est&aacute; seguro de Eliminar la condicion de acceso: "+nombre+" ?"); 
+    $("#del_ca").html("Est\u00E1 seguro de Eliminar la condici\u00F3n de acceso: "+nombre+" ?"); 
     $('#BorrarModalAtraccion_condicion').modal('show'); // abrir modal borrar condicion de la atraccion 
 }
 //
@@ -159,14 +159,14 @@ function openImage() { //Esta función validaría una imágen
                     var ext = fileName.substring(fileName[i],fileName.length);  
                     if (!extensions.test(ext)) {
                         error.state = true;
-                        error.msg+= 'La extensi&oacute;n del archivo no es v&aacute;lida.<br>';
+                        error.msg+= 'La extensi\u00F3n del archivo no es v\u00E1lida.<br>';
                     }  
                     break;
                 }  
             }  
             if(file.size > maxSize) {
                 error.state = true;
-                error.msg += 'La im&aacute;gen no puede ocupar m&aacute;s de '+maxSize/1048576+' MB.';
+                error.msg += 'La im\u00E1gen no puede ocupar m\u00E1s de '+maxSize/1048576+' MB.';
             }  
             if(error.state) {
                 input.value = '';
@@ -174,7 +174,7 @@ function openImage() { //Esta función validaría una imágen
                 return;
             }else{
                 if(file.size > 0){
-                    document.getElementById("result").innerHTML = "El archivo es v&aacute;lido";
+                    document.getElementById("result").innerHTML = "El archivo es v\u00E1lido";
                     //
                     var reader = new FileReader();  
                     reader.onload = function(e) {
@@ -183,7 +183,7 @@ function openImage() { //Esta función validaría una imágen
                     }
                     reader.readAsDataURL(this.files[0]);
                 }else{
-                    document.getElementById("result").innerHTML = "El archivo est&aacute; da&ntilde;ado";
+                    document.getElementById("result").innerHTML = "El archivo est\u00E1 da\u00F1ado";
                     document.getElementById("img").src = "";
                 }
             }								
@@ -211,14 +211,14 @@ function openImage2() { //Esta funcion validara una imagen
                     var ext = fileName.substring(fileName[i],fileName.length);  
                     if (!extensions.test(ext)) {
                         error.state = true;
-                        error.msg+= 'La extensi&oacute;n del archivo no es valida.<br>';
+                        error.msg+= 'La extensi\u00F3n del archivo no es v\u00E1lida.<br>';
                     }  
                     break;
                 }  
             }  
             if(file.size > maxSize) {
                 error.state = true;
-                error.msg += 'La imagen no puede ocupar m&aacute;s de '+maxSize/1048576+' MB.';
+                error.msg += 'La imagen no puede ocupar m\u00E1s de '+maxSize/1048576+' MB.';
             }  
             if(error.state) {
                 input.value = '';
@@ -226,7 +226,7 @@ function openImage2() { //Esta funcion validara una imagen
                 return;
             }else{
                 if(file.size > 0){
-                    document.getElementById("result2").innerHTML = "El archivo es v&aacute;lido";
+                    document.getElementById("result2").innerHTML = "El archivo es v\u00E1lido";
                     //
                     var reader = new FileReader();  
                     reader.onload = function(e) {
@@ -234,7 +234,7 @@ function openImage2() { //Esta funcion validara una imagen
                     }
                     reader.readAsDataURL(this.files[0]);
                 }else{
-                    document.getElementById("result2").innerHTML = "El archivo esta da&nacute;ado";
+                    document.getElementById("result2").innerHTML = "El archivo esta da\u00F1ado";
                     document.getElementById("img2").src = "";
                 }
             }								
@@ -348,7 +348,7 @@ function btnAddAtraccion_condicion(){
                     var id = $("#txtIdAtraccion_condicion").val();
                     cargar_datos_ac(id);                    
                 }else if(r.sts == 'RPT'){
-                    alert('La condicion est&aacute; agregada');                            
+                    alert('La condicion est\u00E1 agregada');                            
                 }else{
                     alert('Error al actualizar');
                 }

@@ -16,13 +16,13 @@ function cargar_datos_condicion(){
                 if(typeof r2.resultado.status === 'undefined'){
                     console.log('CORRECTO 200');                
                     var str_remp;
-                    var option = '<option value="0">Seleccione una condicion</option>';
+                    var option = '<option value="0">Seleccione una condici\u00F3n</option>';
                     $.each(r2.resultado, function(m, n) {
                         //console.log(n);
                         //var img_ext = atracciones.imagenUrl;
                         //var extension_img = img_ext.split('.'); // Saco la extensión para guardarla en la BD
                         //var ext_comilla = "'"+extension_img[1]+"'";
-                        option += '<option value="' + n.id + '">' + n.nombre + '</option>';
+                        if(n.estado == 'ACTIVO'){ option += '<option value="' + n.id + '">' + n.nombre + '</option>'; }
                         var atraccion_comilla = "'"+n.nombre+"'";
                         var idCheck = n.nombre+'-'+n.estado+'-'+n.id;
                         var btnEditar = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/edit.png" class="img-fluid title="Editar" onclick="upCacceso('+ n.id +','+ atraccion_comilla +');"></a>' : '<img src="imagenes/edit.png" class="img-fluid title="Editar">';
@@ -71,12 +71,12 @@ function abreModalActiDesactivacacceso(){
         }
     }    
     if(x == 0){
-        $("#p_cant").html("No se ha seleccionado ninguna condici&oacute;n de acceso");               
+        $("#p_cant_condicion").html("No se ha seleccionado ninguna condici\u00F3n de acceso");               
     }else{
         if(x == 1){
-            $("#p_cant").html("Est&aacute; seguro de Activar/Desactivar "+x+" condici&oacute;n de acceso?"); 
+            $("#p_cant_condicion").html("Est\u00E1 seguro de Activar/Desactivar "+x+" condici\u00F3n de acceso?"); 
         }else{
-            $("#p_cant").html("Est&aacute; seguro de Activar/Desactivar "+x+" condici&oacute;n de accesos?"); 
+            $("#p_cant_condicion").html("Est\u00E1 seguro de Activar/Desactivar "+x+" condici\u00F3n de accesos?"); 
         }
         
     }
@@ -85,6 +85,7 @@ function abreModalActiDesactivacacceso(){
 }
 //
 function upCacceso(id_u, nombre_u, ext_img){
+    limpiarGuardarC('txtupCacceso', 'file2_condicion', 'result2_condicion', 'img2_condicion');
     var ximagen = "imagenc"+id_u;
     g_ext = ext_img;
     console.log(id_u+' - '+ximagen);
@@ -120,7 +121,7 @@ function openImage_condicion() { //Esta función validaría una imágen
             }  
             if(file.size > maxSize) {
                 error.state = true;
-                error.msg += 'La imágen no puede ocupar m&aacute;s de '+maxSize/1048576+' MB.';
+                error.msg += 'La im\u00E1gen no puede ocupar m\u00F3s de '+maxSize/1048576+' MB.';
             }  
             if(error.state) {
                 input.value = '';
@@ -128,7 +129,7 @@ function openImage_condicion() { //Esta función validaría una imágen
                 return;
             }else{
                 if(file.size > 0){
-                    document.getElementById("result_condicion").innerHTML = "El archivo es v&aacute;lido";
+                    document.getElementById("result_condicion").innerHTML = "El archivo es v\u00E1lido";
                     //
                     var reader = new FileReader();  
                     reader.onload = function(e) {
@@ -137,7 +138,7 @@ function openImage_condicion() { //Esta función validaría una imágen
                     }
                     reader.readAsDataURL(this.files[0]);
                 }else{
-                    document.getElementById("result_condicion").innerHTML = "El archivo est&aacute; da&ntilde;ado";
+                    document.getElementById("result_condicion").innerHTML = "El archivo est\u00E1 da\u00F1ado";
                     document.getElementById("img_condicion").src = "";
                 }
             }								
@@ -258,7 +259,7 @@ function btnADCacceso(){
             }        
         }); 
     }else{
-        alert('No ha seleccionado ninguna condici&oacute;n de acceso');
+        alert('No ha seleccionado ninguna condici\u00F3n de acceso');
     } 
 }
 //
