@@ -178,7 +178,7 @@ function cargar_adicionales(filtro){
 
     }else{
 
-        console.log("filtro ***:"+filtro)
+       // console.log("filtro ***:"+filtro)
 
         var str_remp='';
         $.each(info_adicionales, function(m, n) {

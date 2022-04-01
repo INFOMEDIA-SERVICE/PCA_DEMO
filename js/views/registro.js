@@ -68,7 +68,7 @@ function registrarBoleta(){
 
     //alert("idreserva:"+idreserva+" , idboleta:"+idboleta);
      
-
+    var url_pdf="exportar/reserva/reserva_boleta_pdf.php";
 
     var nombre=$("#nombreR").val();
     var apellido=$("#apellidoR").val();
@@ -103,7 +103,7 @@ function registrarBoleta(){
     
     
                 if (r2.sts == 'OK') {               
-                    alert(r2.resultado);
+                    window.open(url_pdf+'?idreserva='+idreserva+'&idboleta='+idboleta,  '_blank');
                     $(".close").click();
                     consultar_reserva();                                          
                    

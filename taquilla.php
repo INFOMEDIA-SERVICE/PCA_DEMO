@@ -794,7 +794,7 @@ recalcular_cambio();
 
 
 
-		alert("sumatoria:"+sumatoria_total+" , total_ingreso:*"+parseInt( total_ingreso) );
+		//alert("sumatoria:"+sumatoria_total+" , total_ingreso:*"+parseInt( total_ingreso) );
 		//return(false);
 
 		if(sumatoria_total==undefined || sumatoria_total==0  || total_ingreso<sumatoria_total ){
