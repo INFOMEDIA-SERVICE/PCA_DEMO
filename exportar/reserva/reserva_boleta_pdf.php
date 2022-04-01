@@ -115,11 +115,11 @@
     h2 { font-size: 80% }  
     td { font-size: 80% } 
     p  { font-size: 70% } 
-    </style>
+    </style>';
 
-   
+   /*
     
-    <h1 style="text-align:center;"> PARQUE CARIBE AVENTURA</h1>
+    $html.='<h1 style="text-align:center;"> PARQUE CARIBE AVENTURA</h1>
     <hr width="100%"> 
 
     <table width="100%">
@@ -192,14 +192,10 @@
         <tr>
             <td><p> Todos los precios incluyen valor del servicio y están en pesos colombianos<br>Lorem ipsum dolor sit amet consectetur adipiscing elit, imperdiet justo rhoncus auctor praesent phasellus ultrices, eu fermentum integer tempus sociosqu placerat. Leo vitae faucibus velit a suscipit quam fames inceptos parturient natoque volutpat ridiculus tristique pellentesque dapibus neque, dis taciti magnis massa varius dictumst in vivamus id platea libero sodales rhoncus nunc enim. Pharetra imperdiet magna laoreet nascetur varius aliquam fringilla aliquet, consequat nulla vitae ligula torquent eleifend dignissim quisque a, magnis cursus primis senectus porttitor massa netus.</p></td>
         </tr>
-    </table>';
-
-
-
-
-    /*
+    </table>
     
-   $html.=' <div style="page-break-after:always;"></div>';
+    
+    <div style="page-break-after:always;"></div>';*/
     
 
 
@@ -213,19 +209,26 @@
     
     foreach ($rDatos->boletas as $key ) {
 
-        $codeFile= $key->id.".png";
+        if($idboleta==$key->id){
 
-        $rest = substr($key->id, -6);
+            $codeFile= $key->id.".png";
 
-        QRcode::png($key->id, $codesDir.$codeFile, "H", 5); 
+            $rest = substr($key->id, -6);
 
-        $html.=' <tr> <td width="100%" style="text-align:center;" >'.$key->tipoBoleta->nombre.' <br> Boleta valida para: '.$fecha_reserva.' <br> # Boleta: '.$rest.' <img class="img-thumbnail " src="'.$codesDir.$codeFile.'" /> <br> <span class="El-cdigo-QR-te-servir-para-identificarte-e-ingresar-al-parque">
-        El código QR te servirá para identificarte e ingresar al parque
-      </span> </td>  <td style="text-align:center;" width="40%"></td> </tr> <tr></tr> <tr> <td td width="100%" colspan="2" ><br><br></td> </tr> ';
+            QRcode::png($key->id, $codesDir.$codeFile, "H", 5); 
+
+            $html.=' <tr> <td width="100%" style="text-align:center;" >'.$key->tipoBoleta->nombre.' <br> Boleta valida para: '.$fecha_reserva.' <br> # Boleta: '.$rest.' <img class="img-thumbnail " src="'.$codesDir.$codeFile.'" /> <br> <span class="El-cdigo-QR-te-servir-para-identificarte-e-ingresar-al-parque">
+            El código QR te servirá para identificarte e ingresar al parque
+            </span> </td>  <td style="text-align:center;" width="40%"></td> </tr> <tr></tr> <tr> <td td width="100%" colspan="2" ><br><br></td> </tr> ';
        
+
+        }
+
+        
+    
     }
 
-    */
+    
 
     $html.='</table> <script> window.print(); </script> ';
 

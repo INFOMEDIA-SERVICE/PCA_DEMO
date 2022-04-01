@@ -24,6 +24,13 @@ echo" </pre> ";*/
 			padding: 0px !important;
 		}
 
+		.derecha {
+			margin: auto;
+			
+			text-align: right;
+			padding: 0px !important;
+		}
+
 		.cmn-divfloat {
 			position: fixed !important;
 			bottom: 45px;
@@ -171,11 +178,25 @@ echo" </pre> ";*/
 		var idboleta =$(this).attr('idboleta');
 		var edadInicial=$(this).attr('edadInicial');
 		var edadFinal=$(this).attr('edadFinal');
+		var estaturaCmMin=$(this).attr('estaturaCmMin');
+		var estaturaCmMax=$(this).attr('estaturaCmMax');
+
+		$("#nombreR").val('');
+		$("#apellidoR").val('');
+		$("#fecha_nacimientoR").val('');
+		$("#alturaR").val('');
+		$("#tipo_documentoR").val('');
+		$("#numero_documentoR").val('');
+		$("#alertaFechaNacimiento").html('')
+		$("#alertaEstatura").html('')
+
 
 		$("#idreservaR").val(idreserva);
 		$("#idboletaR").val(idboleta);
 		$("#edadInicialR").val(edadInicial);
 		$("#edadFinalR").val(edadFinal);
+		$("#estaturaCmMinR").val(estaturaCmMin)
+		$("#estaturaCmMaxR").val(estaturaCmMax)
 		 
 		//alert("idreserva:"+idreserva+" , idboleta:"+idboleta);
 		$("#miModal").modal("show");
@@ -213,6 +234,19 @@ echo" </pre> ";*/
 
 	//	alert("edadInicial:"+edadInicial+" , edadFinal:"+edadFinal+" , fecha_nacimiento:"+fecha_nacimiento)
 		validar_fecha(edadInicial,edadFinal,fecha_nacimiento)
+	});
+
+
+	$(document).on("blur", "#alturaR", function(){
+
+		var altura=$(this).val()
+		var estaturaCmMin=$("#estaturaCmMinR").val();
+		var estaturaCmMax=$("#estaturaCmMaxR").val();
+
+		console.log("altura:"+altura+" , estaturaCmMin:"+estaturaCmMin+" , estaturaCmMax:"+estaturaCmMax)
+
+		//alert("edadInicial:"+edadInicial+" , edadFinal:"+edadFinal+" , fecha_nacimiento:"+fecha_nacimiento)
+		validar_estatura(altura,estaturaCmMin,estaturaCmMax)
 	});
 
 	
@@ -255,6 +289,11 @@ echo" </pre> ";*/
 	$('.solo-numero').keyup(function (){
         this.value = (this.value + '').replace(/[^0-9]/g, '');
     });
+
+	$(document).on("click", "#restablecer", function(){
+		localStorage.clear();
+		location.reload();
+	});
 
 
 	window.onload = function () {
@@ -344,12 +383,16 @@ echo" </pre> ";*/
 			 	 
 				<div class="col-lg-10 pt-2 d-flex">
 				  <div class="panel3 sombra">
+
+				  	<div class="pr-2 derecha" > <a id="restablecer" href="#">Restablecer</a> </div>
                     
                     <div class=" pr-2 centrado" id="div_cliente" ><h1>Consultar Reserva Boletas </h1></div>
                         
                     
                         
                     <div class=" pr-2 centrado" id="div_fecha_reserva"> </div>
+
+					<div class=" pr-2 centrado" id="div_instrucciones"> </div>
 				  	
 				   
 					  <div class="row no-gutters pt-3" id="boletas">
@@ -430,6 +473,8 @@ echo" </pre> ";*/
 					<div class="form-group">
 						<label for="apellidoR">Estatura:</label>
 						<input type="number"  class="form-control solo-numero" id="alturaR" aria-describedby="emailHelp" placeholder="Estatura (cm ej:150)">
+
+						<small id="alertaEstatura" class="form-text text-muted"></small>	
 						
 					</div>
 
@@ -440,6 +485,7 @@ echo" </pre> ";*/
 							<option value="CC" >Cedula Ciudadania</option>
 							<option value="CE">Cedula Estranjeria</option>
 							<option value="PAS">Pasaporte</option>
+							<option value="TI">Tarjeta de Identidad</option>
 						</select>
 						
 					</div>
@@ -456,6 +502,8 @@ echo" </pre> ";*/
 					<input type="hidden" id="idboletaR" value="">
 					<input type="hidden" id="edadInicialR" value="">
 					<input type="hidden" id="edadFinalR" value="">
+					<input type="hidden" id="estaturaCmMinR" value="">
+					<input type="hidden" id="estaturaCmMaxR" value="">
 					
 					<input type="button" onclick="registrarBoleta();" class="boton_campo" style="width: 100%" value="REGISTRAR" id="registrar">
 					</form>
@@ -495,6 +543,7 @@ echo" </pre> ";*/
 							<option value="CC" >Cedula Ciudadania</option>
 							<option value="CE">Cedula Estranjeria</option>
 							<option value="PAS">Pasaporte</option>
+							<option value="TI">Tarjeta de Identidad</option>
 						</select>
 						
 					</div>
