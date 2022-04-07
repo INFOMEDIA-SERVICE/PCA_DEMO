@@ -180,6 +180,11 @@ echo" </pre> ";*/
 		var edadFinal=$(this).attr('edadFinal');
 		var estaturaCmMin=$(this).attr('estaturaCmMin');
 		var estaturaCmMax=$(this).attr('estaturaCmMax');
+		var casillas_disponibles=$(this).attr('casillas_disponibles');
+
+		//console.log("casillas_disponibles")
+		//console.log( casillas_disponibles )
+		//return(false);
 
 		$("#nombreR").val('');
 		$("#apellidoR").val('');
@@ -189,6 +194,7 @@ echo" </pre> ";*/
 		$("#numero_documentoR").val('');
 		$("#alertaFechaNacimiento").html('')
 		$("#alertaEstatura").html('')
+		$("#casillas_disponibles").val();
 
 
 		$("#idreservaR").val(idreserva);
@@ -197,9 +203,35 @@ echo" </pre> ";*/
 		$("#edadFinalR").val(edadFinal);
 		$("#estaturaCmMinR").val(estaturaCmMin)
 		$("#estaturaCmMaxR").val(estaturaCmMax)
+		$("#casillas_disponiblesR").val(casillas_disponibles)
 		 
 		//alert("idreserva:"+idreserva+" , idboleta:"+idboleta);
 		$("#miModal").modal("show");
+
+		console.log("casillas_disponibles:"+casillas_disponibles)
+
+		if(casillas_disponibles!=''){
+
+			var array_casillas_disponibles= casillas_disponibles.split(',');
+
+			console.log("array_casillas:")
+			console.log(array_casillas_disponibles)
+
+			if(array_casillas_disponibles.length>0){
+				
+				
+				$("#div_lockers").show();
+			
+			
+			
+			}else{
+				console.log("No tiene casillas por asignar");
+			}
+
+		}
+
+		
+
 
 		
 
@@ -496,6 +528,13 @@ echo" </pre> ";*/
 						
 					</div>
 
+
+					<div class="form-group " id="div_lockers" style="display:none">
+						<label for="numero_documento" id="label_lockers">Asignar locker:</label>
+						<input type="checkbox" class="" id="agregarLockerR" >
+						
+					</div>
+
 					
 
 					<input type="hidden" id="idreservaR" value="">
@@ -504,6 +543,7 @@ echo" </pre> ";*/
 					<input type="hidden" id="edadFinalR" value="">
 					<input type="hidden" id="estaturaCmMinR" value="">
 					<input type="hidden" id="estaturaCmMaxR" value="">
+					<input type="hidden" id="casillas_disponiblesR" value="">
 					
 					<input type="button" onclick="registrarBoleta();" class="boton_campo" style="width: 100%" value="REGISTRAR" id="registrar">
 					</form>
@@ -563,6 +603,11 @@ echo" </pre> ";*/
 						<label for="apellidoV">Estatura CM:</label>
 						<input type="number"  class="form-control solo-numero" id="alturaV" aria-describedby="emailHelp" placeholder="altura (cm ej:150)">
 						
+					</div>
+
+					<div class="form-group" id="divCasillaAsignada" style="display:none">
+						<label for="" id="CasillaAsignada"></label>
+						 
 					</div>
 
 					<input type="hidden" id="idreservaV" value="">

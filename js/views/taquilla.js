@@ -132,7 +132,7 @@ function cargar_adicionales(filtro){
     if(info_adicionales==null){
 
         $.ajax({        
-            url: "ajax/ajxRequest.php",
+            url: "ajax/ajxRequest2.php",
             data: { op: '10' },
             dataType: 'json',
             type: 'POST',
@@ -153,8 +153,23 @@ function cargar_adicionales(filtro){
                             n.tipo_producto="adicional";
     
                             let nuevaLongitud = productos.push(n)
+
+                            
     
-                                str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye adicional-info informacion" idadicional="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 adicional-add"  idtipo_servicio="'+n.categoriaServicio.id+'"  idadicional="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> </div>     </div>      </div>';
+                                str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye adicional-info informacion" idadicional="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 adicional-add"  idtipo_servicio="'+n.categoriaServicio.id+'"  idadicional="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div>       ';
+
+                                if(n.categoriaServicio.id==1){
+                                    console.log("Lo encontre?:"+n.nombre)
+
+                                    str_remp=str_remp+'<div><h2>Cantidad disponible: <span class="badge bg-success">'+n.disponibilidadCasilleros.disponibles+'</span></h2></div>';
+
+                                    
+                                }
+                                
+                                str_remp=str_remp+'</div>     </div>      </div>';
+
+
+                               // str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye boleta-info informacion" idboleta="'+n.tipoBoleta.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 boleta-add"    idboleta="'+n.tipoBoleta.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.tipoBoleta.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.tipoBoleta.nombre +'</h4> <div><h2>$'+n.tipoBoleta.precio.toLocaleString()+'</h2></div> <div><h2>Cantidad disponible: <span class="badge bg-success">'+n.tipoBoleta.cantidadDisponible+'</span></h2></div> </div>     </div>      </div>';
                         
                             });
                             
@@ -187,13 +202,31 @@ function cargar_adicionales(filtro){
 
                 if( n.nombre.toLowerCase().includes(filtro.toLowerCase()) ){
 
-                    str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye adicional-info informacion" idadicional="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 adicional-add"    idadicional="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> </div>     </div>      </div>';
+                    str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye adicional-info informacion" idadicional="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 adicional-add"    idadicional="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> ';
+
+                    if(n.categoriaServicio.id==1){                    
+
+                        str_remp=str_remp+'<div><h2>Cantidad disponible: <span class="badge bg-success">'+n.disponibilidadCasilleros.disponibles+'</span></h2></div>';
+
+                        
+                    }
+                    
+                    str_remp=str_remp+'</div>     </div>      </div>';
 
                 }
 
             }else{
 
-                    str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye adicional-info informacion" idadicional="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 adicional-add"    idadicional="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> </div>     </div>      </div>';
+                    str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye adicional-info informacion" idadicional="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 adicional-add"    idadicional="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> ';
+
+                    if(n.categoriaServicio.id==1){
+
+                        str_remp=str_remp+'<div><h2>Cantidad disponible: <span class="badge bg-success">'+n.disponibilidadCasilleros.disponibles+'</span></h2></div>';
+
+                        
+                    }
+
+                    str_remp=str_remp+' </div>     </div>      </div>';
             }
     
             
@@ -391,23 +424,30 @@ function pagar(){
 
     let new_array_adicionales=[];
 
+    var cont_lockers=0;
+
     $.each(arr_adicionales, function(index, datos) {
 
 
         let new_sub_array=[];
         var c=0;
         if(datos['cant_taquilla']>0){
+
            
             new_array_adicionales.push({cantidad: datos['cant_taquilla'], idServicioAdicional: datos['id']});
  
+            if(datos['categoriaServicio']['id']==1){
+                cont_lockers=datos['cant_taquilla'];
+            }
 
         }
 
     });
 
 
+    console.log("Esta a punto de reservar :"+cont_lockers+" Lockers")
 
-
+    //return(false);
 
     console.log("longitud array completo")
 
@@ -421,8 +461,8 @@ function pagar(){
             if(idreserva!="undefined"){
 
                 $.ajax({        
-                    url: "ajax/ajxRequest.php",
-                    data: { op: '13',idreserva:idreserva,adicionales:JSON.stringify(new_array_adicionales) },
+                    url: "ajax/ajxRequest2.php",
+                    data: { op: '13',idreserva:idreserva,adicionales:JSON.stringify(new_array_adicionales),cont_lockers:cont_lockers },
                     dataType: 'json',
                     async: false, 
                     type: 'POST',
@@ -484,8 +524,8 @@ function pagar(){
                     if(new_array_adicionales.length>0){
 
                         $.ajax({        
-                            url: "ajax/ajxRequest.php",
-                            data: { op: '13',idreserva:r2.resultado.id,adicionales:JSON.stringify(new_array_adicionales) },
+                            url: "ajax/ajxRequest2.php",
+                            data: { op: '13',idreserva:r2.resultado.id,adicionales:JSON.stringify(new_array_adicionales),cont_lockers:cont_lockers },
                             dataType: 'json',
                             type: 'POST',
                             async: false, 
