@@ -225,7 +225,15 @@
 
             QRcode::png($key->id, $codesDir.$codeFile, "H", 3); 
 
-            $html.=' <tr> <td width="100%" style="text-align:center;" >'.$key->tipoBoleta->nombre.' <br> Boleta valida para: <br> '.$fecha_reserva.' <br> '.$nombre.' '.$apellido.' <br>  Clave del parque: '.$key->visitante->codigo.' <br> # Boleta: '.$rest.' <img class="img-thumbnail "  width="140" height="140" src="'.$codesDir.$codeFile.'" /> <br> <span class="El-cdigo-QR-te-servir-para-identificarte-e-ingresar-al-parque">
+            # Locker: '.$key->visitante->reservaCasilla->casilla->id.' -
+
+            if($key->visitante->reservaCasilla->casilla->id!=''){
+                $locker=' <br> Locker: '.$key->visitante->reservaCasilla->casilla->id ;
+            }else{
+                $locker='';
+            }
+
+            $html.=' <tr> <td width="100%" style="text-align:center;" >'.$key->tipoBoleta->nombre.' <br> Boleta valida para: <br> '.$fecha_reserva.' <br> '.$nombre.' '.$apellido.' '.$locker.' <br>  Clave del parque: '.$key->visitante->codigo.' <br> # Boleta: '.$rest.' <img class="img-thumbnail "  width="140" height="140" src="'.$codesDir.$codeFile.'" /> <br> <span class="El-cdigo-QR-te-servir-para-identificarte-e-ingresar-al-parque">
             El código QR te servirá para identificarte e ingresar al parque
             </span> </td>  <td style="text-align:center;" width="40%"></td> </tr>  ';
        
