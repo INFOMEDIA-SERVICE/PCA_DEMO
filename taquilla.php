@@ -1003,8 +1003,8 @@ recalcular_cambio();
 
 				   <select class="selectAltura" id="tipo_documento" >
 					   <option value="">Tipo de Documento</option>
-					   <option value="CC" >Cedula Ciudadania</option>
-					   <option value="CE">Cedula Estranjeria</option>
+					   <option value="CC" >Cedula Ciudadanía</option>
+					   <option value="CE">Cedula Extranjería</option>
 					   <option value="PAS">Pasaporte</option>
 				   </select>
 					   
