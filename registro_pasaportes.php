@@ -523,8 +523,8 @@ echo" </pre> ";*/
 					</div>
 
 					<div class="form-group">
-						<label for="numero_documento">Numero Documento:</label>
-						<input type="email" class="form-control" id="numero_documentoR" aria-describedby="emailHelp" placeholder="Numero documento">
+						<label for="numero_documento">Número Documento:</label>
+						<input type="email" class="form-control" id="numero_documentoR" aria-describedby="emailHelp" placeholder="Número documento">
 						
 					</div>
 
