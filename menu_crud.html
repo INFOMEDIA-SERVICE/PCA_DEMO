@@ -131,7 +131,11 @@
               </tr>
               <tr>
                 <td align="right">4</td><td><a style="cursor:pointer" class="listar" pagina="categoriaedad">Categoria edad</a></td>
-              </tr>     
+              </tr>
+              
+              <tr>
+                <td align="right">5</td><td><a style="cursor:pointer" class="listar" pagina="empresa">Configuración datos empresa</a></td>
+              </tr>
             </table>
 
           </div>
@@ -167,6 +171,12 @@
           $("#contenido_crud").show();          
           $("#contenido_crud").load('tabla_casillero.php');
           $("#listado").remove();          
+        break;
+
+        case 'empresa':
+        $("#contenido_crud").show();          
+          $("#contenido_crud").load('tabla_empresa.php');
+          $("#listado").remove();  
         break;
 
         default:
