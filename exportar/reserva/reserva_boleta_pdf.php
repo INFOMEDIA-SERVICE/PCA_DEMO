@@ -287,4 +287,7 @@
     $dompdf->render(); 
     #$dompdf->stream("Atracciones.pdf");
     $dompdf->stream("niceshipest", array("Attachment" => 0));
+
+    sleep(3);
+    echo "<script languaje='javascript' type='text/javascript'>window.close();</script>";
 ?>

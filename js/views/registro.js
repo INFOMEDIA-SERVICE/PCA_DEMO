@@ -1,3 +1,12 @@
+function imprimirReserva(idreserva){
+
+    let url_pdf="exportar/reserva/reserva_pdf.php";
+
+    window.open(url_pdf+'?idreserva='+idreserva, '_blank');
+}
+
+
+
 function consultar_reserva(){
 
     var tipo_documento=$("#tipo_documento").val();
@@ -22,7 +31,7 @@ function consultar_reserva(){
                 $("#div_cliente").html('<h3>Cliente: '+datos['cliente']['nombreCompleto']+'</h2>');
                 $("#div_fecha_reserva").html('<h3>Fecha Reserva: '+datos['fecha']+'<h3>')
 
-                str_remp+= ' <div class=" pr-2 " ><h2>Numero reserva: '+datos['id']+'</h2></div><br> ';
+                str_remp+= ' <div class=" pr-2 " ><h2>Numero reserva: '+datos['id']+'</h2>  </div><input type="button" onclick="imprimirReserva(\''+datos['id']+'\');" class="boton_campo2"  value="IMPRIMIR" id="imprimirReserva"><br> ';
 
                
 
@@ -109,11 +118,11 @@ function consultar_reserva(){
 
                     if(datos2['visitante']!=undefined){
 
-                        str_remp+='<b>Ver Visitante</b><img src="imagenes/chulito.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'" edadInicial="'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+'" edadFinal="'+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+'" estaturaCmMin="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMin']+'" estaturaCmMax="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMax']+'" class="centrado pointer verVisitante" width="50" height="50" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
+                        str_remp+='<b>Ver Visitante</b><img src="imagenes/chulito.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'" edadInicial="'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+'" edadFinal="'+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+'" estaturaCmMin="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMin']+'" estaturaCmMax="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMax']+'" pasaporteNombre="'+datos2['tipoBoleta']['nombre']+'" class="centrado pointer verVisitante" width="50" height="50" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
 
                     }else{
 
-                        str_remp+='<b>Registar Visitante</b><img src="imagenes/agregar.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'"  edadInicial="'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+'" edadFinal="'+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+'" estaturaCmMin="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMin']+'" estaturaCmMax="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMax']+'" casillas_disponibles="'+casillas_disponibles+'"  class="centrado pointer agregar" width="70" height="70" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
+                        str_remp+='<b>Registar Visitante</b><img src="imagenes/agregar.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'"  edadInicial="'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+'" edadFinal="'+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+'" estaturaCmMin="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMin']+'" estaturaCmMax="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMax']+'" casillas_disponibles="'+casillas_disponibles+'" pasaporteNombre="'+datos2['tipoBoleta']['nombre']+'" class="centrado pointer agregar" width="70" height="70" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
 
                     }
                 });

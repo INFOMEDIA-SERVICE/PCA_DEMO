@@ -31,6 +31,28 @@ input[type=text]{
 	padding: 0.4em!important;
 	
 }
+
+.boton_campo2{
+	
+	 
+	
+	border-radius: 5px !important;
+	width: 10% !important;
+	
+	padding: 0.4em 1em !important;
+	
+}
+
+.boton_campo30{
+	
+	 
+	
+	border-radius: 5px !important;
+	width: 30% !important;
+	
+	padding: 0.4em 1em !important;
+	
+}
 h4{
 	font-size: 0.875em;
 	color: #919BB4;
