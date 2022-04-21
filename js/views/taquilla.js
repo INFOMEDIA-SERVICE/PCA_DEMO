@@ -365,7 +365,7 @@ if(identificacion_cliente==null && tipo_identificacion_cliente==null){
 
             //console.log("Creo el clinete")
             
-           // console.log(r2)
+            console.log(r2)
 
             if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
                 //alert("Cliente creado exitosamente")                                          

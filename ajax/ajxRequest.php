@@ -31,7 +31,7 @@ session_start();
                 if ($rDatos != '') {
                     echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
                 } else {                
-                    echo json_encode(['sts'=>'NO']);
+                    echo json_encode(['sts'=>'NO', 'resultado'=>$rDatos]);
                 }
 
             } else {
@@ -228,7 +228,7 @@ session_start();
 
             $array['email']=$email;
             $array['telefono']=$telefono;
-            $array['estado']='ACTIVO';
+            #$array['estado']='ACTIVO';
             $array['fechaNacimiento']='01-01-1920';
             $array['tipoIdentificacion']=$tipo_identificacion;
             $array['numeroIdentificacion']=$numero_documento;
@@ -243,7 +243,7 @@ session_start();
             if($rGuardar->message == 'Se ha creado el cliente'){
                 echo json_encode(['sts'=>'OK','resultado'=>$rGuardar]); 
             }else{
-                echo json_encode(['sts'=>'NO']);
+                echo json_encode(['sts'=>'NO','resultado'=>$rGuardar]);
             } 
             
 
