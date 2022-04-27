@@ -171,4 +171,25 @@ function marcar_cacceso(source){
             checkboxes[i].checked=source.checked; //si es un checkbox le damos el valor del checkbox que lo llamo (Marcar/Desmarcar Todos)            
         }
     }
-}       		
+}
+//
+function marcar_sadicionales(source){
+    checkboxes=document.getElementsByTagName('input'); //obtenemos todos los controles del tipo Input
+    for(i=0;i<checkboxes.length;i++){ //recoremos todos los controles                       
+        if(checkboxes[i].type == "checkbox"){ //solo si es un checkbox entramos
+            if(checkboxes[i].name == "scategoria_todos"){ break; }               
+            checkboxes[i].checked=source.checked; //si es un checkbox le damos el valor del checkbox que lo llamo (Marcar/Desmarcar Todos)            
+        }
+    }
+}
+//
+function marcar_scategoria(source){
+    sw = 0;
+    checkboxes=document.getElementsByTagName('input'); //obtenemos todos los controles del tipo Input
+    for(i=0;i<checkboxes.length;i++){ //recoremos todos los controles
+        if(checkboxes[i].name == "scategoria_todos"){ sw = 1; }                      
+        if(checkboxes[i].type == "checkbox" && sw == 1){ //solo si es un checkbox entramos y si es "condicion_todos(sw==1)"
+            checkboxes[i].checked=source.checked; //si es un checkbox le damos el valor del checkbox que lo llamo (Marcar/Desmarcar Todos)            
+        }
+    }
+}                  		

@@ -81,6 +81,8 @@ echo" </pre> ";*/
 	<script type="text/javascript" charset="utf8"  src="js/views/atracciones.js"></script>
 	<script type="text/javascript" charset="utf8"  src="js/views/condicion.js"></script>
 	<script type="text/javascript" charset="utf8"  src="js/views/casillero.js"></script>
+	<script type="text/javascript" charset="utf8"  src="js/views/sadicionales.js"></script>
+	<script type="text/javascript" charset="utf8"  src="js/views/scategoria.js"></script>
 	<!--<link rel="stylesheet" type="text/css" href="css/dataTables.min.css"/>	
 	<script type="text/javascript" charset="utf8"  src="js/jquery.dataTables.min.js"></script>-->
 	<link rel="stylesheet" href="css/main.css">

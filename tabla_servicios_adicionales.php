@@ -8,7 +8,7 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>PCA-Condici&oacute; de acceso</title>
+		<title>PCA-Servicios adicionales</title>
 		<!---->		
 		<!-- Bootstrap -->
 		<link href="css/bootstrap-4.4.1.css" rel="stylesheet">
@@ -33,7 +33,7 @@
 					    	<div class="row pr-0 pl-0 ml-0 mr-0">
 								<div class="col-md-3 col-6 pes-act ">
 									<div class="text-center d-flex align-items-center align-self-center justify-content-center cerrar">
-										<a href="">Consultar Datos Atracciones</a>
+										<a href="">Consultar Datos Servicios adicionales</a>
 									</div>
 								</div>
 						
@@ -47,7 +47,7 @@
 					   		</div>
 						</div>
 				   		<section class="px-3 pt-3">					  
-							<div class="text-center sub-titulo-form textos-medios  mb-4">Condici&oacute;n de acceso</div>
+							<div class="text-center sub-titulo-form textos-medios  mb-4">Servicios adicionales</div>
 					  		<div class="border rounded p-3 mb-4">
 								<div class="row">
 									<div class="col-2 d-flex justify-content-center">
@@ -106,6 +106,7 @@
 												<th class="col-1 text-center"><h2><input type="checkbox" name="atraccion_todos" onclick="marcar(this);"></h2></th>
 												<th class="col-1 text-center"><h2>Id</h2></th>
 												<th class="col-1 text-center"><h2>Nombre</h2></th>
+												<th class="col-1 text-center"><h2>Precio</h2></th>
 												<th class="col-2 text-center"><h2>Imagen</h2></th>
 												<th class="col-1 text-center"><h2>Creado Por</h2></th>
 												<th class="col-1 text-center"><h2>Fecha Creacion</h2></th>
@@ -114,7 +115,7 @@
 												<th class="col-1 text-center"><h2>Estado</h2></th>																					
 											</tr>
 										</thead>
-										<tbody id="tbody_cacceso">	
+										<tbody id="tbody_sadicionales">	
 											
 										</tboby>	
 									</table>								
@@ -176,7 +177,8 @@
 								<input type="file" id="file2_condicion" accept=".jpg,.png" />
 								<br>
 								<div id="result2">El archivo es valido</div>
-													<img id="img2_condicion" width="400" height="260" />
+								<br>
+								<img id="img2_condicion" width="400" height="260" />
 							</div>
 						</div>
 						<div class="modal-footer">					
@@ -189,7 +191,8 @@
 			<!--Modal Activar/Desactivar atracciones--><!--tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true"-->
 			<div class="modal" tabindex="-1" id="estadoModalCacceso">
 				<div class="modal-dialog">
-					<div class="modal-content">								<!--<div class="modal-dialog modal-dialog-scrollable" role="document">-->
+					<div class="modal-content">			
+					<!--<div class="modal-dialog modal-dialog-scrollable" role="document">-->
 						<div class="modal-content">
 						<div class="modal-header">
 							<h2 class="modal-title">Activar/Desactivar condiciones de acceso</h2>
@@ -221,7 +224,7 @@
 			});
 			//
 			$(document).ready(function(){
-				cargar_datos_condicion();
+				cargar_datos_sadicionales();
 			});
 			//
 			document.getElementById("file_condicion").addEventListener("change",openImage,false); //Anadimos un evento al input para que se dispare cuando el usuario seleccione otro archivo  

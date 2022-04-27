@@ -55,11 +55,13 @@ function cargar_datos_condicion(){
 }
 //
 function abreModalcacceso(){
+    console.log('Modal acceso');
     limpiarGuardarC('txtAddCacceso', 'file_condicion', 'result_condicion', 'img_condicion');
     $('#addModalCacceso').modal('show'); // abrir modal agregar condición de acceso 
 } 
 //
 function abreModalActiDesactivacacceso(){ 
+    console.log('Modal acceso activar/Desactivar');
     var x = 0;
     var str_remp2;
     myArray = [];

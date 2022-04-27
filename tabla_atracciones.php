@@ -274,7 +274,7 @@
 						<div class="modal-footer">					
 							<!--<input type="button"  class="btn btn-default" data-dismiss="modal" value="Cerrar">
 							<input type="button" onclick="btnActualizarAtraccion()" class="btn btn-info" value="Actualizar">-->							
-							<div class="px-3"><input type="submit" id="btnActualizarAtraccion" value="Editar"></div>
+							<div class="px-3"><input type="submit" id="btnActualizarAtraccion" value="Actualizar"></div>
 							<div><input  type="button" data-dismiss="modal" value="Cerrar"></div>									
 						</div>
 					</div>
@@ -321,7 +321,7 @@
 				<div class="modal-dialog modal-lg">
 					<div class="modal-content">			
 					<!--<div class="modal-dialog modal-dialog-scrollable" role="document">-->
-						<div class="modal-content">
+						<!--<div class="modal-content">-->
 						<div class="modal-header">
 							<input type="hidden"  id="txtIdAtraccion_condicion">
 							<h2 class="modal-title">Condiciones de las atracci&oacute;n</h2>
