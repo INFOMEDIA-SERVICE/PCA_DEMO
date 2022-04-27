@@ -200,13 +200,46 @@ session_start();
 
         case 10:
 
+            $fecha_actual=date('d-m-Y');
+
             if ($token != '') {
                 $url = 'http://20.44.111.223:80/api/boleteria/servicioAdicional';
                 //$rDatos = $atrac->cargarAtracciones($token);
                 $rDatos = $consumo->Get($url, $headers); 
+
+               # print_r($rDatos);#exit;
+
+                $rDatos2=array();
+
+                foreach ($rDatos as $key  ) {
+                    //print_r($key->categoriaServicio->id); echo"<br>";
+
+                    if($key->categoriaServicio->id==1){//casilleros
+
+                        $url2 = 'http://20.44.111.223:80/api/boleteria/disponibilidadCasilleros?fecha='.$fecha_actual;
+                        //$rDatos = $atrac->cargarAtracciones($token);
+                        $disponibilidadCasilleros = $consumo->Get($url2, $headers); 
+
+                        //print_r("Disaponibilidad casilleros: ");
+                        //print_r($disponibilidadCasilleros);
+
+                        $key->disponibilidadCasilleros=$disponibilidadCasilleros;
+
+                        $rDatos2[]=$key;
+
+                    }else{
+                        $rDatos2[]=$key;
+                    }
+
+
+                }
+
+                #print_r($rDatos2);
+
+                //exit;
                 
-                if ($rDatos != '') {
-                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                if ($rDatos2 != '') {
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos2]); 
                 } else {                
                     echo json_encode(['sts'=>'NO']);
                 }
@@ -284,11 +317,8 @@ session_start();
 
           
             $array['idReserva']=$idreserva;
-
             
             $array['serviciosAdicionales']= json_decode($adicionales) ;
-            
-
             
             //
             $url = 'http://20.44.111.223:80/api/boleteria/reservaServicioAdicional';
@@ -296,6 +326,17 @@ session_start();
             $rGuardar = $consumo->Post($url, $headers, $array);
             //print_r($rGuardar);
             if($rGuardar->message == 'Se han agregado los servicios adicionales a la reserva'){
+
+                if($cont_lockers>0){
+                    $array2['idReserva']=$idreserva;
+                    $array2['cantidad']=$cont_lockers;
+                    $url2 = 'http://20.44.111.223:80/api/boleteria/reservaCasillas';
+                    //$rGuardar = $atrac->guardarAtraccion($anombre, $aimagen, $aextension, $token);
+                    $rGuardar2 = $consumo->Post($url2, $headers, $array2);
+                }
+                
+
+
                 echo json_encode(['sts'=>'OK','resultado'=>$rGuardar]); 
             }else{
                 echo json_encode(['sts'=>'NO','resultado'=>$rGuardar]);
@@ -502,10 +543,40 @@ session_start();
                 $url = 'http://20.44.111.223:80/api/boleteria/visitante';
                 $rGuardar = $consumo->Post($url, $headers, $array);
 
-               // print_r($rGuardar);exit;
+                 
+
+                $idvisitante=$rGuardar->id;
+
+                if($idvisitante!=''){
+
+                    if($reservarLocker==1){
+
+                        $array_casillas_disponibles= explode(",",$casillas_disponibles);
+
+                        if(count($array_casillas_disponibles)>0){
+
+                            foreach ($array_casillas_disponibles as $key  ) {
+                               $idcasilla=$key;
+                            }
+
+                            $array2['idVisitante'] = $idvisitante;
+                            $array2['idCasilla']  = $idcasilla;
+ 
+                            $url = 'http://20.44.111.223:80/api/boleteria/visitanteCasilla';
+                            $asignarCasilla = $consumo->Patch($url, $headers, $array2);
+
+                            //print_r($asignarCasilla);
+                            
+
+                        }
+
+                    }
+
+
+                }
 
                 if($rGuardar->message == 'Se ha creado el visitante'){
-                    echo json_encode(['sts'=>'OK','resultado'=>'Se ha creado el visitante']); 
+                    echo json_encode(['sts'=>'OK','resultado'=>$rGuardar]); 
                 }else{
                     echo json_encode(['sts'=>'NO']);
                 }
@@ -572,6 +643,100 @@ session_start();
             }
 
 
+
+        break;
+
+        case 25:
+            
+            //
+            $array2['idVisitante'] = $idvisitante;
+            $array2['idcasilla']  = $idcasilla;
+             
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/visitanteCasilla';
+            $asignarCasilla = $consumo->Patch($url, $headers, $array2);
+
+            print_r($asignarCasilla);
+
+            if($asignarCasilla->message == ' '){
+                echo json_encode(['sts'=>'OK']); 
+            }else{
+                echo json_encode(['sts'=>'NO']);
+            }           
+        break;
+
+        case 26:
+
+            if ($token != ''  ) {
+                $url = "http://20.44.111.223/api/configuracionGeneral/empresa";
+                //$rDatos = $atrac->cargarAtracciones($token);
+                $rDatos = $consumo->Get($url, $headers); 
+
+                if ($rDatos!='') {
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO', 'resultado'=>'No data']);
+                }
+            
+            } else {
+                die('Se produjo un Error al generar el Token');
+            }
+
+
+        break;
+
+        case 27:
+
+             
+            //
+            $array['nit'] = $nit;
+            
+            $array['nombre'] = $nombre;
+            $array['telefono'] = $telefono;
+            $array['direccion'] = $direccion;
+            $array['razonSocial'] = $razonSocial;
+            $array['terminosCondiciones'] = $terminosCondiciones;
+            $array['resolucionDian'] = $resolucionDian;
+            $array['decimales'] = $decimales;
+            $array['formatoMoneda'] = $formatoMoneda;
+            $array['emailRemitente'] = $emailRemitente;
+            $array['logo']['datosBase64'] = $datosBase64;
+            $array['logo']['formato'] = $formato;
+            $array['accountAdminId']=$accountAdminId;
+            //
+            $url = 'http://20.44.111.223:80/api/configuracionGeneral/empresa';
+            $rGuardar = $consumo->Post($url, $headers, $array);
+
+            //print_r($rGuardar);exit;
+
+            if($rGuardar->message == 'Datos guardados exitosamente'){
+                echo json_encode(['sts'=>'OK']); 
+            }else{
+                echo json_encode(['sts'=>'NO']);
+            }
+
+        break;
+
+        case 28:
+
+            if ($token != ''  ) {
+                $url = "http://20.44.111.223/api/auth/account";
+                //$rDatos = $atrac->cargarAtracciones($token);
+                $rDatos = $consumo->Get($url, $headers);
+                
+               // print_r($rDatos);exit;
+
+                $select=' <select name="accountAdminId" id="accountAdminId" > <option value="'.$rDatos->id.'" >'.$rDatos->name.'</option> </select> ';
+
+                if ($rDatos!='') {
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$select]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO', 'resultado'=>'No data']);
+                }
+            
+            } else {
+                die('Se produjo un Error al generar el Token');
+            }
 
         break;
 

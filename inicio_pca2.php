@@ -89,6 +89,33 @@ echo" </pre> ";*/
 
 	<script>
 
+function mueveReloj(){
+    momentoActual = new Date()
+    hora = momentoActual.getHours()
+    minuto = momentoActual.getMinutes()
+    segundo = momentoActual.getSeconds()
+
+    str_segundo = new String (segundo)
+    if (str_segundo.length == 1)
+       segundo = "0" + segundo
+
+    str_minuto = new String (minuto)
+    if (str_minuto.length == 1)
+       minuto = "0" + minuto
+
+    str_hora = new String (hora)
+    if (str_hora.length == 1)
+       hora = "0" + hora
+
+    horaImprimible = hora + " : " + minuto + " : " + segundo
+
+	$("#Hora").html(horaImprimible)
+
+    //document.form_reloj.reloj.value = horaImprimible
+
+    setTimeout("mueveReloj()",1000)
+}
+
 	$(document).on("click", "#taquilla", function(){
 
 		window.location.href="taquilla.php";
@@ -110,7 +137,7 @@ echo" </pre> ";*/
 
 	</script>
   </head>
-  <body>
+  <body onload="mueveReloj()">
   	<!-- body code goes here -->
     <header>
 	 	<nav class="color-cabezera container-fluid" style="padding:0px;position:fixed;z-index:1;">
@@ -193,7 +220,7 @@ echo" </pre> ";*/
 					<figure class="pt-3"><img src="imagenes/s.png"></figure>
 				</div>
 				<div class="col-lg-4 col-7  d-flex align-items-center justify-content-end">
-					<div class="text-white mr-3 pt-3">9:30 A.M.</div>
+					<div class="text-white mr-3 pt-3" id="Hora">9:30 A.M.</div>
 					<figure class="text-white mr-3  pt-3"><img src="imagenes/Notificaciones.png"></figure>
 					<figure class="text-white mr-3  pt-3"><img src="imagenes/Línea 1.png"></figure>
 					<div class="login mt-2">MB<div>

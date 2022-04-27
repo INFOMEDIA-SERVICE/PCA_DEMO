@@ -29,7 +29,7 @@ session_start();
                 if ($rDatos != '') {
                     echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
                 } else {                
-                    echo json_encode(['sts'=>'NO']);
+                    echo json_encode(['sts'=>'NO', 'resultado'=>$rDatos]);
                 }
             } else {
                 die('Se produjo un Error al generar el Token');
@@ -193,31 +193,30 @@ session_start();
                 die('Se produjo un Error al generar el Token');
             } 
         break;
-
-        case 11://Guarda cliente en la boleta
+        
+        case 11:
             $arr_nombres=explode(" ",$nombre);
-
             $nombresN=$arr_nombres[0];
             $apellidosN=$arr_nombres[1];
+            $array['email']=$email;
+            $array['telefono']=$telefono;
+            #$array['estado']='ACTIVO';
+            $array['fechaNacimiento']='01-01-1920';
+            $array['tipoIdentificacion']=$tipo_identificacion;
+            $array['numeroIdentificacion']=$numero_documento;
+            $array['primerNombre']=$nombresN;
+            $array['primerApellido']=$apellidosN;
 
-
-            $array6['email']=$email;
-            $array6['telefono']=$telefono;
-            $array6['estado']='ACTIVO';
-            $array6['fechaNacimiento']='01-01-1920';
-            $array6['tipoIdentificacion']=$tipo_identificacion;
-            $array6['numeroIdentificacion']=$numero_documento;
-            $array6['primerNombre']=$nombresN;
-            $array6['primerApellido']=$apellidosN;            
             //
             $url = 'http://20.44.111.223:80/api/gestionClientes/cliente';
             //$rGuardar = $atrac->guardarAtraccion($anombre, $aimagen, $aextension, $token);
-            $rGuardar = $consumo->Post($url, $headers, $array6);
+            $rGuardar = $consumo->Post($url, $headers, $array);
             if($rGuardar->message == 'Se ha creado el cliente'){
-                echo json_encode(['sts'=>'OK','resultado'=>$rGuardar]); 
+            echo json_encode(['sts'=>'OK','resultado'=>$rGuardar]);
             }else{
-                echo json_encode(['sts'=>'NO']);
+            echo json_encode(['sts'=>'NO','resultado'=>$rGuardar]);
             }
+
         break;
 
         case 12://Guarda reserva de la boleta

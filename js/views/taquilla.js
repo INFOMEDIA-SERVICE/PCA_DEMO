@@ -2,8 +2,8 @@ function retornarDatosBoleta(idboleta){
     var json_boletas_nombres=localStorage.getItem('boletas_nombres');
     var arr_boletas_nombres= JSON.parse(json_boletas_nombres);
 
-    console.log('arr_boletas_nombres *****')
-    console.log(arr_boletas_nombres)
+    //console.log('arr_boletas_nombres *****')
+    //console.log(arr_boletas_nombres)
     var reto='';
     arr_boletas_nombres.forEach(function(boleta, index) {
         
@@ -19,7 +19,7 @@ function retornarDatosBoleta(idboleta){
   } 
 
 function cargar_datos_taquilla(filtro){
-    console.log('Cargar datos'); 
+   // console.log('Cargar datos'); 
 
     var info_boletas= JSON.parse( localStorage.getItem('boletas_nombres'));
 
@@ -35,7 +35,7 @@ function cargar_datos_taquilla(filtro){
             success: function(r2) {            
                 if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
                     if(typeof r2.resultado.status === 'undefined'){
-                        console.log('CORRECTO 200');
+                        //console.log('CORRECTO 200');
                         //console.log(r2)                
                         var str_remp='';
     
@@ -68,7 +68,7 @@ function cargar_datos_taquilla(filtro){
                             //console.log(str_remp);
                             $("#boletas").html(str_remp);
                     }else{
-                        console.log(r2.resultado.status);
+                        //console.log(r2.resultado.status);
                     }                                            
                    
                 }
@@ -79,7 +79,7 @@ function cargar_datos_taquilla(filtro){
     }else{
         //console.log("El array tiene datos")
 
-        console.log("filtro:"+filtro)
+        //console.log("filtro:"+filtro)
 
 
         str_remp ='';
@@ -132,7 +132,7 @@ function cargar_adicionales(filtro){
     if(info_adicionales==null){
 
         $.ajax({        
-            url: "ajax/ajxRequest.php",
+            url: "ajax/ajxRequest2.php",
             data: { op: '10' },
             dataType: 'json',
             type: 'POST',
@@ -140,8 +140,8 @@ function cargar_adicionales(filtro){
             success: function(r2) {            
                 if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
                     if(typeof r2.resultado.status === 'undefined'){
-                        console.log('CORRECTO 200');
-                        console.log(r2)                
+                       // console.log('CORRECTO 200');
+                       // console.log(r2)                
                         var str_remp='';
     
                         let productos = [];
@@ -153,8 +153,23 @@ function cargar_adicionales(filtro){
                             n.tipo_producto="adicional";
     
                             let nuevaLongitud = productos.push(n)
+
+                            
     
-                                str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye adicional-info informacion" idadicional="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 adicional-add"  idtipo_servicio="'+n.categoriaServicio.id+'"  idadicional="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> </div>     </div>      </div>';
+                                str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye adicional-info informacion" idadicional="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 adicional-add"  idtipo_servicio="'+n.categoriaServicio.id+'"  idadicional="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div>       ';
+
+                                if(n.categoriaServicio.id==1){
+                                   // console.log("Lo encontre?:"+n.nombre)
+
+                                    str_remp=str_remp+'<div><h2>Cantidad disponible: <span class="badge bg-success">'+n.disponibilidadCasilleros.disponibles+'</span></h2></div>';
+
+                                    
+                                }
+                                
+                                str_remp=str_remp+'</div>     </div>      </div>';
+
+
+                               // str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye boleta-info informacion" idboleta="'+n.tipoBoleta.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 boleta-add"    idboleta="'+n.tipoBoleta.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.tipoBoleta.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.tipoBoleta.nombre +'</h4> <div><h2>$'+n.tipoBoleta.precio.toLocaleString()+'</h2></div> <div><h2>Cantidad disponible: <span class="badge bg-success">'+n.tipoBoleta.cantidadDisponible+'</span></h2></div> </div>     </div>      </div>';
                         
                             });
                             
@@ -169,7 +184,7 @@ function cargar_adicionales(filtro){
                             //console.log(str_remp);
                             $("#boletas").html(str_remp);
                     }else{
-                        console.log(r2.resultado.status);
+                       // console.log(r2.resultado.status);
                     }                                            
                    
                 }
@@ -187,13 +202,31 @@ function cargar_adicionales(filtro){
 
                 if( n.nombre.toLowerCase().includes(filtro.toLowerCase()) ){
 
-                    str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye adicional-info informacion" idadicional="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 adicional-add"    idadicional="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> </div>     </div>      </div>';
+                    str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye adicional-info informacion" idadicional="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 adicional-add"    idadicional="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> ';
+
+                    if(n.categoriaServicio.id==1){                    
+
+                        str_remp=str_remp+'<div><h2>Cantidad disponible: <span class="badge bg-success">'+n.disponibilidadCasilleros.disponibles+'</span></h2></div>';
+
+                        
+                    }
+                    
+                    str_remp=str_remp+'</div>     </div>      </div>';
 
                 }
 
             }else{
 
-                    str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye adicional-info informacion" idadicional="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 adicional-add"    idadicional="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> </div>     </div>      </div>';
+                    str_remp=str_remp+'<div class="col-lg-4 p-2 " > <div >   <img class="eye adicional-info informacion" idadicional="'+n.id+'" src="imagenes/info.png" align="right" style="cursor:pointer" width="15%" alt=""/> </div>  <div class="sombra2 panel2 adicional-add"    idadicional="'+n.id+'" style="padding: 0px;" >         <div style="background: #ffffff; height: 120px; border-radius: 20px 20px;"> <div class="pt-3 d-flex justify-content-end pr-2 centrado"> <img src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="150" height="130" style="border-radius:10px;" class="card-img-top" alt="">  </div> </div> <div class="p-2"> <h4 class="pt-2">'+n.nombre +'</h4> <div><h2>$'+n.precio.toLocaleString()+'</h2></div> ';
+
+                    if(n.categoriaServicio.id==1){
+
+                        str_remp=str_remp+'<div><h2>Cantidad disponible: <span class="badge bg-success">'+n.disponibilidadCasilleros.disponibles+'</span></h2></div>';
+
+                        
+                    }
+
+                    str_remp=str_remp+' </div>     </div>      </div>';
             }
     
             
@@ -216,7 +249,7 @@ function cargar_adicionales(filtro){
 }
 
 function validar_cliente(tipo_documento,numero_documento){
-    console.log("Validare el cliente");
+    //console.log("Validare el cliente");
     $.ajax({        
         url: "ajax/ajxRequest.php",
         data: { op: '9',tipo_identificacion:tipo_documento,numero_documento:numero_documento },
@@ -229,7 +262,7 @@ function validar_cliente(tipo_documento,numero_documento){
 
             if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
                 if(typeof r2.resultado.status === 'undefined'){
-                    console.log(r2['resultado'][0])
+                    //console.log(r2['resultado'][0])
 
                     var nombre=r2['resultado'][0]['nombreCompleto'];
 
@@ -262,7 +295,7 @@ function validar_cliente(tipo_documento,numero_documento){
                         //async: false,
                         success: function(r3) { 
                 
-                            console.log(r3.resultado.id)
+                          //  console.log(r3.resultado.id)
                             localStorage.setItem("idreserva", r3.resultado.id)
                             
                 
@@ -278,7 +311,7 @@ function validar_cliente(tipo_documento,numero_documento){
                    
                 }else{
                     //console.log(r2.resultado.status);
-                    console.log("No encontrado")
+                   // console.log("No encontrado")
                     $("#numero_documento").attr('readonly', false);
                     $("#tipo_documento").attr('readonly', false);
                     $("#nombre").attr('readonly', false);
@@ -308,7 +341,7 @@ function crear_cliente(){
     var identificacion_cliente=localStorage.getItem('identificacion_cliente');
 var tipo_identificacion_cliente=localStorage.getItem('tipo_identificacion_cliente');
 
-console.log("identificacion_cliente:"+identificacion_cliente+" , tipo_identificacion_cliente:"+tipo_identificacion_cliente);
+//console.log("identificacion_cliente:"+identificacion_cliente+" , tipo_identificacion_cliente:"+tipo_identificacion_cliente);
 
 if(identificacion_cliente==null && tipo_identificacion_cliente==null){
     //alert("Debo crear el cliente***")
@@ -391,27 +424,34 @@ function pagar(){
 
     let new_array_adicionales=[];
 
+    var cont_lockers=0;
+
     $.each(arr_adicionales, function(index, datos) {
 
 
         let new_sub_array=[];
         var c=0;
         if(datos['cant_taquilla']>0){
+
            
             new_array_adicionales.push({cantidad: datos['cant_taquilla'], idServicioAdicional: datos['id']});
  
+            if(datos['categoriaServicio']['id']==1){
+                cont_lockers=datos['cant_taquilla'];
+            }
 
         }
 
     });
 
 
+    //console.log("Esta a punto de reservar :"+cont_lockers+" Lockers")
 
+    //return(false);
 
+   // console.log("longitud array completo")
 
-    console.log("longitud array completo")
-
-    console.log(new_array.length)
+   // console.log(new_array.length)
 
     if(new_array.length==0 ){
         //solo envio adicionales, entonces debo capturar la reserva
@@ -421,8 +461,8 @@ function pagar(){
             if(idreserva!="undefined"){
 
                 $.ajax({        
-                    url: "ajax/ajxRequest.php",
-                    data: { op: '13',idreserva:idreserva,adicionales:JSON.stringify(new_array_adicionales) },
+                    url: "ajax/ajxRequest2.php",
+                    data: { op: '13',idreserva:idreserva,adicionales:JSON.stringify(new_array_adicionales),cont_lockers:cont_lockers },
                     dataType: 'json',
                     async: false, 
                     type: 'POST',
@@ -451,14 +491,14 @@ function pagar(){
 
 
     }else{
-        console.log("Paso por aca")
+       // console.log("Paso por aca")
         //lanzo la peticion de crear la reserva
         var numero_documento = $("#numero_documento").val();
         var tipo_documento   = $("#tipo_documento").val();
 
         var boletas_enviar=JSON.stringify(new_array)
 
-        console.log(new_array)
+       // console.log(new_array)
 
         $.ajax({        
             url: "ajax/ajxRequest.php",
@@ -471,21 +511,21 @@ function pagar(){
                 
                 
                 
-                console.log(r2)
+                //console.log(r2)
     
                 if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
                     //alert(r2.resultado.message+" "+r2.resultado.id) 
 
                     
                     
-                    console.log("new_array_adicionales")
-                    console.log(new_array_adicionales)
+                   // console.log("new_array_adicionales")
+                   // console.log(new_array_adicionales)
 
                     if(new_array_adicionales.length>0){
 
                         $.ajax({        
-                            url: "ajax/ajxRequest.php",
-                            data: { op: '13',idreserva:r2.resultado.id,adicionales:JSON.stringify(new_array_adicionales) },
+                            url: "ajax/ajxRequest2.php",
+                            data: { op: '13',idreserva:r2.resultado.id,adicionales:JSON.stringify(new_array_adicionales),cont_lockers:cont_lockers },
                             dataType: 'json',
                             type: 'POST',
                             async: false, 
@@ -494,7 +534,7 @@ function pagar(){
                     
                                 
                                 
-                                console.log(r3)
+                              //  console.log(r3)
                     
                                 if (r3.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
                                     //alert("Reserva: "+r2.resultado.id+" A nombre de:"+$("#nombre").val()+" Creada con exito!") 

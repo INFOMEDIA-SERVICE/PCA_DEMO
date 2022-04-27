@@ -92,18 +92,28 @@ echo" </pre> ";*/
 	var span = document.getElementsByClassName("close")[0];
 	var body = document.getElementsByTagName("body")[0];
 
+		function formatear_sin_comas(valor){
+
+			
+			let valor2= valor.substr(0, valor.length-3)
+			let valor3= valor2.replace(",", "");
+			let valor4= valor3.replace(",", "");
+
+			return(valor4);
+		}
+		
+
 		function recalcular_cambio(){
 			/* calculo el cambio */
 		//alert("Entro")
-		var sum_ef_sub=$("#suma_efectivo").val()
-		var sum_ef_sub2= sum_ef_sub.substr(0, sum_ef_sub.length-3)
-		var sum_ef_sub3=sum_ef_sub2.replace(",", "");
-		var sum_ef= sum_ef_sub3.replace(",", "");
 
-		var sum_ta_sub=$("#suma_tarjeta").val()
-		var sum_ta_sub2= sum_ta_sub.substr(0, sum_ta_sub.length-3)
-		var sum_ta_sub3=sum_ta_sub2.replace(",", "");
-		var sum_ta= sum_ta_sub3.replace(",", "");
+		 
+
+		let sum_ef_sub=$("#suma_efectivo").val()
+		let sum_ef= formatear_sin_comas(sum_ef_sub);
+
+		let sum_ta_sub=$("#suma_tarjeta").val()
+		let sum_ta= formatear_sin_comas(sum_ta_sub);
 
 		if(sum_ef==''){
 			sum_ef=0;
@@ -112,7 +122,7 @@ echo" </pre> ";*/
 			sum_ta=0;
 		}
 
-		console.log("sum_ef:"+sum_ef+" , sum_ta:"+sum_ta)
+		//console.log("sum_ef:"+sum_ef+" , sum_ta:"+sum_ta)
 
 		var valor_total_suma= parseInt(sum_ef)+parseInt(sum_ta);
 
@@ -148,18 +158,18 @@ echo" </pre> ";*/
 
 		var info_boletas= JSON.parse( localStorage.getItem('boletas_nombres'));
 
-		console.log(info_boletas);
+		//console.log(info_boletas);
 
 		var str_remp='';
 
 		info_boletas.forEach(function(datos, index) { 
 
 
-			console.log(datos);
+			//console.log(datos);
 			if(idboleta== datos['id'] ){
-				console.log("Encontre la boleta"+datos['id']);
+				//console.log("Encontre la boleta"+datos['id']);
 
-				str_remp=str_remp+' <div class="centrado" ><h2>'+datos['nombre']+'</h2></div>	<table class="table-bordered" >	<tr> <td > <h3>Precio:  </h3> </td> <td colspan="2" class="centrado" > <h4>$'+datos['precio'].toLocaleString() +'</h4></td> </tr> <tr> <td > <h3>Descripcion:  </h3> </td> <td colspan="2" class="centrado" > <h4>'+datos['descripcion']+'</h4></td> </tr> <tr> <td > <h3> Categoria Edad:  </h3> </td> <td colspan="2" class="centrado" > <h4> De '+datos['categoriaEdad']['edadInicial']+' a '+datos['categoriaEdad']['edadFinal']+' años</h4></td> </tr> </table><br><br> <div  ><h2> Atracciones </h2></div> <table class="table-bordered"> ';
+				str_remp=str_remp+' <div class="centrado" ><h2>'+datos['nombre']+'</h2></div>	<table  >	<tr> <td > <h3>Precio:  </h3> </td> <td colspan="2" class="centrado" > <h4>$'+datos['precio'].toLocaleString() +'</h4></td> </tr> <tr> <td > <h3>Descripcion:  </h3> </td> <td colspan="2" class="centrado" > <h4>'+datos['descripcion']+'</h4></td> </tr> <tr> <td > <h3> Categoria Edad:  </h3> </td> <td colspan="2" class="centrado" > <h4> De '+datos['categoriaEdad']['edadInicial']+' a '+datos['categoriaEdad']['edadFinal']+' años</h4></td> </tr> </table><br><br> <div  ><h2> Atracciones </h2></div> <table  > ';
 				
 				datos['atracciones'].forEach(function(datos2, index2) {
 
@@ -195,7 +205,7 @@ echo" </pre> ";*/
 			if(tipo=='boletas'){
 				cargar_datos_taquilla(filtro);
 			}else if(tipo=='adicionales'){
-				console.log("Entro a los adicionales!!")
+				//console.log("Entro a los adicionales!!")
 				cargar_adicionales(filtro)
 			}
 		});
@@ -539,7 +549,7 @@ $.each(arr_recorrer, function(index, datos) {
 
 		 var long=arr_pintar.length;
 
-		 console.log("long: "+long)
+		 //console.log("long: "+long)
 
 		 $.each(arr_pintar, function(index, datos) {
 
@@ -607,16 +617,16 @@ recalcular_cambio();
 
 			var acumulado=$("#suma_efectivo").attr('acumulado');
 
-			console.log('acumulado_antes:'+acumulado)
+			//console.log('acumulado_antes:'+acumulado)
 
 			var str2 = acumulado.substring(0, acumulado.length - 1);
 
 			if(str2==''){
-				console.log("llego al cero!!!!!")
+				//console.log("llego al cero!!!!!")
 				str2=0;
 			}
 
-			console.log('acumulado_despues:'+str2)
+			//console.log('acumulado_despues:'+str2)
 
 			$("#suma_efectivo").attr('acumulado',str2);
 
@@ -628,16 +638,16 @@ recalcular_cambio();
 
 			var acumulado=$("#suma_tarjeta").val();
 
-			console.log('acumulado_antes:'+acumulado)
+			//console.log('acumulado_antes:'+acumulado)
 
 			var str2 = acumulado.substring(0, acumulado.length - 1);
 
 			if(str2==''){
-				console.log("llego al cero!!!!!")
+				//console.log("llego al cero!!!!!")
 				str2=0;
 			}
 
-			console.log('acumulado_despues:'+str2)
+			//console.log('acumulado_despues:'+str2)
 
 			$("#suma_tarjeta").attr('acumulado',str2);
 
@@ -757,7 +767,7 @@ recalcular_cambio();
 		}
 
 		
-		console.log("id:"+id)
+		//console.log("id:"+id)
 	});
 
 	$(document).on("click", "#pagar", function(){
@@ -769,16 +779,15 @@ recalcular_cambio();
 		var email = $("#email").val()
 		var telefono=$("#telefono").val();
 
-		var suma_efectivo_sub=$("#suma_efectivo").val();
-		var suma_efectivo_sub2= suma_efectivo_sub.substr(0, suma_efectivo_sub.length-3)
-		var suma_efectivo_sub3=suma_efectivo_sub2.replace(",", "");
-		var suma_efectivo= suma_efectivo_sub3.replace(",", "");
+		 
+
+		let suma_efectivo_sub=$("#suma_efectivo").val()
+		let suma_efectivo= formatear_sin_comas(suma_efectivo_sub);
+
+		let suma_tarjeta_sub=$("#suma_tarjeta").val()
+		let suma_tarjeta= formatear_sin_comas(suma_tarjeta_sub);
 
 		
-		var suma_tarjeta_sub=$("#suma_tarjeta").val();
-		var suma_tarjeta_sub2= suma_tarjeta_sub.substr(0, suma_tarjeta_sub.length-3)
-		var suma_tarjeta_sub3=suma_tarjeta_sub2.replace(",", "");
-		var suma_tarjeta= suma_tarjeta_sub3.replace(",", "");
 
 		if(suma_efectivo==''){
 			suma_efectivo=0;
@@ -873,10 +882,12 @@ recalcular_cambio();
 
 		//var suma_tarjeta=$("#suma_tarjeta").attr('acumulado');
 
-		var suma_tarjeta_sub=$("#suma_tarjeta").val();
-		var suma_tarjeta_sub2= suma_tarjeta_sub.substr(0, suma_tarjeta_sub.length-3)
-		var suma_tarjeta_sub3=suma_tarjeta_sub2.replace(",", "");
-		var suma_tarjeta= suma_tarjeta_sub3.replace(",", "");
+		 
+
+		let suma_tarjeta_sub=$("#suma_tarjeta").val()
+		let suma_tarjeta= formatear_sin_comas(suma_tarjeta_sub);
+
+
 
 		if(suma_tarjeta>0){
 			var valor_complementario= parseInt(sumatoria_total)-parseInt(suma_tarjeta);
@@ -909,10 +920,8 @@ recalcular_cambio();
 
 		var sumatoria_total =$("#sumatoria_total").attr('val_sum');
 
-		var suma_efectivo_sub=$("#suma_efectivo").val();
-		var suma_efectivo_sub2= suma_efectivo_sub.substr(0, suma_efectivo_sub.length-3)
-		var suma_efectivo_sub3=suma_efectivo_sub2.replace(",", "");
-		var suma_efectivo= suma_efectivo_sub3.replace(",", "");
+		let suma_efectivo_sub=$("#suma_efectivo").val()
+		let suma_efectivo= formatear_sin_comas(suma_efectivo_sub);
 
 		if(suma_efectivo==''){
 			suma_efectivo=0;
@@ -942,7 +951,7 @@ recalcular_cambio();
 			//$("#suma_tarjeta").attr('acumulado',valor_complementario)
 			recalcular_cambio();
 		}else{
-			console.log("Por aqui es camilito")
+			 
 		}
 
 		$("#div_efectivo").removeClass("tipo_pago_check");
@@ -1003,8 +1012,8 @@ recalcular_cambio();
 
 				   <select class="selectAltura" id="tipo_documento" >
 					   <option value="">Tipo de Documento</option>
-					   <option value="CC" >Cedula Ciudadania</option>
-					   <option value="CE">Cedula Estranjeria</option>
+					   <option value="CC" >Cedula Ciudadanía</option>
+					   <option value="CE">Cedula Extranjería</option>
 					   <option value="PAS">Pasaporte</option>
 				   </select>
 					   

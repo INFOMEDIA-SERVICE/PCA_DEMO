@@ -106,9 +106,10 @@
       }
 
     @page {
-		margin-left: 0.2cm;
-		margin-right: 0.2cm;
+		margin-left: 1.5cm;
+		margin-right: 0.1cm;
         margin-top: 0.1cm;
+        margin-bottom : 0.1cm;
 	}
 
     h1 { font-size: 80% }  
@@ -205,21 +206,36 @@
  
     $codesDir = "codes/";
     
-    $html.='<table width="100%">  ';
+    $html.='<table width="100%" style="text-align:center;"> <tr> <td style="text-align:center;"> <img src="../../imagenes/pca_pdf.png"  width="100" height="70"> </td> </tr>  ';
+
+    
     
     foreach ($rDatos->boletas as $key ) {
 
         if($idboleta==$key->id){
 
+            /*echo "<pre>";
+            print_r($key);
+            echo "</pre>";*/
+
+
             $codeFile= $key->id.".png";
 
-            $rest = substr($key->id, -6);
+            $rest = substr($key->id, -9);
 
-            QRcode::png($key->id, $codesDir.$codeFile, "H", 5); 
+            QRcode::png($key->id, $codesDir.$codeFile, "H", 3); 
 
-            $html.=' <tr> <td width="100%" style="text-align:center;" >'.$key->tipoBoleta->nombre.' <br> Boleta valida para: '.$fecha_reserva.' <br> # Boleta: '.$rest.' <img class="img-thumbnail " src="'.$codesDir.$codeFile.'" /> <br> <span class="El-cdigo-QR-te-servir-para-identificarte-e-ingresar-al-parque">
+            # Locker: '.$key->visitante->reservaCasilla->casilla->id.' -
+
+            if($key->visitante->reservaCasilla->casilla->id!=''){
+                $locker=' <br> Locker: '.$key->visitante->reservaCasilla->casilla->id ;
+            }else{
+                $locker='';
+            }
+
+            $html.=' <tr> <td width="100%" style="text-align:center;" >'.$key->tipoBoleta->nombre.' <br> Boleta valida para: <br> '.$fecha_reserva.' <br> '.$nombre.' '.$apellido.' '.$locker.' <br>  Clave del parque: '.$key->visitante->codigo.' <br> # Boleta: '.$rest.' <img class="img-thumbnail "  width="140" height="140" src="'.$codesDir.$codeFile.'" /> <br> <span class="El-cdigo-QR-te-servir-para-identificarte-e-ingresar-al-parque">
             El código QR te servirá para identificarte e ingresar al parque
-            </span> </td>  <td style="text-align:center;" width="40%"></td> </tr> <tr></tr> <tr> <td td width="100%" colspan="2" ><br><br></td> </tr> ';
+            </span> </td>  <td style="text-align:center;" width="40%"></td> </tr>  ';
        
 
         }
@@ -253,6 +269,8 @@
 
     exit;*/
 
+   // exit;
+
     // Load HTML content 
      $dompdf->loadHtml($html); 
 
@@ -269,4 +287,7 @@
     $dompdf->render(); 
     #$dompdf->stream("Atracciones.pdf");
     $dompdf->stream("niceshipest", array("Attachment" => 0));
+
+    sleep(3);
+    echo "<script languaje='javascript' type='text/javascript'>window.close();</script>";
 ?>

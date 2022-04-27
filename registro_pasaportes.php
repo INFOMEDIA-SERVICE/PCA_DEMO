@@ -174,14 +174,20 @@ echo" </pre> ";*/
 	 
 	 $(document).on("click", ".agregar", function(){
         
-		var idreserva=$(this).attr('idreserva');
-		var idboleta =$(this).attr('idboleta');
-		var edadInicial=$(this).attr('edadInicial');
-		var edadFinal=$(this).attr('edadFinal');
-		var estaturaCmMin=$(this).attr('estaturaCmMin');
-		var estaturaCmMax=$(this).attr('estaturaCmMax');
+		let idreserva=$(this).attr('idreserva');
+		let idboleta =$(this).attr('idboleta');
+		let edadInicial=$(this).attr('edadInicial');
+		let edadFinal=$(this).attr('edadFinal');
+		let estaturaCmMin=$(this).attr('estaturaCmMin');
+		let estaturaCmMax=$(this).attr('estaturaCmMax');
+		let casillas_disponibles=$(this).attr('casillas_disponibles');
+		let pasaporteNombre=$(this).attr('pasaporteNombre');
 
-		$("#nombreR").val('');
+		//console.log("casillas_disponibles")
+		//console.log( casillas_disponibles )
+		//return(false);
+
+		/*$("#nombreR").val('');
 		$("#apellidoR").val('');
 		$("#fecha_nacimientoR").val('');
 		$("#alturaR").val('');
@@ -189,17 +195,44 @@ echo" </pre> ";*/
 		$("#numero_documentoR").val('');
 		$("#alertaFechaNacimiento").html('')
 		$("#alertaEstatura").html('')
+		$("#casillas_disponibles").val();*/
 
-
+		$("#PasaporteN").html(pasaporteNombre);
 		$("#idreservaR").val(idreserva);
 		$("#idboletaR").val(idboleta);
 		$("#edadInicialR").val(edadInicial);
 		$("#edadFinalR").val(edadFinal);
 		$("#estaturaCmMinR").val(estaturaCmMin)
 		$("#estaturaCmMaxR").val(estaturaCmMax)
+		$("#casillas_disponiblesR").val(casillas_disponibles)
 		 
 		//alert("idreserva:"+idreserva+" , idboleta:"+idboleta);
 		$("#miModal").modal("show");
+
+		console.log("casillas_disponibles:"+casillas_disponibles)
+
+		if(casillas_disponibles!=''){
+
+			var array_casillas_disponibles= casillas_disponibles.split(',');
+
+			console.log("array_casillas:")
+			console.log(array_casillas_disponibles)
+
+			if(array_casillas_disponibles.length>0){
+				
+				
+				$("#div_lockers").show();
+			
+			
+			
+			}else{
+				console.log("No tiene casillas por asignar");
+			}
+
+		}
+
+		
+
 
 		
 
@@ -209,9 +242,11 @@ echo" </pre> ";*/
 	 $(document).on("click", ".verVisitante", function(){
         var idreserva=$(this).attr('idreserva');
 		var idboleta =$(this).attr('idboleta');
+		var pasaporteNombre=$(this).attr('pasaporteNombre');
 
 		$("#idreservaV").val(idreserva);
 		$("#idboletaV").val(idboleta);
+		$("#PasaporteV").html(pasaporteNombre);
 		$("#miModal2").modal("show");
 		visitante();
 
@@ -222,6 +257,19 @@ echo" </pre> ";*/
 
 	$(document).on("click", ".regresar", function(){
 		window.location.href="inicio_pca2.php";
+	});
+
+	$(document).on("click", "#imprimirBoleta", function(){
+
+		let idreserva=$("#idreservaV").val();
+		let idboleta=$("#idboletaV").val();
+		let nombre=$("#nombreV").val();
+		let apellido=$("#apellidoV").val();
+
+		let url_pdf="exportar/reserva/reserva_boleta_pdf.php";
+
+		window.open(url_pdf+'?idreserva='+idreserva+'&idboleta='+idboleta+'&nombre='+nombre+'&apellido='+apellido,  '_blank');
+
 	});
 
 
@@ -325,8 +373,8 @@ echo" </pre> ";*/
 
 				   <select class="selectAltura" id="tipo_documento" >
 					   <option value="">Tipo de Documento</option>
-					   <option value="CC" >Cedula Ciudadania</option>
-					   <option value="CE">Cedula Estranjeria</option>
+					   <option value="CC" >Cedula Ciudadanía</option>
+					   <option value="CE">Cedula Extranjería</option>
 					   <option value="PAS">Pasaporte</option>
 				   </select>
 					   
@@ -454,6 +502,11 @@ echo" </pre> ";*/
 					<div class="modal-body" id="contenidoModal">
 						
 					<form>
+
+					<div class="form-group" >
+						<h2 id="PasaporteN"></h2>
+					</div>
+
 					<div class="form-group">
 						<label for="nombreR">Nombres:*</label>
 						<input type="email" class="form-control" id="nombreR" aria-describedby="emailHelp" placeholder="Nombres">
@@ -491,8 +544,15 @@ echo" </pre> ";*/
 					</div>
 
 					<div class="form-group">
-						<label for="numero_documento">Numero Documento:</label>
-						<input type="email" class="form-control" id="numero_documentoR" aria-describedby="emailHelp" placeholder="Numero documento">
+						<label for="numero_documento">Número Documento:</label>
+						<input type="email" class="form-control" id="numero_documentoR" aria-describedby="emailHelp" placeholder="Número documento">
+						
+					</div>
+
+
+					<div class="form-group " id="div_lockers" style="display:none">
+						<label for="numero_documento" id="label_lockers">Asignar locker:</label>
+						<input type="checkbox" class="" id="agregarLockerR" >
 						
 					</div>
 
@@ -504,6 +564,7 @@ echo" </pre> ";*/
 					<input type="hidden" id="edadFinalR" value="">
 					<input type="hidden" id="estaturaCmMinR" value="">
 					<input type="hidden" id="estaturaCmMaxR" value="">
+					<input type="hidden" id="casillas_disponiblesR" value="">
 					
 					<input type="button" onclick="registrarBoleta();" class="boton_campo" style="width: 100%" value="REGISTRAR" id="registrar">
 					</form>
@@ -526,6 +587,12 @@ echo" </pre> ";*/
 					<div class="modal-body" id="contenidoModal">
 						
 					<form>
+					<div class="form-group">
+						<h2 id="PasaporteV"></h2>
+					</div>
+					<div class="form-group" >
+						<input type="button"   class="boton_campo30"  value="IMPRIMIR BOLETA" id="imprimirBoleta">
+					</div>
 					<div class="form-group">
 						<label for="nombreR">Nombres:*</label>
 						<input type="email" class="form-control" id="nombreV" aria-describedby="emailHelp" placeholder="Nombres">
@@ -565,8 +632,14 @@ echo" </pre> ";*/
 						
 					</div>
 
+					<div class="form-group" id="divCasillaAsignada" style="display:none">
+						<label for="" id="CasillaAsignada"></label>
+						 
+					</div>
+
 					<input type="hidden" id="idreservaV" value="">
 					<input type="hidden" id="idboletaV" value="">
+
 					
 					<!-- <input type="button" onclick="registrarBoleta();" class="boton_campo" style="width: 100%" value="REGISTRAR" id="registrar"> -->
 					</form>
