@@ -665,6 +665,81 @@ session_start();
             }           
         break;
 
+        case 26:
+
+            if ($token != ''  ) {
+                $url = "http://20.44.111.223/api/configuracionGeneral/empresa";
+                //$rDatos = $atrac->cargarAtracciones($token);
+                $rDatos = $consumo->Get($url, $headers); 
+
+                if ($rDatos!='') {
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO', 'resultado'=>'No data']);
+                }
+            
+            } else {
+                die('Se produjo un Error al generar el Token');
+            }
+
+
+        break;
+
+        case 27:
+
+             
+            //
+            $array['nit'] = $nit;
+            
+            $array['nombre'] = $nombre;
+            $array['telefono'] = $telefono;
+            $array['direccion'] = $direccion;
+            $array['razonSocial'] = $razonSocial;
+            $array['terminosCondiciones'] = $terminosCondiciones;
+            $array['resolucionDian'] = $resolucionDian;
+            $array['decimales'] = $decimales;
+            $array['formatoMoneda'] = $formatoMoneda;
+            $array['emailRemitente'] = $emailRemitente;
+            $array['logo']['datosBase64'] = $datosBase64;
+            $array['logo']['formato'] = $formato;
+            $array['accountAdminId']=$accountAdminId;
+            //
+            $url = 'http://20.44.111.223:80/api/configuracionGeneral/empresa';
+            $rGuardar = $consumo->Post($url, $headers, $array);
+
+            //print_r($rGuardar);exit;
+
+            if($rGuardar->message == 'Datos guardados exitosamente'){
+                echo json_encode(['sts'=>'OK']); 
+            }else{
+                echo json_encode(['sts'=>'NO']);
+            }
+
+        break;
+
+        case 28:
+
+            if ($token != ''  ) {
+                $url = "http://20.44.111.223/api/auth/account";
+                //$rDatos = $atrac->cargarAtracciones($token);
+                $rDatos = $consumo->Get($url, $headers);
+                
+               // print_r($rDatos);exit;
+
+                $select=' <select name="accountAdminId" id="accountAdminId" > <option value="'.$rDatos->id.'" >'.$rDatos->name.'</option> </select> ';
+
+                if ($rDatos!='') {
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$select]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO', 'resultado'=>'No data']);
+                }
+            
+            } else {
+                die('Se produjo un Error al generar el Token');
+            }
+
+        break;
+
         default:
             echo 'No se seleccionó ninguna opción';
     }
