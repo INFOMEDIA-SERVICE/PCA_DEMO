@@ -296,6 +296,7 @@ session_start();
             $array['tipoIdentificacion']=$tipo_identificacion;
             $array['numeroIdentificacion']=$numero_documento;
             $array['boletas']= json_decode($boletas) ;
+            $array['pagos']= json_decode($pagos) ;
             
 
             
@@ -303,7 +304,7 @@ session_start();
             $url = 'http://20.44.111.223:80/api/boleteria/reserva';
             //$rGuardar = $atrac->guardarAtraccion($anombre, $aimagen, $aextension, $token);
             $rGuardar = $consumo->Post($url, $headers, $array);
-            //print_r($rGuardar);
+             
             if($rGuardar->message == 'Se ha creado la reserva'){
                 echo json_encode(['sts'=>'OK','resultado'=>$rGuardar]); 
             }else{
@@ -314,6 +315,9 @@ session_start();
 
 
         case 13:
+
+
+            //print_r($_REQUEST);exit;
 
           
             $array['idReserva']=$idreserva;
@@ -328,11 +332,16 @@ session_start();
             if($rGuardar->message == 'Se han agregado los servicios adicionales a la reserva'){
 
                 if($cont_lockers>0){
+                    $discapacitados="true";
+
                     $array2['idReserva']=$idreserva;
                     $array2['cantidad']=$cont_lockers;
+                    $array2['discapacitados']=$discapacitados;
                     $url2 = 'http://20.44.111.223:80/api/boleteria/reservaCasillas';
                     //$rGuardar = $atrac->guardarAtraccion($anombre, $aimagen, $aextension, $token);
                     $rGuardar2 = $consumo->Post($url2, $headers, $array2);
+                   # print_r($rGuardar2);exit;
+
                 }
                 
 
@@ -703,6 +712,7 @@ session_start();
             $array['logo']['datosBase64'] = $datosBase64;
             $array['logo']['formato'] = $formato;
             $array['accountAdminId']=$accountAdminId;
+            $array['edadAdulto']=$edadAdulto;
             //
             $url = 'http://20.44.111.223:80/api/configuracionGeneral/empresa';
             $rGuardar = $consumo->Post($url, $headers, $array);
@@ -738,6 +748,72 @@ session_start();
                 die('Se produjo un Error al generar el Token');
             }
 
+        break;
+
+        case 29:
+
+        if ($token != ''  ) {
+            $url = "http://20.44.111.223/api/boleteria/buscarReserva?filter=id%3A%27".$idreserva."%27%20and%20boletas.visitante.numeroIdentificacion%3A%27".$identificacion."%27";
+             
+            $rDatos = $consumo->Get($url, $headers);
+            #print_r($rDatos);exit;
+            
+            if (count($rDatos)>0) {
+                echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+            } else {                
+                echo json_encode(['sts'=>'NO', 'resultado'=>'no_registrado']);
+            }
+        
+        } else {
+            die('Se produjo un Error al generar el Token');
+        }
+
+        break;
+
+        case 30:
+        
+            if ($token != ''  ) {
+                $url = "http://20.44.111.223/api/boleteria/buscarReserva?filter=id%3A%27".$idreserva."%27";
+                 
+                $rDatos = $consumo->Get($url, $headers);
+                #print_r($rDatos);exit;
+                
+                if (count($rDatos)>0) {
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO', 'resultado'=>'no_registrado']);
+                }
+            
+            } else {
+                die('Se produjo un Error al generar el Token');
+            }
+
+        break;
+
+        case 31:
+
+            if ($token != '') {
+                $url = 'http://20.44.111.223:80/api/boleteria/metodoPago';
+                $rDatos = $consumo->get($url, $headers); 
+
+                if ($rDatos != '') {
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO']);
+                }
+
+            } else {
+
+                die('Se produjo un Error al generar el Token');
+            }
+
+
+
+        break;
+
+        case 32:
+
+            
         break;
 
         default:

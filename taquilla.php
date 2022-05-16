@@ -62,6 +62,16 @@ echo" </pre> ";*/
 			color:#707070 ;	
 		}
 
+
+		.selectAltura2 {
+			display:block;
+			height:28px;
+			width:180px!important;
+			padding: 0.1em!important;
+			color:#707070 ;	
+			font-size:13px!important;
+		}
+
 		.tipo_pago_check{
 			background:#FFFFFF; 
 			border: #D4D4D4 solid 1px; 
@@ -107,9 +117,18 @@ echo" </pre> ";*/
 			/* calculo el cambio */
 		//alert("Entro")
 
-		 
+		let metodosPago= JSON.parse( localStorage.getItem('metodosPago'));
 
-		let sum_ef_sub=$("#suma_efectivo").val()
+		let valor_total_suma=0;
+
+		$.each(metodosPago, function(index, datos) {
+
+			if(datos['valorPago']>0){
+				valor_total_suma+= parseInt(datos['valorPago']) ;
+			}
+		});
+
+		/*let sum_ef_sub=$("#suma_efectivo").val()
 		let sum_ef= formatear_sin_comas(sum_ef_sub);
 
 		let sum_ta_sub=$("#suma_tarjeta").val()
@@ -124,7 +143,11 @@ echo" </pre> ";*/
 
 		//console.log("sum_ef:"+sum_ef+" , sum_ta:"+sum_ta)
 
-		var valor_total_suma= parseInt(sum_ef)+parseInt(sum_ta);
+		var valor_total_suma= parseInt(sum_ef)+parseInt(sum_ta);*/
+
+
+
+
 
 		var sumatoria_productos=$("#sumatoria_total").attr('val_sum');
 
@@ -134,15 +157,16 @@ echo" </pre> ";*/
 
 		if(cambio==0){
 
-			$("#cambio").html('<h2>Cambio: <span class="badge bg-success">$'+cambio.toLocaleString()+'</span></h2>')
+			$("#divCambio").html('<span class="badge bg-success">$'+cambio.toLocaleString()+'</span>')
+			$("#btn-pagar").html('<input type="button" style="width: 100%" value="Pagar" id="pagar">')
 
 		}else if(cambio>0){
 
-			$("#cambio").html('<h2>Cambio: <span class="badge bg-danger">$'+cambio.toLocaleString()+'</span></h2>')
-
+			$("#divCambio").html('<span class="badge bg-danger">$'+cambio.toLocaleString()+'</span>')
+			$("#btn-pagar").html('<input type="button" style="width: 100%" value="Pagar" id="pagar">')
 		}else if (cambio<0){
 
-			$("#cambio").html('<h2>Cambio: <span class="badge bg-light text-dark">$'+cambio.toLocaleString()+'</span></h2>')
+			$("#divCambio").html('<span class="badge bg-light text-dark">$'+cambio.toLocaleString()+'</span>')
 
 		}
 
@@ -211,6 +235,41 @@ echo" </pre> ";*/
 		});
 
 	 });
+
+
+	 $(document).on("click", ".eliminarMedioPago", function(){
+
+		var idmetodoPago=$(this).attr('id');
+
+		let metodosPago= JSON.parse( localStorage.getItem('metodosPago'));
+
+		let new_array=[];
+
+		$.each(metodosPago, function(index, datos) {
+			if(datos['id']==idmetodoPago){
+				datos.valorPago='';
+				datos.numeroAutorizacion='';
+				datos.ultimosDigitos='';
+			}
+			let nuevaLongitud = new_array.push(datos)
+
+		});
+
+		localStorage.setItem("metodosPago",JSON.stringify(new_array));
+
+		$(this).parent().parent().remove();
+
+		recalcular_cambio();
+
+		$("#metodos_pago").val(0);
+		$("#div_campos_numericos").html(' ')
+ 		$("#div_numero_autorizacion").html('')
+	    $("#div_ultimos_digitos").html('')
+        $("#btn-agregar").html('')
+		
+	});
+
+ 
 
 
 	 $(document).on("click", ".eliminar_boleta", function(){
@@ -448,7 +507,7 @@ $(document).on("click", ".boleta-add", function(){
 
 			if(cont==long && validacion==1){
 
-				str_div=str_div+'<div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">TOTAL</div>    <div style="font-size: 24px;" id="sumatoria_total" val_sum="'+sumatoria+'"  >$'+sumatoria.toLocaleString()+'</div></div>'
+				str_div=str_div+'<div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">TOTAL</div>    <div style="font-size: 24px;" id="sumatoria_total" val_sum="'+sumatoria+'"  >$'+sumatoria.toLocaleString()+'</div></div><div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">CAMBIO</div>    <div style="font-size: 24px;" id="divCambio" val_sum="'+sumatoria+'"  >$0</div></div>'
 
 			}
 
@@ -475,7 +534,7 @@ $(document).on("click", ".boleta-add", function(){
 			}
 
 			if(cont==long){
-				str_div=str_div+'<div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">TOTAL</div>    <div style="font-size: 24px;" id="sumatoria_total" val_sum="'+sumatoria+'"  >$'+sumatoria.toLocaleString()+'</div></div>'
+				str_div=str_div+'<div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">TOTAL</div>    <div style="font-size: 24px;" id="sumatoria_total" val_sum="'+sumatoria+'"  >$'+sumatoria.toLocaleString()+'</div></div> <div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">CAMBIO</div>    <div style="font-size: 24px;" id="divCambio" val_sum="'+sumatoria+'"  >$0</div></div>';
 			}
 
 			cont++;
@@ -502,6 +561,15 @@ $(document).on("click", ".boleta-add", function(){
 		$("#miModalPlaca").modal("show");
 
 		$("#placa").val('')
+
+	}else if(idtipo_servicio==1){
+		var textoEscrito = prompt("Es un locker para discapacitados?", "s/n");
+		if(textoEscrito != null){
+			 
+		} else {
+			 
+		}
+
 
 	}
 
@@ -565,7 +633,7 @@ $.each(arr_recorrer, function(index, datos) {
 
 			if(cont==long && validacion==1){
 
-				str_div=str_div+'<div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">TOTAL</div>    <div style="font-size: 24px;" id="sumatoria_total" val_sum="'+sumatoria+'"  >$'+sumatoria.toLocaleString()+'</div></div>'
+				str_div=str_div+'<div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">TOTAL</div>    <div style="font-size: 24px;" id="sumatoria_total" val_sum="'+sumatoria+'"  >$'+sumatoria.toLocaleString()+'</div></div> <div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">CAMBIO</div>    <div style="font-size: 24px;" id="divCambio" val_sum="'+sumatoria+'"  >$0</div></div>'
 
 			}
 
@@ -592,7 +660,7 @@ $.each(arr_recorrer, function(index, datos) {
 
 	if(cont==long){
 
-		str_div=str_div+'<div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">TOTAL</div>    <div style="font-size: 24px;" id="sumatoria_total" val_sum="'+sumatoria+'"  >$'+sumatoria.toLocaleString()+'</div></div>'
+		str_div=str_div+'<div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">TOTAL</div>    <div style="font-size: 24px;" id="sumatoria_total" val_sum="'+sumatoria+'"  >$'+sumatoria.toLocaleString()+'</div></div> <div style="background: #EEEEFF" class="p-2 d-flex justify-content-between">    <div class="pt-2">CAMBIO</div>    <div style="font-size: 24px;" id="divCambio" val_sum="'+sumatoria+'"  >$0</div></div>'
 
 	}
 
@@ -770,6 +838,72 @@ recalcular_cambio();
 		//console.log("id:"+id)
 	});
 
+	$(document).on("click", "#agregar", function(){
+
+		let requiereDatosAutorizacion= $('option:selected', "#metodos_pago").attr('requiereDatosAutorizacion');
+
+		let idmetodoPago = $('option:selected', "#metodos_pago").val()
+
+		let valorSub = $("#metodo_pago_input").val();
+		let valor= formatear_sin_comas(valorSub);
+
+		if(requiereDatosAutorizacion=='true'){
+
+			var numero_autorizacion=$("#numero_autorizacion").val();
+			var ultimos_digitos=$("#ultimos_digitos").val();
+
+			if(numero_autorizacion>0){
+
+			}else{
+				alert("Debe ingresar el numero de autorizacion.");
+				$("#numero_autorizacion").focus();
+				return(false);
+			}
+
+			if(ultimos_digitos>0){
+				
+			}else{
+				alert("Debe ingresar los ultimos 4 digitos");
+				$("#ultimos_digitos").focus();
+				return(false);
+			}
+
+		}else{
+			var numero_autorizacion=0;
+			var ultimos_digitos=0;
+		}
+
+		console.log("numero_autorizacion:"+numero_autorizacion+" , ultimos_digitos:"+ultimos_digitos)
+
+		let metodosPago= JSON.parse( localStorage.getItem('metodosPago'));
+
+		let new_array = [];
+
+		$.each(metodosPago, function(m, n) {
+
+			if( parseInt(n.id) == parseInt(idmetodoPago) ){
+				n.valorPago=parseFloat(valor);
+				n.numeroAutorizacion=numero_autorizacion;
+				n.ultimosDigitos=ultimos_digitos;
+			}
+
+			let nuevaLongitud = new_array.push(n)
+
+		});
+
+		localStorage.setItem('metodosPago',JSON.stringify(new_array))
+
+		$("#metodos_pago").val(0);
+		$("#div_campos_numericos").html(' ')
+ 		$("#div_numero_autorizacion").html('')
+	    $("#div_ultimos_digitos").html('')
+        $("#btn-agregar").html('')
+
+		listarMetodosPago();
+		recalcular_cambio();
+		//agregar(valor,requiereDatosAutorizacion,numero_autorizacion,ultimos_digitos);
+	});
+
 	$(document).on("click", "#pagar", function(){
 
 		var sumatoria_total=$("#sumatoria_total").attr('val_sum');
@@ -779,27 +913,16 @@ recalcular_cambio();
 		var email = $("#email").val()
 		var telefono=$("#telefono").val();
 
-		 
+		let metodosPago= JSON.parse( localStorage.getItem('metodosPago'));
 
-		let suma_efectivo_sub=$("#suma_efectivo").val()
-		let suma_efectivo= formatear_sin_comas(suma_efectivo_sub);
+		let total_ingreso=0;
 
-		let suma_tarjeta_sub=$("#suma_tarjeta").val()
-		let suma_tarjeta= formatear_sin_comas(suma_tarjeta_sub);
+		$.each(metodosPago, function(index, datos) {
 
-		
-
-		if(suma_efectivo==''){
-			suma_efectivo=0;
-		}
-
-		if(suma_tarjeta==''){
-			suma_tarjeta=0;
-		}
-
-		//alert("suma_efectivo:"+suma_efectivo+" , suma_tarjeta:"+suma_tarjeta)
-
-		var total_ingreso=parseInt(suma_efectivo)+parseInt(suma_tarjeta);
+			if(datos['valorPago']>0){
+				total_ingreso+= parseInt(datos['valorPago']) ;
+			}
+		});
 
 
 
@@ -824,7 +947,7 @@ recalcular_cambio();
 		
 	});
 
-	$(document).on("keyup", "#suma_efectivo", function(){
+	$(document).on("keyup", "#metodo_pago_input", function(){
 
 		$(event.target).val(function (index, value ) {
             return value.replace(/\D/g, "")
@@ -832,6 +955,37 @@ recalcular_cambio();
                         .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
         });
 		recalcular_cambio();
+	});
+
+	$('#numero_autorizacion').on('input', function () { 
+		this.value = this.value.replace(/[^0-9]/g,'');
+	});
+
+
+	$(document).on("keyup", "#numero_autorizacion", function(){
+
+		var temp=$("#numero_autorizacion").val()
+
+		$("#numero_autorizacion").val(  temp.replace(/[^0-9]/g,'') );
+
+	});
+
+
+	$(document).on("keyup", "#ultimos_digitos", function(){
+
+		var temp=$("#ultimos_digitos").val()
+
+		if(temp.length>4){
+			var remp = temp.slice(0,4); 
+
+			$("#ultimos_digitos").val(remp)
+
+		}else{
+			$("#ultimos_digitos").val(  temp.replace(/[^0-9]/g,'') );
+		}
+
+		
+
 	});
 
 
@@ -857,7 +1011,7 @@ recalcular_cambio();
 		recalcular_cambio();
 	});
 
-	$(document).on("focus", "#suma_efectivo", function(){
+	/*$(document).on("focus", "#metodo_pago_input", function(){
 
 		//alert("Hola")
 
@@ -867,7 +1021,7 @@ recalcular_cambio();
 						.replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
 		});
 		recalcular_cambio();
-	});
+	});*/
 
 	function sleep (time) {
 		return new Promise((resolve) => setTimeout(resolve, time));
@@ -970,6 +1124,86 @@ recalcular_cambio();
 			validar_cliente(tipo_documento,numero_documento);
 
 		}
+
+
+	});
+
+	$(document).on("change", "#metodos_pago", function(){
+
+		let requiereDatosAutorizacion= $('option:selected', "#metodos_pago").attr('requiereDatosAutorizacion');
+
+		let idmetodoPago = $('option:selected', "#metodos_pago").val()
+
+		let metodoPago=$('option:selected', "#metodos_pago").text()
+
+		
+
+		//alert(requiereDatosAutorizacion)
+
+		console.log('idmetodoPago:'+idmetodoPago)
+
+		if(parseInt(idmetodoPago)  >0 ){
+
+
+			if(requiereDatosAutorizacion=='true'){
+
+				$("#div_campos_numericos").html('<div style="font-size: 12px;">'+metodoPago+' $<input type="numeric" id="metodo_pago_input" class="campo" value=""  ></div> ')
+
+				$("#div_numero_autorizacion").html('  <div style="font-size: 12px;">Numero Autorización <input type="numeric" id="numero_autorizacion" class="campo" value=""  ></div>')
+
+				$("#div_ultimos_digitos").html(' <div style="font-size: 12px;">Ultimos 4 digitos <input type="numeric" id="ultimos_digitos" class="campo" value=""  ></div> ')
+
+				$("#btn-agregar").html('<input type="button" style="width: 100%" value="Agregar" id="agregar">')
+
+			}else{
+
+				$("#div_campos_numericos").html('<div style="font-size: 12px;">'+metodoPago+' $<input type="numeric" id="metodo_pago_input" class="campo" value=""  ></div>  ')
+
+				$("#div_numero_autorizacion").html('')
+
+				$("#div_ultimos_digitos").html('')
+
+				$("#btn-agregar").html('<input type="button" style="width: 100%" value="Agregar" id="agregar">')
+
+			}
+
+			
+
+		}else{
+
+			$("#div_campos_numericos").html(' ')
+
+			$("#div_numero_autorizacion").html('')
+
+			$("#div_ultimos_digitos").html('')
+
+			$("#btn-agregar").html('')
+
+			
+
+		}
+
+
+		let metodosPago= JSON.parse( localStorage.getItem('metodosPago'));
+			$.each(metodosPago, function(index, datos) {
+				if(datos['id']==idmetodoPago){
+					if(datos['valorPago']>0){
+
+						if(requiereDatosAutorizacion=='true'){
+							$("#metodo_pago_input").val(datos['valorPago']);
+							$("#numero_autorizacion").val(datos['numeroAutorizacion']);
+							$("#ultimos_digitos").val(datos['ultimosDigitos'])
+						}else{
+							$("#metodo_pago_input").val(datos['valorPago']);
+						}
+
+					}
+
+				}
+			});
+
+
+		 
 
 
 	});
@@ -1128,29 +1362,105 @@ recalcular_cambio();
 					</div>
 					<div class="panel3 sombra mt-3">
 						<div class="d-flex p-1 justify-content-between no-gutters">
-							<div class="col-lg-7 p-1">
-								<div style="background: #EEEEFF; border-radius: 10px;" class="" >
+							<div class="col-lg-6 p-1">
+
+							<div style="background: #FCF8F7; border-radius: 10px;" class="" >
+
+							 
+
+							<div class="p-1 d-flex justify-content-between" style="cursor:pointer" class="metodo_pago_select" id="metodo_pago_select">
+
+								<select name="metodos_pago" id="metodos_pago" class="selectAltura2">
+									<option>Seleccione metodo Pago</option>
+									<option>Efectivo</option>
+									<option>Tarjeta Debito</option>
+									<option>Tarjeta Credito</option>
+								</select>
 						
-									<div class="p-1 d-flex justify-content-between" style="cursor:pointer" class="metodo_pago" id="div_efectivo">
+							</div>
+
+							<div class="d-flex justify-content-between pt-3" style="cursor:pointer"   class="div_campos_numericos" id="div_campos_numericos"></div>
+
+							<div class="d-flex justify-content-between pt-3" style="cursor:pointer"   class="div_numero_autorizacion" id="div_numero_autorizacion"></div>
+
+							<div class="d-flex justify-content-between pt-3" style="cursor:pointer"   class="div_ultimos_digitos" id="div_ultimos_digitos"></div>
+
+
+							</div>
+
+							<div class="d-flex justify-content-between " id="cambio">
+
+								</div>
+
+							<div class="text-right pt-5" id="btn-agregar" ></div> 
+
+						</div>
+
+								<div class="col-lg-6" id="divMediosPago">
+
+
+								<!-- <ol class="list-group list-group-numbered">
+								<li class="list-group-item d-flex justify-content-between align-items-start">
+									<div class="ms-2 me-auto">
+									<div class="fw-bold" style="font-size: 12px;">Efectivo</div>
+									 
+									</div>
+									<span class="badge badge-success rounded-pill">$145.000</span>
+									<div><img src="imagenes/menos.svg" id="3" tipo_producto="boleta" class="eliminar_boleta" precio_unidad="50000" sumatoria_producto="150000" cantidad="3" style="cursor:pointer"   alt=""></div>
+								</li>
+								<li class="list-group-item d-flex justify-content-between align-items-start">
+									<div class="ms-2 me-auto">
+									<div class="fw-bold" style="font-size: 12px;">Tarjeta Credito Master</div>
+									 
+									</div>
+									<span class="badge badge-success rounded-pill">$145.000</span>
+									<div><img src="imagenes/menos.svg" id="3" tipo_producto="boleta" class="eliminar_boleta" precio_unidad="50000" sumatoria_producto="150000" cantidad="3" style="cursor:pointer"   alt=""></div> 
+								</li>
+								<li class="list-group-item d-flex justify-content-between align-items-start">
+									<div class="ms-2 me-auto">
+									<div class="fw-bold" style="font-size: 12px;">Tarjeta Credito visa</div>
+									 
+									</div>
+									<span class="badge badge-success rounded-pill">$145.000</span>
+									<div><img src="imagenes/menos.svg" id="3" tipo_producto="boleta" class="eliminar_boleta" precio_unidad="50000" sumatoria_producto="150000" cantidad="3" style="cursor:pointer"   alt=""></div> 
+								</li>
+								</ol> -->
+						
+									<!-- <div class="p-1 d-flex justify-content-between" style="cursor:pointer" class="metodo_pago" id="div_efectivo">
 										<div style="font-size: 12px;">Efectivo $<input type="numeric" id="suma_efectivo" class="campo" value="" readonly="readonly"></div>
 										
-										<!-- <div style="font-size: 16px;" id="suma_efectivo" acumulado="0">$0</div> -->
+										 
 									</div>
 									<div class="d-flex justify-content-between pt-3" style="cursor:pointer" class="metodo_pago" id="div_tarjeta">
 										<div style="font-size: 12px;">&nbsp;&nbsp;Tarjeta &nbsp;&nbsp;$<input type="numeric" class="campo" id="suma_tarjeta" value="" readonly="readonly" ></div>
-										<!-- <div style="font-size: 16px;" id="suma_tarjeta" acumulado="0">$0</div> -->
-									</div>
+										 
+									</div> -->
 
 									
 									
 								</div>
 								<br>
-								<div class="d-flex justify-content-between " id="cambio">
+								
+								
+								 
+
+							<div class="col-lg-6 p-1">
+								<div style="background: #FCF8F7; border-radius: 10px;" class="" >
+						
+									<!-- <div class="p-1 d-flex justify-content-between" style="cursor:pointer" class="metodo_pago" id="div_efectivo">
+										<div style="font-size: 12px;">Efectivo $<input type="numeric" id="suma_efectivo" class="campo" value="" readonly="readonly"></div>
+										
+										 
+									</div>
+									<div class="d-flex justify-content-between pt-3" style="cursor:pointer" class="metodo_pago" id="div_tarjeta">
+										<div style="font-size: 12px;">&nbsp;&nbsp;Tarjeta &nbsp;&nbsp;$<input type="numeric" class="campo" id="suma_tarjeta" value="" readonly="readonly" ></div>
+										 
+									</div> -->
 
 									
-									</div>
-								
-								<div class="text-right pt-5"><input type="button" style="width: 100%" value="PAGAR" id="pagar"></div>
+									
+								</div>
+								 
 							</div>
 							<!-- <div class="col-lg-4">
 								<div class="row no-gutters">

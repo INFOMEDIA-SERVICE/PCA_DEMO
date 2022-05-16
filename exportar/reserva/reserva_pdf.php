@@ -119,12 +119,12 @@
 
    
     
-    <h1 style="text-align:center;"> PARQUE CARIBE AVENTURA</h1>
+    <h1 style="text-align:center;"> '.$_SESSION['nombre'].'</h1>
     <hr width="100%"> 
 
     <table width="100%">
         <tr>
-            <td style="text-align:center;" width="100%">Nit: 830031632-9</td>
+            <td style="text-align:center;" width="100%">Nit: '.$_SESSION['nit'].'</td>
         </tr>
 
         <tr>
@@ -190,7 +190,7 @@
 
     <table width="100%">
         <tr>
-            <td><p> Todos los precios incluyen valor del servicio y están en pesos colombianos<br>Lorem ipsum dolor sit amet consectetur adipiscing elit, imperdiet justo rhoncus auctor praesent phasellus ultrices, eu fermentum integer tempus sociosqu placerat. Leo vitae faucibus velit a suscipit quam fames inceptos parturient natoque volutpat ridiculus tristique pellentesque dapibus neque, dis taciti magnis massa varius dictumst in vivamus id platea libero sodales rhoncus nunc enim. Pharetra imperdiet magna laoreet nascetur varius aliquam fringilla aliquet, consequat nulla vitae ligula torquent eleifend dignissim quisque a, magnis cursus primis senectus porttitor massa netus.</p></td>
+            <td><p>'.$_SESSION['terminos_condiciones'].'</p></td>
         </tr>
     </table>';
 

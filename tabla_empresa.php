@@ -88,6 +88,13 @@
         </div>
 
         <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Edad Mayoria de edad</label>
+            <div class="col-sm-10">
+            <input type="numeric" class="form-control" id="edadAdulto" placeholder="Edad Adulto">
+            </div>
+        </div>
+
+        <div class="form-group row">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Formato moenda</label>
             <div class="col-sm-10">
             <select name="formato_moneda" id="formato_moneda">
