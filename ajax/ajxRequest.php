@@ -783,7 +783,7 @@ session_start();
             echo json_encode(['sts'=>'OK', 'stsNo'=>$no, 'stsSi'=>$si]);         
         break;
         //Actualiza servicio adicional
-        case 41:  data: { op: '41', id: id, nombre: nombre, : cuentad, : tipo, : recepcion, : chk },
+        case 41:  //data: { op: '41', id: id, nombre: nombre, : cuentad, : tipo, : recepcion, : chk },
             $pm_id = addslashes($_POST['id']);
             $pm_nombre = addslashes($_POST['nombre']);
             $pm_cuentad = addslashes($_POST['cuentad']);

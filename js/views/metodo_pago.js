@@ -178,7 +178,7 @@ function limpiarModalPmetodo(txt, fil, resul, imagen){
     $(fil).val(''); //    
 }
 //
-function actualizarPmetodo(id, nombre, cuentad, tipo, recepcion, chk){
+/*function actualizarPmetodo(id, nombre, cuentad, tipo, recepcion, chk){
     if(nombre == 0 && cuentad == 0 && tipo == 0 && recepcion == 0 && chk == 0){
         alert('No hay cambios para actualizar');        
     }else{
@@ -201,7 +201,7 @@ function actualizarPmetodo(id, nombre, cuentad, tipo, recepcion, chk){
             }        
         });   
     }    
-}
+}*/
 //
 //Fin lineas
 //
