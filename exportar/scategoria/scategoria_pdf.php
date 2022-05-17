@@ -1,7 +1,7 @@
 <?php
     session_start();
     /**
-    * Exportar con Word para Atracciones
+    * Exportar con Word para Categoria del servicio adicional
     * User: Alfonso Atencio
     * Date: 02/25/2022
     * Time: 14:30
@@ -9,16 +9,13 @@
     require_once '../../lib/dompdf/autoload.inc.php'; 
     require_once '../../main.php'; 
 
-    header("Content-type: application/vnd.ms-word");
-    header("Content-Disposition: attachment; Filename=Atracciones.doc");
-
     $tokenRefresh = $llamar_token->refreshToken();
     $token=$_SESSION['accessToken'];
     $headers[] = 'Authorization: Bearer '.$token;
     $headers[] = 'Content-Type: application/json'; 
     //
     if ($token != '') {
-      $url = 'http://20.44.111.223:80/api/boleteria/atraccion?incluirImagen=true';
+      $url = 'http://20.44.111.223:80/api/boleteria/categoriaServicio?incluirImagen=true';
       $rDatos = $consumo->Get($url, $headers);            
     }else {
         die('Se produjo un Error al generar el Token');
@@ -30,7 +27,7 @@
         <meta charset="Windows-1252" />
     </head>    
     <body>       
-        <h3>Atracciones</h3>
+        <h3>Categorias del servicio adicional</h3>
         <table border="0">
             <thead>							  
                 <tr>               
@@ -47,14 +44,16 @@
             <tbody>';
             if ($rDatos != '') {
                foreach ($rDatos as $clave => $valor) {
+                    $modificado = isset($valor->modificadoPor) ? $valor->modificadoPor : '';
+                    $fmodificado = isset($valor->fechaModificado) ? $valor->fechaModificado : '';
                     $codigoHTML.='
                     <tr>                 
                         <td>'.$valor->id.'</td>
                         <td>'.$valor->nombre.'</td>
                         <td>'.$valor->creadoPor.'</td>
                         <td>'.$valor->fechaCreado.'</td>
-                        <td>'.$valor->modificadoPor.'</td>
-                        <td>'.$valor->fechaModificado.'</td>
+                        <td>'.$modificado.'</td>
+                        <td>'.$fmodificado.'</td>
                         <td>'.$valor->estado.'</h4></td>
                     </tr>';	
                }              
@@ -82,6 +81,6 @@
     //$dompdf->setPaper('A4', 'landscape'); 
 
     $dompdf->render(); 
-    $dompdf->stream("Atracciones.pdf");
+    $dompdf->stream("Categoria_delServicio.pdf");
     //$dompdf->stream("niceshipest", array("Attachment" => 0));
 ?>

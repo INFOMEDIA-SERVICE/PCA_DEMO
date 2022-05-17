@@ -1,7 +1,7 @@
 <?php
    session_start();
    /**
-    * Exportar con Word para Atracciones
+    * Exportar con Word para Servicios_adicionales
     * User: Alfonso Atencio
     * Date: 02/25/2022
     * Time: 09:18
@@ -10,7 +10,7 @@
    require_once '../../main.php'; 
 
    header("Content-Type: application/vnd.ms-word; charset=UTF-8");
-   header("Content-Disposition: attachment; Filename=Atracciones.doc");
+   header("Content-Disposition: attachment; Filename=Servicios_adicionales.doc");
 ?>
  
 <!DOCTYPE html>
@@ -22,20 +22,22 @@
  
    <body>
       <?php
+         $DateAndTime = date('m-d-Y h:i:s a', time());
          $tokenRefresh = $llamar_token->refreshToken();
          $token=$_SESSION['accessToken'];
          $headers[] = 'Authorization: Bearer '.$token;
          $headers[] = 'Content-Type: application/json'; 
          //
          if ($token != '') {
-            $url = 'http://20.44.111.223:80/api/boleteria/atraccion?incluirImagen=true';
+            $url = 'http://20.44.111.223:80/api/boleteria/servicioAdicional?incluirImagen=true';
             $rDatos = $consumo->Get($url, $headers);            
         } else {
             die('Se produjo un Error al generar el Token');
         }       
       ?>
- 
-      <h3>Atracciones</h3>
+      
+      <h3>Servicios adicionales</h3>
+      <!--<p>Fecha de exportaci&oacute;n: <?php //echo $DateAndTime; ?></p>-->
       <table border="0">
          <thead>							  
             <tr>               
@@ -53,15 +55,16 @@
          <?php
             if ($rDatos != '') {
                foreach ($rDatos as $clave => $valor) {
-                  //print_r($valor->id);
+                  $modificado = isset($valor->modificadoPor) ? $valor->modificadoPor : '';
+                  $fmodificado = isset($valor->fechaModificado) ? $valor->fechaModificado : '';
                   echo '<tr>'; 
                   echo '<td>'.$valor->id.'</td>';
                   echo '<td>'.$valor->nombre.'</h4></td>';
                   //'<td class="col-2 d-flex align-items-center justify-content-center">' + ver_imagen + '</td>'+
                   echo '<td>'.$valor->creadoPor.'</td>';
                   echo '<td>'.$valor->fechaCreado.'</td>';
-                  echo '<td>'.$valor->modificadoPor.'</td>';
-                  echo '<td>'.$valor->fechaModificado.'</td>';
+                  echo '<td>'.$modificado.'</td>';
+                  echo '<td>'.$fmodificado.'</td>';
                   echo '<td>'.$valor->estado.'</h4></td>';
                   echo '</tr>';	
                }

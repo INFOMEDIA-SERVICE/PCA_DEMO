@@ -1,16 +1,16 @@
 <?php
    session_start();
    /**
-    * Exportar con Word para Categoria del servicio adicional
+    * Exportar con excel para Recepcion de pago
     * User: Alfonso Atencio
-    * Date: 02/25/2022
-    * Time: 09:18
+    * Date: 12/Mayo/2022
+    * Time: 14:30
     */
 
    require_once '../../main.php'; 
 
-   header("Content-Type: application/vnd.ms-word; charset=UTF-8");
-   header("Content-Disposition: attachment; Filename=Categoria_delServicio.doc");
+   header("Content-type: application/vnd.ms-excel charset=UTF-8"); 
+   header("Content-Disposition: attachment; Filename=Recepcion_pago.xls");
 ?>
  
 <!DOCTYPE html>
@@ -28,20 +28,19 @@
          $headers[] = 'Content-Type: application/json'; 
          //
          if ($token != '') {
-            $url = 'http://20.44.111.223:80/api/boleteria/categoriaServicio?incluirImagen=true';
+            $url = 'http://20.44.111.223:80/api/boleteria/recepcionPago';
             $rDatos = $consumo->Get($url, $headers);            
         } else {
             die('Se produjo un Error al generar el Token');
         }       
       ?>
  
-      <h3>Categorias del servicio adicional</h3>
+      <h3>Recepci&oacute;n de pago</h3>
       <table border="0">
          <thead>							  
             <tr>               
                <th><h4>Id</h4></th>
                <th><h4>Nombre</h4></th>
-               <!--<th class="col-2 text-center"><h4>Imagen</h4></th>-->
                <th><h4>Creado Por</h4></th>
                <th><h4>Fecha Creacion</h4></th>
                <th><h4>Modificado Por</h4></th>

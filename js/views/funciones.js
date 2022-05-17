@@ -192,4 +192,25 @@ function marcar_scategoria(source){
             checkboxes[i].checked=source.checked; //si es un checkbox le damos el valor del checkbox que lo llamo (Marcar/Desmarcar Todos)            
         }
     }
-}                  		
+}
+//
+function marcar_precepcion(source){
+    sw = 0;
+    checkboxes=document.getElementsByTagName('input'); //obtenemos todos los controles del tipo Input
+    for(i=0;i<checkboxes.length;i++){ //recoremos todos los controles
+        if(checkboxes[i].name == "precepcion_todos"){ sw = 1; }                      
+        if(checkboxes[i].type == "checkbox" && sw == 1){ //solo si es un checkbox entramos y si es "condicion_todos(sw==1)"
+            checkboxes[i].checked=source.checked; //si es un checkbox le damos el valor del checkbox que lo llamo (Marcar/Desmarcar Todos)            
+        }
+    }
+}
+//Quita comillas("") a los valores de un Array
+function quitar_comilla(arr){
+    let fin = Array();
+    arr.forEach(element => {//Para cada valor del array
+        element.split(",").forEach(elm => {//Lo divido en 2 por la coma y para cada uno de los resultados
+        fin.push(parseFloat(elm));//Lo meto en el array fin haciéndole un parse a float para evitar comillas
+        });
+    });
+    return(fin);
+}

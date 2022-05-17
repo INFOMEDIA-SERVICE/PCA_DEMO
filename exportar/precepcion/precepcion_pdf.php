@@ -1,10 +1,10 @@
 <?php
     session_start();
     /**
-    * Exportar con Word para Atracciones
+    * Exportar con pdf para Recepcion de pago
     * User: Alfonso Atencio
-    * Date: 02/25/2022
-    * Time: 14:30
+    * Date: May/12/2022
+    * Time: 18:03
     */
     require_once '../../lib/dompdf/autoload.inc.php'; 
     require_once '../../main.php'; 
@@ -15,7 +15,7 @@
     $headers[] = 'Content-Type: application/json'; 
     //
     if ($token != '') {
-      $url = 'http://20.44.111.223:80/api/boleteria/atraccion?incluirImagen=true';
+      $url = 'http://20.44.111.223:80/api/boleteria/recepcionPago';
       $rDatos = $consumo->Get($url, $headers);            
     }else {
         die('Se produjo un Error al generar el Token');
@@ -24,10 +24,10 @@
     <!DOCTYPE html>
     <html xmlns="http://www.w3.org/1999/xhtml">    
     <head>
-        <meta charset="Windows-1252" />
+        <meta charset="UTF-8" />
     </head>    
     <body>       
-        <h3>Atracciones</h3>
+        <h3>Recepcion de pago</h3>
         <table border="0">
             <thead>							  
                 <tr>               
@@ -44,14 +44,16 @@
             <tbody>';
             if ($rDatos != '') {
                foreach ($rDatos as $clave => $valor) {
+                    $modificado = isset($valor->modificadoPor) ? $valor->modificadoPor : '';
+                    $fmodificado = isset($valor->fechaModificado) ? $valor->fechaModificado : '';
                     $codigoHTML.='
                     <tr>                 
                         <td>'.$valor->id.'</td>
                         <td>'.$valor->nombre.'</td>
                         <td>'.$valor->creadoPor.'</td>
                         <td>'.$valor->fechaCreado.'</td>
-                        <td>'.$valor->modificadoPor.'</td>
-                        <td>'.$valor->fechaModificado.'</td>
+                        <td>'.$modificado.'</td>
+                        <td>'.$fmodificado.'</td>
                         <td>'.$valor->estado.'</h4></td>
                     </tr>';	
                }              
@@ -79,6 +81,6 @@
     //$dompdf->setPaper('A4', 'landscape'); 
 
     $dompdf->render(); 
-    $dompdf->stream("Atracciones.pdf");
+    $dompdf->stream("Recepcion_de_pago.pdf");
     //$dompdf->stream("niceshipest", array("Attachment" => 0));
 ?>

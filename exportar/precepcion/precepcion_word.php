@@ -1,7 +1,7 @@
 <?php
    session_start();
    /**
-    * Exportar con Word para Categoria del servicio adicional
+    * Exportar con Word para Recepcion de pago
     * User: Alfonso Atencio
     * Date: 02/25/2022
     * Time: 09:18
@@ -28,14 +28,14 @@
          $headers[] = 'Content-Type: application/json'; 
          //
          if ($token != '') {
-            $url = 'http://20.44.111.223:80/api/boleteria/categoriaServicio?incluirImagen=true';
+            $url = 'http://20.44.111.223:80/api/boleteria/recepcionPago';
             $rDatos = $consumo->Get($url, $headers);            
         } else {
             die('Se produjo un Error al generar el Token');
         }       
       ?>
  
-      <h3>Categorias del servicio adicional</h3>
+      <h3>Recepci&oacute;n de pago</h3>
       <table border="0">
          <thead>							  
             <tr>               
