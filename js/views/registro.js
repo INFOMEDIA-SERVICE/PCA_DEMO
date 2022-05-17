@@ -118,11 +118,11 @@ function consultar_reserva(){
 
                     if(datos2['visitante']!=undefined){
 
-                        str_remp+='<b>Ver Visitante</b><img src="imagenes/chulito.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'" edadInicial="'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+'" edadFinal="'+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+'" estaturaCmMin="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMin']+'" estaturaCmMax="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMax']+'" pasaporteNombre="'+datos2['tipoBoleta']['nombre']+'" class="centrado pointer verVisitante" width="50" height="50" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
+                        str_remp+='<b>Ver Visitante</b><img src="imagenes/chulito.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'" edadInicial="'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+'" edadFinal="'+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+'" estaturaCmMin="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMin']+'" estaturaCmMax="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMax']+'" pasaporteNombre="'+datos2['tipoBoleta']['nombre']+'" identificacionCliente="'+datos['cliente']['identificacion']['numero']+'" class="centrado pointer verVisitante" width="50" height="50" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
 
                     }else{
 
-                        str_remp+='<b>Registar Visitante</b><img src="imagenes/agregar.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'"  edadInicial="'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+'" edadFinal="'+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+'" estaturaCmMin="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMin']+'" estaturaCmMax="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMax']+'" casillas_disponibles="'+casillas_disponibles+'" pasaporteNombre="'+datos2['tipoBoleta']['nombre']+'" class="centrado pointer agregar" width="70" height="70" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
+                        str_remp+='<b>Registar Visitante</b><img src="imagenes/agregar.jpg" idreserva="'+datos['id']+'"  idboleta="'+datos2['id']+'"  edadInicial="'+datos2['tipoBoleta']['categoriaEdad']['edadInicial']+'" edadFinal="'+datos2['tipoBoleta']['categoriaEdad']['edadFinal']+'" estaturaCmMin="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMin']+'" estaturaCmMax="'+datos2['tipoBoleta']['categoriaEstatura']['estaturaCmMax']+'" casillas_disponibles="'+casillas_disponibles+'" pasaporteNombre="'+datos2['tipoBoleta']['nombre']+'" identificacionCliente="'+datos['cliente']['identificacion']['numero']+'" class="centrado pointer agregar" width="70" height="70" style="border-radius:10px;"  alt="">  </div>  </div> </div> ';
 
                     }
                 });
@@ -334,5 +334,67 @@ function validar_estatura(altura,estaturaCmMin,estaturaCmMax){
         $("#alertaEstatura").html('<h3 style="color:#FF0000";>La estatura esta fuera del rango permitido por el pasaporte!</h3>');
         $("#registrar").hide();
     }
+
+}
+
+function validarCompradorRegistro(idreserva,identificacion){
+
+    $.ajax({        
+        url: "ajax/ajxRequest2.php",
+        data: { op: '29',idreserva:idreserva,identificacion:identificacion },
+        dataType: 'json',
+        async: false, 
+        type: 'POST',
+        //async: false,
+        success: function(r2) { 
+            console.log("Retorna Validacion:")
+            console.log(r2)
+
+            if(r2.resultado=='no_registrado'){
+
+                $("#div_datos_comprador").show();
+
+                
+
+
+
+            }else{
+
+                $("#div_datos_comprador").hide();
+            }
+             
+        }        
+    });
+
+}
+
+function asignarCompradorRegistro(){
+
+    let idreserva=$("#idreservaR").val();
+
+
+    $.ajax({        
+        url: "ajax/ajxRequest2.php",
+        data: { op: '30',idreserva:idreserva},
+        dataType: 'json',
+        async: false, 
+        type: 'POST',
+        //async: false,
+        success: function(r3) { 
+            console.log("De aca saco los campos del cliente")
+            console.log(r3)
+
+            if(r3.sts == 'OK'){
+                //r3['resultado'][0]['cliente']['primerNombre']
+                $("#nombreR").val(r3['resultado'][0]['cliente']['primerNombre'])
+                $("#apellidoR").val(r3['resultado'][0]['cliente']['primerApellido'])
+                $("#tipo_documentoR").val(r3['resultado'][0]['cliente']['identificacion']['tipo'])
+                $("#numero_documentoR").val(r3['resultado'][0]['cliente']['identificacion']['numero'])
+                
+            }else{
+                 
+            }
+        }        
+    });
 
 }

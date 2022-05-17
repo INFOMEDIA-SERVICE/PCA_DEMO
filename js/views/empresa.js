@@ -76,6 +76,7 @@ function cargarDatosEmpresa(){
                     $("#decimales").val(r2.resultado.decimales)
                     $("#formato_moneda").val(r2.resultado.formatoMoneda)
                     $("#email_remitente").val(r2.resultado.emailRemitente)
+                    $("#edadAdulto").val(r2.resultado.edadAdulto);
 
 
                     src="http://20.44.111.223/api/contenido/imagen/"+ r2.resultado.logoImagenId;
@@ -130,6 +131,7 @@ function guardarDatosEmpresa(){
                     let formatoMoneda=$("#formato_moneda").val()
                     let emailRemitente=$("#email_remitente").val()
                     let accountAdminId=$("#accountAdminId").val();
+                    let edadAdulto=$("#edadAdulto").val();
 
                     var v_imagen = document.getElementById("result").innerHTML;
 		            if(nombre != '' && nit!='' && telefono!='' && direccion!='' && razonSocial!='' && terminosCondiciones!='' && resolucionDian!='' && decimales!='' && formatoMoneda!='' && emailRemitente!=''  && v_imagen == 'El archivo es valido'){ 
@@ -150,7 +152,7 @@ function guardarDatosEmpresa(){
 
                         $.ajax({        
                             url: "ajax/ajxRequest2.php",
-                            data: { op: '27',nit:nit,nombre:nombre,telefono:telefono,direccion:direccion,razonSocial:razonSocial,terminosCondiciones:terminosCondiciones,resolucionDian:resolucionDian,decimales:decimales,formatoMoneda:formatoMoneda,emailRemitente:emailRemitente,formato:extension, datosBase64:imagen[1],accountAdminId:accountAdminId},
+                            data: { op: '27',nit:nit,nombre:nombre,telefono:telefono,direccion:direccion,razonSocial:razonSocial,terminosCondiciones:terminosCondiciones,resolucionDian:resolucionDian,decimales:decimales,formatoMoneda:formatoMoneda,emailRemitente:emailRemitente,formato:extension, datosBase64:imagen[1],accountAdminId:accountAdminId,edadAdulto:edadAdulto},
                             dataType: 'json',
                             async: false, 
                             type: 'POST',

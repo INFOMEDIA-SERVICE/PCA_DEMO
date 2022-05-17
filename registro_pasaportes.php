@@ -1,6 +1,8 @@
 <?php
 session_start();
 include('php/sesion.php');
+$edad_adulto=$_SESSION['edad_adulto'];
+#echo " edad adulto: $edad_adulto";
 /*echo" <pre> ";
 print_r($_SESSION);
 echo" </pre> ";*/
@@ -160,7 +162,7 @@ echo" </pre> ";*/
 		$("#tipo_documentoR").val("");
 		$("#numero_documentoR").val("");
 		$("#fecha_nacimientoR").val("");
-        
+        $("#alturaR").val('');
 		$("#miModal").modal("hide");
   
 	 });
@@ -182,20 +184,9 @@ echo" </pre> ";*/
 		let estaturaCmMax=$(this).attr('estaturaCmMax');
 		let casillas_disponibles=$(this).attr('casillas_disponibles');
 		let pasaporteNombre=$(this).attr('pasaporteNombre');
-
-		//console.log("casillas_disponibles")
-		//console.log( casillas_disponibles )
-		//return(false);
-
-		/*$("#nombreR").val('');
-		$("#apellidoR").val('');
-		$("#fecha_nacimientoR").val('');
-		$("#alturaR").val('');
-		$("#tipo_documentoR").val('');
-		$("#numero_documentoR").val('');
-		$("#alertaFechaNacimiento").html('')
-		$("#alertaEstatura").html('')
-		$("#casillas_disponibles").val();*/
+		let edadMayoria='<?=$edad_adulto?>';
+		let identificacion=$(this).attr('identificacioncliente');
+ 
 
 		$("#PasaporteN").html(pasaporteNombre);
 		$("#idreservaR").val(idreserva);
@@ -205,9 +196,20 @@ echo" </pre> ";*/
 		$("#estaturaCmMinR").val(estaturaCmMin)
 		$("#estaturaCmMaxR").val(estaturaCmMax)
 		$("#casillas_disponiblesR").val(casillas_disponibles)
+		$("#edadMayoriaR").val(edadMayoria)
 		 
 		//alert("idreserva:"+idreserva+" , idboleta:"+idboleta);
 		$("#miModal").modal("show");
+
+		if( parseInt(edadInicial)>= parseInt(edadMayoria) ){
+
+			validarCompradorRegistro(idreserva,identificacion);
+			 
+			//alert("puedes ingresar los mismos datos del comprador");
+			
+		}else{
+			$("#div_datos_comprador").hide();
+		}
 
 		console.log("casillas_disponibles:"+casillas_disponibles)
 
@@ -297,46 +299,25 @@ echo" </pre> ";*/
 		validar_estatura(altura,estaturaCmMin,estaturaCmMax)
 	});
 
-	
-
-
-
-	/*$(document).on("click", "#pagar", function(){
-
-		var sumatoria_total=$("#sumatoria_total").attr('val_sum');
-		var tipo_documento=$("#tipo_documento").val();
-		var numero_documento = $("#numero_documento").val();
-		var nombre = $("#nombre").val();
-		var email = $("#email").val()
-		var telefono=$("#telefono").val();
-
-		var suma_efectivo=$("#suma_efectivo").attr('acumulado');
-		var suma_tarjeta=$("#suma_tarjeta").attr('acumulado');
-
-		var total_ingreso=parseInt(suma_efectivo)+parseInt(suma_tarjeta);
-
-		if(sumatoria_total==undefined || sumatoria_total==0  || total_ingreso<sumatoria_total ){
-			alert("Valor ingresado no coincide!");
-			return(false);
-		}else{
-
-			if(tipo_documento=='' || numero_documento=='' || nombre=='' || email=='' || telefono==''){
-				alert("Complete los datos del cliente");
-				return(false);
-			}else{
-				pagar();
-			}
-
-
-		}
-
-		
-	});*/
+	 
 
 
 	$('.solo-numero').keyup(function (){
         this.value = (this.value + '').replace(/[^0-9]/g, '');
     });
+
+	
+
+	$(document).on("click", "#agregarDatosComprador", function(){
+		if( $('#agregarDatosComprador').prop('checked') ) {
+			asignarCompradorRegistro();
+		}else{
+			$("#nombreR").val('')
+			$("#apellidoR").val('')
+			$("#tipo_documentoR").val('')
+			$("#numero_documentoR").val('')
+		}
+	});
 
 	$(document).on("click", "#restablecer", function(){
 		localStorage.clear();
@@ -507,6 +488,12 @@ echo" </pre> ";*/
 						<h2 id="PasaporteN"></h2>
 					</div>
 
+					<div class="form-group " id="div_datos_comprador" style="display:none">
+						<label for="numero_documento" id="label_lockers">Mismos datos del comprador?</label>
+						<input type="checkbox" class="" id="agregarDatosComprador" >
+						
+					</div>
+
 					<div class="form-group">
 						<label for="nombreR">Nombres:*</label>
 						<input type="email" class="form-control" id="nombreR" aria-describedby="emailHelp" placeholder="Nombres">
@@ -556,6 +543,9 @@ echo" </pre> ";*/
 						
 					</div>
 
+
+					
+
 					
 
 					<input type="hidden" id="idreservaR" value="">
@@ -565,7 +555,8 @@ echo" </pre> ";*/
 					<input type="hidden" id="estaturaCmMinR" value="">
 					<input type="hidden" id="estaturaCmMaxR" value="">
 					<input type="hidden" id="casillas_disponiblesR" value="">
-					
+					<input type="hidden" id="edadMayoriaR" value="">
+
 					<input type="button" onclick="registrarBoleta();" class="boton_campo" style="width: 100%" value="REGISTRAR" id="registrar">
 					</form>
 
