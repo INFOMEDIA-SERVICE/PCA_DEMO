@@ -602,7 +602,7 @@
                                     if (r3.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
                                         //alert("Reserva: "+r2.resultado.id+" A nombre de:"+$("#nombre").val()+" Creada con exito!") 
                                         window.open(url_pdf+'?idreserva='+r2.resultado.id, '_blank');
-                                        //location.reload();
+                                        location.reload();
                                         //location.reload();                                      
                                     
                                     }else{
