@@ -13,7 +13,7 @@ function cargar_datos_sadicionales(){
         //async: false,
         success: function(r2) {            
             if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
-                if(typeof r2.resultado.status === 'undefined'){
+                //if(typeof r2.resultado.status === 'undefined'){
                     var str_remp;
                     $.each(r2.resultado, function(m, n) {
                         let atraccion_comilla = "'"+n.nombre+"'";
@@ -39,9 +39,9 @@ function cargar_datos_sadicionales(){
                     restaurar_paginacion('myPager_sadicional');                     
                     $('#tbody_sadicionales').pageMe({pagerSelector:'#myPager_sadicional',showPrevNext:true,hidePageNumbers:false,perPage:20});
 
-                }else{
-                    console.log(r2.resultado.status);
-                }                                            
+                //}else{
+                    //console.log(r2.resultado.status);
+                //}                                            
                
             }
         }        
@@ -49,7 +49,7 @@ function cargar_datos_sadicionales(){
 }
 //
 function abreModalSadicional(){
-    limpiarModalSadicional('txtAddAtraccion', 'file', 'result', 'img');
+    limpiarModalSadicional('txtAddSadicional', 'txtAddPrecio', 'select_sadicional', 'file_sadicional', 'result', 'img');
     $('#addModalSadicionales').modal('show'); // abrir modal agregar atraccion 
 } 
 //
@@ -84,7 +84,7 @@ function abreModalActiDesactivaSadicional(){
 }
 //
 function upSadicional(idsa, nombresa, preciosa, idcategosa){
-    limpiarModalSadicional('txtupSadicional', 'fileup_sadicional', 'result2', 'imgup_sadicional');
+    limpiarModalSadicional('txtupSadicional', 'txtupPrecio', 'selectup_sadicional', 'fileup_sadicional', 'result2', 'imgup_sadicional');
     var ximagen = "imagen"+idsa;
     document.getElementById("imgup_sadicional").src = $("#"+ximagen).attr('src');
     //			
@@ -269,10 +269,14 @@ $('#btnActivarAtraccion').click(function(){
     }		
 });
 //
-function limpiarModalSadicional(txt, fil, resul, imagen){
+function limpiarModalSadicional(txt, txt2, selec, fil, resul, imagen){
     txt = '#'+txt;
+    txt2 = '#'+txt2;
+    select = '#'+selec;
     fil = '#'+fil;
-    $(txt).val(''); // Limpia campo nombre atraccion
+    $(txt).val(''); // Limpia campo nombre servicio adicional
+    $(txt2).val('');
+    $(select).val(0);
     $(fil).val(''); //
     document.getElementById(resul).innerHTML = "Esperando archivo...";
     document.getElementById(imagen).value = "Sin_imagen.png";

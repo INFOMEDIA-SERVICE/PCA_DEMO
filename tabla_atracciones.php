@@ -57,7 +57,7 @@
 								<div class="col-md-6 col-0 pes-act-inv3"></div>
 					   		</div>
 						</div>
-				   		<section class="px-3 pt-3" id="panel_atracciones">					  
+				   		<section class="px-3 pt-3" id="panel_atracciones"><!--ATRACCIONES-->
 							<div class="text-center sub-titulo-form textos-medios  mb-4">Consultar Atracciones</div>
 					  		<div class="border rounded p-3 mb-4">
 								<div class="row">
@@ -111,7 +111,7 @@
 							</section>
 							<section class="px-3">
 								<div>
-									<table id="tabla_atraccion" class="table">
+									<table id="tabla_atraccion" class="table" style="border-collapse: unset !important;">
 										<thead>							  
 											<tr class="row ">
 												<th class="col-1 text-center"><h2>Editar</h2></th>
@@ -135,7 +135,7 @@
 								</div>
 						  	</section>
 					  	</section>
-					  	<section class="px-3 pt-3" id="panel_Cacceso">					
+					  	<section class="px-3 pt-3" id="panel_Cacceso"><!--CONDICION DE ACCESO-->
 							<div class="text-center sub-titulo-form textos-medios  mb-4">Condici&oacute;n de acceso</div>
 					  		<div class="border rounded p-3 mb-4">
 								<div class="row">
@@ -188,7 +188,7 @@
 							</section>
 							<section class="px-3">
 								<div>
-									<table id="tabla_cacceso" class="table">
+									<table id="tabla_cacceso" class="table" style="border-collapse: unset !important;">
 										<thead>							  
 											<tr class="row ">
 												<th class="col-1 text-center"><h2>Editar</h2></th>
@@ -349,12 +349,12 @@
 							<br>
 							<div class="row">
 								<div class="col-sm-12">									
-									<table id="tabla_atraccion_condicion" class="table">
+									<table id="tabla_atraccion_condicion" class="table" style="border-collapse: unset !important;">
 										<thead>							  
 											<tr class="row ">
 												<th class="col-1 text-center"><h2>Id</h2></th>
-												<th class="col-1 text-center"><h2>Nombre</h2></th>
-												<th class="col-2 text-center"><h2>Eliminar</h2></th>																						
+												<th class="col-4 text-center"><h2>Nombre</h2></th>
+												<th class="col-1 text-right"><h2>Eliminar</h2></th>																						
 											</tr>
 										</thead>
 										<tbody id="tbody_atraccion_condicion">
@@ -398,12 +398,12 @@
 				</div>
 			</div>
 			<!--MODALES CONDICIONES-->
-			<!--Modal agregar atracci&oacute;n-->
+			<!--Modal agregar Condicion de acceso-->
 			<div class="modal" id="addModalCacceso" tabindex="-1" role="dialog">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h2 class="modal-title">Adicionar atracciones</h2>
+							<h2 class="modal-title">Adicionar Condici&oacute;n de acceso</h2>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
@@ -459,7 +459,7 @@
 					</div>
 				</div>
 			</div>
-			<!--Modal Activar/Desactivar atracciones--><!--tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true"-->
+			<!--Modal Activar/Desactivar Condicion de acceso--><!--tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true"-->
 			<div class="modal" tabindex="-1" id="estadoModalCacceso">
 				<div class="modal-dialog">
 					<div class="modal-content">			

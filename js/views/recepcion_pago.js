@@ -48,7 +48,7 @@ function cargar_datos_precepcion(){
     });    
 }
 //
-function abreModalScategoria(){
+function abreModalPrecepcion(){
     limpiarGuardarPrecepcion('txtAddPrecepcion');
     $('#addModalPrecepcion').modal('show'); // abrir modal agregar condición de acceso 
 } 

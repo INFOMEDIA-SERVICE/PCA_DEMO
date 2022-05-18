@@ -67,11 +67,11 @@ function cargar_datos_ac(id){
                     var str_remp;
                     $.each(r2.resultado[0]['condicionesAcceso'], function(m, n) {                        
                         var atraccion_comilla = "'"+n.nombre+"'";
-                        var btnCondicion = '<a href="javascript:;"><img src="imagenes/trash.jpg" class="img-fluid title="Condiciones de acceso" onclick="abreBorarModalCondicion('+ n.id +','+ atraccion_comilla +');"></a>';
+                        var btnCondicion = '<a href="javascript:;"><img src="imagenes/union.png" class="img-fluid title="Condiciones de acceso" onclick="abreBorarModalCondicion('+ n.id +','+ atraccion_comilla +');"></a>';
                         str_remp += '<tr class="row py-3">' +
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.id +'</h4></td>'+
-                                '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.nombre +'</h4></td>'+
-                                '<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2">'+ btnCondicion +'</div></td>'+                                       
+                                '<td class="col-4 d-flex align-items-center justify-content-center"><h4>'+ n.nombre +'</h4></td>'+
+                                '<td class="col-1 d-flex align-items-right justify-content-center"><div class="f-icono mr-2">'+ btnCondicion +'</div></td>'+                                       
                             '</tr>';                
                     });                          
                     $("#tbody_atraccion_condicion").html(str_remp);

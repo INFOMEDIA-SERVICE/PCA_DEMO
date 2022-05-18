@@ -60,7 +60,7 @@
 									</div>
 									<div class="col-3 d-flex justify-content-center">
 										<div class="d-flex align-items-center">
-											<a href="javascript:;" onclick="abreModalActiDesactivaSadicional();"><h4 class="mr-2">Activar / Desactivar selectos:</h4></a>
+											<a href="javascript:;" onclick="abreModalActiDesactivaPmetodo();"><h4 class="mr-2">Activar / Desactivar selectos:</h4></a>
 											<figure class="mr-2 pt-1"><img src="imagenes/union.png"></figure>
 										</div>
 									</div>
@@ -135,7 +135,7 @@
 								<div class="row">
 									<div class="col-2 d-flex justify-content-center">
 										<div class="d-flex align-items-center">
-											<a href="javascript:;" onclick="abreModalScategoria();"><h4 class="mr-2">Adicionar:</h4></a>
+											<a href="javascript:;" onclick="abreModalPrecepcion();"><h4 class="mr-2">Adicionar:</h4></a>
 											<figure class="mr-2 pt-1"><img src="imagenes/add.png"></figure>							  
 										</div>
 									</div>
@@ -189,7 +189,7 @@
 												<th class="col-1 text-center"><h2><input type="checkbox" name="precepcion_todos" onclick="marcar_precepcion(this);"></h2></th>
 												<th class="col-1 text-center"><h2>Id</h2></th>
 												<th class="col-1 text-center"><h2>Nombre</h2></th>
-												<th class="col-1 text-center"><h2>Estado</h2></th>
+												<th class="col-2 text-center"><h2>Estado</h2></th>
 											</tr>
 										</thead>
 										<tbody id="tbody_precepcion">	
@@ -351,12 +351,12 @@
 					</div>
 				</div>
 			</div>
-			<!--Modal Activar/Desactivar servicio adicional--><!--tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true"-->
-			<div class="modal" id="estadoModalSadicional" tabindex="-1">
+			<!--Modal Activar/Desactivar Metodo de pago--><!--tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true"-->
+			<div class="modal" id="estadoModalPmetodo" tabindex="-1">
 				<div class="modal-dialog">
 					<div class="modal-content">					
 						<div class="modal-header">
-							<h2 class="modal-title">Activar/Desactivar servicio adicional</h2>
+							<h2 class="modal-title">Activar/Desactivar M&eacute;todo de pago</h2>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 							</button>
@@ -365,7 +365,7 @@
 							<h3 id="p_cant_sadicional"></h3>
 						</div>					
 						<div class="modal-footer">							
-								<div class="px-3"><input type="button" onclick="btnADSadicional();" value="Guardar"></div>
+								<div class="px-3"><input type="button" onclick="btnADPmetodo();" value="Guardar"></div>
 								<div><input type="button" data-dismiss="modal" value="Cerrar"></div>
 							</div>
 						</div>					
@@ -444,14 +444,14 @@
 					</div>
 				</div>
 			</div>
-			<!--Modal Activar/Desactivar scategoria--><!--tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true"-->
+			<!--Modal Activar/Desactivar Recepcion de pago--><!--tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true"-->
 			<div class="modal" tabindex="-1" id="estadoModalPrecepcion">
 				<div class="modal-dialog">
 					<div class="modal-content">			
 					<!--<div class="modal-dialog modal-dialog-scrollable" role="document">-->
 						<div class="modal-content">
 						<div class="modal-header">
-							<h2 class="modal-title">Activar/Desactivar categoria del servicio adicional</h2>
+							<h2 class="modal-title">Activar/Desactivar Recepci&oacute;n de pago</h2>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 							</button>
@@ -518,7 +518,7 @@
 			});
 			//
 			$('#btnActualizarPmetodo').click(function(){
-				let pm_id = $("#txtUpIdPmetodo").val();
+				let pm_id = $("#txtUpIdPmetodo").val(); console.log(pm_id);
 				let pm_nombre = $("#txtUpPMnombre").val();
 				let pm_cuentad = $("#txtUpPMcuentad").val();
 				let pm_tipo = $("#select_up_pmtipo").val();
@@ -531,13 +531,13 @@
 				//
 				if(pm_nombre != ''){
 					if(pm_cuentad != ''){
-						if(pm_tip != ''){
+						if(pm_tipo != ''){
 							//if(imagen_sa != ''){								
-								if(nombre_sa == nombre_sa2){ nombre_sa = 0; }
-								if(precio_sa == precio_sa2){ precio_sa = 0; }
-								if(idcateg_sa == idcateg_sa2){ idcateg_sa= 0; }																		
+								//if(nombre_sa == nombre_sa2){ nombre_sa = 0; }
+								//if(precio_sa == precio_sa2){ precio_sa = 0; }
+								//if(idcateg_sa == idcateg_sa2){ idcateg_sa= 0; }																		
 								//						
-								actualizarPmetodo(pm_id, nombre, pm_cuentad, pm_tipo, pm_idrecepcion, pm_chk); 										
+								actualizarPmetodo(pm_id, pm_nombre, pm_cuentad, pm_tipo, pm_idrecepcion, pm_chk); 										
 							//}else{
 
 							//}

@@ -187,7 +187,7 @@
 												<th class="col-1 text-center"><h2><input type="checkbox" name="scategoria_todos" onclick="marcar_scategoria(this);"></h2></th>
 												<th class="col-1 text-center"><h2>Id</h2></th>
 												<th class="col-1 text-center"><h2>Nombre</h2></th>
-												<th class="col-1 text-center"><h2>Estado</h2></th>
+												<th class="col-2 text-center"><h2>Estado</h2></th>
 											</tr>
 										</thead>
 										<tbody id="tbody_scategoria">	

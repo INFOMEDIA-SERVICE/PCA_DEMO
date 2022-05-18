@@ -706,17 +706,6 @@ session_start();
         break;
         //Guarda metodo de pago
         case 38: 
-            /*
-            {
-              "nombre": "string",
-              "cuentaDestino": "string",
-              "tipo": "EFECTIVO",
-              "requiereDatosAutorizacion": true,
-              "recepcionPago": [
-                0
-              ]
-            }
-            */ 
             //
             $pmnombre = addslashes($_POST['nombre']);
             $pmcuenta = addslashes($_POST['cuenta']);
@@ -788,22 +777,22 @@ session_start();
             $pm_nombre = addslashes($_POST['nombre']);
             $pm_cuentad = addslashes($_POST['cuentad']);
             $pm_tipo = addslashes($_POST['tipo']);
-            $pm_base = addslashes($_POST['recepcion']);
-            $pm_extension = addslashes($_POST['chk']);
+            $pm_recepcion = addslashes($_POST['recepcion']);
+            $pm_chk = addslashes($_POST['chk']);
+            //echo $pm_chk."<br/>";
             //
-            $array20['idServicioAdicional'] = $pm_id;
-            if($pm_nombre != '0'){ $array20['nombre'] = $pm_nombre; }
-            if($pm_extension != '0'){ 
-                $array20['imagen']['formato'] = $pm_extension;
-                $array20['imagen']['datosBase64'] = $pm_base;             
-            }
-            if($pm_cuentad != 0){ $array20['precio'] = $pm_cuentad; }
-            if($pm_tipo != 0){ $array20['idCategoriaServicio'] = $pm_tipo; }
+            $array24['idMetodoPago'] = $pm_id;
+            if($pm_nombre != '0'){ $array24['nombre'] = $pm_nombre; }
+            $array24['cuentaDestino'] = $pm_cuentad;
+            if($pm_tipo != 0){ $array24['tipo'] = $pm_tipo; }
+            if($pm_chk != 0){ $array24['requiereDatosAutorizacion'] = $pm_chk; }
+            $array24['recepcionPago'] = json_decode($pm_recepcion);
             //
             $url = 'http://20.44.111.223:80/api/boleteria/metodoPago';
-            $rActualizar_base = $consumo->Patch($url, $headers, $array20);
+            $rActualizar_base = $consumo->Patch($url, $headers, $array24);
+            //print_r($rActualizar_base); die();
             //
-            if($rActualizar_base->message == 'Se han actualizado los datos'){
+            if($rActualizar_base->message == 'Se realizaron los cambios'){
                 echo json_encode(['sts'=>'OK']); 
             }else{
                 echo json_encode(['sts'=>'NO']);

@@ -25,6 +25,7 @@ function cargar_datos_pmetodo(){
                     let nombre_comilla = "'"+n.nombre+"'";
                     let tipo_comilla = "'"+n.tipo+"'";
                     let idCheck = 'sadi'+'-'+n.estado+'-'+n.id;
+                    let sino = (n.requiereDatosAutorizacion == true) ? 'Si' : 'No';
                     let btnEditar = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/edit.png" class="img-fluid title="Editar" onclick="upPmetodo('+ n.id +','+ nombre_comilla +','+ n.cuentaDestino +','+ tipo_comilla +','+ n.requiereDatosAutorizacion +', '+ JSON.stringify(myArray_recepcionp) +');"></a>' : '<img src="imagenes/edit.png" class="img-fluid title="Editar">';
                     let ver_imagen = '<img id="imagen' + n.id+'" src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="40" height="40" />';
                     str_remp += '<tr class="row py-3">' +
@@ -34,7 +35,7 @@ function cargar_datos_pmetodo(){
                             '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.nombre +'</h4></td>'+
                             '<td class="col-2 d-flex align-items-center justify-content-center"><h4>'+ n.cuentaDestino +'</h4></td>'+
                             '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.tipo +'</h4></td>'+
-                            '<td class="col-2 d-flex align-items-center justify-content-center">' + n.requiereDatosAutorizacion + '</td>'+
+                            '<td class="col-2 d-flex align-items-center justify-content-center">' + sino + '</td>'+
                             '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ recepcionp +'</h4></td>'+
                             //'<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.categoriaServicio['creadoPor'] +'</h4></td>'+
                             //'<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.categoriaServicio['fechaCreado'] +'</h4></td>'+
@@ -60,7 +61,7 @@ function abreModalPmetodo(){
     $('#addModalPmetodo').modal('show'); // abrir modal agregar atraccion 
 } 
 //
-function abreModalActiDesactivaSadicional(){
+function abreModalActiDesactivaPmetodo(){
     var x = 0;
     var str_remp2;
     myArray = [];
@@ -87,13 +88,13 @@ function abreModalActiDesactivaSadicional(){
         
     }
     //
-    $('#estadoModalSadicional').modal('show'); // abrir modal actualizar estado atraccion    		
+    $('#estadoModalPmetodo').modal('show'); // abrir modal actualizar estado atraccion    		
 }
 //
 function upPmetodo(id_pm, nombre_pm, cuentad_pm, tipo_pm, requiereauto_pm, arr_precepcion){
     //limpiarModalPmetodo('txtupSadicional', 'fileup_sadicional', 'result2', 'imgup_sadicional');
     //			
-    $("#txtupIdPmetodo").val(id_pm);
+    $("#txtUpIdPmetodo").val(id_pm);
     $("#txtUpPMnombre").val(nombre_pm);
     $("#txtUpPMcuentad").val(cuentad_pm);
     $("#select_up_pmtipo").val(tipo_pm);
@@ -129,7 +130,7 @@ function adicionarPmetodo(nombre, cuenta, tipo, recep, chk){
     });   
 }
 //
-function btnADSadicional(){ 
+function btnADPmetodo(){ 
     if(myArray.length){     
         $.ajax({         
             url: "ajax/ajxRequest.php",
@@ -141,7 +142,7 @@ function btnADSadicional(){
                 console.log(r);           
                 if (r.sts == 'OK') {
                     alert('Actualizado SI '+r.stsSi+', No'+r.stsNo);
-                    $('#estadoModalSadicional').modal('hide'); // se oculta modal                
+                    $('#estadoModalPmetodo').modal('hide'); // se oculta modal  selectup_sadicional              
                     cargar_datos_pmetodo();              
                 }else{
                     alert('Error al actualizar');
@@ -178,14 +179,14 @@ function limpiarModalPmetodo(txt, fil, resul, imagen){
     $(fil).val(''); //    
 }
 //
-/*function actualizarPmetodo(id, nombre, cuentad, tipo, recepcion, chk){
+function actualizarPmetodo(id, nombre, cuentad, tipo, recepcion, chk){
     if(nombre == 0 && cuentad == 0 && tipo == 0 && recepcion == 0 && chk == 0){
         alert('No hay cambios para actualizar');        
     }else{
-        if(ext != 0){ ext = ext.toUpperCase(); }   //Convierte a mayuscula, si no llega a cero(0)    
+        let sin_recepcion = quitar_comilla(recepcion);   
         $.ajax({        
             url: "ajax/ajxRequest.php",
-            data: { op: '41', id: id, nombre: nombre, cuentad: cuentad, tipo: tipo, recepcion: recepcion, chk: chk },
+            data: { op: '41', id: id, nombre: nombre, cuentad: cuentad, tipo: tipo, recepcion: JSON.stringify(sin_recepcion), chk: chk },
             dataType: 'json',
             type: 'POST',
             //async: false,
@@ -193,7 +194,7 @@ function limpiarModalPmetodo(txt, fil, resul, imagen){
                 console.log(r);           
                 if (r.sts == 'OK') {
                     alert('Actualizado');
-                    $('#upModalSadicional').modal('hide'); // se oculta modal                
+                    $('#upModalPmetodo').modal('hide'); // se oculta modal                
                     cargar_datos_pmetodo();              
                 }else{
                     alert('Error al actualizar');
@@ -201,7 +202,7 @@ function limpiarModalPmetodo(txt, fil, resul, imagen){
             }        
         });   
     }    
-}*/
+}
 //
 //Fin lineas
 //
