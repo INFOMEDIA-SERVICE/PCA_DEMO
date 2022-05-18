@@ -354,8 +354,8 @@ echo" </pre> ";*/
 
 				   <select class="selectAltura" id="tipo_documento" >
 					   <option value="">Tipo de Documento</option>
-					   <option value="CC" >Cedula Ciudadanía</option>
-					   <option value="CE">Cedula Extranjería</option>
+					   <option value="CC" >Cédula Ciudadanía</option>
+					   <option value="CE">Cédula Extranjería</option>
 					   <option value="PAS">Pasaporte</option>
 				   </select>
 					   

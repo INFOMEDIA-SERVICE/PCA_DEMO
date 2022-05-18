@@ -1246,8 +1246,8 @@ recalcular_cambio();
 
 				   <select class="selectAltura" id="tipo_documento" >
 					   <option value="">Tipo de Documento</option>
-					   <option value="CC" >Cedula Ciudadanía</option>
-					   <option value="CE">Cedula Extranjería</option>
+					   <option value="CC" >Cédula Ciudadanía</option>
+					   <option value="CE">Cédula Extranjería</option>
 					   <option value="PAS">Pasaporte</option>
 				   </select>
 					   
@@ -1371,7 +1371,7 @@ recalcular_cambio();
 							<div class="p-1 d-flex justify-content-between" style="cursor:pointer" class="metodo_pago_select" id="metodo_pago_select">
 
 								<select name="metodos_pago" id="metodos_pago" class="selectAltura2">
-									<option>Seleccione metodo Pago</option>
+									<option>Seleccione método Pago</option>
 									<option>Efectivo</option>
 									<option>Tarjeta Debito</option>
 									<option>Tarjeta Credito</option>

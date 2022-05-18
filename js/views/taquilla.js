@@ -87,7 +87,7 @@
                         
                         //console.log(r2);
 
-                        let str_select='<select name="metodos_pago" id="metodos_pago" class="selectAltura2"> <option value="0">Seleccione metodo Pago</option>';
+                        let str_select='<select name="metodos_pago" id="metodos_pago" class="selectAltura2"> <option value="0">Seleccione método Pago</option>';
 
                         let mediosPago= [];
 
