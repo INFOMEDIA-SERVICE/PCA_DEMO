@@ -1,5 +1,6 @@
 //Variables Globales
 var myArray = new Array();
+var saDatos = new Array();
 var nRegistros;
 
   
@@ -14,14 +15,17 @@ function cargar_datos_sadicionales(){
         success: function(r2) {            
             if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
                 //if(typeof r2.resultado.status === 'undefined'){
+                    i = 0;
                     var str_remp;
                     $.each(r2.resultado, function(m, n) {
+                        saDatos[i] = n.nombre;
+                        i++;
                         let atraccion_comilla = "'"+n.nombre+"'";
                         let idCheck = 'sadi'+'-'+n.estado+'-'+n.id;
-                        let btnEditar = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/edit.png" class="img-fluid title="Editar" onclick="upSadicional('+ n.id +','+ atraccion_comilla +','+ n.precio +','+ n.categoriaServicio['id'] +');"></a>' : '<img src="imagenes/edit.png" class="img-fluid title="Editar">';
+                        let btnEditar = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/editar.png" class="img-fluid title="Editar" onclick="upSadicional('+ n.id +','+ atraccion_comilla +','+ n.precio +','+ n.categoriaServicio['id'] +');"></a>' : '<img src="imagenes/editar_no.png" class="img-fluid title="Editar">';
                         let ver_imagen = '<img id="imagen' + n.id+'" src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="40" height="40" />';
                         str_remp += '<tr class="row py-3">' +
-                                '<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2">'+ btnEditar +'</div></td>'+
+                                '<td class="col-1 d-flex align-items-center justify-content-center"><div>'+ btnEditar +'</div></td>'+
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4><input type="checkbox" name="'+idCheck+'"></h4></td>'+
                                 //'<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.id +'</h4></td>'+
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.nombre +'</h4></td>'+
@@ -205,26 +209,31 @@ function openImageUpSadicional() { //Esta funcion validara una imagen
 }	
 //
 function adicionarSadicional(nombre, ext, precio, categ){
-    let str_base64 = document.getElementById("img").src;
-    let imagen = (ext == 'JPG') ? str_base64.substring(23) : str_base64.substring(22);
-    //
-    $.ajax({        
-        url: "ajax/ajxRequest.php",
-        data: { op: '32', nombre: nombre, precio: precio, idcateg: categ, imagen: imagen, extension: ext },
-        dataType: 'json',
-        type: 'POST',
-        //async: false,
-        success: function(r) { 
-            console.log(r);           
-            if (r.sts == 'OK') {
-                //alert('Guardo');
-                $('#addModalSadicionales').modal('hide'); // oculta modal agregar atraccion                
-				cargar_datos_sadicionales();              
-            }else{
-                alert('Error al guardar');
-            }
-        }        
-    });   
+    let respsa = nombres_igual(nombre, saDatos);
+    if(respsa == 0){
+        let str_base64 = document.getElementById("img").src;
+        let imagen = (ext == 'JPG') ? str_base64.substring(23) : str_base64.substring(22);
+        //
+        $.ajax({        
+            url: "ajax/ajxRequest.php",
+            data: { op: '32', nombre: nombre, precio: precio, idcateg: categ, imagen: imagen, extension: ext },
+            dataType: 'json',
+            type: 'POST',
+            //async: false,
+            success: function(r) { 
+                console.log(r);           
+                if (r.sts == 'OK') {
+                    //alert('Guardo');
+                    $('#addModalSadicionales').modal('hide'); // oculta modal agregar atraccion                
+    				cargar_datos_sadicionales();              
+                }else{
+                    alert('Error al guardar');
+                }
+            }        
+        });
+    }else{
+        alert('El nombre del servicio adicional: '+nombre+', ya existe');
+    }   
 }
 //
 function btnADSadicional(){ 

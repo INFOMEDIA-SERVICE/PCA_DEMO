@@ -1,5 +1,6 @@
 //Variables Globales
 var myArray = new Array();
+var scDatos = new Array();
 var nRegistros;  
 
   
@@ -13,18 +14,20 @@ function cargar_datos_scategoria(){
         //async: false,
         success: function(r2) {            
             if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
-                if(typeof r2.resultado.status === 'undefined'){                                    
-                    var str_remp;
-                    var option = '<option value="0">Seleccione una categoria</option>';
+                if(typeof r2.resultado.status === 'undefined'){
+                    let i = 0;                                   
+                    let str_remp;
+                    let option = '<option value="0">Seleccione una categoria</option>';
                     $.each(r2.resultado, function(m, n) {
-                        console.log(n);
+                        scDatos[i] = n.nombre;
+                        i++;
                         if(n.estado == 'ACTIVO'){ option += '<option value="' + n.id + '">' + n.nombre + '</option>'; }
-                        var atraccion_comilla = "'"+n.nombre+"'";
-                        var idCheck = 'categ'+'-'+n.estado+'-'+n.id;
-                        var btnEditar = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/edit.png" class="img-fluid title="Editar" onclick="upScategoria('+ n.id +','+ atraccion_comilla +');"></a>' : '<img src="imagenes/edit.png" class="img-fluid title="Editar">';
-                        var ver_imagen = '<img id="imagenc' + n.id+'" src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="40" height="40" />';
+                        let atraccion_comilla = "'"+n.nombre+"'";
+                        let idCheck = 'categ'+'-'+n.estado+'-'+n.id;
+                        let btnEditar = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/editar.png" class="img-fluid title="Editar" onclick="upScategoria('+ n.id +','+ atraccion_comilla +');"></a>' : '<img src="imagenes/editar_no.png" class="img-fluid title="Editar">';
+                        let ver_imagen = '<img id="imagenc' + n.id+'" src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="40" height="40" />';
                         str_remp += '<tr class="row py-3">' +
-                                '<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2">'+ btnEditar +'</div></td>'+
+                                '<td class="col-1 d-flex align-items-center justify-content-center"><div>'+ btnEditar +'</div></td>'+
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4><input type="checkbox" name="'+idCheck+'"></h4></td>'+
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.id +'</h4></td>'+
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.nombre +'</h4></td>'+
@@ -93,25 +96,29 @@ function upScategoria(id_cat, nombre_cat){
 }
 //
 function adicionarScategoria(nombre){
-    //
-    $.ajax({        
-        url: "ajax/ajxRequest.php",
-        data: { op: '29', nombre: nombre },
-        dataType: 'json',
-        type: 'POST',
-        //async: false,
-        success: function(r) { 
-            console.log(r);           
-            if (r.sts == 'OK') {
-                //alert('Guardo');
-                $('#addModalScategoria').modal('hide'); // oculta modal agregar atraccion
-                limpiarGuardarCatServicio('txtAddScategoria');
-				cargar_datos_scategoria();              
-            }else{
-                alert('Error al guardar');
-            }
-        }        
-    });    
+    let respr = nombres_igual(nombre, scDatos);
+    if(respr == 0){
+        $.ajax({        
+            url: "ajax/ajxRequest.php",
+            data: { op: '29', nombre: nombre },
+            dataType: 'json',
+            type: 'POST',
+            //async: false,
+            success: function(r) { 
+                console.log(r);           
+                if (r.sts == 'OK') {
+                    //alert('Guardo');
+                    $('#addModalScategoria').modal('hide'); // oculta modal agregar atraccion
+                    limpiarGuardarCatServicio('txtAddScategoria');
+    				cargar_datos_scategoria();              
+                }else{
+                    alert('Error al guardar');
+                }
+            }        
+        });
+    }else{
+        alert('El nombre de la categoria del servicio: '+nombre+', ya existe');
+    }
 }
 //
 function btnADCscategoria(){

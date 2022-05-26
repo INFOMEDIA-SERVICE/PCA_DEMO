@@ -1,5 +1,6 @@
 //Variables Globales
 var myArray = new Array();
+var conDatos = new Array();
 var nRegistros;  
 
   
@@ -14,10 +15,12 @@ function cargar_datos_condicion(){
         success: function(r2) {            
             if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
                 if(typeof r2.resultado.status === 'undefined'){
-                    console.log('CORRECTO 200');                
+                    i = 0;                
                     var str_remp;
                     var option = '<option value="0">Seleccione una condici\u00F3n</option>';
                     $.each(r2.resultado, function(m, n) {
+                        conDatos[i] = n.nombre;
+                        i++;
                         //console.log(n);
                         //var img_ext = atracciones.imagenUrl;
                         //var extension_img = img_ext.split('.'); // Saco la extensión para guardarla en la BD
@@ -25,10 +28,10 @@ function cargar_datos_condicion(){
                         if(n.estado == 'ACTIVO'){ option += '<option value="' + n.id + '">' + n.nombre + '</option>'; }
                         var atraccion_comilla = "'"+n.nombre+"'";
                         var idCheck = n.nombre+'-'+n.estado+'-'+n.id;
-                        var btnEditar = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/edit.png" class="img-fluid title="Editar" onclick="upCacceso('+ n.id +','+ atraccion_comilla +');"></a>' : '<img src="imagenes/edit.png" class="img-fluid title="Editar">';
+                        var btnEditar = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/editar.png" class="img-fluid title="Editar" onclick="upCacceso('+ n.id +','+ atraccion_comilla +');"></a>' : '<img src="imagenes/editar_no.png" class="img-fluid title="Editar">';
                         var ver_imagen = '<img id="imagenc' + n.id+'" src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="40" height="40" />';
                         str_remp += '<tr class="row py-3">' +
-                                '<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2">'+ btnEditar +'</div></td>'+
+                                '<td class="col-1 d-flex align-items-center justify-content-center"><div>'+ btnEditar +'</div></td>'+
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4><input type="checkbox" name="'+idCheck+'"></h4></td>'+
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.id +'</h4></td>'+
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.nombre +'</h4></td>'+
@@ -217,27 +220,32 @@ function openImage2_condicion() { //Esta funcion validara una imagen
 });*/
 //
 function adicionarCacceso(nombre, ext){
-    let str_base64 = document.getElementById("img_condicion").src;
-    let imagen = (ext == 'JPG') ? str_base64.substring(23) : str_base64.substring(22);
-    //
-    $.ajax({        
-        url: "ajax/ajxRequest.php",
-        data: { op: '19', nombre: nombre, imagen: imagen, extension: ext },
-        dataType: 'json',
-        type: 'POST',
-        //async: false,
-        success: function(r) { 
-            console.log(r);           
-            if (r.sts == 'OK') {
-                //alert('Guardo');
-                $('#addModalCacceso').modal('hide'); // oculta modal agregar atraccion
-                limpiarGuardarC('txtAddCacceso', 'file_condicion', 'result_condicion', 'img_condicion');
-				cargar_datos_condicion();              
-            }else{
-                alert('Error al guardar');
-            }
-        }        
-    });    
+    let respcon = nombres_igual(nombre, conDatos);
+    if(respcon == 0){
+        let str_base64 = document.getElementById("img_condicion").src;
+        let imagen = (ext == 'JPG') ? str_base64.substring(23) : str_base64.substring(22);
+        //
+        $.ajax({        
+            url: "ajax/ajxRequest.php",
+            data: { op: '19', nombre: nombre, imagen: imagen, extension: ext },
+            dataType: 'json',
+            type: 'POST',
+            //async: false,
+            success: function(r) { 
+                console.log(r);           
+                if (r.sts == 'OK') {
+                    //alert('Guardo');
+                    $('#addModalCacceso').modal('hide'); // oculta modal agregar atraccion
+                    limpiarGuardarC('txtAddCacceso', 'file_condicion', 'result_condicion', 'img_condicion');
+    				cargar_datos_condicion();              
+                }else{
+                    alert('Error al guardar');
+                }
+            }        
+        });
+    }else{
+        alert('El nombre de la condici\u00F3n de acceso: '+nombre+', ya existe')
+    }
 }
 //
 function btnADCacceso(){ 

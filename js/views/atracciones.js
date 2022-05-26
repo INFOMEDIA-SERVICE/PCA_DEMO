@@ -1,5 +1,6 @@
 //Variables Globales
 var myArray = new Array();
+var atDatos = new Array();
 var nRegistros;
 
   
@@ -14,20 +15,22 @@ function cargar_datos(){
         success: function(r2) {            
             if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA                
                 if(typeof r2.resultado.status === 'undefined'){
-                    console.log('CORRECTO 200');                
+                    i = 0;               
                     var str_remp;
                     $.each(r2.resultado, function(m, n) {
+                        atDatos[i] = n.nombre;
+                        i++;
                         //console.log(n);
                         //var img_ext = atracciones.imagenUrl;
                         //var extension_img = img_ext.split('.'); // Saco la extensión para guardarla en la BD
                         //var ext_comilla = "'"+extension_img[1]+"'";
                         var atraccion_comilla = "'"+n.nombre+"'";
                         var idCheck = n.nombre+'-'+n.estado+'-'+n.id;
-                        var btnEditar = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/edit.png" class="img-fluid title="Editar" onclick="upAtraccion('+ n.id +','+ atraccion_comilla +');"></a>' : '<img src="imagenes/edit.png" class="img-fluid title="Editar">';
-                        var btnCondicion = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/+.png" class="img-fluid title="Condiciones de acceso" onclick="abreModalCondicion('+ n.id +','+ atraccion_comilla +');"></a>' : '<img src="imagenes/+.png" class="img-fluid title="Agregar condiciones">';
+                        var btnEditar = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/editar.png" class="img-fluid title="Editar" onclick="upAtraccion('+ n.id +','+ atraccion_comilla +');"></a>' : '<img src="imagenes/editar_no.png" class="img-fluid title="Editar">';
+                        var btnCondicion = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/mas.png" class="img-fluid title="Condiciones de acceso" onclick="abreModalCondicion('+ n.id +','+ atraccion_comilla +');"></a>' : '<img src="imagenes/mas_no.png" class="img-fluid title="Agregar condiciones">';
                         var ver_imagen = '<img id="imagen' + n.id+'" src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="40" height="40" />';
                         str_remp += '<tr class="row py-3">' +
-                                '<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2">'+ btnEditar +'</div></td>'+
+                                '<td class="col-1 d-flex align-items-center justify-content-center"><div>'+ btnEditar +'</div></td>'+
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4><input type="checkbox" name="'+idCheck+'"></h4></td>'+
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.id +'</h4></td>'+
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.nombre +'</h4></td>'+
@@ -37,7 +40,7 @@ function cargar_datos(){
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.modificadoPor +'</h4></td>'+
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.fechaModificado +'</h4></td>'+
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.estado +'</h4></td>'+
-                                '<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2">'+ btnCondicion +'</div></td>'+										
+                                '<td class="col-1 d-flex align-items-center justify-content-center"><div>'+ btnCondicion +'</div></td>'+										
                             '</tr>';				
                     });				             
                     $("#tbody_atraccion").html(str_remp); 
@@ -260,26 +263,31 @@ function openImage2() { //Esta funcion validara una imagen
 });*/
 //
 function adicionarAtracciones(nombre, ext){
-    let str_base64 = document.getElementById("img").src;
-    let imagen = (ext == 'JPG') ? str_base64.substring(23) : str_base64.substring(22);
-    //
-    $.ajax({        
-        url: "ajax/ajxRequest.php",
-        data: { op: '3', nombre: nombre, imagen: imagen, extension: ext },
-        dataType: 'json',
-        type: 'POST',
-        //async: false,
-        success: function(r) { 
-            console.log(r);           
-            if (r.sts == 'OK') {
-                //alert('Guardo');
-                $('#addModalAtraccion').modal('hide'); // oculta modal agregar atraccion                
-				cargar_datos();              
-            }else{
-                alert('Error al guardar');
-            }
-        }        
-    });   
+    let atResp = nombres_igual(nombre, atDatos);
+    if(atResp == 0){
+        let str_base64 = document.getElementById("img").src;
+        let imagen = (ext == 'JPG') ? str_base64.substring(23) : str_base64.substring(22);
+        //
+        $.ajax({        
+            url: "ajax/ajxRequest.php",
+            data: { op: '3', nombre: nombre, imagen: imagen, extension: ext },
+            dataType: 'json',
+            type: 'POST',
+            //async: false,
+            success: function(r) { 
+                console.log(r);           
+                if (r.sts == 'OK') {
+                    //alert('Guardo');
+                    $('#addModalAtraccion').modal('hide'); // oculta modal agregar atraccion                
+    				cargar_datos();              
+                }else{
+                    alert('Error al guardar');
+                }
+            }        
+        });
+    }else{
+        alert('El nombre de la atracci\u00F3n: '+nombre+', ya existe');
+    }
 }
 //
 /*$('#btnActualizarAtraccion').click(function(){
