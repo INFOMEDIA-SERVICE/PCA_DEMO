@@ -194,6 +194,16 @@ function marcar_scategoria(source){
     }
 }
 //
+function marcar_pmetodo(source){
+    checkboxes=document.getElementsByTagName('input'); //obtenemos todos los controles del tipo Input
+    for(i=0;i<checkboxes.length;i++){ //recoremos todos los controles                       
+        if(checkboxes[i].type == "checkbox"){ //solo si es un checkbox entramos
+            if(checkboxes[i].name == "precepcion_todos"){ break; }               
+            checkboxes[i].checked=source.checked; //si es un checkbox le damos el valor del checkbox que lo llamo (Marcar/Desmarcar Todos)            
+        }
+    }
+}
+//
 function marcar_precepcion(source){
     sw = 0;
     checkboxes=document.getElementsByTagName('input'); //obtenemos todos los controles del tipo Input
@@ -213,4 +223,17 @@ function quitar_comilla(arr){
         });
     });
     return(fin);
+}
+//
+function nombres_igual(n, v){
+    let i = 0;
+    let r = 0;
+    while(i < v.length && r == 0) {
+        let nombre = v[i];
+        if(nombre.toLowerCase() === n.toLowerCase()){
+            r = 1;            
+        }
+        i++;                                                 
+    }
+    return r;   
 }

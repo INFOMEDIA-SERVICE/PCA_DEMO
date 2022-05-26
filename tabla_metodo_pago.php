@@ -67,7 +67,7 @@
 									<div class="col-2"></div>
 									<div class="col-5 d-flex justify-content-center">
 										<div class="d-flex align-items-center">
-											Buscar:&nbsp;&nbsp;&nbsp;<input id="searchSadicional" type="text" onkeyup="doSearch('tabla_sadicionales','searchSadicional')" class="campo" value="Que quieres consultar" onclick = "if(this.value=='Que quieres consultar') this.value=''">
+											Buscar:&nbsp;&nbsp;&nbsp;<input id="searchSadicional" type="text" onkeyup="doSearch('tabla_pmetodo','searchSadicional')" class="campo" value="Que quieres consultar" onclick = "if(this.value=='Que quieres consultar') this.value=''">
 										</div>
 									</div>													
 					  			</div>
@@ -102,11 +102,11 @@
 							</section>
 							<section class="px-3">
 								<div>
-									<table id="tabla_sadicionales" class="table" style="border-collapse: unset !important;">
+									<table id="tabla_pmetodo" class="table" style="border-collapse: unset !important;">
 										<thead>							  
 											<tr class="row ">
 												<th class="col-1 text-center"><h2>Editar</h2></th>
-												<th class="col-1 text-center"><h2><input type="checkbox" name="sadicionales_todos" onclick="marcar_sadicionales(this);"></h2></th>
+												<th class="col-1 text-center"><h2><input type="checkbox" name="pmetodo_todos" onclick="marcar_pmetodo(this);"></h2></th>
 												<!--<th class="col-1 text-center"><h2>Id</h2></th>-->
 												<th class="col-1 text-center"><h2>Nombre</h2></th>
 												<th class="col-2 text-center"><h2>Cuenta destino</h2></th>
@@ -254,7 +254,7 @@
 					</div>
 				</div>
 			</div>
-			<!---->
+			<!--Actualiza metodo de pago-->
 			<div class="modal" id="upModalPmetodo" tabindex="-1" role="dialog">
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
@@ -299,58 +299,12 @@
 							</div>
 						</div>
 						<div class="modal-footer">							
-							<div class="px-3"><input type="button" id="btnActualizarPmetodo" value="Guardar"></div>
+							<div class="px-3"><input type="button" onclick="btnActualizarPmetodo();" value="Guardar"></div>
 							<div><input type="button" data-dismiss="modal" value="Cerrar"></div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<!--Modal actualizar servicio adicional-->
-			<div class="modal" id="upModalSadicional" tabindex="-1" role="dialog">
-				<div class="modal-dialog modal-lg" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h2 class="modal-title">Adicionar Servicio adicional</h2>
-							<button type="button" id="btnCerrarSadicionalX" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<input type="hidden"  id="txtupIdSadicional"> 
-						<div class="modal-body">
-							<div class="row">
-								<div class="col-sm-6">
-									<div class="col-12 pt-2"><h4>Nombre servicio adicional</h4></div>
-									<div class="col-10"><input type="text" id="txtupSadicional" style="background: #fff; border:1px solid #BEBEBE; border-radius: 10px"></div>
-									<input type="hidden"  id="txtupSadicional2">
-									<br>
-									<div class="col-2 pt-2"><h4>Precio</h4></div>
-									<div class="col-10"><input type="text" id="txtupPrecio" style="background: #fff; border:1px solid #BEBEBE; border-radius: 10px"></div>
-									<input type="hidden"  id="txtupPrecio2">
-									<br>
-									<div class="col-2 pt-2"><h4>Categoria</h4></div>
-									<div class="col-10">
-										<div class="caja">
-											<select type="text" name="selectup_sadicional" id="selectup_sadicional"></select>
-											<input type="hidden"  id="selectup_sadicional2">
-										</div>
-									</div>
-								</div>										
-								<div class="col-sm-6">
-									<input type="file" id="fileup_sadicional" accept=".jpg,.png" />
-								<br>
-								<div id="result2">El archivo es valido</div>								
-									<br>
-									<img id="imgup_sadicional" width="360" height="220"/>
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">							
-							<div class="px-3"><input type="button" id="btnActualizarSadicional" value="Actualizar"></div>
-							<div><input type="button" data-dismiss="modal" value="Cerrar"></div>
-						</div>
-					</div>
-				</div>
-			</div>
+			</div>			
 			<!--Modal Activar/Desactivar Metodo de pago--><!--tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true"-->
 			<div class="modal" id="estadoModalPmetodo" tabindex="-1">
 				<div class="modal-dialog">
@@ -362,7 +316,7 @@
 							</button>
 						</div>
 						<div class="modal-body">						
-							<h3 id="p_cant_sadicional"></h3>
+							<h3 id="p_cant_pmetodo"></h3>
 						</div>					
 						<div class="modal-footer">							
 								<div class="px-3"><input type="button" onclick="btnADPmetodo();" value="Guardar"></div>
@@ -517,7 +471,7 @@
 				}		
 			});
 			//
-			$('#btnActualizarPmetodo').click(function(){
+			/*$('#btnActualizarPmetodo').click(function(){
 				let pm_id = $("#txtUpIdPmetodo").val(); console.log(pm_id);
 				let pm_nombre = $("#txtUpPMnombre").val();
 				let pm_cuentad = $("#txtUpPMcuentad").val();
@@ -550,7 +504,7 @@
 				}else{
 					alert('Digite el nombre, para actualizar');
 				}		
-			});
+			});*/
 			//
 			$(document).on("click", ".tabb", function(){
 				console.log('Pulsó');		

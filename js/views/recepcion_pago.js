@@ -1,5 +1,6 @@
 //Variables Globales
 var myArray_precepcion = new Array();
+var aDatos = new Array();
 var nRegistros;  
 
   
@@ -12,17 +13,19 @@ function cargar_datos_precepcion(){
         type: 'POST',
         //async: false,
         success: function(r2) {            
-            if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA               
+            if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA 
+                i = 0;              
                 var option; // = '<option value="0">Seleccione recepci\u00F3n pago</option>';
                 $.each(r2.resultado, function(m, n) {
-                    //console.log(n);
+                    aDatos[i] = n.nombre;
+                    i++;
                     if(n.estado == 'ACTIVO'){ option += '<option value="' + n.id + '">' + n.nombre + '</option>'; }
                     var nombre_comilla = "'"+n.nombre+"'";
                     var idCheck = 'precep'+'-'+n.estado+'-'+n.id;
-                    var btnEditar = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/edit.png" class="img-fluid title="Editar" onclick="upPrecepcion('+ n.id +','+ nombre_comilla +');"></a>' : '<img src="imagenes/edit.png" class="img-fluid title="Editar">';
+                    var btnEditar = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/editar.png" class="img-fluid title="Editar" onclick="upPrecepcion('+ n.id +','+ nombre_comilla +');"></a>' : '<img src="imagenes/editar_no.png" class="img-fluid title="Editar">';
                     var ver_imagen = '<img id="imagenc' + n.id+'" src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="40" height="40" />';
                     str_remp += '<tr class="row py-3">' +
-                            '<td class="col-1 d-flex align-items-center justify-content-center"><div class="f-icono mr-2">'+ btnEditar +'</div></td>'+
+                            '<td class="col-1 d-flex align-items-center justify-content-center"><div>'+ btnEditar +'</div></td>'+
                             '<td class="col-1 d-flex align-items-center justify-content-center"><h4><input type="checkbox" name="'+idCheck+'"></h4></td>'+
                             '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.id +'</h4></td>'+
                             '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.nombre +'</h4></td>'+
@@ -90,25 +93,29 @@ function upPrecepcion(id_pm, nombre_pm){
 }
 //
 function adicionarPrecepcion(nombre){
-    //
-    $.ajax({        
-        url: "ajax/ajxRequest.php",
-        data: { op: '37', nombre: nombre },
-        dataType: 'json',
-        type: 'POST',
-        //async: false,
-        success: function(r) { 
-            console.log(r);           
-            if (r.sts == 'OK') {
-                //alert('Guardo');
-                $('#addModalPrecepcion').modal('hide'); // oculta modal agregar atraccion
-                limpiarGuardarPrecepcion('txtAddPrecepcion');
-				cargar_datos_precepcion();              
-            }else{
-                alert('Error al guardar');
-            }
-        }        
-    });    
+    let respr = nombres_igual(nombre, aDatos);
+    if(respr == 0){
+        $.ajax({        
+            url: "ajax/ajxRequest.php",
+            data: { op: '37', nombre: nombre },
+            dataType: 'json',
+            type: 'POST',
+            //async: false,
+            success: function(r) { 
+                console.log(r);           
+                if (r.sts == 'OK') {
+                    //alert('Guardo');
+                    $('#addModalPrecepcion').modal('hide'); // oculta modal agregar atraccion
+                    limpiarGuardarPrecepcion('txtAddPrecepcion');
+    				cargar_datos_precepcion();              
+                }else{
+                    alert('Error al guardar');
+                }
+            }        
+        });
+    }else{
+        alert('El nombre de la recepci\u00F3n: '+nombre+', ya existe');
+    }    
 }
 //
 function btnADPrecepcion(){

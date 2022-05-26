@@ -721,7 +721,7 @@ session_start();
             //
             $url = 'http://20.44.111.223:80/api/boleteria/metodoPago';
             $rGuardar = $consumo->Post($url, $headers, $array23);
-            print_r($rGuardar);
+            //
             if($rGuardar->message == 'Se ha creado el metodo de pago'){
                 echo json_encode(['sts'=>'OK']); 
             }else{
@@ -771,22 +771,22 @@ session_start();
             }
             echo json_encode(['sts'=>'OK', 'stsNo'=>$no, 'stsSi'=>$si]);         
         break;
-        //Actualiza servicio adicional
-        case 41:  //data: { op: '41', id: id, nombre: nombre, : cuentad, : tipo, : recepcion, : chk },
+        //Actualiza método de pago
+        case 41:  
             $pm_id = addslashes($_POST['id']);
             $pm_nombre = addslashes($_POST['nombre']);
             $pm_cuentad = addslashes($_POST['cuentad']);
             $pm_tipo = addslashes($_POST['tipo']);
             $pm_recepcion = addslashes($_POST['recepcion']);
             $pm_chk = addslashes($_POST['chk']);
-            //echo $pm_chk."<br/>";
+            //echo $pm_tipo."<br/>"; echo $pm_chk."<br/>";
             //
             $array24['idMetodoPago'] = $pm_id;
-            if($pm_nombre != '0'){ $array24['nombre'] = $pm_nombre; }
-            $array24['cuentaDestino'] = $pm_cuentad;
-            if($pm_tipo != 0){ $array24['tipo'] = $pm_tipo; }
-            if($pm_chk != 0){ $array24['requiereDatosAutorizacion'] = $pm_chk; }
-            $array24['recepcionPago'] = json_decode($pm_recepcion);
+            /*if($pm_nombre != 0){ $array24['nombre'] = $pm_nombre; }*/ $array24['nombre'] = $pm_nombre;
+            /*if($pm_cuentad != 0){ $array24['cuentaDestino'] = $pm_cuentad; }*/ $array24['cuentaDestino'] = $pm_cuentad;
+            /*if($pm_tipo != 0){ $array24['tipo'] = $pm_tipo; }*/ $array24['tipo'] = $pm_tipo;
+            /*if($pm_chk != 0){ $array24['requiereDatosAutorizacion'] = $pm_chk; }*/ $array24['requiereDatosAutorizacion'] = $pm_chk;
+            $array24['recepcionPago'] = json_decode($pm_recepcion); //print_r($array24); exit;
             //
             $url = 'http://20.44.111.223:80/api/boleteria/metodoPago';
             $rActualizar_base = $consumo->Patch($url, $headers, $array24);
@@ -797,6 +797,32 @@ session_start();
             }else{
                 echo json_encode(['sts'=>'NO']);
             }           
+        break;
+        //Activa/Desactiva metodo de pago
+        case 42:
+            $si = 0;
+            $no = 0;
+            $id_c = Array();
+            $id_check = json_decode($_POST['id']);
+            //
+            foreach ($id_check as $clave => $valor) {
+                $id_sav = explode("-", $valor);
+                $id_sa = $id_sav[2];
+                $estado_sa = ($id_sav[1]=='ACTIVO') ? 'INACTIVO' : 'ACTIVO';            
+                //
+                $array25['idMetodoPago'] = $id_sa;
+                $array25['estado'] = $estado_sa;                
+                //
+                $url = 'http://20.44.111.223:80/api/boleteria/metodoPagoEstado';
+                $rActualizar_base = $consumo->Patch($url, $headers, $array25);
+                //
+                if($rActualizar_base->message == 'Se ha cambiado el estado'){
+                    $si++;
+                }else{
+                   $no++;
+                }
+            }
+            echo json_encode(['sts'=>'OK', 'stsNo'=>$no, 'stsSi'=>$si]);         
         break;
         //
         default:
