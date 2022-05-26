@@ -665,7 +665,7 @@ session_start();
             $url = 'http://20.44.111.223:80/api/boleteria/visitanteCasilla';
             $asignarCasilla = $consumo->Patch($url, $headers, $array2);
 
-            print_r($asignarCasilla);
+            //print_r($asignarCasilla);
 
             if($asignarCasilla->message == ' '){
                 echo json_encode(['sts'=>'OK']); 
@@ -813,8 +813,439 @@ session_start();
 
         case 32:
 
+             
+            $aimagen = addslashes($_POST['imagen']);
+            $aextension = addslashes($_POST['extension']);
+            //
+             
+            $array['imagen']['datosBase64'] = $aimagen;
+            $array['imagen']['formato'] = $aextension;
+            $array['nombre'] = $nombre;
+            $array['precio'] = $precio;
+            $array['descripcion'] = $descripcion;
+            $array['idCategoriaEdad'] = $idcategoriaEdad;
+            $array['idCategoriaEstatura'] = $idcategoriaEstatura;
+            $array['hikcentralPrivilegeGroupId']=1;
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/tipoBoleta';
+            //$rGuardar = $atrac->guardarAtraccion($anombre, $aimagen, $aextension, $token);
+            $rGuardar = $consumo->Post($url, $headers, $array);
+            
+            if($rGuardar->message == 'Se ha creado el tipo de boleta'){
+                echo json_encode(['sts'=>'OK']); 
+            }else{
+                echo json_encode(['sts'=>'NO']);
+            }
+
             
         break;
+
+        case 33:
+
+            if ($token != '' ) {
+                $url = "http://20.44.111.223/api/boleteria/tipoBoleta";
+                //$rDatos = $atrac->cargarAtracciones($token);
+                $rDatos = $consumo->Get($url, $headers); 
+            
+                //print_r($rDatos);exit;
+                
+                if (count($rDatos)>0) {
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO', 'resultado'=>'No hay boletas']);
+            
+                }
+            
+            } else {
+                die('Se produjo un Error al generar el Token');
+            }
+        break;
+
+        case 34:
+
+            if ($token != '' ) {
+                $url = "http://20.44.111.223/api/boleteria/categoriaEdad";
+                //$rDatos = $atrac->cargarAtracciones($token);
+                $rDatos = $consumo->Get($url, $headers); 
+
+
+                $url2 = "http://20.44.111.223/api/boleteria/categoriaEstatura";
+                //$rDatos = $atrac->cargarAtracciones($token);
+                $rDatos2 = $consumo->Get($url2, $headers);            
+
+                $array_devolver['categoriaEdad']=$rDatos;
+                $array_devolver['categoriaEstatura']=$rDatos2;
+
+                
+                if (count($array_devolver)>0) {
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$array_devolver]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO', 'resultado'=>'No hay boletas']);
+            
+                }
+            
+            } else {
+                die('Se produjo un Error al generar el Token');
+            }
+
+        break;
+
+        case 35:
+
+
+            //print_r($_POST);exit;
+
+            //
+            $array2['idTipoBoleta'] = $id;
+            $array2['nombre']  = $nombre;
+            $array2['descripcion']  = $descripcion;
+            $array2['precio']  = $precio;
+            $array2['idCategoriaEdad']  = $idcategoriaEdad;
+            $array2['idCategoriaEstatura'] = $idcategoriaEstatura;
+
+            if($ext=='NULL' && $base64=='null'){
+
+            }else{
+                $array2['imagen']['datosBase64'] = $base64;
+                $array2['imagen']['formato'] = $ext;
+            }
+             
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/tipoBoleta';
+            $asignarCasilla = $consumo->Patch($url, $headers, $array2);
+
+            //print_r($asignarCasilla);exit;
+
+            if($asignarCasilla->message == 'Se han realizado los cambios'){
+                echo json_encode(['sts'=>'OK']); 
+            }else{
+                echo json_encode(['sts'=>'NO']);
+            } 
+
+        break;
+
+        case 36:
+
+            if ($token != '') {
+                $url = 'http://20.44.111.223:80/api/boleteria/servicioAdicional?incluirImagen=true';                
+                $rDatos = $consumo->Get($url, $headers);                 
+                if ($rDatos != '') {
+
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO']);
+                }
+
+            } else {
+                die('Se produjo un Error al generar el Token');
+            } 
+
+        break;
+
+        case 37:
+
+            if ($token != '') {
+                $url = 'http://20.44.111.223:80/api/boleteria/categoriaEdad?incluirImagen=true';                
+                $rDatos = $consumo->Get($url, $headers);                 
+                if ($rDatos != '') {
+
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO']);
+                }
+
+            } else {
+                die('Se produjo un Error al generar el Token');
+            } 
+
+        break;
+
+        case 38:
+
+             //Busca servicios adicionales en un tipo de boleta
+                if ($token != '') {
+                    $id_a = addslashes($_POST['id']);
+                    $url = 'http://20.44.111.223:80/api/boleteria/tipoBoleta?idTipoBoleta='.$id_a;
+                    $rDatos = $consumo->Get($url, $headers); 
+                    if ($rDatos != '') {
+                        echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                    } else {                
+                        echo json_encode(['sts'=>'NO']);
+                    }
+                } else {
+                    die('Se produjo un Error al generar el Token');
+                }       
+            
+
+        break;
+
+        case 39:
+             
+                $id_sa = addslashes($_POST['id_servicio']);
+                $id_bo = addslashes($_POST['id_boleta']);
+                //            
+                $array14['idTipoBoleta'] = $id_bo;
+                $array14['idServicioAdicional'] = $id_sa;
+                //
+                $url = 'http://20.44.111.223:80/api/boleteria/tipoBoletaServicioAdicional';
+                $rGuardar = $consumo->Post($url, $headers, $array14);
+
+                //print_r($rGuardar);exit;
+                //
+                if($rGuardar->message == 'Se ha agregado el servicio adicional'){
+                    echo json_encode(['sts'=>'OK']); 
+                }else if($rGuardar->message == 'La atraccion ya tiene esta condicion de acceso'){
+                    echo json_encode(['sts'=>'RPT']); 
+                }else{
+                    echo json_encode(['sts'=>'NO']);
+                }
+            
+        break;
+
+        case 40://Elimina condicion de acceso de la atraccion
+            $id_sa = addslashes($_POST['id_del_servicio_adicional']);
+            $id_bo = addslashes($_POST['id_del_boleta']);
+            //            
+            $array15['idTipoBoleta'] = $id_bo;
+            $array15['idServicioAdicional'] = $id_sa;
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/tipoBoletaServicioAdicional';
+            $rEliminar = $consumo->Delete($url, $headers, $array15);
+
+            if($rEliminar->message == 'Se ha removido el servicio'){
+                echo json_encode(['sts'=>'OK']); 
+            }else{
+                echo json_encode(['sts'=>'NO']);
+            }
+        break;
+
+        case 41://Actualiza estado Boletas
+            $si = 0;
+            $no = 0;
+            $id_c = Array();
+            $id_check = json_decode($_POST['id']);
+            //
+            foreach ($id_check as $clave => $valor) {
+                $id_c = explode("-", $valor);
+                $id_at = $id_c[2];
+                $estado_at = ($id_c[1]=='ACTIVO') ? 'INACTIVO' : 'ACTIVO';            
+                //
+                $array4['estado'] = $estado_at;
+                $array4['idTipoBoleta'] = $id_at;
+                //
+                $url = 'http://20.44.111.223:80/api/boleteria/tipoBoletaEstado';
+                $rActualizar_base = $consumo->Patch($url, $headers, $array4);
+
+                if($rActualizar_base->message == 'Se ha cambiado el estado'){
+                    $si++;
+                }else{
+                   $no++;
+                }
+            }
+            echo json_encode(['sts'=>'OK', 'stsNo'=>$no, 'stsSi'=>$si]);         
+        break;
+
+
+        case 42:
+             
+            $id_at = addslashes($_POST['id_atraccion']);
+            $id_bo = addslashes($_POST['id_boleta']);
+            //            
+            $array14['idTipoBoleta'] = $id_bo;
+            $array14['idAtraccion'] = $id_at;
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/tipoBoletaAtraccion';
+            $rGuardar = $consumo->Post($url, $headers, $array14);
+
+            //
+            if($rGuardar->message == 'Se ha agregado la atraccion'){
+                echo json_encode(['sts'=>'OK']); 
+            }else if($rGuardar->message == 'La atraccion ya tiene esta condicion de acceso'){
+                echo json_encode(['sts'=>'RPT']); 
+            }else{
+                echo json_encode(['sts'=>'NO']);
+            }
+        
+        break;
+
+
+        case 43://Elimina condicion de acceso de la atraccion
+            $id_at = addslashes($_POST['id_del_atraccion']);
+            $id_bo = addslashes($_POST['id_del_boleta']);
+            //            
+            $array15['idTipoBoleta'] = $id_bo;
+            $array15['idAtraccion'] = $id_at;
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/tipoBoletaAtraccion';
+            $rEliminar = $consumo->Delete($url, $headers, $array15);
+
+            
+
+            if($rEliminar->message == 'Se ha removido la atraccion'){
+                echo json_encode(['sts'=>'OK']); 
+            }else{
+                echo json_encode(['sts'=>'NO']);
+            }
+        break;
+
+        case 44:
+
+            if ($token != '') {
+                $url = 'http://20.44.111.223:80/api/boleteria/categoriaEstatura?incluirImagen=true';                
+                $rDatos = $consumo->Get($url, $headers);                 
+                if ($rDatos != '') {
+
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                } else {                
+                    echo json_encode(['sts'=>'NO']);
+                }
+
+            } else {
+                die('Se produjo un Error al generar el Token');
+            } 
+
+        break;
+
+        case 45:
+
+            
+            //            
+            $array14['nombre'] = $nombre;
+            $array14['edadInicial'] = $edadMinima;
+            $array14['edadFinal'] = $edadMaxima;
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/categoriaEdad';
+
+            $rGuardar = $consumo->Post($url, $headers, $array14);
+
+            //
+            if($rGuardar->message == 'Se ha creado la categoria de edad'){
+                echo json_encode(['sts'=>'OK']); 
+            }else{
+                echo json_encode(['sts'=>'NO']);
+            }
+        
+        break;
+
+        case 46:
+
+            
+            //            
+            $array14['nombre'] = $nombre;
+            $array14['estaturaCmMin'] = $estaturaMinima;
+            $array14['estaturaCmMax'] = $estaturaMaxima;
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/categoriaEstatura';
+
+            $rGuardar = $consumo->Post($url, $headers, $array14);
+
+            //
+            if($rGuardar->message == 'Se ha creado la categoria de estatura'){
+                echo json_encode(['sts'=>'OK']); 
+            }else{
+                echo json_encode(['sts'=>'NO']);
+            }
+        
+        break;
+
+        case 47:
+
+             //
+             $array2['idCategoriaEdad'] = $id;
+             $array2['nombre']  = $nombre;
+             $array2['edadInicial']  = $edadInicial;
+             $array2['edadFinal']  = $edadFinal;
+              
+ 
+             
+              
+             //
+             $url = 'http://20.44.111.223:80/api/boleteria/categoriaEdad';
+             $asignarCasilla = $consumo->Patch($url, $headers, $array2);
+ 
+             if($asignarCasilla->message == 'Se han realizado los cambios'){
+                 echo json_encode(['sts'=>'OK']); 
+             }else{
+                 echo json_encode(['sts'=>'NO']);
+             } 
+
+        break;
+
+        case 48://Actualiza estado Boletas
+            $si = 0;
+            $no = 0;
+            $id_c = Array();
+            $id_check = json_decode($_POST['id']);
+            //
+            foreach ($id_check as $clave => $valor) {
+                $id_c = explode("-", $valor);
+                $id_at = $id_c[2];
+                $estado_at = ($id_c[1]=='ACTIVO') ? 'INACTIVO' : 'ACTIVO';            
+                //
+                $array4['estado'] = $estado_at;
+                $array4['idCategoriaEdad'] = $id_at;
+                //
+                $url = 'http://20.44.111.223:80/api/boleteria/categoriaEdadEstado';
+                $rActualizar_base = $consumo->Patch($url, $headers, $array4);
+
+                if($rActualizar_base->message == 'Se ha cambiado el estado'){
+                    $si++;
+                }else{
+                   $no++;
+                }
+            }
+            echo json_encode(['sts'=>'OK', 'stsNo'=>$no, 'stsSi'=>$si]);         
+        break;
+
+        case 49:
+
+            //
+            $array2['idCategoriaEstatura'] = $id;
+            $array2['nombre']  = $nombre;
+            $array2['estaturaInicial']  = $estaturaInicial;
+            $array2['estaturaFinal']  = $estaturaFinal;
+             
+
+            
+             
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/categoriaEstatura';
+            $asignarCasilla = $consumo->Patch($url, $headers, $array2);
+
+            if($asignarCasilla->message == 'Se han realizado los cambios'){
+                echo json_encode(['sts'=>'OK']); 
+            }else{
+                echo json_encode(['sts'=>'NO']);
+            } 
+
+       break;
+
+
+       case 50://Actualiza estado Boletas
+        $si = 0;
+        $no = 0;
+        $id_c = Array();
+        $id_check = json_decode($_POST['id']);
+        //
+        foreach ($id_check as $clave => $valor) {
+            $id_c = explode("-", $valor);
+            $id_at = $id_c[2];
+            $estado_at = ($id_c[1]=='ACTIVO') ? 'INACTIVO' : 'ACTIVO';            
+            //
+            $array4['estado'] = $estado_at;
+            $array4['idCategoriaEstatura'] = $id_at;
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/categoriaEstaturaEstado';
+            $rActualizar_base = $consumo->Patch($url, $headers, $array4);
+
+            if($rActualizar_base->message == 'Se ha cambiado el estado'){
+                $si++;
+            }else{
+               $no++;
+            }
+        }
+        echo json_encode(['sts'=>'OK', 'stsNo'=>$no, 'stsSi'=>$si]);         
+    break;
 
         default:
             echo 'No se seleccionó ninguna opción';

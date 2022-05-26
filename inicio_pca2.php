@@ -84,6 +84,7 @@ echo" </pre> ";*/
 	<script type="text/javascript" charset="utf8"  src="js/views/sadicionales.js"></script>
 	<script type="text/javascript" charset="utf8"  src="js/views/scategoria.js"></script>
 	<script type="text/javascript" charset="utf8"  src="js/views/metodo_pago.js"></script>
+	<script type="text/javascript" charset="utf8"  src="js/views/boleteria.js"></script>
 	<script type="text/javascript" charset="utf8"  src="js/views/recepcion_pago.js"></script>
 	<script type="text/javascript" charset="utf8"  src="js/views/funciones.js"></script>
 	<!--<link rel="stylesheet" type="text/css" href="css/dataTables.min.css"/>	

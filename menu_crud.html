@@ -137,7 +137,11 @@
                 <td align="right">5</td><td><a style="cursor:pointer" class="listar" pagina="empresa">Configuración datos empresa</a></td>
               </tr>
               <tr>
-                <td align="right">6</td><td><a style="cursor:pointer" class="listar" pagina="metodo_pago">M&eacute;todo/Recepci&oacute;n pago</a></td>
+                <td align="right">6</td><td><a style="cursor:pointer" class="listar" pagina="metodo_pago">Método/Recepción pago</a></td>
+              </tr>
+
+              <tr>
+                <td align="right">7</td><td><a style="cursor:pointer" class="listar" pagina="boleteria">Boleteria</a></td>
               </tr>
             </table>
 
@@ -185,6 +189,12 @@
         case 'metodo_pago':
           $("#contenido_crud").show();          
           $("#contenido_crud").load('tabla_metodo_pago.php');
+          $("#listado").remove();          
+        break;
+
+        case 'boleteria':
+          $("#contenido_crud").show();          
+          $("#contenido_crud").load('tabla_boleteria.php');
           $("#listado").remove();          
         break;
 
