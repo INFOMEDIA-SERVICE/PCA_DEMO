@@ -2,11 +2,11 @@
 var myArray = new Array();
 var nRegistros;
 
-function cargar_datos_boleteria(){
+function cargar_datos_boleteria(size,page){
     console.log('Cargar datos boletas'); 
     $.ajax({        
         url: "ajax/ajxRequest2.php",
-        data: { op: '33' },
+        data: { op: '33' , size:size,page:page},
         dataType: 'json',
         type: 'POST',
         //async: false,
@@ -48,8 +48,8 @@ function cargar_datos_boleteria(){
                             '</tr>';				
                     });				             
                     $("#tbody_atraccion").html(str_remp); 
-                    restaurar_paginacion('myPager');                     
-                    $('#tbody_atraccion').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:20});
+                     
+                    $("#cant_pags").html("Pag. "+r2.pag_consulta+" de: "+r2.cant_pags)
 
                     $.ajax({        
                         url: "ajax/ajxRequest2.php",

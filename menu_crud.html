@@ -120,28 +120,31 @@
           <div class="col"></div>
           <div class="col">
             <table class="table">
+
               <tr>
-                <td align="right">1</td><td><a style="cursor:pointer" class="listar" pagina="atracciones">Atracciones</a></td>
-              </tr>
-              <tr>
-                <td align="right">2</td><td><a style="cursor:pointer" class="listar" pagina="sadicional">Servicios adicionales</a></td>
-              </tr>
-              <tr>
-                <td align="right">3</td><td><a style="cursor:pointer" class="listar" pagina="casillero">Casillero</a></td>
-              </tr>
-              <tr>
-                <td align="right">4</td><td><a style="cursor:pointer" class="listar" pagina="categoriaedad">Categoria edad</a></td>
-              </tr>
-              
-              <tr>
-                <td align="right">5</td><td><a style="cursor:pointer" class="listar" pagina="empresa">Configuración datos empresa</a></td>
-              </tr>
-              <tr>
-                <td align="right">6</td><td><a style="cursor:pointer" class="listar" pagina="metodo_pago">Método/Recepción pago</a></td>
+                <td align="right">1</td><td><a style="cursor:pointer" class="listar" pagina="empresa">Configuración datos empresa</a></td>
               </tr>
 
               <tr>
-                <td align="right">7</td><td><a style="cursor:pointer" class="listar" pagina="boleteria">Boleteria</a></td>
+                <td align="right">2</td><td><a style="cursor:pointer" class="listar" pagina="atracciones">Atracciones</a></td>
+              </tr>
+              <tr>
+                <td align="right">3</td><td><a style="cursor:pointer" class="listar" pagina="sadicional">Servicios adicionales</a></td>
+              </tr>
+               
+               
+              
+              
+              <tr>
+                <td align="right">4</td><td><a style="cursor:pointer" class="listar" pagina="metodo_pago">Método/Recepción pago</a></td>
+              </tr>
+
+              <tr>
+                <td align="right">5</td><td><a style="cursor:pointer" class="listar" pagina="boleteria">Boleteria</a></td>
+              </tr>
+
+              <tr>
+                <td align="right">6</td><td><a style="cursor:pointer" class="listar" pagina="disponibilidad">diponibilidad Boletas</a></td>
               </tr>
             </table>
 
@@ -196,6 +199,12 @@
           $("#contenido_crud").show();          
           $("#contenido_crud").load('tabla_boleteria.php');
           $("#listado").remove();          
+        break;
+
+        case 'disponibilidad':
+          $("#contenido_crud").show();          
+          $("#contenido_crud").load('tabla_disponibilidad.php');
+          $("#listado").remove(); 
         break;
 
         default:

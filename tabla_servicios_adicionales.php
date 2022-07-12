@@ -75,11 +75,18 @@
 								  	<div class="col-3 d-flex align-items-center justify-content-center">
 										<h4 class="text-right pt-3 mr-2">Mostrar:</h4>
 										<div class="caja" style="width: 100px">
-											<select name="nmostrar_cacceso" id="nmostrar_cacceso">
-												<option>20</option>
-												<option>40</option>
-												<option>60</option>
-												<option>Todos</option>
+										<select name="cant_reg_servicio_adicional" id="cant_reg_servicio_adicional">
+												<option value="10">10</option>
+												<option value="20">20</option>
+												<option value="30">30</option>
+												<option value="40">40</option>
+												<option value="50">50</option>
+												<option value="60">60</option>
+												<option value="70">70</option>
+												<option value="80">80</option>
+												<option value="90">90</option>
+												<option value="100">100</option> 
+												<option value="todos">Todos</option>
 											</select>
 										</div>&nbsp;&nbsp;
 										<h4 class="text-right pt-3 mr-2">registros</h4>
@@ -93,7 +100,7 @@
 										</div>
 									</div>								
 									<div class="col-3 d-flex align-items-center justify-content-end">
-										<ul class="pagination pagination-lg pager mr-2 pt-2" id="myPager2"></ul>									
+										<h4 id="cant_pags"> </h4><input type="numeric" class="input_pag" id="input_pag"> <a href="javascript:;"><img src="imagenes/ir.png" class='img-fluid title=" editar"="'  id="irPagina"></a>								
 									</div>
 								</div>
 							</section>
@@ -216,12 +223,7 @@
 			<!---->			
 	  	</main>
 	  	<script>
-			var select = document.getElementById('nmostrar_cacceso');
-			select.addEventListener('change', function(){
-				restaurar_paginacion('myPager2');				
-				var selectedOption = this.options[select.selectedIndex];
-				$('#tbody_cacceso').pageMe({pagerSelector:'#myPager2',showPrevNext:true,hidePageNumbers:false,perPage:selectedOption.text});
-			});
+			
 			//
 			$(document).ready(function(){
 				cargar_datos_sadicionales();
@@ -246,6 +248,40 @@
 					alert('Llene todos los campos');
 				}		
 			});
+
+					$('#cant_reg_servicio_adicional').change(function(){
+				 	
+					 
+					 var cant_reg_servicio_adicional=$("#cant_reg_servicio_adicional").val();
+					 var page=1;
+					 if(   cant_reg_servicio_adicional!=''){
+						 
+						 
+							cargar_datos_sadicionales(cant_reg_servicio_adicional,page);
+							 
+					 }else{
+						 alert('Por favor complete todos los campos!');
+					 }		
+				  });
+ 
+ 
+				  $('#irPagina').click(function(){
+					  
+					   
+					  var cant_reg_servicio_adicional=$("#cant_reg_servicio_adicional").val();
+					  var page= $("#input_pag").val() ;
+					  //alert("page:"+page);
+					  //return(false);
+					  if(  page!='' && cant_reg_servicio_adicional!=''){
+						  
+						  
+							  cargar_datos_sadicionales( cant_reg_disponibilidad,page);
+							  
+					  }else{
+						  alert('Por favor complete todos los campos!');
+					  }		
+				   });
+
 			//
 			$('#btnActualizarCacceso').click(function(){
 				var r_imagen = document.getElementById("result2").innerHTML;	

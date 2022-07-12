@@ -437,7 +437,7 @@
         //valida si el cliente existe, de lo contrario lo crea
         crear_cliente();
 
-        var url_pdf="exportar/reserva/reserva_pdf.php";
+        var url_pdf="exportar/reserva/reserva_pdf2.php";
 
 
         //armo los arrays que voy a enviar

@@ -1,6 +1,6 @@
 function imprimirReserva(idreserva){
 
-    let url_pdf="exportar/reserva/reserva_pdf.php";
+    let url_pdf="exportar/reserva/reserva_pdf2.php";
 
     window.open(url_pdf+'?idreserva='+idreserva, '_blank');
 }
@@ -154,7 +154,7 @@ function registrarBoleta(){
 
     //alert("idreserva:"+idreserva+" , idboleta:"+idboleta);
      
-    var url_pdf="exportar/reserva/reserva_boleta_pdf.php";
+    var url_pdf="exportar/reserva/reserva_boleta_pdf2.php";
 
     var nombre=$("#nombreR").val();
     var apellido=$("#apellidoR").val();

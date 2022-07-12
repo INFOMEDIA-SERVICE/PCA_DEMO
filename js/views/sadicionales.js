@@ -4,11 +4,11 @@ var saDatos = new Array();
 var nRegistros;
 
   
-function cargar_datos_sadicionales(){
+function cargar_datos_sadicionales(page,size){
     console.log('Cargar datos sadicionales'); 
     $.ajax({        
         url: "ajax/ajxRequest.php",
-        data: { op: '27' },
+        data: { op: '27', page:page,size:size },
         dataType: 'json',
         type: 'POST',
         //async: false,
@@ -40,9 +40,7 @@ function cargar_datos_sadicionales(){
                             '</tr>';				
                     });				             
                     $("#tbody_sadicionales").html(str_remp); 
-                    restaurar_paginacion('myPager_sadicional');                     
-                    $('#tbody_sadicionales').pageMe({pagerSelector:'#myPager_sadicional',showPrevNext:true,hidePageNumbers:false,perPage:20});
-
+                    $("#cant_pags").html("Pag. "+r2.pag_consulta+" de: "+r2.cant_pags)
                 //}else{
                     //console.log(r2.resultado.status);
                 //}                                            

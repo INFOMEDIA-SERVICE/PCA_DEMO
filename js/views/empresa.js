@@ -74,6 +74,7 @@ function cargarDatosEmpresa(){
                     $("#terminos_condiciones").val(r2.resultado.terminosCondiciones)
                     $("#resolucion").val(r2.resultado.resolucionDian)
                     $("#decimales").val(r2.resultado.decimales)
+                    $("#accountAdminId").val(r2.resultado.accountAdmin.id)
                     $("#formato_moneda").val(r2.resultado.formatoMoneda)
                     $("#email_remitente").val(r2.resultado.emailRemitente)
                     $("#edadAdulto").val(r2.resultado.edadAdulto);
@@ -119,6 +120,8 @@ function cargarSelectAdmin(){
 
 function guardarDatosEmpresa(){
 
+    alert("Hola")
+
 
                     let nit=$("#nit").val();
                     let nombre=$("#nombre").val();
@@ -134,25 +137,32 @@ function guardarDatosEmpresa(){
                     let edadAdulto=$("#edadAdulto").val();
 
                     var v_imagen = document.getElementById("result").innerHTML;
-		            if(nombre != '' && nit!='' && telefono!='' && direccion!='' && razonSocial!='' && terminosCondiciones!='' && resolucionDian!='' && decimales!='' && formatoMoneda!='' && emailRemitente!=''  && v_imagen == 'El archivo es valido'){ 
+		            if(nombre != '' && nit!='' && telefono!='' && direccion!='' && razonSocial!='' && terminosCondiciones!='' && resolucionDian!='' && decimales!='' && formatoMoneda!='' && emailRemitente!=''  ){ 
 
                         var value = document.getElementById("file").files[0];
-                        let img_ext = value.name;
-                        var extension_img = img_ext.split('.');
-
-                        //guardarDatosEmpresa(nombre, extension_img[1]);
-
-                        let str_base64 = document.getElementById("img").src;
-                        let imagen = str_base64.split(','); //Elimino el "data:image/jpeg;base64," de la cadena
-                        extension = extension_img[1].toUpperCase();   //Convierte a mayuscula 
+                        console.log(value);
+                        if(value!=undefined){
+                            let img_ext = value.name;
+                            var extension_img = img_ext.split('.');
+                            let str_base64 = document.getElementById("img").src;
+                            let imagen = str_base64.split(','); 
+                            var datosBase64 =imagen[1];
+                            var extension = extension_img[1].toUpperCase();   //Convierte a mayuscula 
                         
-                        console.log(str_base64);
-                        console.log(imagen);
+                        }else{
+
+                            var extension ='';
+                            var datosBase64='';
+                        }
+ 
+
+                        
+                        
 
 
                         $.ajax({        
                             url: "ajax/ajxRequest2.php",
-                            data: { op: '27',nit:nit,nombre:nombre,telefono:telefono,direccion:direccion,razonSocial:razonSocial,terminosCondiciones:terminosCondiciones,resolucionDian:resolucionDian,decimales:decimales,formatoMoneda:formatoMoneda,emailRemitente:emailRemitente,formato:extension, datosBase64:imagen[1],accountAdminId:accountAdminId,edadAdulto:edadAdulto},
+                            data: { op: '27',nit:nit,nombre:nombre,telefono:telefono,direccion:direccion,razonSocial:razonSocial,terminosCondiciones:terminosCondiciones,resolucionDian:resolucionDian,decimales:decimales,formatoMoneda:formatoMoneda,emailRemitente:emailRemitente,formato:extension, datosBase64:datosBase64,accountAdminId:accountAdminId,edadAdulto:edadAdulto},
                             dataType: 'json',
                             async: false, 
                             type: 'POST',

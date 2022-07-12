@@ -24,10 +24,45 @@ session_start();
         case 1://Servicio Cargar datos atracciones - by:Alfonso
             //
             if ($token != '') {
-                $url = 'http://20.44.111.223:80/api/boleteria/atraccion?incluirImagen=true';
-                $rDatos = $consumo->Get($url, $headers); 
+
+
+                if(isset($page,$size) ){
+
+                    $page=$page-1;
+    
+                 }else{
+                    $page=0;
+                    $size=10;
+                 }
+
+
+
+                #$url = 'http://20.44.111.223:80/api/boleteria/atraccion?incluirImagen=true';
+                #$rDatos = $consumo->Get($url, $headers); 
+
+
+                $url='http://20.44.111.223/api/boleteria/buscarAtraccion?page='.$page.'&size='.$size.'&sort=fechaCreado';
+                $rDatos = $consumo->Get($url, $headers);
+
+
+
+                #En esta consulto todos los datos
+                $url2='http://20.44.111.223/api/boleteria/buscarAtraccion?size=40000&sort=fechaCreado';
+                $rDatos2 = $consumo->Get($url2, $headers);
+
+                $numero_datos= sizeof($rDatos2);
+
+                $cant_paginas=($numero_datos/$size);
+
+                $cant_paginas=ceil($cant_paginas);
+
+                $page2=$page+1;
+
+
+
+
                 if ($rDatos != '') {
-                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos,'cant_pags'=>$cant_paginas,'pag_consulta'=>$page2]); 
                 } else {                
                     echo json_encode(['sts'=>'NO', 'resultado'=>$rDatos]);
                 }
@@ -499,11 +534,45 @@ session_start();
         //Servicio Cargar datos "Servicios adicionales" - by:Alfonso
         case 27:
             if ($token != '') {
-                $url = 'http://20.44.111.223:80/api/boleteria/servicioAdicional?incluirImagen=true';
-                $rDatos = $consumo->Get($url, $headers); 
+
+                if(isset($page,$size) ){
+
+                    $page=$page-1;
+    
+                 }else{
+                    $page=0;
+                    $size=10;
+                 }
+
+                 
+
+
+                #$url = 'http://20.44.111.223:80/api/boleteria/atraccion?incluirImagen=true';
+                #$rDatos = $consumo->Get($url, $headers); 
+
+
+                $url='http://20.44.111.223/api/boleteria/buscarServicioAdicional?page='.$page.'&size='.$size.'&sort=fechaCreado';
+                $rDatos = $consumo->Get($url, $headers);
+
+
+
+                #En esta consulto todos los datos
+                $url2='http://20.44.111.223/api/boleteria/buscarServicioAdicional?size=40000&sort=fechaCreado';
+                $rDatos2 = $consumo->Get($url2, $headers);
+
+                $numero_datos= sizeof($rDatos2);
+
+                $cant_paginas=($numero_datos/$size);
+
+                $cant_paginas=ceil($cant_paginas);
+
+                $page2=$page+1;
+
+
+                 
                 
                 if ($rDatos != '') {
-                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos,'cant_pags'=>$cant_paginas,'pag_consulta'=>$page2]); 
                 } else {                
                     echo json_encode(['sts'=>'NO']);
                 }

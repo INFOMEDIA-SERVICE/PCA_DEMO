@@ -21,6 +21,20 @@
 		<script src="js/popper.min.js"></script> 
 		<script src="js/bootstrap-4.4.1.js"></script>
  	</head>
+	 <style>
+		 .selectAltura {
+			display:block;
+			height:40px;
+			width:263px!important;
+			padding: 0.1em!important;
+			color:#707070 ;	
+		}
+
+		.input_pag {
+			height:30px;
+			width:32px!important;
+		}
+	 </style>
   	<body>
   		<!-- body code goes here -->	 
 		<main>
@@ -77,11 +91,18 @@
 								  	<div class="col-3 d-flex align-items-center justify-content-center">
 										<h4 class="text-right pt-3 mr-2">Mostrar:</h4>
 										<div class="caja" style="width: 100px">
-											<select name="nmostrar_sadicional" id="nmostrar_sadicional">
-												<option>20</option>
-												<option>40</option>
-												<option>60</option>
-												<option>Todos</option>
+										<select name="cant_reg_servicio_adicional" id="cant_reg_servicio_adicional">
+												<option value="10">10</option>
+												<option value="20">20</option>
+												<option value="30">30</option>
+												<option value="40">40</option>
+												<option value="50">50</option>
+												<option value="60">60</option>
+												<option value="70">70</option>
+												<option value="80">80</option>
+												<option value="90">90</option>
+												<option value="100">100</option> 
+												<option value="todos">Todos</option>
 											</select>
 										</div>&nbsp;&nbsp;
 										<h4 class="text-right pt-3 mr-2">registros</h4>
@@ -95,8 +116,7 @@
 										</div>
 									</div>								
 									<div class="col-3 d-flex align-items-center justify-content-end">
-										<ul class="pagination pagination-lg pager mr-2 pt-2" id="myPager_sadicional"></ul>
-										<!--<div class="f-icono mr-2"><img src="imagenes/Imagen 6.png"></div>-->
+										<h4 id="cant_pags"> </h4><input type="numeric" class="input_pag" id="input_pag"> <a href="javascript:;"><img src="imagenes/ir.png" class='img-fluid title=" editar"="'  id="irPagina"></a>								
 									</div>
 								</div>
 							</section>
@@ -156,11 +176,18 @@
 								  	<div class="col-3 d-flex align-items-center justify-content-center">
 										<h4 class="text-right pt-3 mr-2">Mostrar:</h4>
 										<div class="caja" style="width: 100px">
-											<select name="nmostrar_scategoria" id="nmostrar_scategoria">
-												<option>20</option>
-												<option>40</option>
-												<option>60</option>
-												<option>Todos</option>
+										<select name="cant_reg_cservicio" id="cant_reg_cservicio">
+												<option value="10">10</option>
+												<option value="20">20</option>
+												<option value="30">30</option>
+												<option value="40">40</option>
+												<option value="50">50</option>
+												<option value="60">60</option>
+												<option value="70">70</option>
+												<option value="80">80</option>
+												<option value="90">90</option>
+												<option value="100">100</option> 
+												<option value="todos">Todos</option>
 											</select>
 										</div>&nbsp;&nbsp;
 										<h4 class="text-right pt-3 mr-2">registros</h4>
@@ -174,7 +201,7 @@
 										</div>
 									</div>								
 									<div class="col-3 d-flex align-items-center justify-content-end">
-										<ul class="pagination pagination-lg pager mr-2 pt-2" id="myPager_scategoria"></ul>									
+										<h4 id="cant_pags2"> </h4><input type="numeric" class="input_pag" id="input_pag"> <a href="javascript:;"><img src="imagenes/ir.png" class='img-fluid title=" editar"="'  id="irPagina2"></a>								
 									</div>
 								</div>
 							</section>
@@ -411,21 +438,7 @@
 			<!---->			
 	  	</main>
 	  	<script>
-			var cant_sadicional = document.getElementById('nmostrar_sadicional');
-			cant_sadicional.addEventListener('change', function(){
-				restaurar_paginacion('myPager_sadicional');				
-				var selectedOption = this.options[cant_sadicional.selectedIndex];
-				var Mostrar_sadicional = selectedOption.text == 'Todos' ? 1000000 : selectedOption.text;
-				$('#tbody_sadicional').pageMe({pagerSelector:'#myPager_sadicional',showPrevNext:true,hidePageNumbers:false,perPage:Mostrar_sadicional});				
-			});
-			//
-			var cant_scategoria = document.getElementById('nmostrar_scategoria');
-			cant_scategoria.addEventListener('change', function(){
-				restaurar_paginacion('myPager_scategoria');				
-				var selectedOption2 = this.options[cant_scategoria.selectedIndex];
-				var Mostrar_scategoria = selectedOption2.text == 'Todos' ? 1000000 : selectedOption2.text;
-				$('#tbody_scategoria').pageMe({pagerSelector:'#myPager_scategoria',showPrevNext:true,hidePageNumbers:false,perPage:Mostrar_scategoria});
-			});
+			
 			//		
 			$(document).ready(function(){
 				$('#panel_scategoria').hide(); //muestro mediante id
@@ -462,6 +475,41 @@
 					alert('Digite el nombre del servicio adicional');
 				}		
 			});
+
+
+				$('#cant_reg_servicio_adicional').change(function(){
+				 	
+					 
+					 var cant_reg_servicio_adicional=$("#cant_reg_servicio_adicional").val();
+					 var page=1;
+					 if(   cant_reg_servicio_adicional!=''){
+						 
+						 
+							cargar_datos_sadicionales(page,cant_reg_servicio_adicional );
+							 
+					 }else{
+						 alert('Por favor complete todos los campos!');
+					 }		
+				});
+ 
+ 
+				  $('#irPagina').click(function(){
+					  
+					   
+					  var cant_reg_servicio_adicional=$("#cant_reg_servicio_adicional").val();
+					  var page= $("#input_pag").val() ;
+					  //alert("page:"+page);
+					  //return(false);
+					  if(  page!='' && cant_reg_servicio_adicional!=''){
+						  
+						  
+							  cargar_datos_sadicionales( cant_reg_disponibilidad,page);
+							  
+					  }else{
+						  alert('Por favor complete todos los campos!');
+					  }		
+				   });
+
 			//
 			$('#btnActualizarSadicional').click(function(){
 				let imagen_sa = document.getElementById("result2").innerHTML;	

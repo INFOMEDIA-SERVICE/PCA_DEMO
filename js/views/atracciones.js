@@ -4,11 +4,11 @@ var atDatos = new Array();
 var nRegistros;
 
   
-function cargar_datos(){
+function cargar_datos(page,size){
     console.log('Cargar datos'); 
     $.ajax({        
         url: "ajax/ajxRequest.php",
-        data: { op: '1' },
+        data: { op: '1' , page:page,size:size },
         dataType: 'json',
         type: 'POST',
         //async: false,
@@ -43,9 +43,9 @@ function cargar_datos(){
                                 '<td class="col-1 d-flex align-items-center justify-content-center"><div>'+ btnCondicion +'</div></td>'+										
                             '</tr>';				
                     });				             
-                    $("#tbody_atraccion").html(str_remp); 
-                    restaurar_paginacion('myPager');                     
-                    $('#tbody_atraccion').pageMe({pagerSelector:'#myPager',showPrevNext:true,hidePageNumbers:false,perPage:20});
+                    $("#tbody_atraccion").html(str_remp);
+                     
+                    $("#cant_pags").html("Pag. "+r2.pag_consulta+" de: "+r2.cant_pags)
 
                 }else{
                     console.log(r2.resultado.status);

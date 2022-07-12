@@ -4,11 +4,11 @@ var scDatos = new Array();
 var nRegistros;  
 
   
-function cargar_datos_scategoria(){
+function cargar_datos_scategoria(page,size){
     console.log('Cargar datos'); 
     $.ajax({        
         url: "ajax/ajxRequest.php",
-        data: { op: '28' },
+        data: { op: '28', page:page,size:size},
         dataType: 'json',
         type: 'POST',
         //async: false,
@@ -42,8 +42,8 @@ function cargar_datos_scategoria(){
                     $("#tbody_scategoria").html(str_remp);
                     $('#select_sadicional').html(option);
                     $('#selectup_sadicional').html(option);
-                    restaurar_paginacion('myPager_scategoria');
-                    $('#tbody_scategoria').pageMe({pagerSelector:'#myPager_scategoria',showPrevNext:true,hidePageNumbers:false,perPage:20});
+
+                    $("#cant_pags2").html("Pag. 1 de: 1")
 
                 }else{
                     console.log(r2.resultado.status);

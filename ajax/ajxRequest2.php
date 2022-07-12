@@ -697,6 +697,7 @@ session_start();
         case 27:
 
              
+           # print_r($_REQUEST);exit;
             //
             $array['nit'] = $nit;
             
@@ -709,6 +710,14 @@ session_start();
             $array['decimales'] = $decimales;
             $array['formatoMoneda'] = $formatoMoneda;
             $array['emailRemitente'] = $emailRemitente;
+
+            if($datosBase64=='' && $formato==''){
+
+            }else{
+                $array['logo']['datosBase64'] = $datosBase64;
+                $array['logo']['formato'] = $formato;
+            }
+
             $array['logo']['datosBase64'] = $datosBase64;
             $array['logo']['formato'] = $formato;
             $array['accountAdminId']=$accountAdminId;
@@ -730,13 +739,19 @@ session_start();
         case 28:
 
             if ($token != ''  ) {
-                $url = "http://20.44.111.223/api/auth/account";
+                $url = "http://20.44.111.223/api/users/buscarAccount";
                 //$rDatos = $atrac->cargarAtracciones($token);
                 $rDatos = $consumo->Get($url, $headers);
                 
-               // print_r($rDatos);exit;
+                #print_r($rDatos);exit;
 
-                $select=' <select name="accountAdminId" id="accountAdminId" > <option value="'.$rDatos->id.'" >'.$rDatos->name.'</option> </select> ';
+                $select=' <select name="accountAdminId" id="accountAdminId" >';
+
+                foreach ($rDatos as $key  ) {
+                    $select.='  <option value="'.$key->id.'" >'.$key->name.'</option>  ';
+                }
+
+                $select.='  </select> ';
 
                 if ($rDatos!='') {
                     echo json_encode(['sts'=>'OK', 'resultado'=>$select]); 
@@ -843,14 +858,40 @@ session_start();
         case 33:
 
             if ($token != '' ) {
-                $url = "http://20.44.111.223/api/boleteria/tipoBoleta";
-                //$rDatos = $atrac->cargarAtracciones($token);
-                $rDatos = $consumo->Get($url, $headers); 
+
+                if(isset($page,$size) ){
+
+                    $page=$page-1;
+    
+                 }else{
+                    $page=0;
+                    $size=10;
+                 }
+    
+                 
+    
+                 $url='http://20.44.111.223/api/boleteria/buscarTipoBoleta?page='.$page.'&size='.$size.'&sort=fechaCreado';
+                $rDatos = $consumo->Get($url, $headers);
+    
+    
+    
+                #En esta consulto todos los datos
+                $url2='http://20.44.111.223/api/boleteria/buscarTipoBoleta?sort=fechaCreado&size=40000';
+                $rDatos2 = $consumo->Get($url2, $headers);
+
+                $numero_datos= sizeof($rDatos2);
+
+                $cant_paginas=($numero_datos/$size);
+
+                $cant_paginas=ceil($cant_paginas);
+
+                $page2=$page+1;
+ 
             
                 //print_r($rDatos);exit;
                 
                 if (count($rDatos)>0) {
-                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos]); 
+                    echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos,'cant_pags'=>$cant_paginas,'pag_consulta'=>$page2]); 
                 } else {                
                     echo json_encode(['sts'=>'NO', 'resultado'=>'No hay boletas']);
             
@@ -1247,6 +1288,170 @@ session_start();
         echo json_encode(['sts'=>'OK', 'stsNo'=>$no, 'stsSi'=>$si]);         
     break;
 
+    case 51:
+
+       # print_r($_POST);exit;
+
+            $ar_fec_desde=explode("-",$fecha_desde);
+            $new_fecha_desde=$ar_fec_desde[2]."-".$ar_fec_desde[1]."-".$ar_fec_desde[0];
+            $ar_fec_hasta=explode("-",$fecha_hasta);
+            $new_fecha_hasta=$ar_fec_hasta[2]."-".$ar_fec_hasta[1]."-".$ar_fec_hasta[0];
+
+            #echo "fecha_desde:".$new_fecha_desde."  fecha_hasta:".$new_fecha_hasta;
+
+            $array14['fechaInicial'] = $new_fecha_desde;
+            $array14['fechaFinal'] = $new_fecha_hasta;
+            $array15['idTipoBoleta']= $tipo_boleta;
+            $array15['cantidadMax']= $cantidad;
+            $array14['disponibilidades'][]=$array15;
+            //
+            $url = 'http://20.44.111.223:80/api/boleteria/disponibilidades';
+
+            $rGuardar = $consumo->Post($url, $headers, $array14);
+
+            #print_r($rGuardar);exit;
+
+            //
+            if($rGuardar->message == 'Se crearon todas las disponibilidades'){
+                echo json_encode(['sts'=>'OK']); 
+            }else if($rGuardar->message == 'Algunas disponibilidades no pudieron ser creadas: Ya se encuentra registrada una disponibilidad de este tipo de boleta en la fecha especificada'){
+
+                $array_csv=[];
+
+                $encabezado="Fecha | Tipo Boleta | Cantidad | Estado | Motivo ";
+                $ar_sub=explode("|",$encabezado);
+                array_push($array_csv,$ar_sub);
+
+                $array_nuevo=[];
+                $cont=0;
+                
+                foreach ($rGuardar->data as $key ) {
+                   # print_r($key);
+                     $sub = $key->fecha."|".$key->nombreTipoBoleta."|".$cantidad."|"."FALLIDO"."|"."Ya se encuentra registrada una disponibilidad de este tipo de boleta en la fecha especificada";
+                    $array_nuevo[$cont]['tipoBoleta']=$key->nombreTipoBoleta;
+                    $array_nuevo[$cont]['fecha']=$key->fecha;
+                    $array_nuevo[$cont]['cantidad']=$cantidad;
+                    $cont++;
+
+                     $ar_sub=explode("|",$sub);
+
+                     array_push($array_csv,$ar_sub);
+                }
+
+                $_SESSION['csv_disponibilidad']=$array_nuevo;
+
+                if(count($array_csv)>0){
+                    if(file_exists("../DisponibilidadesNoCreadas.csv")){
+                        unlink("../DisponibilidadesNoCreadas.csv");
+                    }
+                    
+                    $fp = fopen('../DisponibilidadesNoCreadas.csv', 'a');
+                    foreach ($array_csv as $campos) {
+                        fputcsv($fp, $campos);
+                    }
+                   # fputcsv($fp, $array_csv);
+                    fclose($fp);
+                }
+
+               # print_r($array_csv);exit;
+
+               $data= "<br><br><div class='alert alert-danger' role='alert'>Algunas disponibilidades no puedieron ser Asignadas, a continuación podra validarlas en el siguiente enlance 
+               </div>";
+ 
+               $data.= " Descargar: <a href=DisponibilidadesNoCreadas.csv>DisponibilidadesNoCreadas.csv</a>";
+
+                echo json_encode(['sts'=>'CSV', 'data'=>$data]);
+            }else{
+                echo json_encode(['sts'=>'NO']);
+            }
+
+    break;
+
+    case 52:
+
+       
+
+
+        if ($token != ''  ) {
+
+             
+
+             $fecha_desde_arr=explode("-",$fecha_desde);
+             $new_fecha_desde=$fecha_desde_arr[2]."-".$fecha_desde_arr[1]."-".$fecha_desde_arr[0];
+
+             $fecha_hasta_arr=explode("-",$fecha_hasta);
+             $new_fecha_hasta=$fecha_hasta_arr[2]."-".$fecha_hasta_arr[1]."-".$fecha_hasta_arr[0];
+
+             if($tipoBoleta>0){
+                $paramTipoBoleta='%20and%20tipoBoleta.id%3A1';
+             }else{
+                $paramTipoBoleta= '';
+             }
+
+             
+
+             if(isset($page,$size) ){
+
+                $page=$page-1;
+
+             }else{
+                $page=0;
+                $size=10;
+             }
+
+             
+
+             $url='http://20.44.111.223/api/boleteria/buscarDisponibilidad?filter=fecha%3E%3A%27'.$new_fecha_desde.'%27%20and%20fecha%3C%3A%27'.$new_fecha_hasta.'%27'.$paramTipoBoleta.'&page='.$page.'&size='.$size.'&sort=fecha';
+            $rDatos = $consumo->Get($url, $headers);
+
+
+
+            #En esta consulto todos los datos
+            $url2='http://20.44.111.223/api/boleteria/buscarDisponibilidad?filter=fecha%3E%3A%27'.$new_fecha_desde.'%27%20and%20fecha%3C%3A%27'.$new_fecha_hasta.'%27'.$paramTipoBoleta.'&sort=fecha&size=40000';
+            $rDatos2 = $consumo->Get($url2, $headers);
+
+
+
+
+            $numero_datos= sizeof($rDatos2);
+
+            #print_r("numero_datos".$numero_datos);exit;
+
+            $cant_paginas=($numero_datos/$size);
+
+            $cant_paginas=ceil($cant_paginas);
+
+            //print_r($rDatos);exit;
+           $page2=$page+1;
+            
+            if (count($rDatos)>0) {
+                echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos,'cant_pags'=>$cant_paginas,'pag_consulta'=>$page2]); 
+            } else {                
+                echo json_encode(['sts'=>'NO', 'resultado'=>'no_registrado']);
+            }
+        
+        } else {
+            die('Se produjo un Error al generar el Token');
+        }
+
+    break;
+
+    case 53:
+         
+         
+        $array2['idDisponibilidad'] = $id;
+         
+        $array2['cantidadMax'] = $cantidadMax;
+        //
+        $url = 'http://20.44.111.223:80/api/boleteria/disponibilidad';
+        $rActualizar_base = $consumo->Patch($url, $headers, $array2);
+
+        if($rActualizar_base->message == 'Se han realizado los cambios'){
+            echo json_encode(['sts'=>'OK']); 
+        }else{
+            echo json_encode(['sts'=>'NO']);
+        } 
+        break;
         default:
             echo 'No se seleccionó ninguna opción';
     }
