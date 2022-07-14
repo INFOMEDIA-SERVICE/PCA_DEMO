@@ -140,11 +140,17 @@
               </tr>
 
               <tr>
-                <td align="right">5</td><td><a style="cursor:pointer" class="listar" pagina="boleteria">Boleteria</a></td>
+                <td align="right">5</td><td><a style="cursor:pointer" class="listar" pagina="boleteria">Boletería</a></td>
               </tr>
 
               <tr>
                 <td align="right">6</td><td><a style="cursor:pointer" class="listar" pagina="disponibilidad">diponibilidad Boletas</a></td>
+              </tr>
+              <tr>
+                <td align="right">7</td><td><a style="cursor:pointer" class="listar" pagina="menus">Menus</a></td>
+              </tr>
+              <tr>
+                <td align="right">8</td><td><a style="cursor:pointer" class="listar" pagina="usuarios">Usuarios</a></td>
               </tr>
             </table>
 
@@ -207,6 +213,18 @@
           $("#listado").remove(); 
         break;
 
+        case 'menus':
+          $("#contenido_crud").show();          
+          $("#contenido_crud").load('tabla_menus.php');
+          $("#listado").remove(); 
+        brake;
+
+        case 'usuarios':
+          $("#contenido_crud").show();          
+          $("#contenido_crud").load('tabla_usuarios.php');
+          $("#listado").remove(); 
+        break;
+        
         default:
           break;
       }
