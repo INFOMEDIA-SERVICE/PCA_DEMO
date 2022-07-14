@@ -115,7 +115,7 @@
 												<th class="col-1 text-center"><h2>Recepci&oacute;n</h2></th>
 												<!--<th class="col-1 text-center"><h2>Creado Por</h2></th>-->
 												<th class="col-1 text-center"><h2>Estado</h2></th>
-												<!--<th class="col-1 text-center"><h2>Fecha Creacion</h2></th>-->
+												<!--<th class="col-1 text-center"><h2>Fecha Creación</h2></th>-->
 												<!--<th class="col-1 text-center"><h2>Modificado Por</h2></th>-->
 												<!--<th class="col-1 text-center"><h2>Fecha Modificaci&oacute;n</h2></th>-->
 																			

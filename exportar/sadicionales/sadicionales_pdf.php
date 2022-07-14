@@ -35,7 +35,7 @@
                 <th><h4>Nombre</h4></th>
                 <!--<th class="col-2 text-center"><h4>Imagen</h4></th>-->
                 <th><h4>Creado Por</h4></th>
-                <th><h4>Fecha Creacion</h4></th>
+                <th><h4>Fecha Creación</h4></th>
                 <th><h4>Modificado Por</h4></th>
                 <th><h4>Fecha Modificaci&oacute;n</h4></th>
                 <th><h4>Estado</h4></th>               										
