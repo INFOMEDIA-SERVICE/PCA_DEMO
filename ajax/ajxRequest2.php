@@ -1452,7 +1452,171 @@ session_start();
             echo json_encode(['sts'=>'NO']);
         } 
         break;
-        default:
+
+    case 54: #GET
+
+        if ($token != '') {
+
+
+            if(isset($page,$size) ){
+
+                $page=$page-1;
+
+             }else{
+                $page=0;
+                $size=10;
+             }
+
+
+
+            #$url = 'http://20.44.111.223:80/api/boleteria/atraccion?incluirImagen=true';
+            #$rDatos = $consumo->Get($url, $headers); 
+
+
+            $url='http://20.44.111.223/api/users/buscarMenu?filter=menuPadre%20is%20null&page='.$page.'&size='.$size.'&sort=fechaCreado';
+            $rDatos = $consumo->Get($url, $headers);
+
+
+
+            #En esta consulto todos los datos
+            $url2='http://20.44.111.223/api/users/buscarMenu?filter=menuPadre%20is%20null&size=40000&sort=fechaCreado';
+            $rDatos2 = $consumo->Get($url2, $headers);
+
+            $numero_datos= sizeof($rDatos2);
+
+            $cant_paginas=($numero_datos/$size);
+
+            $cant_paginas=ceil($cant_paginas);
+
+            $page2=$page+1;
+
+
+
+
+            if ($rDatos != '') {
+                echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos,'cant_pags'=>$cant_paginas,'pag_consulta'=>$page2]); 
+            } else {                
+                echo json_encode(['sts'=>'NO', 'resultado'=>$rDatos]);
+            }
+        } else {
+            die('Se produjo un Error al generar el Token');
+        } 
+
+    break;
+
+    case 55:#POST
+
+            
+        //            
+        $array14['nombre'] = $nombre;
+        
+        //
+        $url = 'http://20.44.111.223:80/api/users/menu';
+
+        $rGuardar = $consumo->Post($url, $headers, $array14);
+
+        //
+        if($rGuardar->message == 'Se ha creado el menu'){
+            echo json_encode(['sts'=>'OK']); 
+        }else{
+            echo json_encode(['sts'=>'NO']);
+        }
+    
+    break;
+
+    case 56:#PATCH
+
+        //
+        $array2['idMenu'] = $id;
+        $array2['nombre']  = $nombre;
+        //
+        $url = 'http://20.44.111.223:80/api/users/menu';
+        $asignarCasilla = $consumo->Patch($url, $headers, $array2);
+
+        if($asignarCasilla->message == 'Se han realizado los cambios'){
+            echo json_encode(['sts'=>'OK']); 
+        }else{
+            echo json_encode(['sts'=>'NO']);
+        } 
+
+   break;
+        
+   case 57:
+
+    if ($token != '') {
+
+
+        if(isset($page,$size) ){
+
+            $page=$page-1;
+
+         }else{
+            $page=0;
+            $size=10;
+         }
+
+
+
+        #$url = 'http://20.44.111.223:80/api/boleteria/atraccion?incluirImagen=true';
+        #$rDatos = $consumo->Get($url, $headers); 
+
+
+        $url='http://20.44.111.223/api/users/buscarMenu?filter=menuPadre%20is%20not%20null&page='.$page.'&size='.$size.'&sort=fechaCreado';
+        $rDatos = $consumo->Get($url, $headers);
+
+
+
+        #En esta consulto todos los datos
+        $url2='http://20.44.111.223/api/users/buscarMenu?filter=menuPadre%20is%20not%20null&size=40000&sort=fechaCreado';
+        $rDatos2 = $consumo->Get($url2, $headers);
+
+        $numero_datos= sizeof($rDatos2);
+
+        $cant_paginas=($numero_datos/$size);
+
+        $cant_paginas=ceil($cant_paginas);
+
+        $page2=$page+1;
+
+
+
+
+        if ($rDatos != '') {
+            echo json_encode(['sts'=>'OK', 'resultado'=>$rDatos,'cant_pags'=>$cant_paginas,'pag_consulta'=>$page2]); 
+        } else {                
+            echo json_encode(['sts'=>'NO', 'resultado'=>$rDatos]);
+        }
+    } else {
+        die('Se produjo un Error al generar el Token');
+    } 
+
+    break;
+
+    case 58:
+
+       
+
+         //            
+         $array14['nombre'] = $nombre;
+         $array14['idMenuPadre'] = $idMenuPadre;
+         $array14['menuInfo']['url']=$url;
+        
+         //
+         $url = 'http://20.44.111.223:80/api/users/menu';
+ 
+         $rGuardar = $consumo->Post($url, $headers, $array14);
+ 
+         //
+         if($rGuardar->message == 'Se ha creado el menu'){
+             echo json_encode(['sts'=>'OK']); 
+         }else{
+             echo json_encode(['sts'=>'NO']);
+         }
+
+        
+    break;
+
+    default:
             echo 'No se seleccionó ninguna opción';
     }
 //

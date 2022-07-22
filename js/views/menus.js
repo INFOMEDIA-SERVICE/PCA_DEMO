@@ -1,14 +1,71 @@
 //Variables Globales
 var myArray_precepcion = new Array();
 var aDatos = new Array();
+var aDatosSub = new Array();
 var nRegistros;  
 
   
-function cargar_datos_precepcion(){
+function cargar_datos_menus(){
+
     let str_remp; 
     $.ajax({        
-        url: "ajax/ajxRequest.php",
-        data: { op: '35' },
+        url: "ajax/ajxRequest2.php",
+        data: { op: '54' },
+        dataType: 'json',
+        type: 'POST',
+        //async: false,
+        success: function(r2) {            
+            if (r2.sts == 'OK') {//AQUI COMIENZA A PINTAR LA TABLA 
+                i = 0;              
+                var select_menus = ' <select class="selectAltura" name="menuPadre" id="menuPadre" > ';
+                var select_menus_add = ' <select class="selectAltura" name="menuPadreAdd" id="menuPadreAdd" > ';
+                $.each(r2.resultado, function(m, n) {
+                    aDatos[i] = n.nombre;
+                     
+                    i++;
+                    if(n.estado == 'ACTIVO'){ 
+                        select_menus += '<option value="' + n.id + '">' + n.nombre + '</option>'; 
+                        select_menus_add += '<option value="' + n.id + '">' + n.nombre + '</option>'; 
+                    }
+                    var nombre_comilla = "'"+n.nombre+"'";
+                    var idCheck = 'precep'+'-'+n.estado+'-'+n.id;
+                    var btnEditar = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/editar.png" class="img-fluid title="Editar" onclick="upMenu('+ n.id +','+ nombre_comilla +');"></a>' : '<img src="imagenes/editar_no.png" class="img-fluid title="Editar">';
+                    var ver_imagen = '<img id="imagenc' + n.id+'" src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="40" height="40" />';
+                    str_remp += '<tr class="row py-3">' +
+                            '<td class="col-1 d-flex align-items-center justify-content-center"><div>'+ btnEditar +'</div></td>'+
+                            '<td class="col-1 d-flex align-items-center justify-content-center"><h4><input type="checkbox" name="'+idCheck+'"></h4></td>'+
+                            '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.id +'</h4></td>'+
+                            '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.nombre +'</h4></td>'+
+                            '<td class="col-1 d-flex align-items-center justify-content-center"><h4>' + n.estado + '</h4></td>'+
+                            '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.creadoPor +'</h4></td>'+
+                            '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.fechaCreado +'</h4></td>'+
+                            '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.modificadoPor +'</h4></td>'+
+                            '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.fechaModificado +'</h4></td>'+
+                            //'<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.estado +'</h4></td>'+                                									
+                        '</tr>';				
+                });   
+                select_menus+='</select>';
+                select_menus_add+='</select>'; 
+                $("#menu_padre").html(select_menus);
+                $("#menuPadreAddDiv").html(select_menus_add)                                    
+            }else{
+                str_remp += '<tr class="row py-3">' +
+                            '<td  colspan="10" class="justify-content-center">'+ r2.msg +'</td>'+                                                                                                     
+                            '</tr>';        
+            }
+            $("#tbody_menus").html(str_remp);
+                 
+                 
+        }        
+    });    
+}
+
+function cargar_datos_subMenus(){
+
+    let str_remp; 
+    $.ajax({        
+        url: "ajax/ajxRequest2.php",
+        data: { op: '57' },
         dataType: 'json',
         type: 'POST',
         //async: false,
@@ -17,23 +74,25 @@ function cargar_datos_precepcion(){
                 i = 0;              
                 var option; // = '<option value="0">Seleccione recepci\u00F3n pago</option>';
                 $.each(r2.resultado, function(m, n) {
-                    aDatos[i] = n.nombre;
+                    aDatosSub[i] = n.nombre;
                     i++;
                     if(n.estado == 'ACTIVO'){ option += '<option value="' + n.id + '">' + n.nombre + '</option>'; }
                     var nombre_comilla = "'"+n.nombre+"'";
                     var idCheck = 'precep'+'-'+n.estado+'-'+n.id;
-                    var btnEditar = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/editar.png" class="img-fluid title="Editar" onclick="upPrecepcion('+ n.id +','+ nombre_comilla +');"></a>' : '<img src="imagenes/editar_no.png" class="img-fluid title="Editar">';
+                    var btnEditar = (n.estado == 'ACTIVO') ? '<a href="javascript:;"><img src="imagenes/editar.png" class="img-fluid title="Editar" onclick="upSubMenu('+ n.id +','+ nombre_comilla +');"></a>' : '<img src="imagenes/editar_no.png" class="img-fluid title="Editar">';
                     var ver_imagen = '<img id="imagenc' + n.id+'" src="http://20.44.111.223/api/contenido/imagen/' + n.imagenId + '" width="40" height="40" />';
                     str_remp += '<tr class="row py-3">' +
                             '<td class="col-1 d-flex align-items-center justify-content-center"><div>'+ btnEditar +'</div></td>'+
                             '<td class="col-1 d-flex align-items-center justify-content-center"><h4><input type="checkbox" name="'+idCheck+'"></h4></td>'+
                             '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.id +'</h4></td>'+
                             '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.nombre +'</h4></td>'+
-                            '<td class="col-2 d-flex align-items-center justify-content-center">' + n.estado + '</td>'+
-                            //'<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.creadoPor +'</h4></td>'+
-                            //'<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.fechaCreado +'</h4></td>'+
-                            //'<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.modificadoPor +'</h4></td>'+
-                            //'<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.fechaModificado +'</h4></td>'+
+                            '<td class="col-1 d-flex align-items-center justify-content-center"><h4> Taquilla </h4></td>'+
+                            '<td class="col-2 d-flex align-items-center justify-content-center"><h4>' + n.menuInfo.url + '</h4></td>'+
+                            '<td class="col-1 d-flex align-items-center justify-content-center"><h4>' + n.estado + '</h4></td>'+
+                            '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.creadoPor +'</h4></td>'+
+                            '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.fechaCreado +'</h4></td>'+
+                            '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.modificadoPor +'</h4></td>'+
+                            '<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.fechaModificado +'</h4></td>'+
                             //'<td class="col-1 d-flex align-items-center justify-content-center"><h4>'+ n.estado +'</h4></td>'+                                									
                         '</tr>';				
                 });                                        
@@ -42,18 +101,22 @@ function cargar_datos_precepcion(){
                             '<td  colspan="10" class="justify-content-center">'+ r2.msg +'</td>'+                                                                                                     
                             '</tr>';        
             }
-            $("#tbody_precepcion").html(str_remp);
-                $('#select_precepcion').html(option);
-                $('#select_up_precepcion').html(option);
-                restaurar_paginacion('myPager_precepcion');
-                $('#tbody_scategoria').pageMe({pagerSelector:'#myPager_precepcion',showPrevNext:true,hidePageNumbers:false,perPage:20}); 
+            $("#tbody_subMenus").html(str_remp);
+                 
+                 
         }        
     });    
 }
 //
-function abreModalPrecepcion(){
-    limpiarGuardarPrecepcion('txtAddPrecepcion');
-    $('#addModalPrecepcion').modal('show'); // abrir modal agregar condición de acceso 
+function abreModalMenus(){
+     
+    $('#addModalMenu').modal('show'); // abrir modal agregar condición de acceso 
+} 
+
+
+function abreModalSubMenus(){
+     
+    $('#addModalSubMenu').modal('show'); // abrir modal agregar condición de acceso 
 } 
 //
 function abreModalActiDesactivaPrecepcion(){
@@ -84,20 +147,28 @@ function abreModalActiDesactivaPrecepcion(){
     $('#estadoModalPrecepcion').modal('show'); // abrir modal actualizar estado atraccion    		
 }
 //
-function upPrecepcion(id_pm, nombre_pm){
-    limpiarGuardarPrecepcion('txtupIPrecepcion');    
+function upMenu(id_pm, nombre_pm){
+    limpiarGuardarPrecepcion('txtupMenu');    
     //    
-    $("#txtupIPrecepcion").val(id_pm);
-    $("#txtupPrecepcion").val(nombre_pm);
-    $('#upModalPrecepcion').modal('show'); // abrir modal  
+    $("#txtupIdMenu").val(id_pm);
+    $("#txtupMenu").val(nombre_pm);
+    $('#upModalMenu').modal('show'); // abrir modal  
+}
+
+function upSubMenu(id_pm, nombre_pm){
+    limpiarGuardarPrecepcion('txtupMenu');    
+    //    
+    $("#txtupIdSubMenu").val(id_pm);
+    $("#txtupSubMenu").val(nombre_pm);
+    $('#upModalSubMenu').modal('show'); // abrir modal  
 }
 //
-function adicionarPrecepcion(nombre){
+function adicionarMenu(nombre){
     let respr = nombres_igual(nombre, aDatos);
     if(respr == 0){
         $.ajax({        
-            url: "ajax/ajxRequest.php",
-            data: { op: '37', nombre: nombre },
+            url: "ajax/ajxRequest2.php",
+            data: { op: '55', nombre: nombre },
             dataType: 'json',
             type: 'POST',
             //async: false,
@@ -105,9 +176,9 @@ function adicionarPrecepcion(nombre){
                 console.log(r);           
                 if (r.sts == 'OK') {
                     //alert('Guardo');
-                    $('#addModalPrecepcion').modal('hide'); // oculta modal agregar atraccion
-                    limpiarGuardarPrecepcion('txtAddPrecepcion');
-    				cargar_datos_precepcion();              
+                    $('#addModalMenu').modal('hide'); // oculta modal agregar atraccion
+                    limpiarGuardarPrecepcion('nombreMenu');
+    				cargar_datos_menus();              
                 }else{
                     alert('Error al guardar');
                 }
@@ -117,6 +188,37 @@ function adicionarPrecepcion(nombre){
         alert('El nombre de la recepci\u00F3n: '+nombre+', ya existe');
     }    
 }
+
+
+
+function adicionarSubMenu(nombre,url,idMenuPadre){
+    let respr = nombres_igual(nombre, aDatosSub);
+    if(respr == 0){
+        $.ajax({        
+            url: "ajax/ajxRequest2.php",
+            data: { op: '58', nombre: nombre, url:url, idMenuPadre:idMenuPadre },
+            dataType: 'json',
+            type: 'POST',
+            //async: false,
+            success: function(r) { 
+                console.log(r);           
+                if (r.sts == 'OK') {
+                    //alert('Guardo');
+                    $('#addModalSubMenu').modal('hide'); // oculta modal agregar atraccion
+                    limpiarGuardarPrecepcion('subMenuAdd');
+                    limpiarGuardarPrecepcion('urlSubMenuAdd');
+    				cargar_datos_subMenus();              
+                }else{
+                    alert('Error al guardar');
+                }
+            }        
+        });
+    }else{
+        alert('El nombre de la recepci\u00F3n: '+nombre+', ya existe');
+    }    
+}
+
+
 //
 function btnADPrecepcion(){
     //
@@ -167,10 +269,10 @@ function limpiarGuardarPrecepcion(txt){
     $(txt).val(''); // Limpia campo nombre Categoria del servicio adicional     
 }
 //
-function actualizarPrecepcion(id, nombre){
+function actualizarMenu(id, nombre){
     $.ajax({        
-        url: "ajax/ajxRequest.php",
-        data: { op: '39', id: id, nombre: nombre },
+        url: "ajax/ajxRequest2.php",
+        data: { op: '56', id: id, nombre: nombre },
         dataType: 'json',
         type: 'POST',
         //async: false,
@@ -178,8 +280,8 @@ function actualizarPrecepcion(id, nombre){
             console.log(r);           
             if (r.sts == 'OK') {
                 alert('Actualizado');
-                $('#upModalPrecepcion').modal('hide'); // se oculta modal                
-                cargar_datos_precepcion();              
+                $('#upModalMenu').modal('hide'); // se oculta modal                
+                cargar_datos_menus();              
             }else{
                 alert('Error al actualizar');
             }

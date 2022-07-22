@@ -87,6 +87,8 @@ echo" </pre> ";*/
 	<script type="text/javascript" charset="utf8"  src="js/views/boleteria.js"></script>
 	<script type="text/javascript" charset="utf8"  src="js/views/disponibilidad.js"></script>
 	<script type="text/javascript" charset="utf8"  src="js/views/recepcion_pago.js"></script>
+	<script type="text/javascript" charset="utf8"  src="js/views/menus.js"></script>
+	<script type="text/javascript" charset="utf8"  src="js/views/usuarios.js"></script>
 	<script type="text/javascript" charset="utf8"  src="js/views/funciones.js"></script>
 	<!--<link rel="stylesheet" type="text/css" href="css/dataTables.min.css"/>	
 	<script type="text/javascript" charset="utf8"  src="js/jquery.dataTables.min.js"></script>-->
@@ -159,14 +161,14 @@ function mueveReloj(){
 						data-bs-scroll="true" data-bs-backdrop="false"
 						id="offcanvasScrolling"	aria-labelledby="offcanvasScrolling'">
 					<button type="button" id="btnCerrar" data-bs-dismiss="offcanvas" aria-label="Close" style="margin-left:250px;background:none;border:none;margin-top:10px;" ><img src="imagenes/close-colorblanco.png" style="width:10px;"></button>	
+
+
 						<div class="offcanvas-header">					
 						<ul style="list-style-type:none;align-items:left" id="nav" class="administracion"> 
 							<div style="width:500px;margin-left:0px;" id="controlador">
-								<li id="primer"><a><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px; color:white;">
-									Administración</h6><hr style="margin-top:5px;position:absolute;"></a>
-									<ul>
+							<ul>
 										<li>
-											<a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:20px;margin-right:80px; color:white;">Seguridad y Permisos</h6></a><hr> 
+											<a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:20px;margin-right:80px; color:white;">Taquilla</h6></a><hr> 
 											<ul>
 												<li>
 													<a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:10px;margin-right:80px; color:white;">Usuarios</h6></a><hr> 
@@ -180,36 +182,24 @@ function mueveReloj(){
 											</ul>
 										</li>
 										<li>
-											<a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:10px;margin-right:80px; color:white;">Sistemas</h6></a><hr>
+											<a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:10px;margin-right:80px; color:white;">Configuración</h6></a><hr>
+											<ul>
+												<li>
+													<a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:10px;margin-right:80px; color:white;">Usuarios</h6></a><hr> 
+												</li>
+												<li>
+													<a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:10px;margin-right:80px; color:white;">Perfiles</h6></a><hr>
+												</li>
+												<li>
+													<a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:10px;margin-right:80px; color:white;">Notificaciones</h6></a><hr>
+												</li>
+											</ul>
 										</li>
 										<li>
 											<a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:10px;margin-right:80px; color:white;">Perifericos</h6></a><hr>
 										</li>
 									</ul>
-								</li>
-								<li id="prueba"><a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
-									<img src="" alt="" style="width:30px;">Taquilla Parqueadero</h6><hr style="margin-top:10px;position:absolute;"></a>
-									<ul>
-
-									</ul>
-								</li>
-								<li id="prueba1"><a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
-									<img src="" alt="" style="width:30px;">Herramientas</h6><hr style="margin-top:10px;position:absolute;"></a>
-									<ul>
-										
-									</ul>
-								</li>
-								<li id="prueba2"><a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
-									<img src="" alt="" style="width:30px;">Configuración</h6><hr style="margin-top:10px;position:absolute;"></a>
-									<ul>
-									</ul>
-								</li>
-								<li id="prueba3"><a href=""><img src="imagenes/flecha-derecha-colorblanco.png" style="width:20px;position:absolute;margin-left:180px;margin-top:5px;"><h6 class="offcanvas-title" style="margin-top:30px;margin-right:80px;align-items:center; color:white;">
-									<img src="" alt="" style="width:30px;">Ayuda</h6><hr style="margin-top:10px;position:absolute;"></a>
-									<ul>
-									</ul>
-								</li>
-							</div>
+							</div>	
 						</ul>
 							
 					</div>
