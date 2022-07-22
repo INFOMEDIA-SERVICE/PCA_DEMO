@@ -3,6 +3,7 @@ var myArray_precepcion = new Array();
 var aDatos = new Array();
 var nRegistros;  
 
+
   
 function cargar_datos_precepcion(){
     let str_remp; 
